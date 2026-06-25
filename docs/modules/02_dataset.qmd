@@ -1,110 +1,183 @@
 # Understanding the Dataset
 
+::: {.callout-note}
+## Why this chapter matters
+
+Every wearable AI system starts with data, and the data source determines what the system can learn. This chapter introduces the WISDM recordings so we know what kind of Sensor Stream, labels, and subjects our pipeline must handle.
+:::
+
 ## Learning Objectives
 
 After completing this chapter, you should be able to
 
-- understand the structure of the WISDM dataset
-- explain how wearable sensor data is organized
-- identify the most important attributes of the dataset
-- understand why exploratory data analysis (EDA) is the first step of every machine learning project
+- describe what the WISDM dataset contains,
+- explain why smartphone accelerometer data is useful for this project,
+- interpret one raw sensor measurement,
+- explain how activity labels make supervised learning possible,
+- justify why we start with walking, sitting and standing.
 
 ---
 
-## Why Do We Start with the Data?
+## Why We Start With The Data
 
-Many beginners believe that machine learning starts by choosing an algorithm.
+Before we train a model, we need to understand what kind of data we have.
 
-In reality, every successful machine learning project starts with understanding the available data.
+Machine learning does not begin with an algorithm. It begins with measurements, labels, assumptions and constraints.
 
-Before writing a single line of model training code, we should answer questions such as:
+In this project, the WISDM dataset gives us real smartphone sensor recordings. Each row is one timestamped accelerometer measurement. Activity labels then turn raw movement into supervised learning data.
 
-- What information is available?
-- How was the data collected?
-- Which sensors were used?
-- What do the labels represent?
-- Are there missing values?
-- Are all activities equally represented?
+The goal of this chapter is not to load all files yet. That happens in the next chapter.
+
+The goal here is to understand what the dataset represents and why it is suitable for the capstone project.
 
 ::: {.callout-tip}
 ## Engineering Insight
 
-Experienced data scientists usually spend much more time understanding and preparing data than training models.
+Dataset choices are engineering decisions. A smaller, well-understood problem is often better for building a reliable first system.
 :::
 
 ---
 
-## The WISDM Dataset
+## What Is WISDM?
 
-Throughout this project we use the **WISDM Smartphone and Smartwatch Activity Dataset**.
+WISDM is a public activity recognition dataset used in wearable and mobile sensing research.
 
-For simplicity, we only use **smartphone accelerometer data**.
+It contains sensor recordings from smartphones and smartwatches across multiple participants and multiple daily activities.
+
+This makes it useful for a reproducible teaching project:
+
+- the data comes from real devices,
+- the labels are already available,
+- the task is understandable,
+- the same files can be used by every student,
+- the dataset is rich enough to demonstrate a complete pipeline.
+
+For this capstone, we use the smartphone accelerometer recordings.
 
 ---
 
-## Raw File Structure
+## Why Phone Accelerometer Data?
 
-Each participant is stored in a separate file.
+Almost every smartphone contains an accelerometer.
 
-```text
-data_1600_accel_phone.txt
-```
+That makes phone accelerometer data a good first example for wearable data engineering: it is familiar, accessible and directly connected to movement.
+
+It also matches the live demo later in the project. The phyphox app streams smartphone acceleration from a real phone, so the offline WISDM data and the live demo use the same basic sensor type.
+
+Accelerometer signals contain enough variation to demonstrate the full pipeline:
+
+- dynamic movement during walking,
+- lower movement during sitting,
+- subtle differences between sitting and standing,
+- subject-to-subject variation.
 
 ---
 
-## One Measurement
+## One Row, One Measurement
 
-Each row represents one timestamped sensor measurement.
+Each raw WISDM row represents one timestamped sensor measurement.
+
+The raw format is:
 
 ```text
 subject_id, activity_code, timestamp, x, y, z;
 ```
 
+| Column | Meaning | Why it matters |
+|---|---|---|
+| `subject_id` | Participant identifier | Needed for subject-wise evaluation |
+| `activity_code` | Letter code for the activity | Becomes the supervised learning label |
+| `timestamp` | Time of the measurement | Preserves sequence and sampling behavior |
+| `x` | Acceleration along the x-axis | One dimension of phone movement |
+| `y` | Acceleration along the y-axis | One dimension of phone movement |
+| `z` | Acceleration along the z-axis | One dimension of phone movement |
+
+The x, y and z values are not yet features for a classifier.
+
+They are raw signal measurements that we will later transform into Windows and Feature Vectors.
+
 ---
 
-## Understanding the Columns
+## From Files To A Learning Table
 
-| Column | Description |
-|---------|-------------|
-| subject_id | Participant identifier |
-| activity_code | Activity label |
-| timestamp | Measurement timestamp |
-| x | Acceleration along x-axis |
-| y | Acceleration along y-axis |
-| z | Acceleration along z-axis |
+The dataset begins as raw text files.
 
----
+The project turns those files into a structured table for analysis and model training.
 
-## Activity Mapping
-
-```{python}
-ACTIVITY_MAP = {
-    'A':'walking','B':'jogging','C':'stairs','D':'sitting','E':'standing',
-    'F':'typing','G':'brushing_teeth','H':'eating_soup','I':'eating_chips',
-    'J':'eating_pasta','K':'drinking','L':'eating_sandwich','M':'kicking',
-    'O':'catch','P':'dribbling','Q':'writing','R':'clapping','S':'folding_clothes'
-}
-
-TARGET_ACTIVITIES=['walking','sitting','standing']
+```{mermaid}
+flowchart LR
+  A[Raw Text Files] --> B[Parsed Table]
+  B --> C[Activity Mapping]
+  C --> D[Selected Activities]
+  D --> E[DataFrame]
 ```
 
-::: {.callout-note}
-## Remember
+Activity labels are essential because they connect movement measurements to human meaning.
 
-We keep the complete activity mapping although we currently use only three activities.
-:::
+Without labels, we would only have sensor values.
+
+With labels, the model can learn relationships between movement patterns and activities.
+
+---
+
+## Why Only Three Activities?
+
+WISDM contains many activities, but we intentionally start with three:
+
+- walking,
+- sitting,
+- standing.
+
+This keeps the first system simple enough to understand.
+
+Walking is dynamic and usually produces a strong movement signal. Sitting and standing are intentionally similar low-motion activities. That similarity makes the task realistic: not every useful classification problem is visually obvious from the raw signal.
+
+The goal is the full engineering pipeline, not maximum dataset complexity.
+
+Once the pipeline works, the same structure can be extended to more activities or more sensors.
+
+## Thinking Like An Engineer
+
+Instead of asking:
+
+> How many activities can this dataset support?
+
+ask:
+
+> Which activities make the first reliable end-to-end system easiest to understand?
+
+A smaller, well-understood problem helps us build trust in every step from Sensor Stream to Prediction.
 
 ---
 
 ## Checkpoint
 
-1. What does one row represent?
-2. Why separate files per participant?
-3. Why only three activities?
-4. Why inspect the dataset before training?
+Before continuing, you should be able to answer:
+
+1. What does one row in the raw dataset represent?
+2. Why do activity labels matter for supervised learning?
+3. Why is smartphone accelerometer data a good first wearable signal?
+4. Why do we start with only walking, sitting and standing?
 
 ---
 
-## Summary
+## Further Exploration
 
-In the next chapter we will load all participant files and inspect the raw accelerometer signals.
+Optional: look up other activities available in WISDM.
+
+Which activities would you expect to be easy to distinguish from walking?
+
+Which activities might be confused with sitting or standing?
+
+---
+
+## What Have We Achieved?
+
+- We identified WISDM as a reproducible dataset for wearable activity recognition.
+- We connected each row to one timestamped accelerometer measurement.
+- We explained how labels turn raw movement into supervised learning data.
+- We justified starting with walking, sitting, and standing.
+
+## What Comes Next?
+
+Now that we know what data we have, we need to check whether it behaves as expected. The next chapter loads the dataset and explores its quality before any Model is trained.

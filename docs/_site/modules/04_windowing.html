@@ -61,7 +61,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </style>
 
 
-<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" integrity="sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2" crossorigin="anonymous"></script><script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="../site_libs/quarto-nav/headroom.min.js"></script>
 <script src="../site_libs/clipboard/clipboard.min.js"></script>
 <script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
@@ -107,9 +107,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
-<script src="https://cdn.jsdelivr.net/npm/requirejs@2.3.6/require.min.js" integrity="sha384-c9c+LnTbwQ3aujuU7ULEPVvgLs+Fn6fJUvIGTsuu1ZcCf11fiEubah0ttpca4ntM sha384-6V1/AdqZRWk1KAlWbKBlGhN7VG4iE/yAZcO6NZPMF8od0vukrvr0tg4qY6NSrItx" crossorigin="anonymous"></script>
-
-<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+<script src="../site_libs/quarto-diagram/mermaid.min.js"></script>
+<script src="../site_libs/quarto-diagram/mermaid-init.js"></script>
+<link href="../site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
 
 
 </head>
@@ -193,7 +193,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../modules/07_evaluation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Evaluation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Evaluation And Generalization</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -218,15 +218,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#learning-objectives" id="toc-learning-objectives" class="nav-link active" data-scroll-target="#learning-objectives"><span class="header-section-number">5.1</span> Learning Objectives</a></li>
+  <li><a href="#how-can-a-model-understand-something-that-never-stops" id="toc-how-can-a-model-understand-something-that-never-stops" class="nav-link active" data-scroll-target="#how-can-a-model-understand-something-that-never-stops"><span class="header-section-number">5.1</span> How Can A Model Understand Something That Never Stops?</a></li>
   <li><a href="#setup" id="toc-setup" class="nav-link" data-scroll-target="#setup"><span class="header-section-number">5.2</span> Setup</a></li>
-  <li><a href="#why-do-we-need-windowing" id="toc-why-do-we-need-windowing" class="nav-link" data-scroll-target="#why-do-we-need-windowing"><span class="header-section-number">5.3</span> Why Do We Need Windowing?</a></li>
-  <li><a href="#step-1-create-windows-for-walking" id="toc-step-1-create-windows-for-walking" class="nav-link" data-scroll-target="#step-1-create-windows-for-walking"><span class="header-section-number">5.4</span> Step 1 — Create Windows for Walking</a></li>
-  <li><a href="#step-2-inspect-one-window" id="toc-step-2-inspect-one-window" class="nav-link" data-scroll-target="#step-2-inspect-one-window"><span class="header-section-number">5.5</span> Step 2 — Inspect One Window</a></li>
-  <li><a href="#step-3-visualize-one-window" id="toc-step-3-visualize-one-window" class="nav-link" data-scroll-target="#step-3-visualize-one-window"><span class="header-section-number">5.6</span> Step 3 — Visualize One Window</a></li>
-  <li><a href="#step-4-create-windows-for-the-entire-dataset" id="toc-step-4-create-windows-for-the-entire-dataset" class="nav-link" data-scroll-target="#step-4-create-windows-for-the-entire-dataset"><span class="header-section-number">5.7</span> Step 4 — Create Windows for the Entire Dataset</a></li>
-  <li><a href="#checkpoint" id="toc-checkpoint" class="nav-link" data-scroll-target="#checkpoint"><span class="header-section-number">5.8</span> Checkpoint</a></li>
-  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary"><span class="header-section-number">5.9</span> Summary</a></li>
+  <li><a href="#continuous-signals-vs-machine-learning" id="toc-continuous-signals-vs-machine-learning" class="nav-link" data-scroll-target="#continuous-signals-vs-machine-learning"><span class="header-section-number">5.3</span> Continuous Signals vs Machine Learning</a></li>
+  <li><a href="#what-is-a-window" id="toc-what-is-a-window" class="nav-link" data-scroll-target="#what-is-a-window"><span class="header-section-number">5.4</span> What Is A Window?</a></li>
+  <li><a href="#why-five-seconds" id="toc-why-five-seconds" class="nav-link" data-scroll-target="#why-five-seconds"><span class="header-section-number">5.5</span> Why Five Seconds?</a></li>
+  <li><a href="#non-overlapping-vs-sliding-windows" id="toc-non-overlapping-vs-sliding-windows" class="nav-link" data-scroll-target="#non-overlapping-vs-sliding-windows"><span class="header-section-number">5.6</span> Non-Overlapping vs Sliding Windows</a></li>
+  <li><a href="#choosing-a-window-size" id="toc-choosing-a-window-size" class="nav-link" data-scroll-target="#choosing-a-window-size"><span class="header-section-number">5.7</span> Choosing A Window Size</a></li>
+  <li><a href="#thinking-like-an-engineer" id="toc-thinking-like-an-engineer" class="nav-link" data-scroll-target="#thinking-like-an-engineer"><span class="header-section-number">5.8</span> Thinking Like An Engineer</a></li>
+  <li><a href="#the-project-implementation" id="toc-the-project-implementation" class="nav-link" data-scroll-target="#the-project-implementation"><span class="header-section-number">5.9</span> The Project Implementation</a></li>
+  <li><a href="#checkpoint" id="toc-checkpoint" class="nav-link" data-scroll-target="#checkpoint"><span class="header-section-number">5.10</span> Checkpoint</a></li>
+  <li><a href="#further-exploration" id="toc-further-exploration" class="nav-link" data-scroll-target="#further-exploration"><span class="header-section-number">5.11</span> Further Exploration</a></li>
+  <li><a href="#what-have-we-achieved" id="toc-what-have-we-achieved" class="nav-link" data-scroll-target="#what-have-we-achieved"><span class="header-section-number">5.12</span> What Have We Achieved?</a></li>
+  <li><a href="#what-comes-next" id="toc-what-comes-next" class="nav-link" data-scroll-target="#what-comes-next"><span class="header-section-number">5.13</span> What Comes Next?</a></li>
   </ul>
 </nav>
     </div>
@@ -252,75 +256,113 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="learning-objectives" class="level2" data-number="5.1">
-<h2 data-number="5.1" class="anchored" data-anchor-id="learning-objectives"><span class="header-section-number">5.1</span> Learning Objectives</h2>
-<p>After completing this chapter, you should be able to</p>
-<ul>
-<li>explain why continuous sensor streams must be segmented into windows,</li>
-<li>use reusable windowing code from the <code>app/</code> package,</li>
-<li>create windows for one activity,</li>
-<li>create windows safely per subject and activity,</li>
-<li>understand how window size affects live prediction.</li>
-</ul>
-<hr>
-</section>
-<section id="setup" class="level2" data-number="5.2">
-<h2 data-number="5.2" class="anchored" data-anchor-id="setup"><span class="header-section-number">5.2</span> Setup</h2>
-<div id="59f00e3c" class="cell" data-execution_count="1">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pathlib <span class="im">import</span> Path</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>current_path <span class="op">=</span> Path.cwd().resolve()</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> parent <span class="kw">in</span> [current_path] <span class="op">+</span> <span class="bu">list</span>(current_path.parents):</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (parent <span class="op">/</span> <span class="st">"app"</span>).exists():</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>        PROJECT_ROOT <span class="op">=</span> parent</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>        <span class="cf">break</span></span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">raise</span> <span class="pp">RuntimeError</span>(<span class="st">"Could not find project root containing app/ directory."</span>)</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>sys.path.insert(<span class="dv">0</span>, <span class="bu">str</span>(PROJECT_ROOT))</span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> app.config <span class="im">import</span> WINDOW_SIZE</span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> app.data_loader <span class="im">import</span> load_wisdm_phone_accel</span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> app.pipeline <span class="im">import</span> add_magnitude</span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> app.windowing <span class="im">import</span> create_windows, create_grouped_windows</span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>DATA_DIR <span class="op">=</span> PROJECT_ROOT <span class="op">/</span> <span class="st">"data"</span></span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> load_wisdm_phone_accel(DATA_DIR)</span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> add_magnitude(df)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Important</span>Software Engineering Principle
+<span class="screen-reader-only">Note</span>Why this chapter matters
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>This chapter does <strong>not</strong> redefine <code>create_windows()</code>.</p>
-<p>Instead, it imports reusable project code from <code>app.windowing</code>.</p>
-<p>This follows the <strong>Don’t Repeat Yourself (DRY)</strong> principle.</p>
+<p>Wearable sensors produce a Sensor Stream that keeps arriving over time, while classical machine learning expects finite examples. Windowing creates the fixed-size Window objects that make the rest of the pipeline possible.</p>
 </div>
+</div>
+<section id="how-can-a-model-understand-something-that-never-stops" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="how-can-a-model-understand-something-that-never-stops"><span class="header-section-number">5.1</span> How Can A Model Understand Something That Never Stops?</h2>
+<p>Wearable sensors do not wait for us to ask a neat question.</p>
+<p>They keep measuring.</p>
+<p>A phone accelerometer can produce sample after sample while a person walks, sits, stands, turns, pauses or changes phone position.</p>
+<p>Machine learning models, however, usually expect finite observations: one row, one Feature Vector, one Prediction.</p>
+<p>Windowing is the bridge between continuous time and tabular machine learning.</p>
+<p>It turns an endless Sensor Stream into many fixed-size pieces that a Model can learn from.</p>
+<hr>
+</section>
+<section id="setup" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="setup"><span class="header-section-number">5.2</span> Setup</h2>
+<p>We use reusable project code to load the data and create windows.</p>
+<p>The purpose of this chapter is to understand the engineering decision behind windowing.</p>
+<div id="ad55444c" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pathlib <span class="im">import</span> Path</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>current_path <span class="op">=</span> Path.cwd().resolve()</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> parent <span class="kw">in</span> [current_path] <span class="op">+</span> <span class="bu">list</span>(current_path.parents):</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (parent <span class="op">/</span> <span class="st">"app"</span>).exists():</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>        PROJECT_ROOT <span class="op">=</span> parent</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>        <span class="cf">break</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">raise</span> <span class="pp">RuntimeError</span>(<span class="st">"Could not find project root containing app/ directory."</span>)</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>sys.path.insert(<span class="dv">0</span>, <span class="bu">str</span>(PROJECT_ROOT))</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> app.config <span class="im">import</span> WINDOW_SIZE</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> app.data_loader <span class="im">import</span> load_wisdm_phone_accel</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> app.pipeline <span class="im">import</span> add_magnitude</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> app.windowing <span class="im">import</span> create_grouped_windows, create_windows</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>DATA_DIR <span class="op">=</span> PROJECT_ROOT <span class="op">/</span> <span class="st">"data"</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> load_wisdm_phone_accel(DATA_DIR)</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> add_magnitude(df)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <hr>
 </section>
-<section id="why-do-we-need-windowing" class="level2" data-number="5.3">
-<h2 data-number="5.3" class="anchored" data-anchor-id="why-do-we-need-windowing"><span class="header-section-number">5.3</span> Why Do We Need Windowing?</h2>
-<p>Wearable sensors produce a continuous stream of measurements.</p>
-<p>Classical machine learning algorithms expect <strong>fixed-size samples</strong>.</p>
-<p>Windowing bridges this gap by splitting a continuous stream into equally sized segments.</p>
+<section id="continuous-signals-vs-machine-learning" class="level2" data-number="5.3">
+<h2 data-number="5.3" class="anchored" data-anchor-id="continuous-signals-vs-machine-learning"><span class="header-section-number">5.3</span> Continuous Signals vs Machine Learning</h2>
+<p>A Sensor Stream is like a movie.</p>
+<p>A machine learning table is more like a photo album.</p>
+<p>The movie never really stops. The table needs individual examples.</p>
+<p>That mismatch is why windowing exists.</p>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart LR
+  A[Continuous wearable stream] --&gt; B[Windowing]
+  B --&gt; C[Fixed-size observations]
+  C --&gt; D[Tabular ML model]
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<p>The stream preserves time.</p>
+<p>The window creates a bounded observation.</p>
+<p>The model receives a finite object it can classify.</p>
+<p>Without windowing, a classical machine learning model has no clear answer to a basic question:</p>
+<blockquote class="blockquote">
+<p>Which part of the stream should become one training example?</p>
+</blockquote>
 <hr>
 </section>
-<section id="step-1-create-windows-for-walking" class="level2" data-number="5.4">
-<h2 data-number="5.4" class="anchored" data-anchor-id="step-1-create-windows-for-walking"><span class="header-section-number">5.4</span> Step 1 — Create Windows for Walking</h2>
-<div id="9016b308" class="cell" data-execution_count="2">
+<section id="what-is-a-window" class="level2" data-number="5.4">
+<h2 data-number="5.4" class="anchored" data-anchor-id="what-is-a-window"><span class="header-section-number">5.4</span> What Is A Window?</h2>
+<p>A window is a short segment of consecutive sensor samples.</p>
+<p>For example, if the sensor records at about 20 Hz, then 100 samples represent about five seconds.</p>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart TD
+  A[Continuous Signal]
+  --&gt; B[One Window]
+  --&gt; C[Many Windows]
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<p>We first inspect windows for walking.</p>
+<div id="bd09b055" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>walking_df <span class="op">=</span> (</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    df[df[<span class="st">"activity"</span>] <span class="op">==</span> <span class="st">"walking"</span>]</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    .sort_values(<span class="st">"timestamp"</span>)</span>
@@ -337,172 +379,225 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre><code>2798</code></pre>
 </div>
 </div>
-<hr>
-</section>
-<section id="step-2-inspect-one-window" class="level2" data-number="5.5">
-<h2 data-number="5.5" class="anchored" data-anchor-id="step-2-inspect-one-window"><span class="header-section-number">5.5</span> Step 2 — Inspect One Window</h2>
-<div id="157b5aa8" class="cell" data-execution_count="3">
+<p>Each window has the same number of rows.</p>
+<div id="770797fd" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>first_window <span class="op">=</span> walking_windows[<span class="dv">0</span>]</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>first_window.head()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>first_window.shape</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="3">
-<div>
-
-
-<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
-<thead>
-<tr class="header">
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th">subject_id</th>
-<th data-quarto-table-cell-role="th">activity_code</th>
-<th data-quarto-table-cell-role="th">timestamp</th>
-<th data-quarto-table-cell-role="th">x</th>
-<th data-quarto-table-cell-role="th">y</th>
-<th data-quarto-table-cell-role="th">z</th>
-<th data-quarto-table-cell-role="th">activity</th>
-<th data-quarto-table-cell-role="th">magnitude</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">303991</th>
-<td>1623</td>
-<td>A</td>
-<td>2520219142823</td>
-<td>-0.152512</td>
-<td>-8.585220</td>
-<td>-1.219192</td>
-<td>walking</td>
-<td>8.672698</td>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">303992</th>
-<td>1623</td>
-<td>A</td>
-<td>2520269496827</td>
-<td>0.999466</td>
-<td>-8.196548</td>
-<td>-0.758926</td>
-<td>walking</td>
-<td>8.292063</td>
-</tr>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">303993</th>
-<td>1623</td>
-<td>A</td>
-<td>2520319850830</td>
-<td>0.450241</td>
-<td>-8.701187</td>
-<td>-1.290024</td>
-<td>walking</td>
-<td>8.807811</td>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">303994</th>
-<td>1623</td>
-<td>A</td>
-<td>2520370204834</td>
-<td>-0.042175</td>
-<td>-9.739563</td>
-<td>-1.787415</td>
-<td>walking</td>
-<td>9.902309</td>
-</tr>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">303995</th>
-<td>1623</td>
-<td>A</td>
-<td>2520420558838</td>
-<td>3.551483</td>
-<td>-10.745132</td>
-<td>-1.266403</td>
-<td>walking</td>
-<td>11.387479</td>
-</tr>
-</tbody>
-</table>
-
-</div>
-</div>
-</div>
-<div id="cbed379a" class="cell" data-execution_count="4">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>first_window.shape</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="4">
 <pre><code>(100, 8)</code></pre>
 </div>
 </div>
-<hr>
-</section>
-<section id="step-3-visualize-one-window" class="level2" data-number="5.6">
-<h2 data-number="5.6" class="anchored" data-anchor-id="step-3-visualize-one-window"><span class="header-section-number">5.6</span> Step 3 — Visualize One Window</h2>
-<div id="995bcbab" class="cell" data-execution_count="5">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">4</span>))</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>plt.plot(first_window[<span class="st">"magnitude"</span>])</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"One Walking Window"</span>)</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Sample"</span>)</span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Magnitude"</span>)</span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Now we visualize one real window.</p>
+<div id="d6a6dcdf" class="cell" data-execution_count="4">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">4</span>))</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>plt.plot(first_window[<span class="st">"magnitude"</span>])</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"One Walking Window"</span>)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Sample inside the window"</span>)</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Acceleration magnitude"</span>)</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="04_windowing_files/figure-html/cell-6-output-1.png" width="809" height="377" class="figure-img"></p>
+<p><img src="04_windowing_files/figure-html/cell-5-output-1.png" width="809" height="377" class="figure-img"></p>
 </figure>
 </div>
 </div>
 </div>
+<p>This figure shows one bounded moment of activity.</p>
+<p>The model will not see the entire recording at once.</p>
+<p>It will see many windows like this, each summarized into features in the next chapter.</p>
 <hr>
 </section>
-<section id="step-4-create-windows-for-the-entire-dataset" class="level2" data-number="5.7">
-<h2 data-number="5.7" class="anchored" data-anchor-id="step-4-create-windows-for-the-entire-dataset"><span class="header-section-number">5.7</span> Step 4 — Create Windows for the Entire Dataset</h2>
-<div id="d60ed1ab" class="cell" data-execution_count="6">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>all_windows <span class="op">=</span> create_grouped_windows(</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    df,</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    window_size<span class="op">=</span>WINDOW_SIZE,</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="bu">len</span>(all_windows)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="6">
-<pre><code>8066</code></pre>
+<section id="why-five-seconds" class="level2" data-number="5.5">
+<h2 data-number="5.5" class="anchored" data-anchor-id="why-five-seconds"><span class="header-section-number">5.5</span> Why Five Seconds?</h2>
+<p>This project uses 100 samples per window.</p>
+<p>At approximately 20 Hz, that is about five seconds.</p>
+<p>Five seconds is not magic.</p>
+<p>It is a trade-off.</p>
+<p>Short windows can react quickly. That is useful for live prediction because the dashboard can update sooner. But short windows may not contain enough movement to represent the activity clearly.</p>
+<p>Long windows are often more stable. They contain more evidence. But they increase latency because the system must wait longer before making a prediction.</p>
+<p>For live systems, this trade-off is very concrete:</p>
+<ul>
+<li>shorter window: faster response, noisier prediction,</li>
+<li>longer window: slower response, more stable prediction.</li>
+</ul>
+<p>Window size controls how quickly the system can notice that something changed.</p>
+<hr>
+</section>
+<section id="non-overlapping-vs-sliding-windows" class="level2" data-number="5.6">
+<h2 data-number="5.6" class="anchored" data-anchor-id="non-overlapping-vs-sliding-windows"><span class="header-section-number">5.6</span> Non-Overlapping vs Sliding Windows</h2>
+<p>There are two common ways to create windows.</p>
+<p>Non-overlapping windows use each sample once.</p>
+<p>Sliding windows move forward by a smaller step and overlap with previous windows.</p>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart TD
+  A[Samples 1-100] --&gt; B[Non-overlapping: next window starts at 101]
+  C[Samples 1-100] --&gt; D[Sliding: next window starts at 21]
+  D --&gt; E[Overlap: samples 21-100 appear again]
+</pre>
+</div>
+<p></p></figure><p></p>
 </div>
 </div>
-<div class="callout callout-style-default callout-warning callout-titled">
+</div>
+<p>Overlapping windows can produce smoother predictions because the model receives updates more often.</p>
+<p>They also duplicate information.</p>
+<p>That increases computational cost and can make evaluation more complicated if highly similar windows appear in both train and test data.</p>
+<p>This project intentionally starts with non-overlapping windows.</p>
+<p>That choice keeps the first system easier to reason about:</p>
+<ul>
+<li>fewer windows,</li>
+<li>less duplicated information,</li>
+<li>simpler evaluation,</li>
+<li>clearer connection between raw data and training examples.</li>
+</ul>
+<hr>
+</section>
+<section id="choosing-a-window-size" class="level2" data-number="5.7">
+<h2 data-number="5.7" class="anchored" data-anchor-id="choosing-a-window-size"><span class="header-section-number">5.7</span> Choosing A Window Size</h2>
+<p>Different applications need different windows.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Window Size</th>
+<th>Advantages</th>
+<th>Disadvantages</th>
+<th>Typical Use Cases</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1 s</td>
+<td>Very responsive</td>
+<td>Often noisy and incomplete</td>
+<td>Fast gestures, quick feedback</td>
+</tr>
+<tr class="even">
+<td>2 s</td>
+<td>Still responsive, slightly more context</td>
+<td>May miss slower activity patterns</td>
+<td>Lightweight live demos</td>
+</tr>
+<tr class="odd">
+<td>5 s</td>
+<td>Good balance of context and latency</td>
+<td>Slower to react than short windows</td>
+<td>Walking/sitting/standing baseline</td>
+</tr>
+<tr class="even">
+<td>10 s</td>
+<td>More stable summaries</td>
+<td>High latency, delayed feedback</td>
+<td>Slow activities, offline analysis</td>
+</tr>
+</tbody>
+</table>
+<p>The table does not tell us the universally correct answer.</p>
+<p>It tells us what trade-offs we are accepting.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Warning</span>Common Pitfall
+<span class="screen-reader-only">Tip</span>Engineering Insight
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Always create windows separately for each subject and activity.</p>
-<p>Otherwise, a window may contain multiple activities.</p>
+<p>There is no perfect Window size.</p>
+<p>The correct Window depends on the activity, latency requirements, battery, computational resources and deployment scenario.</p>
 </div>
 </div>
 <hr>
 </section>
-<section id="checkpoint" class="level2" data-number="5.8">
-<h2 data-number="5.8" class="anchored" data-anchor-id="checkpoint"><span class="header-section-number">5.8</span> Checkpoint</h2>
+<section id="thinking-like-an-engineer" class="level2" data-number="5.8">
+<h2 data-number="5.8" class="anchored" data-anchor-id="thinking-like-an-engineer"><span class="header-section-number">5.8</span> Thinking Like An Engineer</h2>
+<p>Instead of asking:</p>
+<blockquote class="blockquote">
+<p>What window size is best?</p>
+</blockquote>
+<p>ask:</p>
+<blockquote class="blockquote">
+<p>What trade-offs does my application require?</p>
+</blockquote>
+<p>For a classroom live demo, responsiveness matters because students should see predictions change.</p>
+<p>For a clinical monitoring system, stability and reliability might matter more than instant updates.</p>
+<p>For a battery-powered wearable, computation and energy use matter too.</p>
+<p>Windowing is not just preprocessing.</p>
+<p>It is an engineering decision.</p>
+<hr>
+</section>
+<section id="the-project-implementation" class="level2" data-number="5.9">
+<h2 data-number="5.9" class="anchored" data-anchor-id="the-project-implementation"><span class="header-section-number">5.9</span> The Project Implementation</h2>
+<p>The reusable windowing logic lives in <code>app.windowing</code>.</p>
+<p>This chapter does not redefine that logic.</p>
+<p>It imports:</p>
+<ul>
+<li><code>create_windows()</code> for one sorted signal segment,</li>
+<li><code>create_grouped_windows()</code> for safe windowing by subject and activity.</li>
+</ul>
+<div id="938b7ae4" class="cell" data-execution_count="5">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>all_windows <span class="op">=</span> create_grouped_windows(</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    df,</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    window_size<span class="op">=</span>WINDOW_SIZE,</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="bu">len</span>(all_windows)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="5">
+<pre><code>8066</code></pre>
+</div>
+</div>
+<p>Creating windows separately by subject and activity matters.</p>
+<p>Otherwise, one window could accidentally contain multiple people or multiple labels.</p>
+<p>That would create training examples that do not mean what we think they mean.</p>
+<hr>
+</section>
+<section id="checkpoint" class="level2" data-number="5.10">
+<h2 data-number="5.10" class="anchored" data-anchor-id="checkpoint"><span class="header-section-number">5.10</span> Checkpoint</h2>
+<p>Before continuing, you should be able to answer:</p>
 <ol type="1">
-<li>Why do we need windowing?</li>
-<li>What does a 100-sample window represent at 20 Hz?</li>
-<li>Why should windows not span multiple activities?</li>
-<li>Why is the window size relevant for live prediction?</li>
+<li>Why do wearable streams need to be segmented before classical ML?</li>
+<li>What does a five-second window mean at 20 Hz?</li>
+<li>Why can short windows be more responsive but less stable?</li>
+<li>Why can overlapping windows make predictions smoother?</li>
+<li>Why does this project start with non-overlapping windows?</li>
 </ol>
 <hr>
 </section>
-<section id="summary" class="level2" data-number="5.9">
-<h2 data-number="5.9" class="anchored" data-anchor-id="summary"><span class="header-section-number">5.9</span> Summary</h2>
-<p>In this chapter you learned</p>
+<section id="further-exploration" class="level2" data-number="5.11">
+<h2 data-number="5.11" class="anchored" data-anchor-id="further-exploration"><span class="header-section-number">5.11</span> Further Exploration</h2>
+<p>Optional ideas:</p>
 <ul>
-<li>why windowing is necessary,</li>
-<li>how reusable project code is imported,</li>
-<li>how to create windows safely,</li>
-<li>why window size controls the trade-off between stability and responsiveness.</li>
+<li>try a smaller window size,</li>
+<li>try a larger window size,</li>
+<li>design an overlapping-window version and discuss what would change.</li>
 </ul>
-<p>In the next chapter we will extract numerical features from every window.</p>
+<p>These are experiments, not required steps.</p>
+<hr>
+</section>
+<section id="what-have-we-achieved" class="level2" data-number="5.12">
+<h2 data-number="5.12" class="anchored" data-anchor-id="what-have-we-achieved"><span class="header-section-number">5.12</span> What Have We Achieved?</h2>
+<ul>
+<li>We explained why continuous Sensor Streams must become finite Windows.</li>
+<li>We compared short, long, overlapping, and non-overlapping Window choices.</li>
+<li>We connected Window size to latency, stability, and Live Prediction.</li>
+<li>We used the reusable <code>app.windowing</code> logic instead of duplicating pipeline code.</li>
+</ul>
+</section>
+<section id="what-comes-next" class="level2" data-number="5.13">
+<h2 data-number="5.13" class="anchored" data-anchor-id="what-comes-next"><span class="header-section-number">5.13</span> What Comes Next?</h2>
+<p>A Window still contains many raw measurements. The next chapter turns each Window into a compact Feature Vector that a Model can use.</p>
 
 
 </section>

@@ -1,0 +1,168 @@
+---
+title: "Student Lab Guide"
+subtitle: "DE4W Capstone Project"
+format:
+  html:
+    toc: true
+---
+
+# Goal
+
+In this lab, you will work through an end-to-end wearable machine learning pipeline:
+
+```text
+raw accelerometer data
+→ windows
+→ features
+→ model
+→ evaluation
+→ API
+→ dashboard
+→ live phyphox prediction
+```
+
+# Setup
+
+Install dependencies:
+
+```bash
+uv sync
+```
+
+Check imports:
+
+```bash
+uv run python -c "import app.api, app.training, app.evaluation, app.model_utils; print('ready')"
+```
+
+# Data Placement
+
+Place WISDM phone accelerometer files in `data/`.
+
+Expected names:
+
+```text
+data_1600_accel_phone.txt
+data_1601_accel_phone.txt
+...
+```
+
+The generated feature table is:
+
+```text
+data/features_df.csv
+```
+
+# Render The Course Book
+
+Use the project Python environment:
+
+```bash
+PATH=.venv/bin:$PATH quarto render docs
+```
+
+If plain `quarto render docs` fails because Jupyter or PyYAML is missing, use the command above.
+
+# Train Or Export The Model
+
+The project already includes model artifacts.
+
+If you need to regenerate them, work through the machine learning and evaluation chapters.
+
+Expected artifacts:
+
+```text
+models/activity_model_random_forest.joblib
+models/feature_columns.joblib
+models/activity_labels.joblib
+models/model_metadata.json
+```
+
+# Start FastAPI
+
+Run:
+
+```bash
+uv run uvicorn app.api:app --reload
+```
+
+Open:
+
+```text
+http://127.0.0.1:8000/health
+```
+
+You should see `model_loaded: true`.
+
+# Start Streamlit
+
+Run:
+
+```bash
+uv run streamlit run dashboard.py
+```
+
+The dashboard asks for:
+
+- phyphox URL
+- window size
+- demo duration
+
+# Connect phyphox
+
+On your phone:
+
+1. Open phyphox.
+2. Start an acceleration experiment.
+3. Enable remote access.
+4. Copy the shown URL.
+5. Paste it into Streamlit.
+
+# Troubleshooting
+
+## phyphox URL Does Not Open
+
+Make sure phone and laptop are on the same network.
+
+eduroam may block direct communication.
+
+Try:
+
+- smartphone hotspot
+- local WiFi router
+- travel router
+
+## API Health Fails
+
+Check that model artifacts exist in `models/`.
+
+## Prediction Fails With Missing Features
+
+The model expects all 20 feature columns saved in `models/feature_columns.joblib`.
+
+Do not manually invent feature names.
+
+Use the feature extraction pipeline.
+
+## Streamlit Stops With A phyphox Error
+
+Read the dashboard message.
+
+Most failures are caused by:
+
+- wrong phyphox URL
+- remote access disabled
+- phone and laptop on different networks
+- eduroam blocking local traffic
+
+# Completion Checklist
+
+You are done when you can:
+
+- render the Quarto book,
+- explain random split vs subject-wise split,
+- start `/health`,
+- start Streamlit,
+- describe the live prediction pipeline,
+- explain the eduroam/hotspot lesson.
+

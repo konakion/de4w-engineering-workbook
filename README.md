@@ -1,157 +1,204 @@
-DE4W Live Activity Recognition App
+# DE4W Live Activity Recognition App
 
-Project Goal
+Educational capstone project for the course **Data Engineering for Wearables**.
 
-In this project, we build a complete end-to-end machine learning application for human activity recognition using smartphone accelerometer data.
+The project demonstrates how to turn wearable sensor data into a working activity recognition system:
 
-The goal is to demonstrate the entire machine learning pipeline:
+```text
+WISDM accelerometer data
+→ windowing
+→ feature engineering
+→ Random Forest
+→ evaluation
+→ FastAPI
+→ Streamlit
+→ phyphox live prediction
+```
 
-Sensor Data → Feature Engineering → Machine Learning → Deployment → Live Prediction
+## Educational Purpose
 
-Students will train a machine learning model on the WISDM dataset, deploy the model as a web service, and finally perform live activity recognition using real-time smartphone sensor data streamed from phyphox.
+Students learn how the pieces of a wearable ML system fit together:
 
-Learning Objectives
+- loading raw sensor files,
+- segmenting streams into windows,
+- extracting statistical features,
+- training a baseline model,
+- evaluating generalization to unseen people,
+- exporting model artifacts,
+- serving predictions with FastAPI,
+- running a live dashboard with phyphox.
 
-After completing this project, students should be able to:
+The goal is not to build the most complex model.
 
-* Load and explore raw wearable sensor data
-* Understand windowing and segmentation
-* Extract meaningful features from time-series sensor data
-* Train and evaluate machine learning models
-* Understand subject-wise evaluation and generalization
-* Export and reuse trained models
-* Build prediction APIs using FastAPI
-* Create dashboards using Streamlit
-* Integrate live smartphone sensor streams
-* Deploy a complete end-to-end machine learning pipeline
+The goal is to understand the full engineering pipeline.
 
-Project Pipeline
+## Quick Start
 
-Smartphone Sensor Data
+Install dependencies:
 
-↓
+```bash
+uv sync
+```
 
-Windowing
+Check imports:
 
-↓
+```bash
+uv run python -c "import app.api, app.training, app.evaluation, app.model_utils; print('ready')"
+```
 
-Feature Engineering
+Render the Quarto book:
 
-↓
+```bash
+PATH=.venv/bin:$PATH quarto render docs
+```
 
-Random Forest Model
+Start the API:
 
-↓
+```bash
+uv run uvicorn app.api:app --reload
+```
 
-Model Export
+Start the dashboard:
 
-↓
+```bash
+uv run streamlit run dashboard.py
+```
 
-FastAPI Service
+## Repository Structure
 
-↓
+```text
+app/
+  api.py                 FastAPI endpoints
+  config.py              shared paths and defaults
+  data_loader.py         WISDM loading
+  evaluation.py          random, subject-wise and LOSO evaluation
+  feature_extraction.py  window feature extraction
+  live_buffer.py         live sample buffer
+  model_utils.py         prediction service
+  phyphox_client.py      phyphox HTTP client
+  pipeline.py            reusable feature table pipeline
+  training.py            model training and artifact export
 
-Streamlit Dashboard
+data/                    WISDM raw data and feature table
+models/                  trained model artifacts and metadata
+docs/                    Quarto book, slides and teaching guides
+dashboard.py             Streamlit live demo
+```
 
-↓
+## Data Placement
 
-Live Activity Prediction
+Place WISDM phone accelerometer files in `data/`.
 
-Dataset
+Expected file names look like:
 
-Dataset:
+```text
+data_1600_accel_phone.txt
+data_1601_accel_phone.txt
+```
 
-wisdm-dataset/raw/phone/accel
+The project focuses on:
 
-Target activities:
+- walking
+- sitting
+- standing
 
-* walking
-* sitting
-* standing
+## Core Commands
 
-Technologies
+Render docs:
 
-* Python
-* uv
-* pandas
-* NumPy
-* scikit-learn
-* FastAPI
-* Streamlit
-* phyphox
+```bash
+PATH=.venv/bin:$PATH quarto render docs
+```
 
-Evaluation
+Render slides:
 
-Two evaluation strategies are compared:
+```bash
+PATH=.venv/bin:$PATH quarto render docs/slides/de4w_capstone_project.qmd
+```
 
-Random Split
+Check deployment imports:
 
-Training and test data may contain samples from the same subjects.
+```bash
+uv run python -c "import app.api, app.training, app.evaluation, app.model_utils; print('release 1 imports work')"
+```
 
-Subject-wise Split
+Start FastAPI:
 
-Training and test data contain different subjects.
+```bash
+uv run uvicorn app.api:app --reload
+```
 
-This better reflects real-world deployment scenarios.
+Check API health:
 
-Live Demonstration
+```bash
+curl http://127.0.0.1:8000/health
+```
 
-The system performs live activity recognition using smartphone accelerometer data streamed from phyphox.
+Start Streamlit:
 
-Pipeline:
+```bash
+uv run streamlit run dashboard.py
+```
 
+## Model Artifacts
+
+Expected files:
+
+```text
+models/activity_model_random_forest.joblib
+models/feature_columns.joblib
+models/activity_labels.joblib
+models/model_metadata.json
+```
+
+`feature_columns.joblib` is important because live prediction must use the same feature names and order as training.
+
+## phyphox Live Demo
+
+On the phone:
+
+1. Open phyphox.
+2. Start an acceleration experiment.
+3. Enable remote access.
+4. Copy the URL shown by phyphox.
+5. Paste the URL into the Streamlit dashboard.
+
+The live path is:
+
+```text
 phyphox
+→ PhyphoxClient
+→ LiveBuffer
+→ feature extraction
+→ prediction service
+→ dashboard
+```
 
-↓
+## eduroam And Hotspot Note
 
-LiveBuffer
+The phone and laptop must communicate directly.
 
-↓
+Some university networks, especially eduroam, block device-to-device traffic.
 
-Feature Extraction
+If the phyphox URL does not open in the laptop browser, use:
 
-↓
+- a smartphone hotspot,
+- a local WiFi router,
+- a travel router.
 
-Random Forest
+This is an expected deployment lesson, not a model bug.
 
-↓
+## Teaching Materials
 
-Prediction
+- Quarto book: `docs/`
+- Slide deck: `docs/slides/de4w_capstone_project.qmd`
+- Instructor guide: `docs/instructor_guide.qmd`
+- Student lab guide: `docs/lab_guide.qmd`
+- Project checklist: `docs/project_checklist.md`
 
-↓
+## Known Issues
 
-Dashboard
+- `quarto render docs` may use a system Python without Jupyter/PyYAML. Use `PATH=.venv/bin:$PATH quarto render docs`.
+- Live prediction depends on local network reachability between phone and laptop.
+- The model is a teaching baseline, not a production medical model.
 
-Important Note
-
-For live demonstrations, the smartphone and laptop must be connected to the same local network.
-
-Some university WiFi networks (e.g. eduroam) may block direct device-to-device communication.
-
-Recommended:
-
-* Smartphone hotspot
-* Local WiFi network
-* Travel router
-
-Expected Outcome
-
-Students build a complete machine learning application connecting:
-
-Sensors
-
-↓
-
-Data Engineering
-
-↓
-
-Machine Learning
-
-↓
-
-Deployment
-
-↓
-
-Live Prediction

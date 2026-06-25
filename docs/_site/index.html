@@ -158,7 +158,7 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./modules/07_evaluation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Evaluation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Evaluation And Generalization</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -185,12 +185,11 @@ ul.task-list li input[type="checkbox"] {
   <ul>
   <li><a href="#welcome" id="toc-welcome" class="nav-link active" data-scroll-target="#welcome"><span class="header-section-number">1</span> Welcome</a>
   <ul class="collapse">
-  <li><a href="#building-a-live-activity-recognition-system" id="toc-building-a-live-activity-recognition-system" class="nav-link" data-scroll-target="#building-a-live-activity-recognition-system"><span class="header-section-number">1.1</span> Building a Live Activity Recognition System</a></li>
-  <li><a href="#what-will-we-build" id="toc-what-will-we-build" class="nav-link" data-scroll-target="#what-will-we-build"><span class="header-section-number">1.2</span> What Will We Build?</a></li>
-  <li><a href="#project-pipeline" id="toc-project-pipeline" class="nav-link" data-scroll-target="#project-pipeline"><span class="header-section-number">1.3</span> Project Pipeline</a></li>
-  <li><a href="#learning-outcomes" id="toc-learning-outcomes" class="nav-link" data-scroll-target="#learning-outcomes"><span class="header-section-number">1.4</span> Learning Outcomes</a></li>
-  <li><a href="#repository-structure" id="toc-repository-structure" class="nav-link" data-scroll-target="#repository-structure"><span class="header-section-number">1.5</span> Repository Structure</a></li>
-  <li><a href="#the-journey" id="toc-the-journey" class="nav-link" data-scroll-target="#the-journey"><span class="header-section-number">1.6</span> The Journey</a></li>
+  <li><a href="#from-machine-learning-to-ai-systems" id="toc-from-machine-learning-to-ai-systems" class="nav-link" data-scroll-target="#from-machine-learning-to-ai-systems"><span class="header-section-number">1.1</span> From Machine Learning to AI Systems</a></li>
+  <li><a href="#project-pipeline" id="toc-project-pipeline" class="nav-link" data-scroll-target="#project-pipeline"><span class="header-section-number">1.2</span> Project Pipeline</a></li>
+  <li><a href="#why-this-project-matters" id="toc-why-this-project-matters" class="nav-link" data-scroll-target="#why-this-project-matters"><span class="header-section-number">1.3</span> Why This Project Matters</a></li>
+  <li><a href="#what-you-will-build-this-semester" id="toc-what-you-will-build-this-semester" class="nav-link" data-scroll-target="#what-you-will-build-this-semester"><span class="header-section-number">1.4</span> What You Will Build This Semester</a></li>
+  <li><a href="#the-journey" id="toc-the-journey" class="nav-link" data-scroll-target="#the-journey"><span class="header-section-number">1.5</span> The Journey</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -226,49 +225,44 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="welcome" class="level1" data-number="1">
 <h1 data-number="1"><span class="header-section-number">1</span> Welcome</h1>
-<section id="building-a-live-activity-recognition-system" class="level2" data-number="1.1">
-<h2 data-number="1.1" class="anchored" data-anchor-id="building-a-live-activity-recognition-system"><span class="header-section-number">1.1</span> Building a Live Activity Recognition System</h2>
+<section id="from-machine-learning-to-ai-systems" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="from-machine-learning-to-ai-systems"><span class="header-section-number">1.1</span> From Machine Learning to AI Systems</h2>
 <p>Welcome to the <strong>DE4W Capstone Project</strong>.</p>
-<p>During this semester you learned many individual concepts:</p>
-<ul>
-<li>wearable sensors</li>
-<li>data collection</li>
-<li>preprocessing</li>
-<li>feature engineering</li>
-<li>machine learning</li>
-<li>evaluation</li>
-<li>deployment</li>
-</ul>
-<p>Today, we combine all of these concepts into <strong>one complete engineering project</strong>.</p>
+<p>This workbook is not only about learning machine learning.</p>
+<p>It is about engineering a complete AI system for wearable sensor data.</p>
+<p>During the semester, you will connect ideas that are often taught separately: sensors, data collection, data engineering, feature engineering, model training, evaluation, deployment and live prediction.</p>
+<p>The result will be an end-to-end wearable AI application that starts with smartphone accelerometer data and ends with real-time activity recognition.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Engineering Mindset
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Every chapter contributes one component of the final system. The goal is to understand how each part works on its own and how the parts fit together.</p>
+</div>
+</div>
 <hr>
 </section>
-<section id="what-will-we-build" class="level2" data-number="1.2">
-<h2 data-number="1.2" class="anchored" data-anchor-id="what-will-we-build"><span class="header-section-number">1.2</span> What Will We Build?</h2>
-<p>By the end of this project, you will have built a complete activity recognition system capable of recognizing human activities in real time using smartphone accelerometer data.</p>
-</section>
-<section id="project-pipeline" class="level2" data-number="1.3">
-<h2 data-number="1.3" class="anchored" data-anchor-id="project-pipeline"><span class="header-section-number">1.3</span> Project Pipeline</h2>
+<section id="project-pipeline" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="project-pipeline"><span class="header-section-number">1.2</span> Project Pipeline</h2>
 <div class="cell" data-layout-align="default">
 <div class="cell-output-display">
 <div>
 <p></p><figure class="figure"><p></p>
 <div>
-<pre class="mermaid mermaid-js">flowchart LR
-
-A[Smartphone]
---&gt;B[Accelerometer]
-
-B--&gt;C[Windowing]
-
-C--&gt;D[Feature Engineering]
-
-D--&gt;E[Random Forest]
-
-E--&gt;F[FastAPI]
-
-F--&gt;G[Streamlit]
-
-G--&gt;H[Live Prediction]
+<pre class="mermaid mermaid-js">flowchart TD
+  A[Wearable Sensor]
+  --&gt; B[Data Collection]
+  --&gt; C[Data Engineering]
+  --&gt; D[Feature Engineering]
+  --&gt; E[Machine Learning]
+  --&gt; F[Evaluation]
+  --&gt; G[Deployment]
+  --&gt; H[Live Prediction]
 </pre>
 </div>
 <p></p></figure><p></p>
@@ -277,46 +271,50 @@ G--&gt;H[Live Prediction]
 </div>
 <hr>
 </section>
-<section id="learning-outcomes" class="level2" data-number="1.4">
-<h2 data-number="1.4" class="anchored" data-anchor-id="learning-outcomes"><span class="header-section-number">1.4</span> Learning Outcomes</h2>
-<p>After completing this project you will be able to</p>
+<section id="why-this-project-matters" class="level2" data-number="1.3">
+<h2 data-number="1.3" class="anchored" data-anchor-id="why-this-project-matters"><span class="header-section-number">1.3</span> Why This Project Matters</h2>
+<p>Modern AI systems are much more than trained models.</p>
+<p>In real projects, data engineering often requires more work than the machine learning algorithm itself. Sensor data must be loaded, cleaned, segmented, transformed and checked before it becomes useful for a model.</p>
+<p>Deployment is also part of the work. A model that only runs in a notebook is not yet an application. Real systems need reusable code, model artifacts, APIs, user interfaces and clear error handling.</p>
+<p>Reproducibility and software engineering make the project trustworthy. If training and live prediction use different feature logic, the system becomes unreliable. If paths, artifacts or dependencies are unclear, other people cannot run the work.</p>
+<hr>
+</section>
+<section id="what-you-will-build-this-semester" class="level2" data-number="1.4">
+<h2 data-number="1.4" class="anchored" data-anchor-id="what-you-will-build-this-semester"><span class="header-section-number">1.4</span> What You Will Build This Semester</h2>
+<p>By the end of this project, you will have built:</p>
 <ul>
-<li>build an end-to-end machine learning pipeline</li>
-<li>engineer features from wearable sensor data</li>
-<li>train and evaluate a machine learning model</li>
-<li>deploy a trained model as a REST API</li>
-<li>create an interactive dashboard</li>
-<li>perform live activity recognition using your own smartphone</li>
+<li>a reusable Python project,</li>
+<li>a data loading and feature engineering pipeline,</li>
+<li>a Random Forest activity classifier,</li>
+<li>subject-wise evaluation for generalization,</li>
+<li>a FastAPI backend for predictions,</li>
+<li>a Streamlit dashboard for live demos,</li>
+<li>live smartphone activity recognition with phyphox.</li>
 </ul>
+<p>The system will focus on three activities:</p>
+<ul>
+<li>walking,</li>
+<li>sitting,</li>
+<li>standing.</li>
+</ul>
+<p>This small activity set keeps the machine learning task understandable while still showing the full engineering workflow.</p>
 <hr>
 </section>
-<section id="repository-structure" class="level2" data-number="1.5">
-<h2 data-number="1.5" class="anchored" data-anchor-id="repository-structure"><span class="header-section-number">1.5</span> Repository Structure</h2>
-<pre class="text"><code>de4w-live-activity-app/
-
-├── app/
-├── data/
-├── docs/
-├── models/
-├── notebooks/
-├── pyproject.toml
-└── uv.lock</code></pre>
-<hr>
-</section>
-<section id="the-journey" class="level2" data-number="1.6">
-<h2 data-number="1.6" class="anchored" data-anchor-id="the-journey"><span class="header-section-number">1.6</span> The Journey</h2>
-<p>The following chapters guide you through the complete engineering workflow.</p>
+<section id="the-journey" class="level2" data-number="1.5">
+<h2 data-number="1.5" class="anchored" data-anchor-id="the-journey"><span class="header-section-number">1.5</span> The Journey</h2>
+<p>The chapters guide you through the system step by step:</p>
 <ol type="1">
-<li>Introduction</li>
+<li>Introduction and motivation</li>
 <li>Dataset</li>
+<li>Loading and exploration</li>
 <li>Windowing</li>
-<li>Feature Engineering</li>
-<li>Machine Learning</li>
+<li>Feature engineering</li>
+<li>Machine learning</li>
 <li>Evaluation</li>
 <li>Deployment</li>
-<li>Live Prediction</li>
+<li>Live prediction</li>
 </ol>
-<p>Let’s get started.</p>
+<p>By the end of this workbook you will have built a complete end-to-end machine learning application.</p>
 
 
 </section>

@@ -23,41 +23,6 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-html { -webkit-text-size-adjust: 100%; }
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
 </style>
 
 
@@ -107,6 +72,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
+<script src="../site_libs/quarto-diagram/mermaid.min.js"></script>
+<script src="../site_libs/quarto-diagram/mermaid-init.js"></script>
+<link href="../site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
 
 
 </head>
@@ -190,7 +158,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../modules/07_evaluation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Evaluation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Evaluation And Generalization</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -216,14 +184,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    
   <ul>
   <li><a href="#learning-objectives" id="toc-learning-objectives" class="nav-link active" data-scroll-target="#learning-objectives"><span class="header-section-number">3.1</span> Learning Objectives</a></li>
-  <li><a href="#why-do-we-start-with-the-data" id="toc-why-do-we-start-with-the-data" class="nav-link" data-scroll-target="#why-do-we-start-with-the-data"><span class="header-section-number">3.2</span> Why Do We Start with the Data?</a></li>
-  <li><a href="#the-wisdm-dataset" id="toc-the-wisdm-dataset" class="nav-link" data-scroll-target="#the-wisdm-dataset"><span class="header-section-number">3.3</span> The WISDM Dataset</a></li>
-  <li><a href="#raw-file-structure" id="toc-raw-file-structure" class="nav-link" data-scroll-target="#raw-file-structure"><span class="header-section-number">3.4</span> Raw File Structure</a></li>
-  <li><a href="#one-measurement" id="toc-one-measurement" class="nav-link" data-scroll-target="#one-measurement"><span class="header-section-number">3.5</span> One Measurement</a></li>
-  <li><a href="#understanding-the-columns" id="toc-understanding-the-columns" class="nav-link" data-scroll-target="#understanding-the-columns"><span class="header-section-number">3.6</span> Understanding the Columns</a></li>
-  <li><a href="#activity-mapping" id="toc-activity-mapping" class="nav-link" data-scroll-target="#activity-mapping"><span class="header-section-number">3.7</span> Activity Mapping</a></li>
-  <li><a href="#checkpoint" id="toc-checkpoint" class="nav-link" data-scroll-target="#checkpoint"><span class="header-section-number">3.8</span> Checkpoint</a></li>
-  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary"><span class="header-section-number">3.9</span> Summary</a></li>
+  <li><a href="#why-we-start-with-the-data" id="toc-why-we-start-with-the-data" class="nav-link" data-scroll-target="#why-we-start-with-the-data"><span class="header-section-number">3.2</span> Why We Start With The Data</a></li>
+  <li><a href="#what-is-wisdm" id="toc-what-is-wisdm" class="nav-link" data-scroll-target="#what-is-wisdm"><span class="header-section-number">3.3</span> What Is WISDM?</a></li>
+  <li><a href="#why-phone-accelerometer-data" id="toc-why-phone-accelerometer-data" class="nav-link" data-scroll-target="#why-phone-accelerometer-data"><span class="header-section-number">3.4</span> Why Phone Accelerometer Data?</a></li>
+  <li><a href="#one-row-one-measurement" id="toc-one-row-one-measurement" class="nav-link" data-scroll-target="#one-row-one-measurement"><span class="header-section-number">3.5</span> One Row, One Measurement</a></li>
+  <li><a href="#from-files-to-a-learning-table" id="toc-from-files-to-a-learning-table" class="nav-link" data-scroll-target="#from-files-to-a-learning-table"><span class="header-section-number">3.6</span> From Files To A Learning Table</a></li>
+  <li><a href="#why-only-three-activities" id="toc-why-only-three-activities" class="nav-link" data-scroll-target="#why-only-three-activities"><span class="header-section-number">3.7</span> Why Only Three Activities?</a></li>
+  <li><a href="#thinking-like-an-engineer" id="toc-thinking-like-an-engineer" class="nav-link" data-scroll-target="#thinking-like-an-engineer"><span class="header-section-number">3.8</span> Thinking Like An Engineer</a></li>
+  <li><a href="#checkpoint" id="toc-checkpoint" class="nav-link" data-scroll-target="#checkpoint"><span class="header-section-number">3.9</span> Checkpoint</a></li>
+  <li><a href="#further-exploration" id="toc-further-exploration" class="nav-link" data-scroll-target="#further-exploration"><span class="header-section-number">3.10</span> Further Exploration</a></li>
+  <li><a href="#what-have-we-achieved" id="toc-what-have-we-achieved" class="nav-link" data-scroll-target="#what-have-we-achieved"><span class="header-section-number">3.11</span> What Have We Achieved?</a></li>
+  <li><a href="#what-comes-next" id="toc-what-comes-next" class="nav-link" data-scroll-target="#what-comes-next"><span class="header-section-number">3.12</span> What Comes Next?</a></li>
   </ul>
 </nav>
     </div>
@@ -249,30 +220,38 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Why this chapter matters
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Every wearable AI system starts with data, and the data source determines what the system can learn. This chapter introduces the WISDM recordings so we know what kind of Sensor Stream, labels, and subjects our pipeline must handle.</p>
+</div>
+</div>
 <section id="learning-objectives" class="level2" data-number="3.1">
 <h2 data-number="3.1" class="anchored" data-anchor-id="learning-objectives"><span class="header-section-number">3.1</span> Learning Objectives</h2>
 <p>After completing this chapter, you should be able to</p>
 <ul>
-<li>understand the structure of the WISDM dataset</li>
-<li>explain how wearable sensor data is organized</li>
-<li>identify the most important attributes of the dataset</li>
-<li>understand why exploratory data analysis (EDA) is the first step of every machine learning project</li>
+<li>describe what the WISDM dataset contains,</li>
+<li>explain why smartphone accelerometer data is useful for this project,</li>
+<li>interpret one raw sensor measurement,</li>
+<li>explain how activity labels make supervised learning possible,</li>
+<li>justify why we start with walking, sitting and standing.</li>
 </ul>
 <hr>
 </section>
-<section id="why-do-we-start-with-the-data" class="level2" data-number="3.2">
-<h2 data-number="3.2" class="anchored" data-anchor-id="why-do-we-start-with-the-data"><span class="header-section-number">3.2</span> Why Do We Start with the Data?</h2>
-<p>Many beginners believe that machine learning starts by choosing an algorithm.</p>
-<p>In reality, every successful machine learning project starts with understanding the available data.</p>
-<p>Before writing a single line of model training code, we should answer questions such as:</p>
-<ul>
-<li>What information is available?</li>
-<li>How was the data collected?</li>
-<li>Which sensors were used?</li>
-<li>What do the labels represent?</li>
-<li>Are there missing values?</li>
-<li>Are all activities equally represented?</li>
-</ul>
+<section id="why-we-start-with-the-data" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="why-we-start-with-the-data"><span class="header-section-number">3.2</span> Why We Start With The Data</h2>
+<p>Before we train a model, we need to understand what kind of data we have.</p>
+<p>Machine learning does not begin with an algorithm. It begins with measurements, labels, assumptions and constraints.</p>
+<p>In this project, the WISDM dataset gives us real smartphone sensor recordings. Each row is one timestamped accelerometer measurement. Activity labels then turn raw movement into supervised learning data.</p>
+<p>The goal of this chapter is not to load all files yet. That happens in the next chapter.</p>
+<p>The goal here is to understand what the dataset represents and why it is suitable for the capstone project.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -283,107 +262,176 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Experienced data scientists usually spend much more time understanding and preparing data than training models.</p>
+<p>Dataset choices are engineering decisions. A smaller, well-understood problem is often better for building a reliable first system.</p>
 </div>
 </div>
 <hr>
 </section>
-<section id="the-wisdm-dataset" class="level2" data-number="3.3">
-<h2 data-number="3.3" class="anchored" data-anchor-id="the-wisdm-dataset"><span class="header-section-number">3.3</span> The WISDM Dataset</h2>
-<p>Throughout this project we use the <strong>WISDM Smartphone and Smartwatch Activity Dataset</strong>.</p>
-<p>For simplicity, we only use <strong>smartphone accelerometer data</strong>.</p>
+<section id="what-is-wisdm" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="what-is-wisdm"><span class="header-section-number">3.3</span> What Is WISDM?</h2>
+<p>WISDM is a public activity recognition dataset used in wearable and mobile sensing research.</p>
+<p>It contains sensor recordings from smartphones and smartwatches across multiple participants and multiple daily activities.</p>
+<p>This makes it useful for a reproducible teaching project:</p>
+<ul>
+<li>the data comes from real devices,</li>
+<li>the labels are already available,</li>
+<li>the task is understandable,</li>
+<li>the same files can be used by every student,</li>
+<li>the dataset is rich enough to demonstrate a complete pipeline.</li>
+</ul>
+<p>For this capstone, we use the smartphone accelerometer recordings.</p>
 <hr>
 </section>
-<section id="raw-file-structure" class="level2" data-number="3.4">
-<h2 data-number="3.4" class="anchored" data-anchor-id="raw-file-structure"><span class="header-section-number">3.4</span> Raw File Structure</h2>
-<p>Each participant is stored in a separate file.</p>
-<pre class="text"><code>data_1600_accel_phone.txt</code></pre>
+<section id="why-phone-accelerometer-data" class="level2" data-number="3.4">
+<h2 data-number="3.4" class="anchored" data-anchor-id="why-phone-accelerometer-data"><span class="header-section-number">3.4</span> Why Phone Accelerometer Data?</h2>
+<p>Almost every smartphone contains an accelerometer.</p>
+<p>That makes phone accelerometer data a good first example for wearable data engineering: it is familiar, accessible and directly connected to movement.</p>
+<p>It also matches the live demo later in the project. The phyphox app streams smartphone acceleration from a real phone, so the offline WISDM data and the live demo use the same basic sensor type.</p>
+<p>Accelerometer signals contain enough variation to demonstrate the full pipeline:</p>
+<ul>
+<li>dynamic movement during walking,</li>
+<li>lower movement during sitting,</li>
+<li>subtle differences between sitting and standing,</li>
+<li>subject-to-subject variation.</li>
+</ul>
 <hr>
 </section>
-<section id="one-measurement" class="level2" data-number="3.5">
-<h2 data-number="3.5" class="anchored" data-anchor-id="one-measurement"><span class="header-section-number">3.5</span> One Measurement</h2>
-<p>Each row represents one timestamped sensor measurement.</p>
+<section id="one-row-one-measurement" class="level2" data-number="3.5">
+<h2 data-number="3.5" class="anchored" data-anchor-id="one-row-one-measurement"><span class="header-section-number">3.5</span> One Row, One Measurement</h2>
+<p>Each raw WISDM row represents one timestamped sensor measurement.</p>
+<p>The raw format is:</p>
 <pre class="text"><code>subject_id, activity_code, timestamp, x, y, z;</code></pre>
-<hr>
-</section>
-<section id="understanding-the-columns" class="level2" data-number="3.6">
-<h2 data-number="3.6" class="anchored" data-anchor-id="understanding-the-columns"><span class="header-section-number">3.6</span> Understanding the Columns</h2>
 <table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
 <thead>
 <tr class="header">
 <th>Column</th>
-<th>Description</th>
+<th>Meaning</th>
+<th>Why it matters</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td>subject_id</td>
+<td><code>subject_id</code></td>
 <td>Participant identifier</td>
+<td>Needed for subject-wise evaluation</td>
 </tr>
 <tr class="even">
-<td>activity_code</td>
-<td>Activity label</td>
+<td><code>activity_code</code></td>
+<td>Letter code for the activity</td>
+<td>Becomes the supervised learning label</td>
 </tr>
 <tr class="odd">
-<td>timestamp</td>
-<td>Measurement timestamp</td>
+<td><code>timestamp</code></td>
+<td>Time of the measurement</td>
+<td>Preserves sequence and sampling behavior</td>
 </tr>
 <tr class="even">
-<td>x</td>
-<td>Acceleration along x-axis</td>
+<td><code>x</code></td>
+<td>Acceleration along the x-axis</td>
+<td>One dimension of phone movement</td>
 </tr>
 <tr class="odd">
-<td>y</td>
-<td>Acceleration along y-axis</td>
+<td><code>y</code></td>
+<td>Acceleration along the y-axis</td>
+<td>One dimension of phone movement</td>
 </tr>
 <tr class="even">
-<td>z</td>
-<td>Acceleration along z-axis</td>
+<td><code>z</code></td>
+<td>Acceleration along the z-axis</td>
+<td>One dimension of phone movement</td>
 </tr>
 </tbody>
 </table>
+<p>The x, y and z values are not yet features for a classifier.</p>
+<p>They are raw signal measurements that we will later transform into Windows and Feature Vectors.</p>
 <hr>
 </section>
-<section id="activity-mapping" class="level2" data-number="3.7">
-<h2 data-number="3.7" class="anchored" data-anchor-id="activity-mapping"><span class="header-section-number">3.7</span> Activity Mapping</h2>
-<div id="ce4a16fb" class="cell" data-execution_count="1">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>ACTIVITY_MAP <span class="op">=</span> {</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">'A'</span>:<span class="st">'walking'</span>,<span class="st">'B'</span>:<span class="st">'jogging'</span>,<span class="st">'C'</span>:<span class="st">'stairs'</span>,<span class="st">'D'</span>:<span class="st">'sitting'</span>,<span class="st">'E'</span>:<span class="st">'standing'</span>,</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'F'</span>:<span class="st">'typing'</span>,<span class="st">'G'</span>:<span class="st">'brushing_teeth'</span>,<span class="st">'H'</span>:<span class="st">'eating_soup'</span>,<span class="st">'I'</span>:<span class="st">'eating_chips'</span>,</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">'J'</span>:<span class="st">'eating_pasta'</span>,<span class="st">'K'</span>:<span class="st">'drinking'</span>,<span class="st">'L'</span>:<span class="st">'eating_sandwich'</span>,<span class="st">'M'</span>:<span class="st">'kicking'</span>,</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">'O'</span>:<span class="st">'catch'</span>,<span class="st">'P'</span>:<span class="st">'dribbling'</span>,<span class="st">'Q'</span>:<span class="st">'writing'</span>,<span class="st">'R'</span>:<span class="st">'clapping'</span>,<span class="st">'S'</span>:<span class="st">'folding_clothes'</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>TARGET_ACTIVITIES<span class="op">=</span>[<span class="st">'walking'</span>,<span class="st">'sitting'</span>,<span class="st">'standing'</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="from-files-to-a-learning-table" class="level2" data-number="3.6">
+<h2 data-number="3.6" class="anchored" data-anchor-id="from-files-to-a-learning-table"><span class="header-section-number">3.6</span> From Files To A Learning Table</h2>
+<p>The dataset begins as raw text files.</p>
+<p>The project turns those files into a structured table for analysis and model training.</p>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart LR
+  A[Raw Text Files] --&gt; B[Parsed Table]
+  B --&gt; C[Activity Mapping]
+  C --&gt; D[Selected Activities]
+  D --&gt; E[DataFrame]
+</pre>
 </div>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>Remember
+<p></p></figure><p></p>
 </div>
 </div>
-<div class="callout-body-container callout-body">
-<p>We keep the complete activity mapping although we currently use only three activities.</p>
 </div>
-</div>
+<p>Activity labels are essential because they connect movement measurements to human meaning.</p>
+<p>Without labels, we would only have sensor values.</p>
+<p>With labels, the model can learn relationships between movement patterns and activities.</p>
 <hr>
 </section>
-<section id="checkpoint" class="level2" data-number="3.8">
-<h2 data-number="3.8" class="anchored" data-anchor-id="checkpoint"><span class="header-section-number">3.8</span> Checkpoint</h2>
+<section id="why-only-three-activities" class="level2" data-number="3.7">
+<h2 data-number="3.7" class="anchored" data-anchor-id="why-only-three-activities"><span class="header-section-number">3.7</span> Why Only Three Activities?</h2>
+<p>WISDM contains many activities, but we intentionally start with three:</p>
+<ul>
+<li>walking,</li>
+<li>sitting,</li>
+<li>standing.</li>
+</ul>
+<p>This keeps the first system simple enough to understand.</p>
+<p>Walking is dynamic and usually produces a strong movement signal. Sitting and standing are intentionally similar low-motion activities. That similarity makes the task realistic: not every useful classification problem is visually obvious from the raw signal.</p>
+<p>The goal is the full engineering pipeline, not maximum dataset complexity.</p>
+<p>Once the pipeline works, the same structure can be extended to more activities or more sensors.</p>
+</section>
+<section id="thinking-like-an-engineer" class="level2" data-number="3.8">
+<h2 data-number="3.8" class="anchored" data-anchor-id="thinking-like-an-engineer"><span class="header-section-number">3.8</span> Thinking Like An Engineer</h2>
+<p>Instead of asking:</p>
+<blockquote class="blockquote">
+<p>How many activities can this dataset support?</p>
+</blockquote>
+<p>ask:</p>
+<blockquote class="blockquote">
+<p>Which activities make the first reliable end-to-end system easiest to understand?</p>
+</blockquote>
+<p>A smaller, well-understood problem helps us build trust in every step from Sensor Stream to Prediction.</p>
+<hr>
+</section>
+<section id="checkpoint" class="level2" data-number="3.9">
+<h2 data-number="3.9" class="anchored" data-anchor-id="checkpoint"><span class="header-section-number">3.9</span> Checkpoint</h2>
+<p>Before continuing, you should be able to answer:</p>
 <ol type="1">
-<li>What does one row represent?</li>
-<li>Why separate files per participant?</li>
-<li>Why only three activities?</li>
-<li>Why inspect the dataset before training?</li>
+<li>What does one row in the raw dataset represent?</li>
+<li>Why do activity labels matter for supervised learning?</li>
+<li>Why is smartphone accelerometer data a good first wearable signal?</li>
+<li>Why do we start with only walking, sitting and standing?</li>
 </ol>
 <hr>
 </section>
-<section id="summary" class="level2" data-number="3.9">
-<h2 data-number="3.9" class="anchored" data-anchor-id="summary"><span class="header-section-number">3.9</span> Summary</h2>
-<p>In the next chapter we will load all participant files and inspect the raw accelerometer signals.</p>
+<section id="further-exploration" class="level2" data-number="3.10">
+<h2 data-number="3.10" class="anchored" data-anchor-id="further-exploration"><span class="header-section-number">3.10</span> Further Exploration</h2>
+<p>Optional: look up other activities available in WISDM.</p>
+<p>Which activities would you expect to be easy to distinguish from walking?</p>
+<p>Which activities might be confused with sitting or standing?</p>
+<hr>
+</section>
+<section id="what-have-we-achieved" class="level2" data-number="3.11">
+<h2 data-number="3.11" class="anchored" data-anchor-id="what-have-we-achieved"><span class="header-section-number">3.11</span> What Have We Achieved?</h2>
+<ul>
+<li>We identified WISDM as a reproducible dataset for wearable activity recognition.</li>
+<li>We connected each row to one timestamped accelerometer measurement.</li>
+<li>We explained how labels turn raw movement into supervised learning data.</li>
+<li>We justified starting with walking, sitting, and standing.</li>
+</ul>
+</section>
+<section id="what-comes-next" class="level2" data-number="3.12">
+<h2 data-number="3.12" class="anchored" data-anchor-id="what-comes-next"><span class="header-section-number">3.12</span> What Comes Next?</h2>
+<p>Now that we know what data we have, we need to check whether it behaves as expected. The next chapter loads the dataset and explores its quality before any Model is trained.</p>
 
 
 </section>

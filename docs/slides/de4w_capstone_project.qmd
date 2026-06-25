@@ -1,0 +1,221 @@
+---
+title: "DE4W Capstone Project"
+subtitle: "From Sensor Data to Live Activity Recognition"
+author: "Data Engineering for Wearables"
+format:
+  revealjs:
+    theme: simple
+    slide-number: true
+    chalkboard: true
+    preview-links: auto
+execute:
+  echo: false
+---
+
+## The Big Idea
+
+Most machine learning tutorials stop at model accuracy.
+
+This project asks a more engineering-oriented question:
+
+> How do we turn wearable sensor data into a working live activity recognition system?
+
+## What Students Build
+
+```{mermaid}
+flowchart LR
+  A[Smartphone sensor data] --> B[Windowing]
+  B --> C[Feature engineering]
+  C --> D[Random Forest]
+  D --> E[Evaluation]
+  E --> F[FastAPI]
+  F --> G[Streamlit]
+  G --> H[Live prediction]
+```
+
+## Why Wearables Are Different
+
+- Data arrives continuously
+- Sensor orientation can change
+- People move differently
+- Labels are tied to time
+- Live demos depend on networks and devices
+
+## Dataset
+
+We use WISDM smartphone accelerometer data.
+
+Focus activities:
+
+- walking
+- sitting
+- standing
+
+Teaching purpose: keep the classification task small enough to see the whole system.
+
+## Raw Signal To Window
+
+Classical ML models expect fixed-size samples.
+
+Wearable sensors produce streams.
+
+Windowing bridges the two.
+
+```text
+continuous samples -> 100-sample windows -> one feature row per window
+```
+
+## Windowing Rule
+
+Windows are created separately by:
+
+- subject
+- activity
+
+This avoids windows that accidentally mix people or labels.
+
+## Feature Engineering
+
+For each window, compute summary statistics for:
+
+```text
+x, y, z, magnitude
+```
+
+Features:
+
+- mean
+- standard deviation
+- minimum
+- maximum
+- energy
+
+## Why Magnitude Helps
+
+Acceleration magnitude combines the three axes:
+
+$$
+m = \sqrt{x^2 + y^2 + z^2}
+$$
+
+It is less sensitive to how the phone is held.
+
+## Baseline Model
+
+Random Forest is a good teaching baseline:
+
+- fast
+- robust
+- works well with tabular features
+- easier to explain than deep learning
+
+The point is not to chase the most complex model.
+
+The point is to build the full pipeline.
+
+## Evaluation Question
+
+Random split:
+
+> Can the model classify unseen windows from the same subject pool?
+
+Subject-wise split:
+
+> Can the model classify activities for people it has never seen?
+
+## Why Random Split Can Be Optimistic
+
+Windows from the same person can appear in both train and test sets.
+
+The model may learn person-specific movement patterns.
+
+Subject-wise evaluation is closer to real deployment.
+
+## LOSO
+
+Leave-one-subject-out evaluation:
+
+- hold out one subject
+- train on all others
+- repeat for each subject
+
+This shows which people are easier or harder to generalize to.
+
+## Deployment
+
+FastAPI turns the trained model into a service.
+
+Important artifacts:
+
+- trained model
+- feature column order
+- class labels
+- metadata
+
+## Prediction API
+
+Endpoints:
+
+- `GET /health`
+- `POST /predict`
+
+The API validates feature names before predicting.
+
+Missing features should fail clearly.
+
+## Live Prediction
+
+```{mermaid}
+flowchart LR
+  A[phyphox] --> B[PhyphoxClient]
+  B --> C[LiveBuffer]
+  C --> D[Feature extraction]
+  D --> E[Prediction service]
+  E --> F[Streamlit dashboard]
+```
+
+## Classroom Network Lesson
+
+The phone and laptop must communicate directly.
+
+eduroam and many university networks block device-to-device traffic.
+
+Reliable fallbacks:
+
+- phone hotspot
+- local router
+- travel router
+
+## Troubleshooting First Checks
+
+1. Can the laptop open the phyphox URL in a browser?
+2. Is phyphox remote access enabled?
+3. Are model artifacts present?
+4. Does `/health` return `model_loaded: true`?
+5. Are all 20 features present in prediction requests?
+
+## Teaching Flow
+
+Slides:
+
+Frame the system and concepts.
+
+Quarto book:
+
+Walk through code and outputs.
+
+VS Code:
+
+Show package structure and reusable functions.
+
+FastAPI/Streamlit/phyphox:
+
+Demonstrate deployment and live prediction.
+
+## Take-Home Messages
+
+- A model is not yet a system.
+- Data leakage can make evaluation too optimistic.
+- Training and deployment must share feature logic.
+- Live wearable demos are also network engineering.
+- Simple models can teach strong engineering habits.

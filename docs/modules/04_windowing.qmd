@@ -1,24 +1,37 @@
 # Windowing
 
-## Learning Objectives
+::: {.callout-note}
+## Why this chapter matters
 
-After completing this chapter, you should be able to
+Wearable sensors produce a Sensor Stream that keeps arriving over time, while classical machine learning expects finite examples. Windowing creates the fixed-size Window objects that make the rest of the pipeline possible.
+:::
 
-- explain why continuous sensor streams must be segmented into windows,
-- use reusable windowing code from the `app/` package,
-- create windows for one activity,
-- create windows safely per subject and activity,
-- understand how window size affects live prediction.
+## How Can A Model Understand Something That Never Stops?
+
+Wearable sensors do not wait for us to ask a neat question.
+
+They keep measuring.
+
+A phone accelerometer can produce sample after sample while a person walks, sits, stands, turns, pauses or changes phone position.
+
+Machine learning models, however, usually expect finite observations: one row, one Feature Vector, one Prediction.
+
+Windowing is the bridge between continuous time and tabular machine learning.
+
+It turns an endless Sensor Stream into many fixed-size pieces that a Model can learn from.
 
 ---
 
 ## Setup
 
+We use reusable project code to load the data and create windows.
+
+The purpose of this chapter is to understand the engineering decision behind windowing.
+
 ```{python}
 from pathlib import Path
 import sys
 
-import numpy as np
 import matplotlib.pyplot as plt
 
 current_path = Path.cwd().resolve()
@@ -35,7 +48,7 @@ sys.path.insert(0, str(PROJECT_ROOT))
 from app.config import WINDOW_SIZE
 from app.data_loader import load_wisdm_phone_accel
 from app.pipeline import add_magnitude
-from app.windowing import create_windows, create_grouped_windows
+from app.windowing import create_grouped_windows, create_windows
 
 DATA_DIR = PROJECT_ROOT / "data"
 
@@ -43,29 +56,51 @@ df = load_wisdm_phone_accel(DATA_DIR)
 df = add_magnitude(df)
 ```
 
-::: {.callout-important}
-## Software Engineering Principle
+---
 
-This chapter does **not** redefine `create_windows()`.
+## Continuous Signals vs Machine Learning
 
-Instead, it imports reusable project code from `app.windowing`.
+A Sensor Stream is like a movie.
 
-This follows the **Don't Repeat Yourself (DRY)** principle.
-:::
+A machine learning table is more like a photo album.
+
+The movie never really stops. The table needs individual examples.
+
+That mismatch is why windowing exists.
+
+```{mermaid}
+flowchart LR
+  A[Continuous wearable stream] --> B[Windowing]
+  B --> C[Fixed-size observations]
+  C --> D[Tabular ML model]
+```
+
+The stream preserves time.
+
+The window creates a bounded observation.
+
+The model receives a finite object it can classify.
+
+Without windowing, a classical machine learning model has no clear answer to a basic question:
+
+> Which part of the stream should become one training example?
 
 ---
 
-## Why Do We Need Windowing?
+## What Is A Window?
 
-Wearable sensors produce a continuous stream of measurements.
+A window is a short segment of consecutive sensor samples.
 
-Classical machine learning algorithms expect **fixed-size samples**.
+For example, if the sensor records at about 20 Hz, then 100 samples represent about five seconds.
 
-Windowing bridges this gap by splitting a continuous stream into equally sized segments.
+```{mermaid}
+flowchart TD
+  A[Continuous Signal]
+  --> B[One Window]
+  --> C[Many Windows]
+```
 
----
-
-## Step 1 — Create Windows for Walking
+We first inspect windows for walking.
 
 ```{python}
 walking_df = (
@@ -82,38 +117,145 @@ walking_windows = create_windows(
 len(walking_windows)
 ```
 
----
-
-## Step 2 — Inspect One Window
+Each window has the same number of rows.
 
 ```{python}
 first_window = walking_windows[0]
 
-first_window.head()
-```
-
-```{python}
 first_window.shape
 ```
 
----
-
-## Step 3 — Visualize One Window
+Now we visualize one real window.
 
 ```{python}
 plt.figure(figsize=(10, 4))
-
 plt.plot(first_window["magnitude"])
-
 plt.title("One Walking Window")
-plt.xlabel("Sample")
-plt.ylabel("Magnitude")
+plt.xlabel("Sample inside the window")
+plt.ylabel("Acceleration magnitude")
 plt.show()
 ```
 
+This figure shows one bounded moment of activity.
+
+The model will not see the entire recording at once.
+
+It will see many windows like this, each summarized into features in the next chapter.
+
 ---
 
-## Step 4 — Create Windows for the Entire Dataset
+## Why Five Seconds?
+
+This project uses 100 samples per window.
+
+At approximately 20 Hz, that is about five seconds.
+
+Five seconds is not magic.
+
+It is a trade-off.
+
+Short windows can react quickly. That is useful for live prediction because the dashboard can update sooner. But short windows may not contain enough movement to represent the activity clearly.
+
+Long windows are often more stable. They contain more evidence. But they increase latency because the system must wait longer before making a prediction.
+
+For live systems, this trade-off is very concrete:
+
+- shorter window: faster response, noisier prediction,
+- longer window: slower response, more stable prediction.
+
+Window size controls how quickly the system can notice that something changed.
+
+---
+
+## Non-Overlapping vs Sliding Windows
+
+There are two common ways to create windows.
+
+Non-overlapping windows use each sample once.
+
+Sliding windows move forward by a smaller step and overlap with previous windows.
+
+```{mermaid}
+flowchart TD
+  A[Samples 1-100] --> B[Non-overlapping: next window starts at 101]
+  C[Samples 1-100] --> D[Sliding: next window starts at 21]
+  D --> E[Overlap: samples 21-100 appear again]
+```
+
+Overlapping windows can produce smoother predictions because the model receives updates more often.
+
+They also duplicate information.
+
+That increases computational cost and can make evaluation more complicated if highly similar windows appear in both train and test data.
+
+This project intentionally starts with non-overlapping windows.
+
+That choice keeps the first system easier to reason about:
+
+- fewer windows,
+- less duplicated information,
+- simpler evaluation,
+- clearer connection between raw data and training examples.
+
+---
+
+## Choosing A Window Size
+
+Different applications need different windows.
+
+| Window Size | Advantages | Disadvantages | Typical Use Cases |
+|---|---|---|---|
+| 1 s | Very responsive | Often noisy and incomplete | Fast gestures, quick feedback |
+| 2 s | Still responsive, slightly more context | May miss slower activity patterns | Lightweight live demos |
+| 5 s | Good balance of context and latency | Slower to react than short windows | Walking/sitting/standing baseline |
+| 10 s | More stable summaries | High latency, delayed feedback | Slow activities, offline analysis |
+
+The table does not tell us the universally correct answer.
+
+It tells us what trade-offs we are accepting.
+
+::: {.callout-tip}
+## Engineering Insight
+
+There is no perfect Window size.
+
+The correct Window depends on the activity, latency requirements, battery, computational resources and deployment scenario.
+:::
+
+---
+
+## Thinking Like An Engineer
+
+Instead of asking:
+
+> What window size is best?
+
+ask:
+
+> What trade-offs does my application require?
+
+For a classroom live demo, responsiveness matters because students should see predictions change.
+
+For a clinical monitoring system, stability and reliability might matter more than instant updates.
+
+For a battery-powered wearable, computation and energy use matter too.
+
+Windowing is not just preprocessing.
+
+It is an engineering decision.
+
+---
+
+## The Project Implementation
+
+The reusable windowing logic lives in `app.windowing`.
+
+This chapter does not redefine that logic.
+
+It imports:
+
+- `create_windows()` for one sorted signal segment,
+- `create_grouped_windows()` for safe windowing by subject and activity.
 
 ```{python}
 all_windows = create_grouped_windows(
@@ -124,32 +266,45 @@ all_windows = create_grouped_windows(
 len(all_windows)
 ```
 
-::: {.callout-warning}
-## Common Pitfall
+Creating windows separately by subject and activity matters.
 
-Always create windows separately for each subject and activity.
+Otherwise, one window could accidentally contain multiple people or multiple labels.
 
-Otherwise, a window may contain multiple activities.
-:::
+That would create training examples that do not mean what we think they mean.
 
 ---
 
 ## Checkpoint
 
-1. Why do we need windowing?
-2. What does a 100-sample window represent at 20 Hz?
-3. Why should windows not span multiple activities?
-4. Why is the window size relevant for live prediction?
+Before continuing, you should be able to answer:
+
+1. Why do wearable streams need to be segmented before classical ML?
+2. What does a five-second window mean at 20 Hz?
+3. Why can short windows be more responsive but less stable?
+4. Why can overlapping windows make predictions smoother?
+5. Why does this project start with non-overlapping windows?
 
 ---
 
-## Summary
+## Further Exploration
 
-In this chapter you learned
+Optional ideas:
 
-- why windowing is necessary,
-- how reusable project code is imported,
-- how to create windows safely,
-- why window size controls the trade-off between stability and responsiveness.
+- try a smaller window size,
+- try a larger window size,
+- design an overlapping-window version and discuss what would change.
 
-In the next chapter we will extract numerical features from every window.
+These are experiments, not required steps.
+
+---
+
+## What Have We Achieved?
+
+- We explained why continuous Sensor Streams must become finite Windows.
+- We compared short, long, overlapping, and non-overlapping Window choices.
+- We connected Window size to latency, stability, and Live Prediction.
+- We used the reusable `app.windowing` logic instead of duplicating pipeline code.
+
+## What Comes Next?
+
+A Window still contains many raw measurements. The next chapter turns each Window into a compact Feature Vector that a Model can use.

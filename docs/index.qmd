@@ -4,91 +4,88 @@ title: "DE4W Capstone Project"
 
 # Welcome
 
-## Building a Live Activity Recognition System
+## From Machine Learning to AI Systems
 
 Welcome to the **DE4W Capstone Project**.
 
-During this semester you learned many individual concepts:
+This workbook is not only about learning machine learning.
 
-- wearable sensors
-- data collection
-- preprocessing
-- feature engineering
-- machine learning
-- evaluation
-- deployment
+It is about engineering a complete AI system for wearable sensor data.
 
-Today, we combine all of these concepts into **one complete engineering project**.
+During the semester, you will connect ideas that are often taught separately: sensors, data collection, data engineering, feature engineering, model training, evaluation, deployment and live prediction.
+
+The result will be an end-to-end wearable AI application that starts with smartphone accelerometer data and ends with real-time activity recognition.
+
+::: {.callout-tip}
+## Engineering Mindset
+
+Every chapter contributes one component of the final system. The goal is to understand how each part works on its own and how the parts fit together.
+:::
 
 ---
-
-## What Will We Build?
-
-By the end of this project, you will have built a complete activity recognition system capable of recognizing human activities in real time using smartphone accelerometer data.
 
 ## Project Pipeline
 
 ```{mermaid}
-flowchart LR
-
-A[Smartphone]
--->B[Accelerometer]
-
-B-->C[Windowing]
-
-C-->D[Feature Engineering]
-
-D-->E[Random Forest]
-
-E-->F[FastAPI]
-
-F-->G[Streamlit]
-
-G-->H[Live Prediction]
+flowchart TD
+  A[Wearable Sensor]
+  --> B[Data Collection]
+  --> C[Data Engineering]
+  --> D[Feature Engineering]
+  --> E[Machine Learning]
+  --> F[Evaluation]
+  --> G[Deployment]
+  --> H[Live Prediction]
 ```
 
 ---
 
-## Learning Outcomes
+## Why This Project Matters
 
-After completing this project you will be able to
+Modern AI systems are much more than trained models.
 
-- build an end-to-end machine learning pipeline
-- engineer features from wearable sensor data
-- train and evaluate a machine learning model
-- deploy a trained model as a REST API
-- create an interactive dashboard
-- perform live activity recognition using your own smartphone
+In real projects, data engineering often requires more work than the machine learning algorithm itself. Sensor data must be loaded, cleaned, segmented, transformed and checked before it becomes useful for a model.
+
+Deployment is also part of the work. A model that only runs in a notebook is not yet an application. Real systems need reusable code, model artifacts, APIs, user interfaces and clear error handling.
+
+Reproducibility and software engineering make the project trustworthy. If training and live prediction use different feature logic, the system becomes unreliable. If paths, artifacts or dependencies are unclear, other people cannot run the work.
 
 ---
 
-## Repository Structure
+## What You Will Build This Semester
 
-```text
-de4w-live-activity-app/
+By the end of this project, you will have built:
 
-├── app/
-├── data/
-├── docs/
-├── models/
-├── notebooks/
-├── pyproject.toml
-└── uv.lock
-```
+- a reusable Python project,
+- a data loading and feature engineering pipeline,
+- a Random Forest activity classifier,
+- subject-wise evaluation for generalization,
+- a FastAPI backend for predictions,
+- a Streamlit dashboard for live demos,
+- live smartphone activity recognition with phyphox.
+
+The system will focus on three activities:
+
+- walking,
+- sitting,
+- standing.
+
+This small activity set keeps the machine learning task understandable while still showing the full engineering workflow.
 
 ---
 
 ## The Journey
 
-The following chapters guide you through the complete engineering workflow.
+The chapters guide you through the system step by step:
 
-1. Introduction
+1. Introduction and motivation
 2. Dataset
-3. Windowing
-4. Feature Engineering
-5. Machine Learning
-6. Evaluation
-7. Deployment
-8. Live Prediction
+3. Loading and exploration
+4. Windowing
+5. Feature engineering
+6. Machine learning
+7. Evaluation
+8. Deployment
+9. Live prediction
 
-Let's get started.
+By the end of this workbook you will have built a complete end-to-end machine learning application.

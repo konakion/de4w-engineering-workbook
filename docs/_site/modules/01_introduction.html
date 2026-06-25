@@ -158,7 +158,7 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../modules/07_evaluation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Evaluation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Evaluation And Generalization</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -183,16 +183,13 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#today-we-build-a-system" id="toc-today-we-build-a-system" class="nav-link active" data-scroll-target="#today-we-build-a-system"><span class="header-section-number">2.1</span> Today We Build a System</a></li>
-  <li><a href="#why-this-matters" id="toc-why-this-matters" class="nav-link" data-scroll-target="#why-this-matters"><span class="header-section-number">2.2</span> Why This Matters</a></li>
-  <li><a href="#the-scenario" id="toc-the-scenario" class="nav-link" data-scroll-target="#the-scenario"><span class="header-section-number">2.3</span> The Scenario</a></li>
-  <li><a href="#target-activities" id="toc-target-activities" class="nav-link" data-scroll-target="#target-activities"><span class="header-section-number">2.4</span> Target Activities</a></li>
-  <li><a href="#semester-connection" id="toc-semester-connection" class="nav-link" data-scroll-target="#semester-connection"><span class="header-section-number">2.5</span> Semester Connection</a></li>
-  <li><a href="#required-tools" id="toc-required-tools" class="nav-link" data-scroll-target="#required-tools"><span class="header-section-number">2.6</span> Required Tools</a></li>
-  <li><a href="#networking-requirement" id="toc-networking-requirement" class="nav-link" data-scroll-target="#networking-requirement"><span class="header-section-number">2.7</span> Networking Requirement</a></li>
-  <li><a href="#project-structure" id="toc-project-structure" class="nav-link" data-scroll-target="#project-structure"><span class="header-section-number">2.8</span> Project Structure</a></li>
-  <li><a href="#how-to-work-through-this-project" id="toc-how-to-work-through-this-project" class="nav-link" data-scroll-target="#how-to-work-through-this-project"><span class="header-section-number">2.9</span> How to Work Through This Project</a></li>
-  <li><a href="#chapter-summary" id="toc-chapter-summary" class="nav-link" data-scroll-target="#chapter-summary"><span class="header-section-number">2.10</span> Chapter Summary</a></li>
+  <li><a href="#wearables-are-continuous-data-systems" id="toc-wearables-are-continuous-data-systems" class="nav-link active" data-scroll-target="#wearables-are-continuous-data-systems"><span class="header-section-number">2.1</span> Wearables Are Continuous Data Systems</a></li>
+  <li><a href="#from-sensor-to-decision" id="toc-from-sensor-to-decision" class="nav-link" data-scroll-target="#from-sensor-to-decision"><span class="header-section-number">2.2</span> From Sensor to Decision</a></li>
+  <li><a href="#why-activity-recognition" id="toc-why-activity-recognition" class="nav-link" data-scroll-target="#why-activity-recognition"><span class="header-section-number">2.3</span> Why Activity Recognition?</a></li>
+  <li><a href="#the-engineering-challenge" id="toc-the-engineering-challenge" class="nav-link" data-scroll-target="#the-engineering-challenge"><span class="header-section-number">2.4</span> The Engineering Challenge</a></li>
+  <li><a href="#thinking-like-an-engineer" id="toc-thinking-like-an-engineer" class="nav-link" data-scroll-target="#thinking-like-an-engineer"><span class="header-section-number">2.5</span> Thinking Like An Engineer</a></li>
+  <li><a href="#what-have-we-achieved" id="toc-what-have-we-achieved" class="nav-link" data-scroll-target="#what-have-we-achieved"><span class="header-section-number">2.6</span> What Have We Achieved?</a></li>
+  <li><a href="#what-comes-next" id="toc-what-comes-next" class="nav-link" data-scroll-target="#what-comes-next"><span class="header-section-number">2.7</span> What Comes Next?</a></li>
   </ul>
 </nav>
     </div>
@@ -218,56 +215,27 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="today-we-build-a-system" class="level2" data-number="2.1">
-<h2 data-number="2.1" class="anchored" data-anchor-id="today-we-build-a-system"><span class="header-section-number">2.1</span> Today We Build a System</h2>
-<p>Most machine learning tutorials end after model training.</p>
-<p>This project goes further.</p>
-<p>We will build a complete system:</p>
-<div class="cell" data-layout-align="default">
-<div class="cell-output-display">
-<div>
-<p></p><figure class="figure"><p></p>
-<div>
-<pre class="mermaid mermaid-js">flowchart TD
-
-A[Raw Sensor Data]
---&gt;B[Windowing]
-
-B--&gt;C[Feature Engineering]
-
-C--&gt;D[Machine Learning]
-
-D--&gt;E[Evaluation]
-
-E--&gt;F[Model Export]
-
-F--&gt;G[FastAPI]
-
-G--&gt;H[Streamlit Dashboard]
-
-H--&gt;I[Live Prediction]
-</pre>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
 </div>
-<p></p></figure><p></p>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Why this chapter matters
 </div>
 </div>
+<div class="callout-body-container callout-body">
+<p>This chapter explains why wearable activity recognition is a realistic data engineering problem, not just a machine learning example. It sets up the full path from a Sensor Stream to a Prediction that can support a real application decision.</p>
 </div>
-<hr>
-</section>
-<section id="why-this-matters" class="level2" data-number="2.2">
-<h2 data-number="2.2" class="anchored" data-anchor-id="why-this-matters"><span class="header-section-number">2.2</span> Why This Matters</h2>
-<p>A trained model is not yet an application.</p>
-<p>A real wearable machine learning system also needs:</p>
-<ul>
-<li>reliable data handling</li>
-<li>reproducible preprocessing</li>
-<li>consistent feature extraction</li>
-<li>realistic evaluation</li>
-<li>model export</li>
-<li>an API</li>
-<li>a user interface</li>
-<li>live sensor integration</li>
-</ul>
+</div>
+<section id="wearables-are-continuous-data-systems" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="wearables-are-continuous-data-systems"><span class="header-section-number">2.1</span> Wearables Are Continuous Data Systems</h2>
+<p>Wearables are everywhere: smartphones, smartwatches, fitness trackers, medical sensors and research devices all measure signals from daily life.</p>
+<p>They do not produce neat spreadsheet rows by default.</p>
+<p>They produce a continuous Sensor Stream.</p>
+<p>Those streams are only the beginning. Raw acceleration values do not directly tell us whether someone is walking, sitting or standing. They are measurements, not yet information.</p>
+<p>Data engineering is the bridge between raw sensing and meaningful prediction.</p>
+<p>This project demonstrates that bridge. We start with wearable sensor signals, transform them into structured data, train and evaluate a model, and finally connect the result to a live application.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -278,181 +246,91 @@ H--&gt;I[Live Prediction]
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>In real-world machine learning projects, the model is only one component of a larger system.</p>
+<p>A good wearable ML system is not defined only by its model accuracy, but by the reliability of the complete pipeline.</p>
 </div>
 </div>
 <hr>
 </section>
-<section id="the-scenario" class="level2" data-number="2.3">
-<h2 data-number="2.3" class="anchored" data-anchor-id="the-scenario"><span class="header-section-number">2.3</span> The Scenario</h2>
-<p>Imagine you joined a small digital health startup.</p>
-<p>Your task:</p>
+<section id="from-sensor-to-decision" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="from-sensor-to-decision"><span class="header-section-number">2.2</span> From Sensor to Decision</h2>
+<p>An activity recognition system turns a physical signal into an application-level decision.</p>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart LR
+  A[Sensor Signal] --&gt; B[Data Stream]
+  B --&gt; C[Window]
+  C --&gt; D[Feature Vector]
+  D --&gt; E[Model]
+  E --&gt; F[Prediction]
+  F --&gt; G[Application Decision]
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<p>Each step changes the form of the data:</p>
+<ul>
+<li>the sensor measures movement,</li>
+<li>the Sensor Stream preserves measurements over time,</li>
+<li>Windows make the stream manageable,</li>
+<li>Feature Vectors summarize movement patterns,</li>
+<li>the Model maps features to activities,</li>
+<li>the application uses Predictions to support a user-facing task.</li>
+</ul>
+<hr>
+</section>
+<section id="why-activity-recognition" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="why-activity-recognition"><span class="header-section-number">2.3</span> Why Activity Recognition?</h2>
+<p>Physical activity is clinically and behaviorally relevant.</p>
+<p>Movement patterns can help us understand mobility, routines, recovery, fatigue, sedentary behavior and changes in daily life.</p>
+<p>Activity recognition is also a classic wearable sensing problem. It is simple enough to teach clearly, but realistic enough to expose the challenges that appear in larger digital health systems.</p>
+<p>In this project we focus on walking, sitting and standing.</p>
+<p>These activities are simple, but meaningful:</p>
+<ul>
+<li>walking is dynamic and often easier to detect,</li>
+<li>sitting and standing are low-motion states,</li>
+<li>distinguishing sitting from standing shows why wearable ML is not always obvious.</li>
+</ul>
+<p>The same pipeline can generalize to more complex tasks, such as rehabilitation monitoring, fall-risk assessment, sleep behavior analysis or long-term mobility tracking.</p>
+<hr>
+</section>
+<section id="the-engineering-challenge" class="level2" data-number="2.4">
+<h2 data-number="2.4" class="anchored" data-anchor-id="the-engineering-challenge"><span class="header-section-number">2.4</span> The Engineering Challenge</h2>
+<p>Wearable data is useful because it comes from real life.</p>
+<p>That is also what makes it difficult.</p>
+<p>Data arrives continuously, so we must decide how to segment it into Windows. Labels are often imperfect because human activity does not always change at clean boundaries. Subjects differ in body movement, walking style and phone handling. Phone placement changes between pockets, hands, bags and tables.</p>
+<p>Live systems add another layer of reality. Even if the Model is correct, a demo can fail because the phone and laptop cannot communicate, a network blocks local traffic, phyphox is not reachable or a model artifact is missing.</p>
+<p>This is why the project treats software engineering, reproducibility and deployment as part of the learning goal rather than as optional extras.</p>
+<hr>
+</section>
+<section id="thinking-like-an-engineer" class="level2" data-number="2.5">
+<h2 data-number="2.5" class="anchored" data-anchor-id="thinking-like-an-engineer"><span class="header-section-number">2.5</span> Thinking Like An Engineer</h2>
+<p>Instead of asking:</p>
 <blockquote class="blockquote">
-<p>Build a system that recognizes whether a person is walking, sitting or standing using only smartphone accelerometer data.</p>
+<p>What model should I train?</p>
 </blockquote>
-<p>The system should eventually work live with a real smartphone.</p>
-<hr>
+<p>ask:</p>
+<blockquote class="blockquote">
+<p>What information is available, and what must happen before it can become a reliable Prediction?</p>
+</blockquote>
+<p>This shift matters because the Model is only one component of the final system.</p>
 </section>
-<section id="target-activities" class="level2" data-number="2.4">
-<h2 data-number="2.4" class="anchored" data-anchor-id="target-activities"><span class="header-section-number">2.4</span> Target Activities</h2>
-<p>We focus on three activities:</p>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>Activity</th>
-<th>Why it is useful</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Walking</td>
-<td>Dynamic, periodic movement</td>
-</tr>
-<tr class="even">
-<td>Sitting</td>
-<td>Low movement, common daily activity</td>
-</tr>
-<tr class="odd">
-<td>Standing</td>
-<td>Low movement, hard to distinguish from sitting</td>
-</tr>
-</tbody>
-</table>
-<p>This simplified setup keeps the focus on the complete engineering pipeline.</p>
-<hr>
-</section>
-<section id="semester-connection" class="level2" data-number="2.5">
-<h2 data-number="2.5" class="anchored" data-anchor-id="semester-connection"><span class="header-section-number">2.5</span> Semester Connection</h2>
-<p>This project connects the entire course.</p>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>Course Topic</th>
-<th>Where It Appears in the Project</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Sensors</td>
-<td>Smartphone accelerometer</td>
-</tr>
-<tr class="even">
-<td>Data Collection</td>
-<td>WISDM and phyphox</td>
-</tr>
-<tr class="odd">
-<td>Data Engineering</td>
-<td>Loading, cleaning, structuring</td>
-</tr>
-<tr class="even">
-<td>Preprocessing</td>
-<td>Magnitude and windowing</td>
-</tr>
-<tr class="odd">
-<td>Feature Engineering</td>
-<td>Statistical window features</td>
-</tr>
-<tr class="even">
-<td>Machine Learning</td>
-<td>Random Forest</td>
-</tr>
-<tr class="odd">
-<td>Evaluation</td>
-<td>Random split vs subject-wise split</td>
-</tr>
-<tr class="even">
-<td>Deployment</td>
-<td>FastAPI and Streamlit</td>
-</tr>
-</tbody>
-</table>
-<hr>
-</section>
-<section id="required-tools" class="level2" data-number="2.6">
-<h2 data-number="2.6" class="anchored" data-anchor-id="required-tools"><span class="header-section-number">2.6</span> Required Tools</h2>
-<p>You need:</p>
+<section id="what-have-we-achieved" class="level2" data-number="2.6">
+<h2 data-number="2.6" class="anchored" data-anchor-id="what-have-we-achieved"><span class="header-section-number">2.6</span> What Have We Achieved?</h2>
 <ul>
-<li>Python</li>
-<li>uv</li>
-<li>Quarto</li>
-<li>Jupyter kernel</li>
-<li>phyphox app</li>
-<li>WISDM phone accelerometer data</li>
+<li>We framed wearable activity recognition as an end-to-end engineering problem.</li>
+<li>We connected raw sensing to application decisions.</li>
+<li>We identified why a Sensor Stream needs structure before it can support a Model.</li>
+<li>We previewed the path from data to Deployment and Live Prediction.</li>
 </ul>
-<hr>
 </section>
-<section id="networking-requirement" class="level2" data-number="2.7">
-<h2 data-number="2.7" class="anchored" data-anchor-id="networking-requirement"><span class="header-section-number">2.7</span> Networking Requirement</h2>
-<p>For the live demo, your laptop and smartphone must be able to communicate in the same local network.</p>
-<div class="callout callout-style-default callout-warning callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Warning</span>Important
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>University networks such as eduroam may block direct communication between devices.</p>
-<p>If phyphox is not reachable from your browser, use:</p>
-<ul>
-<li>smartphone hotspot</li>
-<li>local WiFi</li>
-<li>travel router</li>
-</ul>
-</div>
-</div>
-<hr>
-</section>
-<section id="project-structure" class="level2" data-number="2.8">
-<h2 data-number="2.8" class="anchored" data-anchor-id="project-structure"><span class="header-section-number">2.8</span> Project Structure</h2>
-<p>The project is organized as follows:</p>
-<pre class="text"><code>de4w-live-activity-app/
-
-├── app/
-│   ├── api.py
-│   ├── config.py
-│   ├── feature_extraction.py
-│   ├── live_buffer.py
-│   ├── model_utils.py
-│   └── phyphox_client.py
-│
-├── data/
-├── docs/
-├── models/
-├── notebooks/
-├── dashboard.py
-├── pyproject.toml
-└── uv.lock</code></pre>
-<hr>
-</section>
-<section id="how-to-work-through-this-project" class="level2" data-number="2.9">
-<h2 data-number="2.9" class="anchored" data-anchor-id="how-to-work-through-this-project"><span class="header-section-number">2.9</span> How to Work Through This Project</h2>
-<p>Each major step follows the same pattern:</p>
-<ol type="1">
-<li>Understand the problem.</li>
-<li>Implement the solution.</li>
-<li>Inspect the output.</li>
-<li>Discuss what could go wrong.</li>
-<li>Continue to the next component.</li>
-</ol>
-<p>The goal is not to copy code.</p>
-<p>The goal is to understand the engineering decisions behind the code.</p>
-<hr>
-</section>
-<section id="chapter-summary" class="level2" data-number="2.10">
-<h2 data-number="2.10" class="anchored" data-anchor-id="chapter-summary"><span class="header-section-number">2.10</span> Chapter Summary</h2>
-<p>In this chapter you learned:</p>
-<ul>
-<li>what we will build</li>
-<li>why deployment matters</li>
-<li>how the project connects to the semester</li>
-<li>which tools are required</li>
-<li>why networking matters for live sensor demos</li>
-<li>how the project is structured</li>
-</ul>
-<p>Next, we will inspect the WISDM dataset and understand the raw smartphone accelerometer signals.</p>
+<section id="what-comes-next" class="level2" data-number="2.7">
+<h2 data-number="2.7" class="anchored" data-anchor-id="what-comes-next"><span class="header-section-number">2.7</span> What Comes Next?</h2>
+<p>Before building the pipeline, we need to understand the data source. The next chapter introduces the WISDM dataset and explains why it is a good starting point for this project.</p>
 
 
 </section>

@@ -225,7 +225,7 @@ window.Quarto = {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../modules/07_evaluation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Evaluation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Evaluation And Generalization</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -250,30 +250,21 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#learning-objectives" id="toc-learning-objectives" class="nav-link active" data-scroll-target="#learning-objectives"><span class="header-section-number">6.1</span> Learning Objectives</a></li>
+  <li><a href="#how-can-a-computer-recognize-walking-without-ever-seeing-a-person" id="toc-how-can-a-computer-recognize-walking-without-ever-seeing-a-person" class="nav-link active" data-scroll-target="#how-can-a-computer-recognize-walking-without-ever-seeing-a-person"><span class="header-section-number">6.1</span> How Can A Computer Recognize Walking Without Ever Seeing A Person?</a></li>
   <li><a href="#setup" id="toc-setup" class="nav-link" data-scroll-target="#setup"><span class="header-section-number">6.2</span> Setup</a></li>
-  <li><a href="#why-feature-engineering" id="toc-why-feature-engineering" class="nav-link" data-scroll-target="#why-feature-engineering"><span class="header-section-number">6.3</span> Why Feature Engineering?</a></li>
-  <li><a href="#our-feature-set" id="toc-our-feature-set" class="nav-link" data-scroll-target="#our-feature-set"><span class="header-section-number">6.4</span> Our Feature Set</a></li>
-  <li><a href="#step-1-create-one-example-window" id="toc-step-1-create-one-example-window" class="nav-link" data-scroll-target="#step-1-create-one-example-window"><span class="header-section-number">6.5</span> Step 1 — Create One Example Window</a></li>
-  <li><a href="#step-2-extract-features-from-one-window" id="toc-step-2-extract-features-from-one-window" class="nav-link" data-scroll-target="#step-2-extract-features-from-one-window"><span class="header-section-number">6.6</span> Step 2 — Extract Features from One Window</a>
-  <ul class="collapse">
-  <li><a href="#expected-output" id="toc-expected-output" class="nav-link" data-scroll-target="#expected-output"><span class="header-section-number">6.6.1</span> Expected Output</a></li>
-  </ul></li>
-  <li><a href="#step-3-understand-the-energy-feature" id="toc-step-3-understand-the-energy-feature" class="nav-link" data-scroll-target="#step-3-understand-the-energy-feature"><span class="header-section-number">6.7</span> Step 3 — Understand the Energy Feature</a></li>
-  <li><a href="#step-4-convert-all-windows-into-features" id="toc-step-4-convert-all-windows-into-features" class="nav-link" data-scroll-target="#step-4-convert-all-windows-into-features"><span class="header-section-number">6.8</span> Step 4 — Convert All Windows into Features</a>
-  <ul class="collapse">
-  <li><a href="#goal" id="toc-goal" class="nav-link" data-scroll-target="#goal"><span class="header-section-number">6.8.1</span> Goal</a></li>
-  </ul></li>
-  <li><a href="#step-5-inspect-the-feature-table" id="toc-step-5-inspect-the-feature-table" class="nav-link" data-scroll-target="#step-5-inspect-the-feature-table"><span class="header-section-number">6.9</span> Step 5 — Inspect the Feature Table</a>
-  <ul class="collapse">
-  <li><a href="#discussion" id="toc-discussion" class="nav-link" data-scroll-target="#discussion"><span class="header-section-number">6.9.1</span> Discussion</a></li>
-  </ul></li>
-  <li><a href="#step-6-save-the-feature-table" id="toc-step-6-save-the-feature-table" class="nav-link" data-scroll-target="#step-6-save-the-feature-table"><span class="header-section-number">6.10</span> Step 6 — Save the Feature Table</a></li>
-  <li><a href="#think" id="toc-think" class="nav-link" data-scroll-target="#think"><span class="header-section-number">6.11</span> Think</a></li>
-  <li><a href="#common-pitfall" id="toc-common-pitfall" class="nav-link" data-scroll-target="#common-pitfall"><span class="header-section-number">6.12</span> Common Pitfall</a></li>
-  <li><a href="#checkpoint" id="toc-checkpoint" class="nav-link" data-scroll-target="#checkpoint"><span class="header-section-number">6.13</span> Checkpoint</a></li>
-  <li><a href="#further-exploration" id="toc-further-exploration" class="nav-link" data-scroll-target="#further-exploration"><span class="header-section-number">6.14</span> Further Exploration</a></li>
-  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary"><span class="header-section-number">6.15</span> Summary</a></li>
+  <li><a href="#why-raw-signals-are-difficult-for-classical-ml" id="toc-why-raw-signals-are-difficult-for-classical-ml" class="nav-link" data-scroll-target="#why-raw-signals-are-difficult-for-classical-ml"><span class="header-section-number">6.3</span> Why Raw Signals Are Difficult For Classical ML</a></li>
+  <li><a href="#what-is-a-feature" id="toc-what-is-a-feature" class="nav-link" data-scroll-target="#what-is-a-feature"><span class="header-section-number">6.4</span> What Is A Feature?</a></li>
+  <li><a href="#our-feature-set" id="toc-our-feature-set" class="nav-link" data-scroll-target="#our-feature-set"><span class="header-section-number">6.5</span> Our Feature Set</a></li>
+  <li><a href="#from-physics-to-mathematics" id="toc-from-physics-to-mathematics" class="nav-link" data-scroll-target="#from-physics-to-mathematics"><span class="header-section-number">6.6</span> From Physics To Mathematics</a></li>
+  <li><a href="#why-does-walking-have-higher-energy" id="toc-why-does-walking-have-higher-energy" class="nav-link" data-scroll-target="#why-does-walking-have-higher-energy"><span class="header-section-number">6.7</span> Why Does Walking Have Higher Energy?</a></li>
+  <li><a href="#building-a-feature-table" id="toc-building-a-feature-table" class="nav-link" data-scroll-target="#building-a-feature-table"><span class="header-section-number">6.8</span> Building A Feature Table</a></li>
+  <li><a href="#the-project-implementation" id="toc-the-project-implementation" class="nav-link" data-scroll-target="#the-project-implementation"><span class="header-section-number">6.9</span> The Project Implementation</a></li>
+  <li><a href="#thinking-like-an-engineer" id="toc-thinking-like-an-engineer" class="nav-link" data-scroll-target="#thinking-like-an-engineer"><span class="header-section-number">6.10</span> Thinking Like An Engineer</a></li>
+  <li><a href="#save-the-feature-table" id="toc-save-the-feature-table" class="nav-link" data-scroll-target="#save-the-feature-table"><span class="header-section-number">6.11</span> Save The Feature Table</a></li>
+  <li><a href="#checkpoint" id="toc-checkpoint" class="nav-link" data-scroll-target="#checkpoint"><span class="header-section-number">6.12</span> Checkpoint</a></li>
+  <li><a href="#further-exploration" id="toc-further-exploration" class="nav-link" data-scroll-target="#further-exploration"><span class="header-section-number">6.13</span> Further Exploration</a></li>
+  <li><a href="#what-have-we-achieved" id="toc-what-have-we-achieved" class="nav-link" data-scroll-target="#what-have-we-achieved"><span class="header-section-number">6.14</span> What Have We Achieved?</a></li>
+  <li><a href="#what-comes-next" id="toc-what-comes-next" class="nav-link" data-scroll-target="#what-comes-next"><span class="header-section-number">6.15</span> What Comes Next?</a></li>
   </ul>
 </nav>
     </div>
@@ -299,86 +290,38 @@ window.Quarto = {
 </header>
 
 
-<section id="learning-objectives" class="level2" data-number="6.1">
-<h2 data-number="6.1" class="anchored" data-anchor-id="learning-objectives"><span class="header-section-number">6.1</span> Learning Objectives</h2>
-<p>After completing this chapter, you should be able to</p>
-<ul>
-<li>explain why feature engineering is needed for classical machine learning,</li>
-<li>convert sensor windows into numerical feature vectors,</li>
-<li>use reusable feature extraction code from the <code>app/</code> package,</li>
-<li>create a complete feature table for all windows,</li>
-<li>understand why training and deployment must use the same feature extraction logic.</li>
-</ul>
-<hr>
-</section>
-<section id="setup" class="level2" data-number="6.2">
-<h2 data-number="6.2" class="anchored" data-anchor-id="setup"><span class="header-section-number">6.2</span> Setup</h2>
-<div id="493b6fd0" class="cell" data-execution_count="1">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pathlib <span class="im">import</span> Path</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>current_path <span class="op">=</span> Path.cwd().resolve()</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> parent <span class="kw">in</span> [current_path] <span class="op">+</span> <span class="bu">list</span>(current_path.parents):</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (parent <span class="op">/</span> <span class="st">"app"</span>).exists():</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>        PROJECT_ROOT <span class="op">=</span> parent</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>        <span class="cf">break</span></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">raise</span> <span class="pp">RuntimeError</span>(<span class="st">"Could not find project root containing app/ directory."</span>)</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>sys.path.insert(<span class="dv">0</span>, <span class="bu">str</span>(PROJECT_ROOT))</span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> app.config <span class="im">import</span> WINDOW_SIZE</span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> app.data_loader <span class="im">import</span> load_wisdm_phone_accel</span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> app.windowing <span class="im">import</span> create_windows</span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> app.feature_extraction <span class="im">import</span> extract_features</span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> app.pipeline <span class="im">import</span> add_magnitude, windows_to_features</span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>DATA_DIR <span class="op">=</span> PROJECT_ROOT <span class="op">/</span> <span class="st">"data"</span></span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> load_wisdm_phone_accel(DATA_DIR)</span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> add_magnitude(df)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Important</span>Software Engineering Principle
+<span class="screen-reader-only">Note</span>Why this chapter matters
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>The feature extraction logic lives in <code>app/feature_extraction.py</code>.</p>
-<p>The workbook imports and uses this function instead of redefining it.</p>
-<p>This ensures that training and live prediction use the same implementation.</p>
+<p>Windows organize time, but they are still raw measurements. Feature engineering turns each Window into a Feature Vector, which is the bridge between physical motion and a machine learning Model.</p>
 </div>
 </div>
-<hr>
-</section>
-<section id="why-feature-engineering" class="level2" data-number="6.3">
-<h2 data-number="6.3" class="anchored" data-anchor-id="why-feature-engineering"><span class="header-section-number">6.3</span> Why Feature Engineering?</h2>
-<p>A sensor window contains many raw measurements.</p>
-<p>For example, with a window size of 100 samples and four signals (<code>x</code>, <code>y</code>, <code>z</code>, <code>magnitude</code>), one window contains 400 raw values.</p>
-<p>Classical machine learning models such as Random Forests usually work better with structured tabular features.</p>
-<p>Feature engineering transforms a window into a compact numerical summary.</p>
+<section id="how-can-a-computer-recognize-walking-without-ever-seeing-a-person" class="level2" data-number="6.1">
+<h2 data-number="6.1" class="anchored" data-anchor-id="how-can-a-computer-recognize-walking-without-ever-seeing-a-person"><span class="header-section-number">6.1</span> How Can A Computer Recognize Walking Without Ever Seeing A Person?</h2>
+<p>A computer does not see a person walking.</p>
+<p>It sees numbers.</p>
+<p>In this project, those numbers come from accelerometer Windows: x, y, z and magnitude values sampled over time.</p>
+<p>The central question of this chapter is:</p>
+<blockquote class="blockquote">
+<p>How can raw sensor signals become something a machine learning model can understand?</p>
+</blockquote>
+<p>The answer is feature engineering.</p>
+<p>Feature engineering transforms raw physical measurements into mathematical descriptions of behavior.</p>
 <div class="cell" data-layout-align="default">
 <div class="cell-output-display">
 <div>
 <p></p><figure class="figure"><p></p>
 <div>
 <pre class="mermaid mermaid-js">flowchart LR
-
-A[Sensor Window]
---&gt;B[Feature Extraction]
-
-B--&gt;C[Feature Vector]
-
-C--&gt;D[Machine Learning Model]
+  A[Raw sensor signals] --&gt; B[Mathematical descriptors]
+  B --&gt; C[Machine Learning]
 </pre>
 </div>
 <p></p></figure><p></p>
@@ -387,66 +330,243 @@ C--&gt;D[Machine Learning Model]
 </div>
 <hr>
 </section>
-<section id="our-feature-set" class="level2" data-number="6.4">
-<h2 data-number="6.4" class="anchored" data-anchor-id="our-feature-set"><span class="header-section-number">6.4</span> Our Feature Set</h2>
-<p>For each signal</p>
+<section id="setup" class="level2" data-number="6.2">
+<h2 data-number="6.2" class="anchored" data-anchor-id="setup"><span class="header-section-number">6.2</span> Setup</h2>
+<p>We use reusable project code for loading, windowing and feature extraction.</p>
+<p>The important idea is not the syntax.</p>
+<p>The important idea is how motion becomes numbers that can be compared.</p>
+<div id="42469149" class="cell" data-execution_count="1">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pathlib <span class="im">import</span> Path</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>current_path <span class="op">=</span> Path.cwd().resolve()</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> parent <span class="kw">in</span> [current_path] <span class="op">+</span> <span class="bu">list</span>(current_path.parents):</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (parent <span class="op">/</span> <span class="st">"app"</span>).exists():</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>        PROJECT_ROOT <span class="op">=</span> parent</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>        <span class="cf">break</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">raise</span> <span class="pp">RuntimeError</span>(<span class="st">"Could not find project root containing app/ directory."</span>)</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>sys.path.insert(<span class="dv">0</span>, <span class="bu">str</span>(PROJECT_ROOT))</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> app.config <span class="im">import</span> WINDOW_SIZE</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> app.data_loader <span class="im">import</span> load_wisdm_phone_accel</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> app.feature_extraction <span class="im">import</span> extract_features</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> app.pipeline <span class="im">import</span> add_magnitude, windows_to_features</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> app.windowing <span class="im">import</span> create_windows</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>DATA_DIR <span class="op">=</span> PROJECT_ROOT <span class="op">/</span> <span class="st">"data"</span></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> load_wisdm_phone_accel(DATA_DIR)</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> add_magnitude(df)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<hr>
+</section>
+<section id="why-raw-signals-are-difficult-for-classical-ml" class="level2" data-number="6.3">
+<h2 data-number="6.3" class="anchored" data-anchor-id="why-raw-signals-are-difficult-for-classical-ml"><span class="header-section-number">6.3</span> Why Raw Signals Are Difficult For Classical ML</h2>
+<p>A window still contains many measurements.</p>
+<p>With 100 samples and four signals, one window contains 400 raw values.</p>
+<p>That is a lot of detail, but not yet much meaning.</p>
+<p>Classical machine learning models such as Random Forests usually work best with structured feature tables: one row per example, one column per meaningful descriptor.</p>
+<p>An analogy:</p>
+<p>Imagine describing a song to someone.</p>
+<p>You could send every audio sample.</p>
+<p>Or you could describe tempo, loudness, rhythm and energy.</p>
+<p>The second description loses some detail, but it captures useful structure.</p>
+<p>Feature engineering does the same for sensor windows.</p>
+<p>It summarizes behavior instead of asking the model to memorize every sample.</p>
+<hr>
+</section>
+<section id="what-is-a-feature" class="level2" data-number="6.4">
+<h2 data-number="6.4" class="anchored" data-anchor-id="what-is-a-feature"><span class="header-section-number">6.4</span> What Is A Feature?</h2>
+<p>A feature is not just another measurement.</p>
+<p>A feature is information extracted from many measurements.</p>
+<p>For one signal window, we can compute descriptors such as average level, variability, extremes and movement intensity.</p>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart TD
+  A[Signal Window]
+  --&gt; B[Mean]
+  --&gt; C[Standard Deviation]
+  --&gt; D[Maximum]
+  --&gt; E[Energy]
+  --&gt; F[Feature Vector]
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<p>The feature vector is the compact mathematical description that the model sees.</p>
+<p>The raw signal is still important.</p>
+<p>But the model receives the summary.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Engineering Insight
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Feature engineering is knowledge compression.</p>
+<p>Hundreds of measurements become a compact mathematical representation. Good Feature Vectors preserve information that helps distinguish activities.</p>
+</div>
+</div>
+<hr>
+</section>
+<section id="our-feature-set" class="level2" data-number="6.5">
+<h2 data-number="6.5" class="anchored" data-anchor-id="our-feature-set"><span class="header-section-number">6.5</span> Our Feature Set</h2>
+<p>For each signal, we compute the same set of descriptors.</p>
+<p>Signals:</p>
 <pre class="text"><code>x, y, z, magnitude</code></pre>
-<p>we compute:</p>
+<p>Features:</p>
 <table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
 <thead>
 <tr class="header">
 <th>Feature</th>
-<th>Meaning</th>
+<th>What it describes</th>
+<th>Why it helps</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td>mean</td>
-<td>average signal level</td>
+<td>Average signal level</td>
+<td>Captures orientation and baseline acceleration</td>
 </tr>
 <tr class="even">
-<td>std</td>
-<td>variability</td>
+<td>standard deviation</td>
+<td>Variability</td>
+<td>Higher for dynamic movement</td>
 </tr>
 <tr class="odd">
-<td>min</td>
-<td>smallest value</td>
+<td>minimum</td>
+<td>Lowest observed value</td>
+<td>Captures one side of the movement range</td>
 </tr>
 <tr class="even">
-<td>max</td>
-<td>largest value</td>
+<td>maximum</td>
+<td>Highest observed value</td>
+<td>Captures extreme movement</td>
 </tr>
 <tr class="odd">
 <td>energy</td>
-<td>overall signal intensity</td>
+<td>Sum of squared values</td>
+<td>Captures overall movement intensity</td>
 </tr>
 </tbody>
 </table>
-<p>This gives</p>
+<p>This gives:</p>
 <p><span class="math display">\[
 4 \times 5 = 20
 \]</span></p>
 <p>features per window.</p>
+<p>This table answers:</p>
+<blockquote class="blockquote">
+<p>What information might distinguish one activity from another?</p>
+</blockquote>
+<p>Walking should usually have more variability and higher energy than sitting or standing.</p>
+<p>Sitting and standing may have similar energy, which is why they can be harder to separate.</p>
 <hr>
 </section>
-<section id="step-1-create-one-example-window" class="level2" data-number="6.5">
-<h2 data-number="6.5" class="anchored" data-anchor-id="step-1-create-one-example-window"><span class="header-section-number">6.5</span> Step 1 — Create One Example Window</h2>
-<div id="c8a20f58" class="cell" data-execution_count="2">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>walking_df <span class="op">=</span> (</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    df[df[<span class="st">"activity"</span>] <span class="op">==</span> <span class="st">"walking"</span>]</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    .sort_values(<span class="st">"timestamp"</span>)</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    .copy()</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>windows <span class="op">=</span> create_windows(</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    walking_df,</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    window_size<span class="op">=</span>WINDOW_SIZE,</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>example_window <span class="op">=</span> windows[<span class="dv">0</span>]</span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>example_window.head()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="2">
+<section id="from-physics-to-mathematics" class="level2" data-number="6.6">
+<h2 data-number="6.6" class="anchored" data-anchor-id="from-physics-to-mathematics"><span class="header-section-number">6.6</span> From Physics To Mathematics</h2>
+<p>Accelerometers measure physical motion.</p>
+<p>Feature engineering converts that motion into numbers.</p>
+<p>Machine learning compares numerical patterns.</p>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart LR
+  A[Physical motion]
+  --&gt; B[Accelerometer measurements]
+  --&gt; C[Window]
+  --&gt; D[Feature Vector]
+  --&gt; E[Pattern comparison]
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<p>This is one of the central ideas of the project.</p>
+<p>The model does not know what walking looks like.</p>
+<p>It learns that certain numerical patterns tend to correspond to walking, sitting or standing.</p>
+<hr>
+</section>
+<section id="why-does-walking-have-higher-energy" class="level2" data-number="6.7">
+<h2 data-number="6.7" class="anchored" data-anchor-id="why-does-walking-have-higher-energy"><span class="header-section-number">6.7</span> Why Does Walking Have Higher Energy?</h2>
+<p>We compare a walking window with a sitting window.</p>
+<div id="3c68f98b" class="cell" data-execution_count="2">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>walking_window <span class="op">=</span> create_windows(</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    df[df[<span class="st">"activity"</span>] <span class="op">==</span> <span class="st">"walking"</span>].sort_values(<span class="st">"timestamp"</span>),</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    window_size<span class="op">=</span>WINDOW_SIZE,</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>)[<span class="dv">0</span>]</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>sitting_window <span class="op">=</span> create_windows(</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    df[df[<span class="st">"activity"</span>] <span class="op">==</span> <span class="st">"sitting"</span>].sort_values(<span class="st">"timestamp"</span>),</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    window_size<span class="op">=</span>WINDOW_SIZE,</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>)[<span class="dv">0</span>]</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">4</span>))</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>plt.plot(walking_window[<span class="st">"magnitude"</span>].reset_index(drop<span class="op">=</span><span class="va">True</span>), label<span class="op">=</span><span class="st">"walking"</span>)</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>plt.plot(sitting_window[<span class="st">"magnitude"</span>].reset_index(drop<span class="op">=</span><span class="va">True</span>), label<span class="op">=</span><span class="st">"sitting"</span>)</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Walking and Sitting Magnitude Windows"</span>)</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Sample inside the window"</span>)</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Acceleration magnitude"</span>)</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="05_feature_engineering_files/figure-html/cell-3-output-1.png" width="957" height="377" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>What should you observe?</p>
+<p>Walking usually produces repeated changes in acceleration magnitude.</p>
+<p>Sitting is often flatter because the phone moves less.</p>
+<p>Energy is computed as:</p>
+<p><span class="math display">\[
+Energy = \sum_i x_i^2
+\]</span></p>
+<p>Squaring makes larger movements count more.</p>
+<p>So a dynamic activity like walking often produces higher energy than a static activity like sitting.</p>
+<p>Now we inspect the actual feature values.</p>
+<div id="90563d70" class="cell" data-execution_count="3">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>comparison <span class="op">=</span> pd.DataFrame(</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    [</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>        {<span class="st">"activity"</span>: <span class="st">"walking"</span>, <span class="op">**</span>extract_features(walking_window)},</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>        {<span class="st">"activity"</span>: <span class="st">"sitting"</span>, <span class="op">**</span>extract_features(sitting_window)},</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    ]</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>comparison[</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    [</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>        <span class="st">"activity"</span>,</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>        <span class="st">"std_magnitude"</span>,</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>        <span class="st">"max_magnitude"</span>,</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>        <span class="st">"energy_magnitude"</span>,</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>    ]</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="3">
 <div>
 
 
@@ -454,71 +574,26 @@ C--&gt;D[Machine Learning Model]
 <thead>
 <tr class="header">
 <th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th">subject_id</th>
-<th data-quarto-table-cell-role="th">activity_code</th>
-<th data-quarto-table-cell-role="th">timestamp</th>
-<th data-quarto-table-cell-role="th">x</th>
-<th data-quarto-table-cell-role="th">y</th>
-<th data-quarto-table-cell-role="th">z</th>
 <th data-quarto-table-cell-role="th">activity</th>
-<th data-quarto-table-cell-role="th">magnitude</th>
+<th data-quarto-table-cell-role="th">std_magnitude</th>
+<th data-quarto-table-cell-role="th">max_magnitude</th>
+<th data-quarto-table-cell-role="th">energy_magnitude</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<th data-quarto-table-cell-role="th">303991</th>
-<td>1623</td>
-<td>A</td>
-<td>2520219142823</td>
-<td>-0.152512</td>
-<td>-8.585220</td>
-<td>-1.219192</td>
+<th data-quarto-table-cell-role="th">0</th>
 <td>walking</td>
-<td>8.672698</td>
+<td>4.566283</td>
+<td>25.331639</td>
+<td>13653.06148</td>
 </tr>
 <tr class="even">
-<th data-quarto-table-cell-role="th">303992</th>
-<td>1623</td>
-<td>A</td>
-<td>2520269496827</td>
-<td>0.999466</td>
-<td>-8.196548</td>
-<td>-0.758926</td>
-<td>walking</td>
-<td>8.292063</td>
-</tr>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">303993</th>
-<td>1623</td>
-<td>A</td>
-<td>2520319850830</td>
-<td>0.450241</td>
-<td>-8.701187</td>
-<td>-1.290024</td>
-<td>walking</td>
-<td>8.807811</td>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">303994</th>
-<td>1623</td>
-<td>A</td>
-<td>2520370204834</td>
-<td>-0.042175</td>
-<td>-9.739563</td>
-<td>-1.787415</td>
-<td>walking</td>
-<td>9.902309</td>
-</tr>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">303995</th>
-<td>1623</td>
-<td>A</td>
-<td>2520420558838</td>
-<td>3.551483</td>
-<td>-10.745132</td>
-<td>-1.266403</td>
-<td>walking</td>
-<td>11.387479</td>
+<th data-quarto-table-cell-role="th">1</th>
+<td>sitting</td>
+<td>1.491087</td>
+<td>17.177679</td>
+<td>10810.68680</td>
 </tr>
 </tbody>
 </table>
@@ -526,98 +601,46 @@ C--&gt;D[Machine Learning Model]
 </div>
 </div>
 </div>
+<p>This table answers:</p>
+<blockquote class="blockquote">
+<p>Do the mathematical descriptors reflect what we saw in the plot?</p>
+</blockquote>
+<p>The point is not that one feature solves the whole problem.</p>
+<p>The point is that features translate visual movement patterns into numbers.</p>
 <hr>
 </section>
-<section id="step-2-extract-features-from-one-window" class="level2" data-number="6.6">
-<h2 data-number="6.6" class="anchored" data-anchor-id="step-2-extract-features-from-one-window"><span class="header-section-number">6.6</span> Step 2 — Extract Features from One Window</h2>
-<div id="8b559309" class="cell" data-execution_count="3">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>example_features <span class="op">=</span> extract_features(example_window)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>pd.Series(example_features)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="3">
-<pre><code>mean_x                  0.719130
-std_x                   2.459520
-min_x                  -5.262344
-max_x                   5.583405
-energy_x              650.589595
-mean_y                 -9.682053
-std_y                   3.874742
-min_y                 -18.635117
-max_y                  -2.588074
-energy_y            10860.564142
-mean_z                 -1.843645
-std_z                   4.266389
-min_z                 -17.696304
-max_z                   6.950653
-energy_z             2141.907743
-mean_magnitude         10.765137
-std_magnitude           4.566283
-min_magnitude           3.196334
-max_magnitude          25.331639
-energy_magnitude    13653.061480
-dtype: float64</code></pre>
+<section id="building-a-feature-table" class="level2" data-number="6.8">
+<h2 data-number="6.8" class="anchored" data-anchor-id="building-a-feature-table"><span class="header-section-number">6.8</span> Building A Feature Table</h2>
+<p>One window becomes one feature vector.</p>
+<p>Many windows become a feature matrix.</p>
+<p>That matrix is what the machine learning model uses.</p>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart TD
+  A[One Window]
+  --&gt; B[One Feature Vector]
+  --&gt; C[Many Windows]
+  --&gt; D[Feature Matrix]
+</pre>
+</div>
+<p></p></figure><p></p>
 </div>
 </div>
-<div id="3a6f490b" class="cell" data-execution_count="4">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="bu">len</span>(example_features)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>The feature table has one row per window.</p>
+<p>Feature columns describe movement.</p>
+<p>Metadata columns keep the activity label and subject identifier.</p>
+<div id="6c126dad" class="cell" data-execution_count="4">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>features_df <span class="op">=</span> windows_to_features(</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    df,</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    window_size<span class="op">=</span>WINDOW_SIZE,</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>features_df.head()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="4">
-<pre><code>20</code></pre>
-</div>
-</div>
-<section id="expected-output" class="level3" data-number="6.6.1">
-<h3 data-number="6.6.1" class="anchored" data-anchor-id="expected-output"><span class="header-section-number">6.6.1</span> Expected Output</h3>
-<p>The output should contain 20 features.</p>
-<hr>
-</section>
-</section>
-<section id="step-3-understand-the-energy-feature" class="level2" data-number="6.7">
-<h2 data-number="6.7" class="anchored" data-anchor-id="step-3-understand-the-energy-feature"><span class="header-section-number">6.7</span> Step 3 — Understand the Energy Feature</h2>
-<p>Energy is computed as</p>
-<p><span class="math display">\[
-Energy = \sum_i x_i^2
-\]</span></p>
-<p>It is often useful because dynamic activities such as walking usually produce higher signal intensity than static activities such as sitting or standing.</p>
-<div id="b2bdeba6" class="cell" data-execution_count="5">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>example_window[<span class="st">"magnitude"</span>].head()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="5">
-<pre><code>303991     8.672698
-303992     8.292063
-303993     8.807811
-303994     9.902309
-303995    11.387479
-Name: magnitude, dtype: float64</code></pre>
-</div>
-</div>
-<div id="992548cf" class="cell" data-execution_count="6">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>energy_magnitude <span class="op">=</span> np.<span class="bu">sum</span>(example_window[<span class="st">"magnitude"</span>] <span class="op">**</span> <span class="dv">2</span>)</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>energy_magnitude</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="6">
-<pre><code>np.float64(13653.061479592923)</code></pre>
-</div>
-</div>
-<hr>
-</section>
-<section id="step-4-convert-all-windows-into-features" class="level2" data-number="6.8">
-<h2 data-number="6.8" class="anchored" data-anchor-id="step-4-convert-all-windows-into-features"><span class="header-section-number">6.8</span> Step 4 — Convert All Windows into Features</h2>
-<section id="goal" class="level3" data-number="6.8.1">
-<h3 data-number="6.8.1" class="anchored" data-anchor-id="goal"><span class="header-section-number">6.8.1</span> Goal</h3>
-<p>We now create one feature row per window.</p>
-<p>Windows are created separately per subject and activity.</p>
-<div id="efcc4272" class="cell" data-execution_count="7">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>windows_to_features</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="7">
-<pre><code>&lt;function app.pipeline.windows_to_features(df: pandas.DataFrame, window_size: int = 100) -&gt; pandas.DataFrame&gt;</code></pre>
-</div>
-</div>
-<div id="60d6aa33" class="cell" data-execution_count="8">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>features_df <span class="op">=</span> windows_to_features(</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>    df,</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    window_size<span class="op">=</span>WINDOW_SIZE,</span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>features_df.head()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="8">
 <div>
 
 
@@ -776,136 +799,156 @@ Name: magnitude, dtype: float64</code></pre>
 </div>
 </div>
 </div>
+<div id="719d3025" class="cell" data-execution_count="5">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>feature_table_summary <span class="op">=</span> pd.DataFrame(</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    [</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>        {</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>            <span class="st">"question"</span>: <span class="st">"How many windows?"</span>,</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>            <span class="st">"answer"</span>: <span class="bu">len</span>(features_df),</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>            <span class="st">"why it matters"</span>: <span class="st">"Each window becomes one training example."</span>,</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>        },</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>        {</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>            <span class="st">"question"</span>: <span class="st">"How many feature columns?"</span>,</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>            <span class="st">"answer"</span>: <span class="bu">len</span>([c <span class="cf">for</span> c <span class="kw">in</span> features_df.columns <span class="cf">if</span> c <span class="kw">not</span> <span class="kw">in</span> [<span class="st">"activity"</span>, <span class="st">"subject_id"</span>]]),</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>            <span class="st">"why it matters"</span>: <span class="st">"This is the numerical description the model receives."</span>,</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>        },</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>        {</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>            <span class="st">"question"</span>: <span class="st">"How many subjects?"</span>,</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>            <span class="st">"answer"</span>: features_df[<span class="st">"subject_id"</span>].nunique(),</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>            <span class="st">"why it matters"</span>: <span class="st">"Subject IDs support realistic evaluation later."</span>,</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>        },</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>        {</span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>            <span class="st">"question"</span>: <span class="st">"Missing feature values?"</span>,</span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>            <span class="st">"answer"</span>: <span class="bu">int</span>(features_df.isna().<span class="bu">sum</span>().<span class="bu">sum</span>()),</span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>            <span class="st">"why it matters"</span>: <span class="st">"Missing values can break training or distort results."</span>,</span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>        },</span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>    ]</span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>feature_table_summary</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="5">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">question</th>
+<th data-quarto-table-cell-role="th">answer</th>
+<th data-quarto-table-cell-role="th">why it matters</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>How many windows?</td>
+<td>8066</td>
+<td>Each window becomes one training example.</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">1</th>
+<td>How many feature columns?</td>
+<td>20</td>
+<td>This is the numerical description the model re...</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2</th>
+<td>How many subjects?</td>
+<td>51</td>
+<td>Subject IDs support realistic evaluation later.</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">3</th>
+<td>Missing feature values?</td>
+<td>0</td>
+<td>Missing values can break training or distort r...</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p>This table answers:</p>
+<blockquote class="blockquote">
+<p>Is the feature table ready to become a machine learning dataset?</p>
+</blockquote>
 <hr>
 </section>
-</section>
-<section id="step-5-inspect-the-feature-table" class="level2" data-number="6.9">
-<h2 data-number="6.9" class="anchored" data-anchor-id="step-5-inspect-the-feature-table"><span class="header-section-number">6.9</span> Step 5 — Inspect the Feature Table</h2>
-<div id="0f29a118" class="cell" data-execution_count="9">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>features_df.shape</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="9">
-<pre><code>(8066, 22)</code></pre>
-</div>
-</div>
-<div id="ea872e60" class="cell" data-execution_count="10">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>features_df[<span class="st">"activity"</span>].value_counts()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="10">
-<pre><code>activity
-walking     2773
-standing    2672
-sitting     2621
-Name: count, dtype: int64</code></pre>
-</div>
-</div>
-<div id="6727b332" class="cell" data-execution_count="11">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>features_df[<span class="st">"subject_id"</span>].nunique()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="11">
-<pre><code>51</code></pre>
-</div>
-</div>
-<div id="a21a28a6" class="cell" data-execution_count="12">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>features_df.isna().<span class="bu">sum</span>().<span class="bu">sum</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="12">
-<pre><code>np.int64(0)</code></pre>
-</div>
-</div>
-<section id="discussion" class="level3" data-number="6.9.1">
-<h3 data-number="6.9.1" class="anchored" data-anchor-id="discussion"><span class="header-section-number">6.9.1</span> Discussion</h3>
-<p>At this point, the continuous sensor data has been transformed into a tabular machine learning dataset.</p>
-<p>Each row represents one window.</p>
-<p>Each column represents one feature or metadata field.</p>
+<section id="the-project-implementation" class="level2" data-number="6.9">
+<h2 data-number="6.9" class="anchored" data-anchor-id="the-project-implementation"><span class="header-section-number">6.9</span> The Project Implementation</h2>
+<p>The reusable feature extraction logic lives in <code>app.feature_extraction</code>.</p>
+<p>This chapter does not redefine it.</p>
+<p>It imports <code>extract_features()</code> and uses <code>windows_to_features()</code> from the project pipeline.</p>
+<p>That matters because training and live prediction must use the same feature logic.</p>
+<p>If the model is trained with one feature definition and deployed with another, predictions become unreliable.</p>
 <hr>
 </section>
+<section id="thinking-like-an-engineer" class="level2" data-number="6.10">
+<h2 data-number="6.10" class="anchored" data-anchor-id="thinking-like-an-engineer"><span class="header-section-number">6.10</span> Thinking Like An Engineer</h2>
+<p>Instead of asking:</p>
+<blockquote class="blockquote">
+<p>Which feature should I compute?</p>
+</blockquote>
+<p>ask:</p>
+<blockquote class="blockquote">
+<p>What information distinguishes one activity from another?</p>
+</blockquote>
+<p>For walking, useful information may include movement intensity, rhythm and variability.</p>
+<p>For sitting versus standing, the difference may be smaller and may depend on phone placement.</p>
+<p>Feature engineering is where domain knowledge enters the machine learning pipeline.</p>
+<hr>
 </section>
-<section id="step-6-save-the-feature-table" class="level2" data-number="6.10">
-<h2 data-number="6.10" class="anchored" data-anchor-id="step-6-save-the-feature-table"><span class="header-section-number">6.10</span> Step 6 — Save the Feature Table</h2>
-<div id="67ef2de0" class="cell" data-execution_count="13">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>features_df.to_csv(</span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>    DATA_DIR <span class="op">/</span> <span class="st">"features_df.csv"</span>,</span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>    index<span class="op">=</span><span class="va">False</span>,</span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>Remember
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Saving intermediate artifacts makes the pipeline easier to debug and reproduce.</p>
-<p>The next chapters can load the feature table directly instead of recomputing it every time.</p>
-</div>
+<section id="save-the-feature-table" class="level2" data-number="6.11">
+<h2 data-number="6.11" class="anchored" data-anchor-id="save-the-feature-table"><span class="header-section-number">6.11</span> Save The Feature Table</h2>
+<p>The next chapters can load the feature table directly.</p>
+<p>Saving it makes the pipeline easier to reproduce and debug.</p>
+<div id="b9998df4" class="cell" data-execution_count="6">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>features_df.to_csv(</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    DATA_DIR <span class="op">/</span> <span class="st">"features_df.csv"</span>,</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    index<span class="op">=</span><span class="va">False</span>,</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <hr>
 </section>
-<section id="think" class="level2" data-number="6.11">
-<h2 data-number="6.11" class="anchored" data-anchor-id="think"><span class="header-section-number">6.11</span> Think</h2>
-<p>Which feature do you expect to be most useful for distinguishing walking from standing?</p>
-<ul>
-<li>mean?</li>
-<li>standard deviation?</li>
-<li>maximum?</li>
-<li>energy?</li>
-</ul>
-<p>Why?</p>
-<hr>
-</section>
-<section id="common-pitfall" class="level2" data-number="6.12">
-<h2 data-number="6.12" class="anchored" data-anchor-id="common-pitfall"><span class="header-section-number">6.12</span> Common Pitfall</h2>
-<div class="callout callout-style-default callout-warning callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Warning</span>Training and Deployment Must Match
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>If you train a model using one feature extraction method but deploy it with a different method, predictions become unreliable.</p>
-<p>That is why the project keeps feature extraction in <code>app/feature_extraction.py</code>.</p>
-</div>
-</div>
-<hr>
-</section>
-<section id="checkpoint" class="level2" data-number="6.13">
-<h2 data-number="6.13" class="anchored" data-anchor-id="checkpoint"><span class="header-section-number">6.13</span> Checkpoint</h2>
+<section id="checkpoint" class="level2" data-number="6.12">
+<h2 data-number="6.12" class="anchored" data-anchor-id="checkpoint"><span class="header-section-number">6.12</span> Checkpoint</h2>
 <p>Before continuing, you should be able to answer:</p>
 <ol type="1">
-<li>Why do we extract features from windows?</li>
-<li>Why does a Random Forest work well with feature tables?</li>
-<li>What does the energy feature measure?</li>
-<li>How many features do we compute per window?</li>
+<li>Why are raw windows difficult for classical machine learning?</li>
+<li>Why is a feature more than one measurement?</li>
+<li>Why might walking have higher energy than sitting?</li>
+<li>What does one row in the feature table represent?</li>
 <li>Why must training and deployment use the same feature extraction logic?</li>
 </ol>
 <hr>
 </section>
-<section id="further-exploration" class="level2" data-number="6.14">
-<h2 data-number="6.14" class="anchored" data-anchor-id="further-exploration"><span class="header-section-number">6.14</span> Further Exploration</h2>
-<p>Optional: add one additional feature to <code>app/feature_extraction.py</code>, for example:</p>
+<section id="further-exploration" class="level2" data-number="6.13">
+<h2 data-number="6.13" class="anchored" data-anchor-id="further-exploration"><span class="header-section-number">6.13</span> Further Exploration</h2>
+<p>Optional feature ideas:</p>
 <ul>
-<li>median</li>
-<li>range</li>
-<li>interquartile range</li>
+<li>frequency-domain features,</li>
+<li>entropy,</li>
+<li>jerk,</li>
+<li>correlation between axes.</li>
 </ul>
-<p>Then rerun this chapter.</p>
-<p>How does the number of features change?</p>
+<p>These can be useful later, but they are not required for the first reliable system.</p>
 <hr>
 </section>
-<section id="summary" class="level2" data-number="6.15">
-<h2 data-number="6.15" class="anchored" data-anchor-id="summary"><span class="header-section-number">6.15</span> Summary</h2>
-<p>In this chapter you learned</p>
+<section id="what-have-we-achieved" class="level2" data-number="6.14">
+<h2 data-number="6.14" class="anchored" data-anchor-id="what-have-we-achieved"><span class="header-section-number">6.14</span> What Have We Achieved?</h2>
 <ul>
-<li>why feature engineering is necessary,</li>
-<li>how windows are transformed into feature vectors,</li>
-<li>how reusable project code improves maintainability,</li>
-<li>how to create a complete feature table,</li>
-<li>why consistent feature extraction is essential for deployment.</li>
+<li>We explained why raw Windows are difficult for classical machine learning.</li>
+<li>We described how features summarize motion across many measurements.</li>
+<li>We connected physical acceleration to mathematical descriptors.</li>
+<li>We built a Feature Matrix where each row represents one Window.</li>
+<li>We reused <code>app.feature_extraction</code> for the project implementation.</li>
 </ul>
-<p>In the next chapter we will train a machine learning model using this feature table.</p>
+</section>
+<section id="what-comes-next" class="level2" data-number="6.15">
+<h2 data-number="6.15" class="anchored" data-anchor-id="what-comes-next"><span class="header-section-number">6.15</span> What Comes Next?</h2>
+<p>Now that we have a Feature Matrix and labels, we can train a Model. The next chapter explains how classical machine learning turns Feature Vectors into Predictions.</p>
 
 
 </section>

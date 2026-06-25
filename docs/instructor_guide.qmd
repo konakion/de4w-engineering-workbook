@@ -1,0 +1,127 @@
+---
+title: "Instructor Guide"
+subtitle: "DE4W Capstone Project"
+format:
+  html:
+    toc: true
+---
+
+# Purpose
+
+This guide supports a 90-minute teaching session for the DE4W Capstone Project.
+
+The goal is to help students connect wearable sensor data, feature engineering, machine learning, deployment, and live prediction into one coherent engineering workflow.
+
+# Session Plan
+
+| Time | Activity | Tool |
+|---:|---|---|
+| 0-10 min | Motivation and project architecture | Slides |
+| 10-20 min | Dataset and accelerometer signal | Quarto book |
+| 20-35 min | Windowing and feature engineering | Quarto book + VS Code |
+| 35-50 min | Baseline model and evaluation | Quarto book |
+| 50-60 min | Subject-wise evaluation and LOSO concept | Quarto book |
+| 60-70 min | FastAPI deployment | Terminal + browser |
+| 70-82 min | Streamlit and phyphox live demo | Streamlit + phone |
+| 82-90 min | Troubleshooting and take-home messages | Slides |
+
+# Teaching Transitions
+
+## Slides To Quarto Book
+
+Use the slides to frame the architecture and learning goals.
+
+Switch to the Quarto book when students need to see executable examples, tables, plots, and checkpoints.
+
+## Quarto Book To VS Code
+
+Switch to VS Code when discussing reusable project code:
+
+- `app/data_loader.py`
+- `app/windowing.py`
+- `app/feature_extraction.py`
+- `app/pipeline.py`
+- `app/training.py`
+- `app/evaluation.py`
+- `app/model_utils.py`
+
+Emphasize the transition from exploratory notebook-style code to reusable package code.
+
+## VS Code To FastAPI
+
+Use VS Code to show `app/api.py`.
+
+Then start the service:
+
+```bash
+uv run uvicorn app.api:app --reload
+```
+
+Open:
+
+```text
+http://127.0.0.1:8000/health
+```
+
+## FastAPI To Streamlit
+
+After showing the API, start the dashboard:
+
+```bash
+uv run streamlit run dashboard.py
+```
+
+Explain that the dashboard and API use the same prediction service.
+
+## Streamlit To phyphox
+
+On the phone:
+
+1. Open phyphox.
+2. Start an acceleration experiment.
+3. Enable remote access.
+4. Copy the remote URL.
+5. Paste it into Streamlit.
+
+# Demo Fallback Plan
+
+Live sensor demos can fail because of networks, firewalls, phones, or battery state.
+
+Use this fallback order:
+
+1. Try a phone hotspot.
+2. Try a local router or travel router.
+3. Open the phyphox URL directly in the laptop browser.
+4. If phyphox still fails, demonstrate the Streamlit UI states and explain the expected data flow.
+5. Use the saved WISDM feature table to show prediction through the API.
+6. Continue with architecture discussion rather than spending the session debugging WiFi.
+
+# Network Notes
+
+eduroam often blocks direct phone-to-laptop communication.
+
+This is not a project bug.
+
+It is a useful engineering lesson: live wearable systems depend on infrastructure.
+
+# Instructor Checklist
+
+Before class:
+
+- Run `uv sync`.
+- Confirm `data/features_df.csv` exists.
+- Confirm model artifacts exist in `models/`.
+- Run `PATH=.venv/bin:$PATH quarto render docs`.
+- Run `uv run uvicorn app.api:app --reload`.
+- Open `/health`.
+- Run `uv run streamlit run dashboard.py`.
+- Test phyphox URL from laptop browser.
+
+# Suggested Discussion Prompts
+
+- Why is subject-wise evaluation more realistic than random split?
+- What could go wrong if training and live feature extraction differ?
+- Why might sitting and standing be confused?
+- What does the eduroam issue teach us about deployment?
+- What would need to change for a production medical wearable?
+

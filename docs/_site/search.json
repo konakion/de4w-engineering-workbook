@@ -10,21 +10,11 @@
     ]
   },
   {
-    "objectID": "index.html#building-a-live-activity-recognition-system",
-    "href": "index.html#building-a-live-activity-recognition-system",
+    "objectID": "index.html#from-machine-learning-to-ai-systems",
+    "href": "index.html#from-machine-learning-to-ai-systems",
     "title": "DE4W Capstone Project",
-    "section": "1.1 Building a Live Activity Recognition System",
-    "text": "1.1 Building a Live Activity Recognition System\nWelcome to the DE4W Capstone Project.\nDuring this semester you learned many individual concepts:\n\nwearable sensors\ndata collection\npreprocessing\nfeature engineering\nmachine learning\nevaluation\ndeployment\n\nToday, we combine all of these concepts into one complete engineering project.",
-    "crumbs": [
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>DE4W Capstone Project</span>"
-    ]
-  },
-  {
-    "objectID": "index.html#what-will-we-build",
-    "href": "index.html#what-will-we-build",
-    "title": "DE4W Capstone Project",
-    "section": "1.2 What Will We Build?",
-    "text": "1.2 What Will We Build?\nBy the end of this project, you will have built a complete activity recognition system capable of recognizing human activities in real time using smartphone accelerometer data.",
+    "section": "1.1 From Machine Learning to AI Systems",
+    "text": "1.1 From Machine Learning to AI Systems\nWelcome to the DE4W Capstone Project.\nThis workbook is not only about learning machine learning.\nIt is about engineering a complete AI system for wearable sensor data.\nDuring the semester, you will connect ideas that are often taught separately: sensors, data collection, data engineering, feature engineering, model training, evaluation, deployment and live prediction.\nThe result will be an end-to-end wearable AI application that starts with smartphone accelerometer data and ends with real-time activity recognition.\n\n\n\n\n\n\nTipEngineering Mindset\n\n\n\nEvery chapter contributes one component of the final system. The goal is to understand how each part works on its own and how the parts fit together.",
     "crumbs": [
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>DE4W Capstone Project</span>"
     ]
@@ -33,28 +23,28 @@
     "objectID": "index.html#project-pipeline",
     "href": "index.html#project-pipeline",
     "title": "DE4W Capstone Project",
-    "section": "1.3 Project Pipeline",
-    "text": "1.3 Project Pipeline\n\n\n\n\n\nflowchart LR\n\nA[Smartphone]\n--&gt;B[Accelerometer]\n\nB--&gt;C[Windowing]\n\nC--&gt;D[Feature Engineering]\n\nD--&gt;E[Random Forest]\n\nE--&gt;F[FastAPI]\n\nF--&gt;G[Streamlit]\n\nG--&gt;H[Live Prediction]",
+    "section": "1.2 Project Pipeline",
+    "text": "1.2 Project Pipeline\n\n\n\n\n\nflowchart TD\n  A[Wearable Sensor]\n  --&gt; B[Data Collection]\n  --&gt; C[Data Engineering]\n  --&gt; D[Feature Engineering]\n  --&gt; E[Machine Learning]\n  --&gt; F[Evaluation]\n  --&gt; G[Deployment]\n  --&gt; H[Live Prediction]",
     "crumbs": [
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>DE4W Capstone Project</span>"
     ]
   },
   {
-    "objectID": "index.html#learning-outcomes",
-    "href": "index.html#learning-outcomes",
+    "objectID": "index.html#why-this-project-matters",
+    "href": "index.html#why-this-project-matters",
     "title": "DE4W Capstone Project",
-    "section": "1.4 Learning Outcomes",
-    "text": "1.4 Learning Outcomes\nAfter completing this project you will be able to\n\nbuild an end-to-end machine learning pipeline\nengineer features from wearable sensor data\ntrain and evaluate a machine learning model\ndeploy a trained model as a REST API\ncreate an interactive dashboard\nperform live activity recognition using your own smartphone",
+    "section": "1.3 Why This Project Matters",
+    "text": "1.3 Why This Project Matters\nModern AI systems are much more than trained models.\nIn real projects, data engineering often requires more work than the machine learning algorithm itself. Sensor data must be loaded, cleaned, segmented, transformed and checked before it becomes useful for a model.\nDeployment is also part of the work. A model that only runs in a notebook is not yet an application. Real systems need reusable code, model artifacts, APIs, user interfaces and clear error handling.\nReproducibility and software engineering make the project trustworthy. If training and live prediction use different feature logic, the system becomes unreliable. If paths, artifacts or dependencies are unclear, other people cannot run the work.",
     "crumbs": [
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>DE4W Capstone Project</span>"
     ]
   },
   {
-    "objectID": "index.html#repository-structure",
-    "href": "index.html#repository-structure",
+    "objectID": "index.html#what-you-will-build-this-semester",
+    "href": "index.html#what-you-will-build-this-semester",
     "title": "DE4W Capstone Project",
-    "section": "1.5 Repository Structure",
-    "text": "1.5 Repository Structure\nde4w-live-activity-app/\n\n├── app/\n├── data/\n├── docs/\n├── models/\n├── notebooks/\n├── pyproject.toml\n└── uv.lock",
+    "section": "1.4 What You Will Build This Semester",
+    "text": "1.4 What You Will Build This Semester\nBy the end of this project, you will have built:\n\na reusable Python project,\na data loading and feature engineering pipeline,\na Random Forest activity classifier,\nsubject-wise evaluation for generalization,\na FastAPI backend for predictions,\na Streamlit dashboard for live demos,\nlive smartphone activity recognition with phyphox.\n\nThe system will focus on three activities:\n\nwalking,\nsitting,\nstanding.\n\nThis small activity set keeps the machine learning task understandable while still showing the full engineering workflow.",
     "crumbs": [
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>DE4W Capstone Project</span>"
     ]
@@ -63,8 +53,8 @@
     "objectID": "index.html#the-journey",
     "href": "index.html#the-journey",
     "title": "DE4W Capstone Project",
-    "section": "1.6 The Journey",
-    "text": "1.6 The Journey\nThe following chapters guide you through the complete engineering workflow.\n\nIntroduction\nDataset\nWindowing\nFeature Engineering\nMachine Learning\nEvaluation\nDeployment\nLive Prediction\n\nLet’s get started.",
+    "section": "1.5 The Journey",
+    "text": "1.5 The Journey\nThe chapters guide you through the system step by step:\n\nIntroduction and motivation\nDataset\nLoading and exploration\nWindowing\nFeature engineering\nMachine learning\nEvaluation\nDeployment\nLive prediction\n\nBy the end of this workbook you will have built a complete end-to-end machine learning application.",
     "crumbs": [
       "<span class='chapter-number'>1</span>  <span class='chapter-title'>DE4W Capstone Project</span>"
     ]
@@ -74,97 +64,77 @@
     "href": "modules/01_introduction.html",
     "title": "2  Introduction and Motivation",
     "section": "",
-    "text": "2.1 Today We Build a System\nMost machine learning tutorials end after model training.\nThis project goes further.\nWe will build a complete system:\nflowchart TD\n\nA[Raw Sensor Data]\n--&gt;B[Windowing]\n\nB--&gt;C[Feature Engineering]\n\nC--&gt;D[Machine Learning]\n\nD--&gt;E[Evaluation]\n\nE--&gt;F[Model Export]\n\nF--&gt;G[FastAPI]\n\nG--&gt;H[Streamlit Dashboard]\n\nH--&gt;I[Live Prediction]",
+    "text": "2.1 Wearables Are Continuous Data Systems\nWearables are everywhere: smartphones, smartwatches, fitness trackers, medical sensors and research devices all measure signals from daily life.\nThey do not produce neat spreadsheet rows by default.\nThey produce a continuous Sensor Stream.\nThose streams are only the beginning. Raw acceleration values do not directly tell us whether someone is walking, sitting or standing. They are measurements, not yet information.\nData engineering is the bridge between raw sensing and meaningful prediction.\nThis project demonstrates that bridge. We start with wearable sensor signals, transform them into structured data, train and evaluate a model, and finally connect the result to a live application.",
     "crumbs": [
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>Introduction and Motivation</span>"
     ]
   },
   {
-    "objectID": "modules/01_introduction.html#why-this-matters",
-    "href": "modules/01_introduction.html#why-this-matters",
+    "objectID": "modules/01_introduction.html#wearables-are-continuous-data-systems",
+    "href": "modules/01_introduction.html#wearables-are-continuous-data-systems",
     "title": "2  Introduction and Motivation",
-    "section": "2.2 Why This Matters",
-    "text": "2.2 Why This Matters\nA trained model is not yet an application.\nA real wearable machine learning system also needs:\n\nreliable data handling\nreproducible preprocessing\nconsistent feature extraction\nrealistic evaluation\nmodel export\nan API\na user interface\nlive sensor integration\n\n\n\n\n\n\n\nTipEngineering Insight\n\n\n\nIn real-world machine learning projects, the model is only one component of a larger system.",
+    "section": "",
+    "text": "TipEngineering Insight\n\n\n\nA good wearable ML system is not defined only by its model accuracy, but by the reliability of the complete pipeline.",
     "crumbs": [
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>Introduction and Motivation</span>"
     ]
   },
   {
-    "objectID": "modules/01_introduction.html#the-scenario",
-    "href": "modules/01_introduction.html#the-scenario",
+    "objectID": "modules/01_introduction.html#from-sensor-to-decision",
+    "href": "modules/01_introduction.html#from-sensor-to-decision",
     "title": "2  Introduction and Motivation",
-    "section": "2.3 The Scenario",
-    "text": "2.3 The Scenario\nImagine you joined a small digital health startup.\nYour task:\n\nBuild a system that recognizes whether a person is walking, sitting or standing using only smartphone accelerometer data.\n\nThe system should eventually work live with a real smartphone.",
+    "section": "2.2 From Sensor to Decision",
+    "text": "2.2 From Sensor to Decision\nAn activity recognition system turns a physical signal into an application-level decision.\n\n\n\n\n\nflowchart LR\n  A[Sensor Signal] --&gt; B[Data Stream]\n  B --&gt; C[Window]\n  C --&gt; D[Feature Vector]\n  D --&gt; E[Model]\n  E --&gt; F[Prediction]\n  F --&gt; G[Application Decision]\n\n\n\n\n\n\nEach step changes the form of the data:\n\nthe sensor measures movement,\nthe Sensor Stream preserves measurements over time,\nWindows make the stream manageable,\nFeature Vectors summarize movement patterns,\nthe Model maps features to activities,\nthe application uses Predictions to support a user-facing task.",
     "crumbs": [
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>Introduction and Motivation</span>"
     ]
   },
   {
-    "objectID": "modules/01_introduction.html#target-activities",
-    "href": "modules/01_introduction.html#target-activities",
+    "objectID": "modules/01_introduction.html#why-activity-recognition",
+    "href": "modules/01_introduction.html#why-activity-recognition",
     "title": "2  Introduction and Motivation",
-    "section": "2.4 Target Activities",
-    "text": "2.4 Target Activities\nWe focus on three activities:\n\n\n\nActivity\nWhy it is useful\n\n\n\n\nWalking\nDynamic, periodic movement\n\n\nSitting\nLow movement, common daily activity\n\n\nStanding\nLow movement, hard to distinguish from sitting\n\n\n\nThis simplified setup keeps the focus on the complete engineering pipeline.",
+    "section": "2.3 Why Activity Recognition?",
+    "text": "2.3 Why Activity Recognition?\nPhysical activity is clinically and behaviorally relevant.\nMovement patterns can help us understand mobility, routines, recovery, fatigue, sedentary behavior and changes in daily life.\nActivity recognition is also a classic wearable sensing problem. It is simple enough to teach clearly, but realistic enough to expose the challenges that appear in larger digital health systems.\nIn this project we focus on walking, sitting and standing.\nThese activities are simple, but meaningful:\n\nwalking is dynamic and often easier to detect,\nsitting and standing are low-motion states,\ndistinguishing sitting from standing shows why wearable ML is not always obvious.\n\nThe same pipeline can generalize to more complex tasks, such as rehabilitation monitoring, fall-risk assessment, sleep behavior analysis or long-term mobility tracking.",
     "crumbs": [
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>Introduction and Motivation</span>"
     ]
   },
   {
-    "objectID": "modules/01_introduction.html#semester-connection",
-    "href": "modules/01_introduction.html#semester-connection",
+    "objectID": "modules/01_introduction.html#the-engineering-challenge",
+    "href": "modules/01_introduction.html#the-engineering-challenge",
     "title": "2  Introduction and Motivation",
-    "section": "2.5 Semester Connection",
-    "text": "2.5 Semester Connection\nThis project connects the entire course.\n\n\n\nCourse Topic\nWhere It Appears in the Project\n\n\n\n\nSensors\nSmartphone accelerometer\n\n\nData Collection\nWISDM and phyphox\n\n\nData Engineering\nLoading, cleaning, structuring\n\n\nPreprocessing\nMagnitude and windowing\n\n\nFeature Engineering\nStatistical window features\n\n\nMachine Learning\nRandom Forest\n\n\nEvaluation\nRandom split vs subject-wise split\n\n\nDeployment\nFastAPI and Streamlit",
+    "section": "2.4 The Engineering Challenge",
+    "text": "2.4 The Engineering Challenge\nWearable data is useful because it comes from real life.\nThat is also what makes it difficult.\nData arrives continuously, so we must decide how to segment it into Windows. Labels are often imperfect because human activity does not always change at clean boundaries. Subjects differ in body movement, walking style and phone handling. Phone placement changes between pockets, hands, bags and tables.\nLive systems add another layer of reality. Even if the Model is correct, a demo can fail because the phone and laptop cannot communicate, a network blocks local traffic, phyphox is not reachable or a model artifact is missing.\nThis is why the project treats software engineering, reproducibility and deployment as part of the learning goal rather than as optional extras.",
     "crumbs": [
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>Introduction and Motivation</span>"
     ]
   },
   {
-    "objectID": "modules/01_introduction.html#required-tools",
-    "href": "modules/01_introduction.html#required-tools",
+    "objectID": "modules/01_introduction.html#thinking-like-an-engineer",
+    "href": "modules/01_introduction.html#thinking-like-an-engineer",
     "title": "2  Introduction and Motivation",
-    "section": "2.6 Required Tools",
-    "text": "2.6 Required Tools\nYou need:\n\nPython\nuv\nQuarto\nJupyter kernel\nphyphox app\nWISDM phone accelerometer data",
+    "section": "2.5 Thinking Like An Engineer",
+    "text": "2.5 Thinking Like An Engineer\nInstead of asking:\n\nWhat model should I train?\n\nask:\n\nWhat information is available, and what must happen before it can become a reliable Prediction?\n\nThis shift matters because the Model is only one component of the final system.",
     "crumbs": [
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>Introduction and Motivation</span>"
     ]
   },
   {
-    "objectID": "modules/01_introduction.html#networking-requirement",
-    "href": "modules/01_introduction.html#networking-requirement",
+    "objectID": "modules/01_introduction.html#what-have-we-achieved",
+    "href": "modules/01_introduction.html#what-have-we-achieved",
     "title": "2  Introduction and Motivation",
-    "section": "2.7 Networking Requirement",
-    "text": "2.7 Networking Requirement\nFor the live demo, your laptop and smartphone must be able to communicate in the same local network.\n\n\n\n\n\n\nWarningImportant\n\n\n\nUniversity networks such as eduroam may block direct communication between devices.\nIf phyphox is not reachable from your browser, use:\n\nsmartphone hotspot\nlocal WiFi\ntravel router",
+    "section": "2.6 What Have We Achieved?",
+    "text": "2.6 What Have We Achieved?\n\nWe framed wearable activity recognition as an end-to-end engineering problem.\nWe connected raw sensing to application decisions.\nWe identified why a Sensor Stream needs structure before it can support a Model.\nWe previewed the path from data to Deployment and Live Prediction.",
     "crumbs": [
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>Introduction and Motivation</span>"
     ]
   },
   {
-    "objectID": "modules/01_introduction.html#project-structure",
-    "href": "modules/01_introduction.html#project-structure",
+    "objectID": "modules/01_introduction.html#what-comes-next",
+    "href": "modules/01_introduction.html#what-comes-next",
     "title": "2  Introduction and Motivation",
-    "section": "2.8 Project Structure",
-    "text": "2.8 Project Structure\nThe project is organized as follows:\nde4w-live-activity-app/\n\n├── app/\n│   ├── api.py\n│   ├── config.py\n│   ├── feature_extraction.py\n│   ├── live_buffer.py\n│   ├── model_utils.py\n│   └── phyphox_client.py\n│\n├── data/\n├── docs/\n├── models/\n├── notebooks/\n├── dashboard.py\n├── pyproject.toml\n└── uv.lock",
-    "crumbs": [
-      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Introduction and Motivation</span>"
-    ]
-  },
-  {
-    "objectID": "modules/01_introduction.html#how-to-work-through-this-project",
-    "href": "modules/01_introduction.html#how-to-work-through-this-project",
-    "title": "2  Introduction and Motivation",
-    "section": "2.9 How to Work Through This Project",
-    "text": "2.9 How to Work Through This Project\nEach major step follows the same pattern:\n\nUnderstand the problem.\nImplement the solution.\nInspect the output.\nDiscuss what could go wrong.\nContinue to the next component.\n\nThe goal is not to copy code.\nThe goal is to understand the engineering decisions behind the code.",
-    "crumbs": [
-      "<span class='chapter-number'>2</span>  <span class='chapter-title'>Introduction and Motivation</span>"
-    ]
-  },
-  {
-    "objectID": "modules/01_introduction.html#chapter-summary",
-    "href": "modules/01_introduction.html#chapter-summary",
-    "title": "2  Introduction and Motivation",
-    "section": "2.10 Chapter Summary",
-    "text": "2.10 Chapter Summary\nIn this chapter you learned:\n\nwhat we will build\nwhy deployment matters\nhow the project connects to the semester\nwhich tools are required\nwhy networking matters for live sensor demos\nhow the project is structured\n\nNext, we will inspect the WISDM dataset and understand the raw smartphone accelerometer signals.",
+    "section": "2.7 What Comes Next?",
+    "text": "2.7 What Comes Next?\nBefore building the pipeline, we need to understand the data source. The next chapter introduces the WISDM dataset and explains why it is a good starting point for this project.",
     "crumbs": [
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>Introduction and Motivation</span>"
     ]
@@ -184,67 +154,77 @@
     "href": "modules/02_dataset.html#learning-objectives",
     "title": "3  Understanding the Dataset",
     "section": "",
-    "text": "understand the structure of the WISDM dataset\nexplain how wearable sensor data is organized\nidentify the most important attributes of the dataset\nunderstand why exploratory data analysis (EDA) is the first step of every machine learning project",
+    "text": "describe what the WISDM dataset contains,\nexplain why smartphone accelerometer data is useful for this project,\ninterpret one raw sensor measurement,\nexplain how activity labels make supervised learning possible,\njustify why we start with walking, sitting and standing.",
     "crumbs": [
       "<span class='chapter-number'>3</span>  <span class='chapter-title'>Understanding the Dataset</span>"
     ]
   },
   {
-    "objectID": "modules/02_dataset.html#why-do-we-start-with-the-data",
-    "href": "modules/02_dataset.html#why-do-we-start-with-the-data",
+    "objectID": "modules/02_dataset.html#why-we-start-with-the-data",
+    "href": "modules/02_dataset.html#why-we-start-with-the-data",
     "title": "3  Understanding the Dataset",
-    "section": "3.2 Why Do We Start with the Data?",
-    "text": "3.2 Why Do We Start with the Data?\nMany beginners believe that machine learning starts by choosing an algorithm.\nIn reality, every successful machine learning project starts with understanding the available data.\nBefore writing a single line of model training code, we should answer questions such as:\n\nWhat information is available?\nHow was the data collected?\nWhich sensors were used?\nWhat do the labels represent?\nAre there missing values?\nAre all activities equally represented?\n\n\n\n\n\n\n\nTipEngineering Insight\n\n\n\nExperienced data scientists usually spend much more time understanding and preparing data than training models.",
+    "section": "3.2 Why We Start With The Data",
+    "text": "3.2 Why We Start With The Data\nBefore we train a model, we need to understand what kind of data we have.\nMachine learning does not begin with an algorithm. It begins with measurements, labels, assumptions and constraints.\nIn this project, the WISDM dataset gives us real smartphone sensor recordings. Each row is one timestamped accelerometer measurement. Activity labels then turn raw movement into supervised learning data.\nThe goal of this chapter is not to load all files yet. That happens in the next chapter.\nThe goal here is to understand what the dataset represents and why it is suitable for the capstone project.\n\n\n\n\n\n\nTipEngineering Insight\n\n\n\nDataset choices are engineering decisions. A smaller, well-understood problem is often better for building a reliable first system.",
     "crumbs": [
       "<span class='chapter-number'>3</span>  <span class='chapter-title'>Understanding the Dataset</span>"
     ]
   },
   {
-    "objectID": "modules/02_dataset.html#the-wisdm-dataset",
-    "href": "modules/02_dataset.html#the-wisdm-dataset",
+    "objectID": "modules/02_dataset.html#what-is-wisdm",
+    "href": "modules/02_dataset.html#what-is-wisdm",
     "title": "3  Understanding the Dataset",
-    "section": "3.3 The WISDM Dataset",
-    "text": "3.3 The WISDM Dataset\nThroughout this project we use the WISDM Smartphone and Smartwatch Activity Dataset.\nFor simplicity, we only use smartphone accelerometer data.",
+    "section": "3.3 What Is WISDM?",
+    "text": "3.3 What Is WISDM?\nWISDM is a public activity recognition dataset used in wearable and mobile sensing research.\nIt contains sensor recordings from smartphones and smartwatches across multiple participants and multiple daily activities.\nThis makes it useful for a reproducible teaching project:\n\nthe data comes from real devices,\nthe labels are already available,\nthe task is understandable,\nthe same files can be used by every student,\nthe dataset is rich enough to demonstrate a complete pipeline.\n\nFor this capstone, we use the smartphone accelerometer recordings.",
     "crumbs": [
       "<span class='chapter-number'>3</span>  <span class='chapter-title'>Understanding the Dataset</span>"
     ]
   },
   {
-    "objectID": "modules/02_dataset.html#raw-file-structure",
-    "href": "modules/02_dataset.html#raw-file-structure",
+    "objectID": "modules/02_dataset.html#why-phone-accelerometer-data",
+    "href": "modules/02_dataset.html#why-phone-accelerometer-data",
     "title": "3  Understanding the Dataset",
-    "section": "3.4 Raw File Structure",
-    "text": "3.4 Raw File Structure\nEach participant is stored in a separate file.\ndata_1600_accel_phone.txt",
+    "section": "3.4 Why Phone Accelerometer Data?",
+    "text": "3.4 Why Phone Accelerometer Data?\nAlmost every smartphone contains an accelerometer.\nThat makes phone accelerometer data a good first example for wearable data engineering: it is familiar, accessible and directly connected to movement.\nIt also matches the live demo later in the project. The phyphox app streams smartphone acceleration from a real phone, so the offline WISDM data and the live demo use the same basic sensor type.\nAccelerometer signals contain enough variation to demonstrate the full pipeline:\n\ndynamic movement during walking,\nlower movement during sitting,\nsubtle differences between sitting and standing,\nsubject-to-subject variation.",
     "crumbs": [
       "<span class='chapter-number'>3</span>  <span class='chapter-title'>Understanding the Dataset</span>"
     ]
   },
   {
-    "objectID": "modules/02_dataset.html#one-measurement",
-    "href": "modules/02_dataset.html#one-measurement",
+    "objectID": "modules/02_dataset.html#one-row-one-measurement",
+    "href": "modules/02_dataset.html#one-row-one-measurement",
     "title": "3  Understanding the Dataset",
-    "section": "3.5 One Measurement",
-    "text": "3.5 One Measurement\nEach row represents one timestamped sensor measurement.\nsubject_id, activity_code, timestamp, x, y, z;",
+    "section": "3.5 One Row, One Measurement",
+    "text": "3.5 One Row, One Measurement\nEach raw WISDM row represents one timestamped sensor measurement.\nThe raw format is:\nsubject_id, activity_code, timestamp, x, y, z;\n\n\n\n\n\n\n\n\nColumn\nMeaning\nWhy it matters\n\n\n\n\nsubject_id\nParticipant identifier\nNeeded for subject-wise evaluation\n\n\nactivity_code\nLetter code for the activity\nBecomes the supervised learning label\n\n\ntimestamp\nTime of the measurement\nPreserves sequence and sampling behavior\n\n\nx\nAcceleration along the x-axis\nOne dimension of phone movement\n\n\ny\nAcceleration along the y-axis\nOne dimension of phone movement\n\n\nz\nAcceleration along the z-axis\nOne dimension of phone movement\n\n\n\nThe x, y and z values are not yet features for a classifier.\nThey are raw signal measurements that we will later transform into Windows and Feature Vectors.",
     "crumbs": [
       "<span class='chapter-number'>3</span>  <span class='chapter-title'>Understanding the Dataset</span>"
     ]
   },
   {
-    "objectID": "modules/02_dataset.html#understanding-the-columns",
-    "href": "modules/02_dataset.html#understanding-the-columns",
+    "objectID": "modules/02_dataset.html#from-files-to-a-learning-table",
+    "href": "modules/02_dataset.html#from-files-to-a-learning-table",
     "title": "3  Understanding the Dataset",
-    "section": "3.6 Understanding the Columns",
-    "text": "3.6 Understanding the Columns\n\n\n\nColumn\nDescription\n\n\n\n\nsubject_id\nParticipant identifier\n\n\nactivity_code\nActivity label\n\n\ntimestamp\nMeasurement timestamp\n\n\nx\nAcceleration along x-axis\n\n\ny\nAcceleration along y-axis\n\n\nz\nAcceleration along z-axis",
+    "section": "3.6 From Files To A Learning Table",
+    "text": "3.6 From Files To A Learning Table\nThe dataset begins as raw text files.\nThe project turns those files into a structured table for analysis and model training.\n\n\n\n\n\nflowchart LR\n  A[Raw Text Files] --&gt; B[Parsed Table]\n  B --&gt; C[Activity Mapping]\n  C --&gt; D[Selected Activities]\n  D --&gt; E[DataFrame]\n\n\n\n\n\n\nActivity labels are essential because they connect movement measurements to human meaning.\nWithout labels, we would only have sensor values.\nWith labels, the model can learn relationships between movement patterns and activities.",
     "crumbs": [
       "<span class='chapter-number'>3</span>  <span class='chapter-title'>Understanding the Dataset</span>"
     ]
   },
   {
-    "objectID": "modules/02_dataset.html#activity-mapping",
-    "href": "modules/02_dataset.html#activity-mapping",
+    "objectID": "modules/02_dataset.html#why-only-three-activities",
+    "href": "modules/02_dataset.html#why-only-three-activities",
     "title": "3  Understanding the Dataset",
-    "section": "3.7 Activity Mapping",
-    "text": "3.7 Activity Mapping\n\nACTIVITY_MAP = {\n    'A':'walking','B':'jogging','C':'stairs','D':'sitting','E':'standing',\n    'F':'typing','G':'brushing_teeth','H':'eating_soup','I':'eating_chips',\n    'J':'eating_pasta','K':'drinking','L':'eating_sandwich','M':'kicking',\n    'O':'catch','P':'dribbling','Q':'writing','R':'clapping','S':'folding_clothes'\n}\n\nTARGET_ACTIVITIES=['walking','sitting','standing']\n\n\n\n\n\n\n\nNoteRemember\n\n\n\nWe keep the complete activity mapping although we currently use only three activities.",
+    "section": "3.7 Why Only Three Activities?",
+    "text": "3.7 Why Only Three Activities?\nWISDM contains many activities, but we intentionally start with three:\n\nwalking,\nsitting,\nstanding.\n\nThis keeps the first system simple enough to understand.\nWalking is dynamic and usually produces a strong movement signal. Sitting and standing are intentionally similar low-motion activities. That similarity makes the task realistic: not every useful classification problem is visually obvious from the raw signal.\nThe goal is the full engineering pipeline, not maximum dataset complexity.\nOnce the pipeline works, the same structure can be extended to more activities or more sensors.",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Understanding the Dataset</span>"
+    ]
+  },
+  {
+    "objectID": "modules/02_dataset.html#thinking-like-an-engineer",
+    "href": "modules/02_dataset.html#thinking-like-an-engineer",
+    "title": "3  Understanding the Dataset",
+    "section": "3.8 Thinking Like An Engineer",
+    "text": "3.8 Thinking Like An Engineer\nInstead of asking:\n\nHow many activities can this dataset support?\n\nask:\n\nWhich activities make the first reliable end-to-end system easiest to understand?\n\nA smaller, well-understood problem helps us build trust in every step from Sensor Stream to Prediction.",
     "crumbs": [
       "<span class='chapter-number'>3</span>  <span class='chapter-title'>Understanding the Dataset</span>"
     ]
@@ -253,18 +233,38 @@
     "objectID": "modules/02_dataset.html#checkpoint",
     "href": "modules/02_dataset.html#checkpoint",
     "title": "3  Understanding the Dataset",
-    "section": "3.8 Checkpoint",
-    "text": "3.8 Checkpoint\n\nWhat does one row represent?\nWhy separate files per participant?\nWhy only three activities?\nWhy inspect the dataset before training?",
+    "section": "3.9 Checkpoint",
+    "text": "3.9 Checkpoint\nBefore continuing, you should be able to answer:\n\nWhat does one row in the raw dataset represent?\nWhy do activity labels matter for supervised learning?\nWhy is smartphone accelerometer data a good first wearable signal?\nWhy do we start with only walking, sitting and standing?",
     "crumbs": [
       "<span class='chapter-number'>3</span>  <span class='chapter-title'>Understanding the Dataset</span>"
     ]
   },
   {
-    "objectID": "modules/02_dataset.html#summary",
-    "href": "modules/02_dataset.html#summary",
+    "objectID": "modules/02_dataset.html#further-exploration",
+    "href": "modules/02_dataset.html#further-exploration",
     "title": "3  Understanding the Dataset",
-    "section": "3.9 Summary",
-    "text": "3.9 Summary\nIn the next chapter we will load all participant files and inspect the raw accelerometer signals.",
+    "section": "3.10 Further Exploration",
+    "text": "3.10 Further Exploration\nOptional: look up other activities available in WISDM.\nWhich activities would you expect to be easy to distinguish from walking?\nWhich activities might be confused with sitting or standing?",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Understanding the Dataset</span>"
+    ]
+  },
+  {
+    "objectID": "modules/02_dataset.html#what-have-we-achieved",
+    "href": "modules/02_dataset.html#what-have-we-achieved",
+    "title": "3  Understanding the Dataset",
+    "section": "3.11 What Have We Achieved?",
+    "text": "3.11 What Have We Achieved?\n\nWe identified WISDM as a reproducible dataset for wearable activity recognition.\nWe connected each row to one timestamped accelerometer measurement.\nWe explained how labels turn raw movement into supervised learning data.\nWe justified starting with walking, sitting, and standing.",
+    "crumbs": [
+      "<span class='chapter-number'>3</span>  <span class='chapter-title'>Understanding the Dataset</span>"
+    ]
+  },
+  {
+    "objectID": "modules/02_dataset.html#what-comes-next",
+    "href": "modules/02_dataset.html#what-comes-next",
+    "title": "3  Understanding the Dataset",
+    "section": "3.12 What Comes Next?",
+    "text": "3.12 What Comes Next?\nNow that we know what data we have, we need to check whether it behaves as expected. The next chapter loads the dataset and explores its quality before any Model is trained.",
     "crumbs": [
       "<span class='chapter-number'>3</span>  <span class='chapter-title'>Understanding the Dataset</span>"
     ]
@@ -274,137 +274,97 @@
     "href": "modules/03_loading_and_exploration.html",
     "title": "4  Loading and Exploring the Data",
     "section": "",
-    "text": "4.1 Learning Objectives\nAfter completing this chapter, you should be able to",
+    "text": "4.1 Never Trust Your Data\nEvery machine learning project starts with a quiet but important rule:\nThis does not mean we assume the dataset is bad.\nIt means we verify what is actually there before we build anything on top of it.\nModels only learn from the data we give them. If the data is incomplete, mislabeled, imbalanced, noisy or structured differently than we expect, the model will learn those problems too.\nTables help us count things.\nPlots help us see things.\nBoth matter.\nVisualization often reveals problems that are invisible in a summary table: spikes, flat signals, strange transitions, sensor noise or activity patterns that look less distinct than expected.",
     "crumbs": [
       "<span class='chapter-number'>4</span>  <span class='chapter-title'>Loading and Exploring the Data</span>"
     ]
   },
   {
-    "objectID": "modules/03_loading_and_exploration.html#learning-objectives",
-    "href": "modules/03_loading_and_exploration.html#learning-objectives",
+    "objectID": "modules/03_loading_and_exploration.html#never-trust-your-data",
+    "href": "modules/03_loading_and_exploration.html#never-trust-your-data",
     "title": "4  Loading and Exploring the Data",
     "section": "",
-    "text": "load one WISDM phone accelerometer file,\nload all participant files into one DataFrame,\nmap activity codes to readable activity names,\nrestrict the dataset to selected target activities,\ninspect class distribution and subject distribution,\ncompute and visualize acceleration magnitude,\nestimate the sampling rate from timestamps.",
+    "text": "Never trust your data.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nTipEngineering Insight\n\n\n\nExperienced ML engineers often spend much more time exploring and validating data than training models. A strong model cannot rescue a weak understanding of the dataset.",
     "crumbs": [
       "<span class='chapter-number'>4</span>  <span class='chapter-title'>Loading and Exploring the Data</span>"
     ]
   },
   {
-    "objectID": "modules/03_loading_and_exploration.html#why-this-chapter-matters",
-    "href": "modules/03_loading_and_exploration.html#why-this-chapter-matters",
+    "objectID": "modules/03_loading_and_exploration.html#setup",
+    "href": "modules/03_loading_and_exploration.html#setup",
     "title": "4  Loading and Exploring the Data",
-    "section": "4.2 Why This Chapter Matters",
-    "text": "4.2 Why This Chapter Matters\nBefore we create windows, extract features, or train a model, we need to make sure that we can load and understand the raw data.\nThis chapter turns a folder of raw text files into a structured table that we can analyze and process further.\n\n\n\n\n\n\nTipEngineering Insight\n\n\n\nA clean data loading step is one of the most important parts of a reproducible machine learning project.\nIf the loading logic is unclear or inconsistent, every later result becomes questionable.",
+    "section": "4.2 Setup",
+    "text": "4.2 Setup\nWe use reusable project functions to load the dataset.\nThe important part of this chapter is not the Python syntax.\nThe important part is what we check and why.\n\nfrom pathlib import Path\nimport sys\n\nimport matplotlib.pyplot as plt\nimport pandas as pd\n\ncurrent_path = Path.cwd().resolve()\n\nfor parent in [current_path] + list(current_path.parents):\n    if (parent / \"app\").exists():\n        PROJECT_ROOT = parent\n        break\nelse:\n    raise RuntimeError(\"Could not find project root containing app/ directory.\")\n\nsys.path.insert(0, str(PROJECT_ROOT))\n\nfrom app.config import DATA_DIR\nfrom app.data_loader import TARGET_ACTIVITIES, load_wisdm_phone_accel\nfrom app.pipeline import add_magnitude\n\n\ndf = load_wisdm_phone_accel(\n    DATA_DIR,\n    target_activities=TARGET_ACTIVITIES,\n)\n\ndf = add_magnitude(df)",
     "crumbs": [
       "<span class='chapter-number'>4</span>  <span class='chapter-title'>Loading and Exploring the Data</span>"
     ]
   },
   {
-    "objectID": "modules/03_loading_and_exploration.html#step-1-import-required-libraries",
-    "href": "modules/03_loading_and_exploration.html#step-1-import-required-libraries",
+    "objectID": "modules/03_loading_and_exploration.html#why-explore-data-before-building-models",
+    "href": "modules/03_loading_and_exploration.html#why-explore-data-before-building-models",
     "title": "4  Loading and Exploring the Data",
-    "section": "4.3 Step 1 — Import Required Libraries",
-    "text": "4.3 Step 1 — Import Required Libraries\n\n4.3.1 Goal\nWe import the libraries needed for data loading, numerical processing and visualization.\n\nfrom pathlib import Path\nimport sys\n\nimport numpy as np\nimport pandas as pd\nimport matplotlib.pyplot as plt\n\n\n\n4.3.2 Expected Output\nThis cell should run without errors.",
+    "section": "4.3 Why Explore Data Before Building Models?",
+    "text": "4.3 Why Explore Data Before Building Models?\nBefore training, we need to ask:\n\nWhat did we actually load?\nWhich subjects are represented?\nWhich activities are represented?\nHow many samples do we have?\nDo the signals look physically plausible?\nAre there obvious problems that would make evaluation misleading?\n\nBad data creates bad models.\nSometimes the problem is dramatic, such as missing files.\nSometimes it is subtle, such as one activity being recorded much more often than another, or one subject contributing far more data than the rest.\nA professional data engineer does not wait for the model to fail.\nThey inspect the data first.",
     "crumbs": [
       "<span class='chapter-number'>4</span>  <span class='chapter-title'>Loading and Exploring the Data</span>"
     ]
   },
   {
-    "objectID": "modules/03_loading_and_exploration.html#step-2-configure-project-paths",
-    "href": "modules/03_loading_and_exploration.html#step-2-configure-project-paths",
+    "objectID": "modules/03_loading_and_exploration.html#what-does-our-dataset-look-like",
+    "href": "modules/03_loading_and_exploration.html#what-does-our-dataset-look-like",
     "title": "4  Loading and Exploring the Data",
-    "section": "4.4 Step 2 — Configure Project Paths",
-    "text": "4.4 Step 2 — Configure Project Paths\n\n4.4.1 Goal\nWe define where the project root and the data directory are located.\n\ncurrent_path = Path.cwd().resolve()\n\nfor parent in [current_path] + list(current_path.parents):\n    if (parent / \"app\").exists():\n        PROJECT_ROOT = parent\n        break\nelse:\n    raise RuntimeError(\"Could not find project root containing app/ directory.\")\n\nsys.path.insert(0, str(PROJECT_ROOT))\n\nfrom app.config import DATA_DIR\nfrom app.data_loader import (\n    ACTIVITY_MAP,\n    TARGET_ACTIVITIES,\n    load_single_wisdm_file,\n    load_wisdm_phone_accel,\n)\nfrom app.pipeline import add_magnitude\n\n\nprint(\"Project root:\", PROJECT_ROOT)\nprint(\"Data directory:\", DATA_DIR)\n\nProject root: /Users/konak/HPI/Vorlesungen/Data Engineering for Wearables SS2026/Mini-Project/de4w-engineering-workbook\nData directory: /Users/konak/HPI/Vorlesungen/Data Engineering for Wearables SS2026/Mini-Project/de4w-engineering-workbook/data\n\n\n\n\n4.4.2 Expected Output\nThe output should point to your project folder and the data/ directory.\n\n\n\n\n\n\nWarningCommon Pitfall\n\n\n\nIf the printed path does not point to your project folder, you may have started Quarto from the wrong directory.",
+    "section": "4.4 What Does Our Dataset Look Like?",
+    "text": "4.4 What Does Our Dataset Look Like?\nThis first table answers the basic question:\n\nWhat kind of dataset are we about to use?\n\n\ndataset_summary = pd.DataFrame(\n    [\n        {\n            \"question\": \"How many samples?\",\n            \"answer\": len(df),\n            \"engineering meaning\": \"More samples can help, but only if they represent the real problem.\",\n        },\n        {\n            \"question\": \"How many subjects?\",\n            \"answer\": df[\"subject_id\"].nunique(),\n            \"engineering meaning\": \"More subjects make generalization to new people more realistic.\",\n        },\n        {\n            \"question\": \"Which activities?\",\n            \"answer\": \", \".join(sorted(df[\"activity\"].unique())),\n            \"engineering meaning\": \"The model can only learn activities present in the data.\",\n        },\n        {\n            \"question\": \"Which signal dimensions?\",\n            \"answer\": \"x, y, z, magnitude\",\n            \"engineering meaning\": \"These are the raw movement signals we will later summarize.\",\n        },\n    ]\n)\n\ndataset_summary\n\n\n\n\n\n\n\n\nquestion\nanswer\nengineering meaning\n\n\n\n\n0\nHow many samples?\n814013\nMore samples can help, but only if they repres...\n\n\n1\nHow many subjects?\n51\nMore subjects make generalization to new peopl...\n\n\n2\nWhich activities?\nsitting, standing, walking\nThe model can only learn activities present in...\n\n\n3\nWhich signal dimensions?\nx, y, z, magnitude\nThese are the raw movement signals we will lat...\n\n\n\n\n\n\n\nEvery number tells us something.\nThe number of samples tells us the scale of the data.\nThe number of subjects tells us whether we can test generalization across people.\nThe activity list tells us what the model can and cannot learn.\nThe signal dimensions tell us what physical measurements are available.\nNow we check whether the classes are roughly balanced.\n\nactivity_counts = (\n    df[\"activity\"]\n    .value_counts()\n    .rename_axis(\"activity\")\n    .reset_index(name=\"samples\")\n)\n\nactivity_counts\n\n\n\n\n\n\n\n\nactivity\nsamples\n\n\n\n\n0\nwalking\n279817\n\n\n1\nstanding\n269604\n\n\n2\nsitting\n264592\n\n\n\n\n\n\n\nThis table answers:\n\nIs one activity dominating the dataset?\n\nIf one class is much larger than the others, accuracy can become misleading. A model might perform well overall while still doing poorly on the smaller classes.\nWe also check the number of samples per subject.\n\nsubject_counts = (\n    df.groupby(\"subject_id\")\n    .size()\n    .describe()\n    .to_frame(name=\"samples per subject\")\n)\n\nsubject_counts\n\n\n\n\n\n\n\n\nsamples per subject\n\n\n\n\ncount\n51.000000\n\n\nmean\n15961.039216\n\n\nstd\n6580.439581\n\n\nmin\n10717.000000\n\n\n25%\n10719.000000\n\n\n50%\n13532.000000\n\n\n75%\n21477.500000\n\n\nmax\n27294.000000\n\n\n\n\n\n\n\nThis table answers:\n\nDo subjects contribute similar amounts of data?\n\nLarge differences matter because models may become biased toward subjects with more recordings.",
     "crumbs": [
       "<span class='chapter-number'>4</span>  <span class='chapter-title'>Loading and Exploring the Data</span>"
     ]
   },
   {
-    "objectID": "modules/03_loading_and_exploration.html#step-3-define-activity-mapping",
-    "href": "modules/03_loading_and_exploration.html#step-3-define-activity-mapping",
+    "objectID": "modules/03_loading_and_exploration.html#looking-at-the-signals",
+    "href": "modules/03_loading_and_exploration.html#looking-at-the-signals",
     "title": "4  Loading and Exploring the Data",
-    "section": "4.5 Step 3 — Define Activity Mapping",
-    "text": "4.5 Step 3 — Define Activity Mapping\n\n4.5.1 Goal\nThe raw WISDM files use activity codes such as A, D, and E.\nWe map these codes to readable names.\n\nACTIVITY_MAP\n\n{'A': 'walking',\n 'B': 'jogging',\n 'C': 'stairs',\n 'D': 'sitting',\n 'E': 'standing',\n 'F': 'typing',\n 'G': 'brushing_teeth',\n 'H': 'eating_soup',\n 'I': 'eating_chips',\n 'J': 'eating_pasta',\n 'K': 'drinking',\n 'L': 'eating_sandwich',\n 'M': 'kicking',\n 'O': 'catch',\n 'P': 'dribbling',\n 'Q': 'writing',\n 'R': 'clapping',\n 'S': 'folding_clothes'}\n\n\n\nTARGET_ACTIVITIES\n\n['walking', 'sitting', 'standing']\n\n\n\n\n4.5.2 Discussion\nWe keep the complete mapping even though we currently use only three activities.\nThis makes it easier to extend the project later.",
+    "section": "4.5 Looking At The Signals",
+    "text": "4.5 Looking At The Signals\nSensor values are physical measurements.\nThey are not abstract numbers.\nA phone accelerometer measures acceleration along three axes: x, y and z.\nThe signal includes several effects:\n\ngravity,\ndynamic acceleration from movement,\nnoise,\nvariability from phone placement and subject behavior.\n\nWe first inspect one walking segment.\n\nwalking_sample = (\n    df[df[\"activity\"] == \"walking\"]\n    .sort_values(\"timestamp\")\n    .head(400)\n    .reset_index(drop=True)\n)\n\nplt.figure(figsize=(12, 4))\nplt.plot(walking_sample[\"x\"], label=\"x\")\nplt.plot(walking_sample[\"y\"], label=\"y\")\nplt.plot(walking_sample[\"z\"], label=\"z\")\nplt.plot(walking_sample[\"magnitude\"], label=\"magnitude\", linewidth=2)\nplt.title(\"Walking accelerometer signal\")\nplt.xlabel(\"Sample\")\nplt.ylabel(\"Acceleration\")\nplt.legend()\nplt.show()\n\n\n\n\n\n\n\n\nHow should we read this figure?\nThe individual axes depend on how the phone is oriented.\nGravity contributes to the signal even when the phone is not moving.\nWalking adds dynamic acceleration, so the signal changes repeatedly over time.\nThe magnitude line combines x, y and z into one movement-strength signal. It is not perfect, but it is often easier to interpret than any single axis.",
     "crumbs": [
       "<span class='chapter-number'>4</span>  <span class='chapter-title'>Loading and Exploring the Data</span>"
     ]
   },
   {
-    "objectID": "modules/03_loading_and_exploration.html#step-4-inspect-available-files",
-    "href": "modules/03_loading_and_exploration.html#step-4-inspect-available-files",
+    "objectID": "modules/03_loading_and_exploration.html#what-can-we-already-observe",
+    "href": "modules/03_loading_and_exploration.html#what-can-we-already-observe",
     "title": "4  Loading and Exploring the Data",
-    "section": "4.6 Step 4 — Inspect Available Files",
-    "text": "4.6 Step 4 — Inspect Available Files\n\n4.6.1 Goal\nBefore loading the data, we check which raw files are available.\n\nfiles = sorted(DATA_DIR.glob(\"data_*_accel_phone.txt\"))\n\nlen(files), files[:5]\n\n(51,\n [PosixPath('/Users/konak/HPI/Vorlesungen/Data Engineering for Wearables SS2026/Mini-Project/de4w-engineering-workbook/data/data_1600_accel_phone.txt'),\n  PosixPath('/Users/konak/HPI/Vorlesungen/Data Engineering for Wearables SS2026/Mini-Project/de4w-engineering-workbook/data/data_1601_accel_phone.txt'),\n  PosixPath('/Users/konak/HPI/Vorlesungen/Data Engineering for Wearables SS2026/Mini-Project/de4w-engineering-workbook/data/data_1602_accel_phone.txt'),\n  PosixPath('/Users/konak/HPI/Vorlesungen/Data Engineering for Wearables SS2026/Mini-Project/de4w-engineering-workbook/data/data_1603_accel_phone.txt'),\n  PosixPath('/Users/konak/HPI/Vorlesungen/Data Engineering for Wearables SS2026/Mini-Project/de4w-engineering-workbook/data/data_1604_accel_phone.txt')])\n\n\n\n\n4.6.2 Expected Output\nYou should see approximately 51 files, one per participant.",
+    "section": "4.6 What Can We Already Observe?",
+    "text": "4.6 What Can We Already Observe?\nNow we compare the three target activities.\n\nplt.figure(figsize=(12, 5))\n\nfor activity in TARGET_ACTIVITIES:\n    signal = (\n        df[df[\"activity\"] == activity][\"magnitude\"]\n        .head(400)\n        .reset_index(drop=True)\n    )\n    plt.plot(signal, label=activity)\n\nplt.title(\"Magnitude comparison across activities\")\nplt.xlabel(\"Sample\")\nplt.ylabel(\"Acceleration magnitude\")\nplt.legend()\nplt.show()\n\n\n\n\n\n\n\n\nThis plot is not a model.\nIt is an engineering sanity check.\nAsk yourself:\n\nCan you already see why walking may be easier to classify?\nDo sitting and standing look more similar?\nAre there spikes or unusual regions?\nDoes the signal look plausible for human movement?\n\nWalking usually has stronger and more repeated movement.\nSitting and standing are lower-motion states. They may be meaningful in real life, but they are harder to separate from accelerometer data alone.\nThat observation will matter later when we evaluate the model.",
     "crumbs": [
       "<span class='chapter-number'>4</span>  <span class='chapter-title'>Loading and Exploring the Data</span>"
     ]
   },
   {
-    "objectID": "modules/03_loading_and_exploration.html#step-5-load-one-participant-file",
-    "href": "modules/03_loading_and_exploration.html#step-5-load-one-participant-file",
+    "objectID": "modules/03_loading_and_exploration.html#sampling-rate-sanity-check",
+    "href": "modules/03_loading_and_exploration.html#sampling-rate-sanity-check",
     "title": "4  Loading and Exploring the Data",
-    "section": "4.7 Step 5 — Load One Participant File",
-    "text": "4.7 Step 5 — Load One Participant File\n\n4.7.1 Goal\nWe first load a single file to understand the raw structure.\n\nload_single_wisdm_file\n\n&lt;function app.data_loader.load_single_wisdm_file(file_path: pathlib.Path) -&gt; pandas.DataFrame&gt;\n\n\n\ndf_one = load_single_wisdm_file(files[0])\n\ndf_one.head()\n\n\n\n\n\n\n\n\nsubject_id\nactivity_code\ntimestamp\nx\ny\nz\nactivity\n\n\n\n\n0\n1600\nA\n252207666810782\n-0.364761\n8.793503\n1.055084\nwalking\n\n\n1\n1600\nA\n252207717164786\n-0.879730\n9.768784\n1.016998\nwalking\n\n\n2\n1600\nA\n252207767518790\n2.001495\n11.109070\n2.619156\nwalking\n\n\n3\n1600\nA\n252207817872794\n0.450623\n12.651642\n0.184555\nwalking\n\n\n4\n1600\nA\n252207868226798\n-2.164352\n13.928436\n-4.422485\nwalking\n\n\n\n\n\n\n\n\n\n4.7.2 Expected Output\nYou should see a table with the columns:\nsubject_id, activity_code, timestamp, x, y, z, activity",
+    "section": "4.7 Sampling Rate Sanity Check",
+    "text": "4.7 Sampling Rate Sanity Check\nThe WISDM documentation states that the data was collected at approximately 20 Hz.\nWe should still verify that assumption from the timestamps.\n\nsubject = df[\"subject_id\"].iloc[0]\nactivity = \"walking\"\n\nsample = df[\n    (df[\"subject_id\"] == subject)\n    & (df[\"activity\"] == activity)\n].sort_values(\"timestamp\")\n\ndt = sample[\"timestamp\"].diff().dropna()\nestimated_sampling_rate = 1e9 / dt.mean()\n\nestimated_sampling_rate\n\nnp.float64(19.85939378331699)\n\n\nThis number answers:\n\nHow much real time does one sample represent?\n\nThat matters because window size is measured in samples.\nA 100-sample window means something different at 20 Hz than it would at 100 Hz.",
     "crumbs": [
       "<span class='chapter-number'>4</span>  <span class='chapter-title'>Loading and Exploring the Data</span>"
     ]
   },
   {
-    "objectID": "modules/03_loading_and_exploration.html#step-6-load-all-participant-files",
-    "href": "modules/03_loading_and_exploration.html#step-6-load-all-participant-files",
+    "objectID": "modules/03_loading_and_exploration.html#data-quality-checklist",
+    "href": "modules/03_loading_and_exploration.html#data-quality-checklist",
     "title": "4  Loading and Exploring the Data",
-    "section": "4.8 Step 6 — Load All Participant Files",
-    "text": "4.8 Step 6 — Load All Participant Files\n\n4.8.1 Goal\nWe now load all phone accelerometer files and combine them into a single DataFrame.\n\nload_wisdm_phone_accel\n\n&lt;function app.data_loader.load_wisdm_phone_accel(data_dir: pathlib.Path, target_activities: collections.abc.Sequence[str] | None = ['walking', 'sitting', 'standing']) -&gt; pandas.DataFrame&gt;\n\n\n\ndf = load_wisdm_phone_accel(\n    DATA_DIR,\n    target_activities=TARGET_ACTIVITIES,\n)\n\ndf.head()\n\n\n\n\n\n\n\n\nsubject_id\nactivity_code\ntimestamp\nx\ny\nz\nactivity\n\n\n\n\n0\n1600\nA\n252207666810782\n-0.364761\n8.793503\n1.055084\nwalking\n\n\n1\n1600\nA\n252207717164786\n-0.879730\n9.768784\n1.016998\nwalking\n\n\n2\n1600\nA\n252207767518790\n2.001495\n11.109070\n2.619156\nwalking\n\n\n3\n1600\nA\n252207817872794\n0.450623\n12.651642\n0.184555\nwalking\n\n\n4\n1600\nA\n252207868226798\n-2.164352\n13.928436\n-4.422485\nwalking",
+    "section": "4.8 Data Quality Checklist",
+    "text": "4.8 Data Quality Checklist\nBefore modeling, a data engineer should build a checklist.\n\n\n\n\n\n\n\nCheck\nWhy it matters\n\n\n\n\nMissing values\nMissing x, y or z values can break feature extraction or create misleading statistics.\n\n\nUnexpected timestamps\nIrregular timing changes the meaning of a fixed-size window.\n\n\nConstant signals\nA flat signal may indicate a sensor problem or a recording that contains no useful movement.\n\n\nSensor spikes\nExtreme values can dominate features such as maximum and energy.\n\n\nDifferent recording lengths\nSome subjects or activities may influence the model more than others.\n\n\nClass imbalance\nAccuracy can hide poor performance on smaller classes.\n\n\nSubject imbalance\nEvaluation can become biased toward heavily represented participants.\n\n\n\nThis checklist is not bureaucracy.\nIt protects the rest of the pipeline.\nEvery later step depends on the assumptions we accept here.",
     "crumbs": [
       "<span class='chapter-number'>4</span>  <span class='chapter-title'>Loading and Exploring the Data</span>"
     ]
   },
   {
-    "objectID": "modules/03_loading_and_exploration.html#step-7-inspect-the-dataset",
-    "href": "modules/03_loading_and_exploration.html#step-7-inspect-the-dataset",
+    "objectID": "modules/03_loading_and_exploration.html#thinking-like-an-engineer",
+    "href": "modules/03_loading_and_exploration.html#thinking-like-an-engineer",
     "title": "4  Loading and Exploring the Data",
-    "section": "4.9 Step 7 — Inspect the Dataset",
-    "text": "4.9 Step 7 — Inspect the Dataset\n\n4.9.1 Goal\nWe check the size, classes and number of subjects.\n\ndf.shape\n\n(814013, 7)\n\n\n\ndf[\"activity\"].value_counts()\n\nactivity\nwalking     279817\nstanding    269604\nsitting     264592\nName: count, dtype: int64\n\n\n\ndf[\"subject_id\"].nunique()\n\n51\n\n\n\n\n4.9.2 Discussion\nAt this point, we should verify that\n\nall expected subjects were loaded,\nall target activities are present,\nthe class distribution is not extremely imbalanced.",
-    "crumbs": [
-      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Loading and Exploring the Data</span>"
-    ]
-  },
-  {
-    "objectID": "modules/03_loading_and_exploration.html#step-8-add-acceleration-magnitude",
-    "href": "modules/03_loading_and_exploration.html#step-8-add-acceleration-magnitude",
-    "title": "4  Loading and Exploring the Data",
-    "section": "4.10 Step 8 — Add Acceleration Magnitude",
-    "text": "4.10 Step 8 — Add Acceleration Magnitude\n\n4.10.1 Goal\nWe compute the magnitude of the three-dimensional acceleration vector.\n\\[\nm = \\sqrt{x^2 + y^2 + z^2}\n\\]\n\ndf = add_magnitude(df)\n\ndf.head()\n\n\n\n\n\n\n\n\nsubject_id\nactivity_code\ntimestamp\nx\ny\nz\nactivity\nmagnitude\n\n\n\n\n0\n1600\nA\n252207666810782\n-0.364761\n8.793503\n1.055084\nwalking\n8.864082\n\n\n1\n1600\nA\n252207717164786\n-0.879730\n9.768784\n1.016998\nwalking\n9.860900\n\n\n2\n1600\nA\n252207767518790\n2.001495\n11.109070\n2.619156\nwalking\n11.587812\n\n\n3\n1600\nA\n252207817872794\n0.450623\n12.651642\n0.184555\nwalking\n12.661010\n\n\n4\n1600\nA\n252207868226798\n-2.164352\n13.928436\n-4.422485\nwalking\n14.773088\n\n\n\n\n\n\n\n\n\n4.10.2 Discussion\nThe magnitude combines all three axes into one signal.\nIt is often easier to interpret than individual axes because it is less sensitive to phone orientation.",
-    "crumbs": [
-      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Loading and Exploring the Data</span>"
-    ]
-  },
-  {
-    "objectID": "modules/03_loading_and_exploration.html#step-9-plot-one-activity",
-    "href": "modules/03_loading_and_exploration.html#step-9-plot-one-activity",
-    "title": "4  Loading and Exploring the Data",
-    "section": "4.11 Step 9 — Plot One Activity",
-    "text": "4.11 Step 9 — Plot One Activity\n\n4.11.1 Goal\nWe visualize x, y, z and magnitude for one activity.\n\nactivity = \"walking\"\n\nsample = (\n    df[df[\"activity\"] == activity]\n    .head(400)\n    .reset_index(drop=True)\n)\n\nplt.figure(figsize=(12, 4))\nplt.plot(sample[\"x\"], label=\"x\")\nplt.plot(sample[\"y\"], label=\"y\")\nplt.plot(sample[\"z\"], label=\"z\")\nplt.plot(sample[\"magnitude\"], label=\"magnitude\", linewidth=2)\n\nplt.title(f\"Phone accelerometer signal: {activity}\")\nplt.xlabel(\"Sample\")\nplt.ylabel(\"Acceleration [m/s²]\")\nplt.legend()\nplt.show()\n\n\n\n\n\n\n\n\n\n\n4.11.2 Discussion\nWalking usually produces a more dynamic and periodic signal than sitting or standing.",
-    "crumbs": [
-      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Loading and Exploring the Data</span>"
-    ]
-  },
-  {
-    "objectID": "modules/03_loading_and_exploration.html#step-10-compare-activities",
-    "href": "modules/03_loading_and_exploration.html#step-10-compare-activities",
-    "title": "4  Loading and Exploring the Data",
-    "section": "4.12 Step 10 — Compare Activities",
-    "text": "4.12 Step 10 — Compare Activities\n\n4.12.1 Goal\nWe compare the magnitude signal for walking, sitting and standing.\n\nplt.figure(figsize=(12, 5))\n\nfor activity in TARGET_ACTIVITIES:\n    signal = (\n        df[df[\"activity\"] == activity][\"magnitude\"]\n        .head(400)\n        .reset_index(drop=True)\n    )\n    plt.plot(signal, label=activity)\n\nplt.title(\"Magnitude comparison\")\nplt.xlabel(\"Sample\")\nplt.ylabel(\"Magnitude\")\nplt.legend()\nplt.show()\n\n\n\n\n\n\n\n\n\n\n4.12.2 Discussion\nWalking should usually be easier to distinguish because it contains stronger and more regular movement.\nSitting and standing are more similar and may be harder to separate.",
-    "crumbs": [
-      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Loading and Exploring the Data</span>"
-    ]
-  },
-  {
-    "objectID": "modules/03_loading_and_exploration.html#step-11-estimate-the-sampling-rate",
-    "href": "modules/03_loading_and_exploration.html#step-11-estimate-the-sampling-rate",
-    "title": "4  Loading and Exploring the Data",
-    "section": "4.13 Step 11 — Estimate the Sampling Rate",
-    "text": "4.13 Step 11 — Estimate the Sampling Rate\n\n4.13.1 Goal\nThe WISDM documentation states that the data was collected at approximately 20 Hz.\nWe estimate the sampling rate from timestamps.\n\nsubject = df[\"subject_id\"].iloc[0]\nactivity = \"walking\"\n\nsample = df[\n    (df[\"subject_id\"] == subject)\n    & (df[\"activity\"] == activity)\n].sort_values(\"timestamp\")\n\ndt = sample[\"timestamp\"].diff().dropna()\n\nsampling_rate = 1e9 / dt.mean()\n\nsampling_rate\n\nnp.float64(19.85939378331699)\n\n\n\n\n4.13.2 Expected Output\nThe result should be close to 20 Hz.\n\n\n\n\n\n\nNoteRemember\n\n\n\nDocumentation is important, but data engineers should still verify assumptions directly from the data.",
+    "section": "4.9 Thinking Like An Engineer",
+    "text": "4.9 Thinking Like An Engineer\nA beginner might ask:\n\nCan I train a model?\n\nAn engineer asks:\n\nWhat assumptions am I making about the data?\n\nFor this dataset, we are already making several assumptions:\n\nactivity labels are correct enough to learn from,\nthe sampling rate is close enough to 20 Hz,\nwindows will capture meaningful movement,\nthe selected activities are represented well enough,\nsubject differences are important and should be evaluated later.\n\nThe point of exploration is to make those assumptions visible.\nOnce assumptions are visible, we can test them.",
     "crumbs": [
       "<span class='chapter-number'>4</span>  <span class='chapter-title'>Loading and Exploring the Data</span>"
     ]
@@ -413,8 +373,8 @@
     "objectID": "modules/03_loading_and_exploration.html#checkpoint",
     "href": "modules/03_loading_and_exploration.html#checkpoint",
     "title": "4  Loading and Exploring the Data",
-    "section": "4.14 Checkpoint",
-    "text": "4.14 Checkpoint\nBefore continuing, you should be able to answer:\n\nWhy do we load one file before loading all files?\nWhy do we keep the subject identifier?\nWhat is acceleration magnitude?\nWhy are sitting and standing harder to distinguish than walking?\nWhy is the sampling rate important for the next chapter?",
+    "section": "4.10 Checkpoint",
+    "text": "4.10 Checkpoint\nBefore continuing, you should be able to answer:\n\nWhy should we inspect data before training a model?\nWhy can visualization reveal problems that tables miss?\nWhy might walking be easier to classify than sitting or standing?\nWhy does subject imbalance matter?\nWhy is the sampling rate important for windowing?",
     "crumbs": [
       "<span class='chapter-number'>4</span>  <span class='chapter-title'>Loading and Exploring the Data</span>"
     ]
@@ -423,18 +383,28 @@
     "objectID": "modules/03_loading_and_exploration.html#further-exploration",
     "href": "modules/03_loading_and_exploration.html#further-exploration",
     "title": "4  Loading and Exploring the Data",
-    "section": "4.15 Further Exploration",
-    "text": "4.15 Further Exploration\nOptional: modify the target activity selection so that the dataset also includes jogging.\nWhich parts of the pipeline would change?",
+    "section": "4.11 Further Exploration",
+    "text": "4.11 Further Exploration\nOptional investigations:\n\ncompare the same activity for two different subjects,\ncompare signal histograms across activities,\nlook for unusually flat or spiky signal segments.\n\nThese are not required for the first pass.\nThey are examples of how professional data exploration can go deeper.",
     "crumbs": [
       "<span class='chapter-number'>4</span>  <span class='chapter-title'>Loading and Exploring the Data</span>"
     ]
   },
   {
-    "objectID": "modules/03_loading_and_exploration.html#summary",
-    "href": "modules/03_loading_and_exploration.html#summary",
+    "objectID": "modules/03_loading_and_exploration.html#what-have-we-achieved",
+    "href": "modules/03_loading_and_exploration.html#what-have-we-achieved",
     "title": "4  Loading and Exploring the Data",
-    "section": "4.16 Summary",
-    "text": "4.16 Summary\nIn this chapter you learned how to\n\nload one raw WISDM file,\nload all participant files,\nmap activity codes,\ninspect class and subject distributions,\ncompute acceleration magnitude,\nvisualize raw signals,\nestimate sampling rate.\n\nIn the next chapter we will transform the continuous sensor stream into fixed-size windows.",
+    "section": "4.12 What Have We Achieved?",
+    "text": "4.12 What Have We Achieved?\n\nWe loaded the selected WISDM activities into a usable table.\nWe inspected subjects, activities, samples, and signal dimensions.\nWe interpreted accelerometer plots instead of trusting tables alone.\nWe built a checklist for common Sensor Stream quality problems.\nWe practiced asking what assumptions the data supports.",
+    "crumbs": [
+      "<span class='chapter-number'>4</span>  <span class='chapter-title'>Loading and Exploring the Data</span>"
+    ]
+  },
+  {
+    "objectID": "modules/03_loading_and_exploration.html#what-comes-next",
+    "href": "modules/03_loading_and_exploration.html#what-comes-next",
+    "title": "4  Loading and Exploring the Data",
+    "section": "4.13 What Comes Next?",
+    "text": "4.13 What Comes Next?\nExploration shows us that the data is continuous, but machine learning needs fixed-size observations. The next chapter turns the Sensor Stream into Windows.",
     "crumbs": [
       "<span class='chapter-number'>4</span>  <span class='chapter-title'>Loading and Exploring the Data</span>"
     ]
@@ -444,17 +414,7 @@
     "href": "modules/04_windowing.html",
     "title": "5  Windowing",
     "section": "",
-    "text": "5.1 Learning Objectives\nAfter completing this chapter, you should be able to",
-    "crumbs": [
-      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Windowing</span>"
-    ]
-  },
-  {
-    "objectID": "modules/04_windowing.html#learning-objectives",
-    "href": "modules/04_windowing.html#learning-objectives",
-    "title": "5  Windowing",
-    "section": "",
-    "text": "explain why continuous sensor streams must be segmented into windows,\nuse reusable windowing code from the app/ package,\ncreate windows for one activity,\ncreate windows safely per subject and activity,\nunderstand how window size affects live prediction.",
+    "text": "5.1 How Can A Model Understand Something That Never Stops?\nWearable sensors do not wait for us to ask a neat question.\nThey keep measuring.\nA phone accelerometer can produce sample after sample while a person walks, sits, stands, turns, pauses or changes phone position.\nMachine learning models, however, usually expect finite observations: one row, one Feature Vector, one Prediction.\nWindowing is the bridge between continuous time and tabular machine learning.\nIt turns an endless Sensor Stream into many fixed-size pieces that a Model can learn from.",
     "crumbs": [
       "<span class='chapter-number'>5</span>  <span class='chapter-title'>Windowing</span>"
     ]
@@ -464,57 +424,77 @@
     "href": "modules/04_windowing.html#setup",
     "title": "5  Windowing",
     "section": "5.2 Setup",
-    "text": "5.2 Setup\n\nfrom pathlib import Path\nimport sys\n\nimport numpy as np\nimport matplotlib.pyplot as plt\n\ncurrent_path = Path.cwd().resolve()\n\nfor parent in [current_path] + list(current_path.parents):\n    if (parent / \"app\").exists():\n        PROJECT_ROOT = parent\n        break\nelse:\n    raise RuntimeError(\"Could not find project root containing app/ directory.\")\n\nsys.path.insert(0, str(PROJECT_ROOT))\n\nfrom app.config import WINDOW_SIZE\nfrom app.data_loader import load_wisdm_phone_accel\nfrom app.pipeline import add_magnitude\nfrom app.windowing import create_windows, create_grouped_windows\n\nDATA_DIR = PROJECT_ROOT / \"data\"\n\ndf = load_wisdm_phone_accel(DATA_DIR)\ndf = add_magnitude(df)\n\n\n\n\n\n\n\nImportantSoftware Engineering Principle\n\n\n\nThis chapter does not redefine create_windows().\nInstead, it imports reusable project code from app.windowing.\nThis follows the Don’t Repeat Yourself (DRY) principle.",
+    "text": "5.2 Setup\nWe use reusable project code to load the data and create windows.\nThe purpose of this chapter is to understand the engineering decision behind windowing.\n\nfrom pathlib import Path\nimport sys\n\nimport matplotlib.pyplot as plt\n\ncurrent_path = Path.cwd().resolve()\n\nfor parent in [current_path] + list(current_path.parents):\n    if (parent / \"app\").exists():\n        PROJECT_ROOT = parent\n        break\nelse:\n    raise RuntimeError(\"Could not find project root containing app/ directory.\")\n\nsys.path.insert(0, str(PROJECT_ROOT))\n\nfrom app.config import WINDOW_SIZE\nfrom app.data_loader import load_wisdm_phone_accel\nfrom app.pipeline import add_magnitude\nfrom app.windowing import create_grouped_windows, create_windows\n\nDATA_DIR = PROJECT_ROOT / \"data\"\n\ndf = load_wisdm_phone_accel(DATA_DIR)\ndf = add_magnitude(df)",
     "crumbs": [
       "<span class='chapter-number'>5</span>  <span class='chapter-title'>Windowing</span>"
     ]
   },
   {
-    "objectID": "modules/04_windowing.html#why-do-we-need-windowing",
-    "href": "modules/04_windowing.html#why-do-we-need-windowing",
+    "objectID": "modules/04_windowing.html#continuous-signals-vs-machine-learning",
+    "href": "modules/04_windowing.html#continuous-signals-vs-machine-learning",
     "title": "5  Windowing",
-    "section": "5.3 Why Do We Need Windowing?",
-    "text": "5.3 Why Do We Need Windowing?\nWearable sensors produce a continuous stream of measurements.\nClassical machine learning algorithms expect fixed-size samples.\nWindowing bridges this gap by splitting a continuous stream into equally sized segments.",
+    "section": "5.3 Continuous Signals vs Machine Learning",
+    "text": "5.3 Continuous Signals vs Machine Learning\nA Sensor Stream is like a movie.\nA machine learning table is more like a photo album.\nThe movie never really stops. The table needs individual examples.\nThat mismatch is why windowing exists.\n\n\n\n\n\nflowchart LR\n  A[Continuous wearable stream] --&gt; B[Windowing]\n  B --&gt; C[Fixed-size observations]\n  C --&gt; D[Tabular ML model]\n\n\n\n\n\n\nThe stream preserves time.\nThe window creates a bounded observation.\nThe model receives a finite object it can classify.\nWithout windowing, a classical machine learning model has no clear answer to a basic question:\n\nWhich part of the stream should become one training example?",
     "crumbs": [
       "<span class='chapter-number'>5</span>  <span class='chapter-title'>Windowing</span>"
     ]
   },
   {
-    "objectID": "modules/04_windowing.html#step-1-create-windows-for-walking",
-    "href": "modules/04_windowing.html#step-1-create-windows-for-walking",
+    "objectID": "modules/04_windowing.html#what-is-a-window",
+    "href": "modules/04_windowing.html#what-is-a-window",
     "title": "5  Windowing",
-    "section": "5.4 Step 1 — Create Windows for Walking",
-    "text": "5.4 Step 1 — Create Windows for Walking\n\nwalking_df = (\n    df[df[\"activity\"] == \"walking\"]\n    .sort_values(\"timestamp\")\n    .copy()\n)\n\nwalking_windows = create_windows(\n    walking_df,\n    window_size=WINDOW_SIZE,\n)\n\nlen(walking_windows)\n\n2798",
+    "section": "5.4 What Is A Window?",
+    "text": "5.4 What Is A Window?\nA window is a short segment of consecutive sensor samples.\nFor example, if the sensor records at about 20 Hz, then 100 samples represent about five seconds.\n\n\n\n\n\nflowchart TD\n  A[Continuous Signal]\n  --&gt; B[One Window]\n  --&gt; C[Many Windows]\n\n\n\n\n\n\nWe first inspect windows for walking.\n\nwalking_df = (\n    df[df[\"activity\"] == \"walking\"]\n    .sort_values(\"timestamp\")\n    .copy()\n)\n\nwalking_windows = create_windows(\n    walking_df,\n    window_size=WINDOW_SIZE,\n)\n\nlen(walking_windows)\n\n2798\n\n\nEach window has the same number of rows.\n\nfirst_window = walking_windows[0]\n\nfirst_window.shape\n\n(100, 8)\n\n\nNow we visualize one real window.\n\nplt.figure(figsize=(10, 4))\nplt.plot(first_window[\"magnitude\"])\nplt.title(\"One Walking Window\")\nplt.xlabel(\"Sample inside the window\")\nplt.ylabel(\"Acceleration magnitude\")\nplt.show()\n\n\n\n\n\n\n\n\nThis figure shows one bounded moment of activity.\nThe model will not see the entire recording at once.\nIt will see many windows like this, each summarized into features in the next chapter.",
     "crumbs": [
       "<span class='chapter-number'>5</span>  <span class='chapter-title'>Windowing</span>"
     ]
   },
   {
-    "objectID": "modules/04_windowing.html#step-2-inspect-one-window",
-    "href": "modules/04_windowing.html#step-2-inspect-one-window",
+    "objectID": "modules/04_windowing.html#why-five-seconds",
+    "href": "modules/04_windowing.html#why-five-seconds",
     "title": "5  Windowing",
-    "section": "5.5 Step 2 — Inspect One Window",
-    "text": "5.5 Step 2 — Inspect One Window\n\nfirst_window = walking_windows[0]\n\nfirst_window.head()\n\n\n\n\n\n\n\n\nsubject_id\nactivity_code\ntimestamp\nx\ny\nz\nactivity\nmagnitude\n\n\n\n\n303991\n1623\nA\n2520219142823\n-0.152512\n-8.585220\n-1.219192\nwalking\n8.672698\n\n\n303992\n1623\nA\n2520269496827\n0.999466\n-8.196548\n-0.758926\nwalking\n8.292063\n\n\n303993\n1623\nA\n2520319850830\n0.450241\n-8.701187\n-1.290024\nwalking\n8.807811\n\n\n303994\n1623\nA\n2520370204834\n-0.042175\n-9.739563\n-1.787415\nwalking\n9.902309\n\n\n303995\n1623\nA\n2520420558838\n3.551483\n-10.745132\n-1.266403\nwalking\n11.387479\n\n\n\n\n\n\n\n\nfirst_window.shape\n\n(100, 8)",
+    "section": "5.5 Why Five Seconds?",
+    "text": "5.5 Why Five Seconds?\nThis project uses 100 samples per window.\nAt approximately 20 Hz, that is about five seconds.\nFive seconds is not magic.\nIt is a trade-off.\nShort windows can react quickly. That is useful for live prediction because the dashboard can update sooner. But short windows may not contain enough movement to represent the activity clearly.\nLong windows are often more stable. They contain more evidence. But they increase latency because the system must wait longer before making a prediction.\nFor live systems, this trade-off is very concrete:\n\nshorter window: faster response, noisier prediction,\nlonger window: slower response, more stable prediction.\n\nWindow size controls how quickly the system can notice that something changed.",
     "crumbs": [
       "<span class='chapter-number'>5</span>  <span class='chapter-title'>Windowing</span>"
     ]
   },
   {
-    "objectID": "modules/04_windowing.html#step-3-visualize-one-window",
-    "href": "modules/04_windowing.html#step-3-visualize-one-window",
+    "objectID": "modules/04_windowing.html#non-overlapping-vs-sliding-windows",
+    "href": "modules/04_windowing.html#non-overlapping-vs-sliding-windows",
     "title": "5  Windowing",
-    "section": "5.6 Step 3 — Visualize One Window",
-    "text": "5.6 Step 3 — Visualize One Window\n\nplt.figure(figsize=(10, 4))\n\nplt.plot(first_window[\"magnitude\"])\n\nplt.title(\"One Walking Window\")\nplt.xlabel(\"Sample\")\nplt.ylabel(\"Magnitude\")\nplt.show()",
+    "section": "5.6 Non-Overlapping vs Sliding Windows",
+    "text": "5.6 Non-Overlapping vs Sliding Windows\nThere are two common ways to create windows.\nNon-overlapping windows use each sample once.\nSliding windows move forward by a smaller step and overlap with previous windows.\n\n\n\n\n\nflowchart TD\n  A[Samples 1-100] --&gt; B[Non-overlapping: next window starts at 101]\n  C[Samples 1-100] --&gt; D[Sliding: next window starts at 21]\n  D --&gt; E[Overlap: samples 21-100 appear again]\n\n\n\n\n\n\nOverlapping windows can produce smoother predictions because the model receives updates more often.\nThey also duplicate information.\nThat increases computational cost and can make evaluation more complicated if highly similar windows appear in both train and test data.\nThis project intentionally starts with non-overlapping windows.\nThat choice keeps the first system easier to reason about:\n\nfewer windows,\nless duplicated information,\nsimpler evaluation,\nclearer connection between raw data and training examples.",
     "crumbs": [
       "<span class='chapter-number'>5</span>  <span class='chapter-title'>Windowing</span>"
     ]
   },
   {
-    "objectID": "modules/04_windowing.html#step-4-create-windows-for-the-entire-dataset",
-    "href": "modules/04_windowing.html#step-4-create-windows-for-the-entire-dataset",
+    "objectID": "modules/04_windowing.html#choosing-a-window-size",
+    "href": "modules/04_windowing.html#choosing-a-window-size",
     "title": "5  Windowing",
-    "section": "5.7 Step 4 — Create Windows for the Entire Dataset",
-    "text": "5.7 Step 4 — Create Windows for the Entire Dataset\n\nall_windows = create_grouped_windows(\n    df,\n    window_size=WINDOW_SIZE,\n)\n\nlen(all_windows)\n\n8066\n\n\n\n\n\n\n\n\nWarningCommon Pitfall\n\n\n\nAlways create windows separately for each subject and activity.\nOtherwise, a window may contain multiple activities.",
+    "section": "5.7 Choosing A Window Size",
+    "text": "5.7 Choosing A Window Size\nDifferent applications need different windows.\n\n\n\n\n\n\n\n\n\nWindow Size\nAdvantages\nDisadvantages\nTypical Use Cases\n\n\n\n\n1 s\nVery responsive\nOften noisy and incomplete\nFast gestures, quick feedback\n\n\n2 s\nStill responsive, slightly more context\nMay miss slower activity patterns\nLightweight live demos\n\n\n5 s\nGood balance of context and latency\nSlower to react than short windows\nWalking/sitting/standing baseline\n\n\n10 s\nMore stable summaries\nHigh latency, delayed feedback\nSlow activities, offline analysis\n\n\n\nThe table does not tell us the universally correct answer.\nIt tells us what trade-offs we are accepting.\n\n\n\n\n\n\nTipEngineering Insight\n\n\n\nThere is no perfect Window size.\nThe correct Window depends on the activity, latency requirements, battery, computational resources and deployment scenario.",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Windowing</span>"
+    ]
+  },
+  {
+    "objectID": "modules/04_windowing.html#thinking-like-an-engineer",
+    "href": "modules/04_windowing.html#thinking-like-an-engineer",
+    "title": "5  Windowing",
+    "section": "5.8 Thinking Like An Engineer",
+    "text": "5.8 Thinking Like An Engineer\nInstead of asking:\n\nWhat window size is best?\n\nask:\n\nWhat trade-offs does my application require?\n\nFor a classroom live demo, responsiveness matters because students should see predictions change.\nFor a clinical monitoring system, stability and reliability might matter more than instant updates.\nFor a battery-powered wearable, computation and energy use matter too.\nWindowing is not just preprocessing.\nIt is an engineering decision.",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Windowing</span>"
+    ]
+  },
+  {
+    "objectID": "modules/04_windowing.html#the-project-implementation",
+    "href": "modules/04_windowing.html#the-project-implementation",
+    "title": "5  Windowing",
+    "section": "5.9 The Project Implementation",
+    "text": "5.9 The Project Implementation\nThe reusable windowing logic lives in app.windowing.\nThis chapter does not redefine that logic.\nIt imports:\n\ncreate_windows() for one sorted signal segment,\ncreate_grouped_windows() for safe windowing by subject and activity.\n\n\nall_windows = create_grouped_windows(\n    df,\n    window_size=WINDOW_SIZE,\n)\n\nlen(all_windows)\n\n8066\n\n\nCreating windows separately by subject and activity matters.\nOtherwise, one window could accidentally contain multiple people or multiple labels.\nThat would create training examples that do not mean what we think they mean.",
     "crumbs": [
       "<span class='chapter-number'>5</span>  <span class='chapter-title'>Windowing</span>"
     ]
@@ -523,18 +503,38 @@
     "objectID": "modules/04_windowing.html#checkpoint",
     "href": "modules/04_windowing.html#checkpoint",
     "title": "5  Windowing",
-    "section": "5.8 Checkpoint",
-    "text": "5.8 Checkpoint\n\nWhy do we need windowing?\nWhat does a 100-sample window represent at 20 Hz?\nWhy should windows not span multiple activities?\nWhy is the window size relevant for live prediction?",
+    "section": "5.10 Checkpoint",
+    "text": "5.10 Checkpoint\nBefore continuing, you should be able to answer:\n\nWhy do wearable streams need to be segmented before classical ML?\nWhat does a five-second window mean at 20 Hz?\nWhy can short windows be more responsive but less stable?\nWhy can overlapping windows make predictions smoother?\nWhy does this project start with non-overlapping windows?",
     "crumbs": [
       "<span class='chapter-number'>5</span>  <span class='chapter-title'>Windowing</span>"
     ]
   },
   {
-    "objectID": "modules/04_windowing.html#summary",
-    "href": "modules/04_windowing.html#summary",
+    "objectID": "modules/04_windowing.html#further-exploration",
+    "href": "modules/04_windowing.html#further-exploration",
     "title": "5  Windowing",
-    "section": "5.9 Summary",
-    "text": "5.9 Summary\nIn this chapter you learned\n\nwhy windowing is necessary,\nhow reusable project code is imported,\nhow to create windows safely,\nwhy window size controls the trade-off between stability and responsiveness.\n\nIn the next chapter we will extract numerical features from every window.",
+    "section": "5.11 Further Exploration",
+    "text": "5.11 Further Exploration\nOptional ideas:\n\ntry a smaller window size,\ntry a larger window size,\ndesign an overlapping-window version and discuss what would change.\n\nThese are experiments, not required steps.",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Windowing</span>"
+    ]
+  },
+  {
+    "objectID": "modules/04_windowing.html#what-have-we-achieved",
+    "href": "modules/04_windowing.html#what-have-we-achieved",
+    "title": "5  Windowing",
+    "section": "5.12 What Have We Achieved?",
+    "text": "5.12 What Have We Achieved?\n\nWe explained why continuous Sensor Streams must become finite Windows.\nWe compared short, long, overlapping, and non-overlapping Window choices.\nWe connected Window size to latency, stability, and Live Prediction.\nWe used the reusable app.windowing logic instead of duplicating pipeline code.",
+    "crumbs": [
+      "<span class='chapter-number'>5</span>  <span class='chapter-title'>Windowing</span>"
+    ]
+  },
+  {
+    "objectID": "modules/04_windowing.html#what-comes-next",
+    "href": "modules/04_windowing.html#what-comes-next",
+    "title": "5  Windowing",
+    "section": "5.13 What Comes Next?",
+    "text": "5.13 What Comes Next?\nA Window still contains many raw measurements. The next chapter turns each Window into a compact Feature Vector that a Model can use.",
     "crumbs": [
       "<span class='chapter-number'>5</span>  <span class='chapter-title'>Windowing</span>"
     ]
@@ -544,17 +544,17 @@
     "href": "modules/05_feature_engineering.html",
     "title": "6  Feature Engineering",
     "section": "",
-    "text": "6.1 Learning Objectives\nAfter completing this chapter, you should be able to",
+    "text": "6.1 How Can A Computer Recognize Walking Without Ever Seeing A Person?\nA computer does not see a person walking.\nIt sees numbers.\nIn this project, those numbers come from accelerometer Windows: x, y, z and magnitude values sampled over time.\nThe central question of this chapter is:\nThe answer is feature engineering.\nFeature engineering transforms raw physical measurements into mathematical descriptions of behavior.\nflowchart LR\n  A[Raw sensor signals] --&gt; B[Mathematical descriptors]\n  B --&gt; C[Machine Learning]",
     "crumbs": [
       "<span class='chapter-number'>6</span>  <span class='chapter-title'>Feature Engineering</span>"
     ]
   },
   {
-    "objectID": "modules/05_feature_engineering.html#learning-objectives",
-    "href": "modules/05_feature_engineering.html#learning-objectives",
+    "objectID": "modules/05_feature_engineering.html#how-can-a-computer-recognize-walking-without-ever-seeing-a-person",
+    "href": "modules/05_feature_engineering.html#how-can-a-computer-recognize-walking-without-ever-seeing-a-person",
     "title": "6  Feature Engineering",
     "section": "",
-    "text": "explain why feature engineering is needed for classical machine learning,\nconvert sensor windows into numerical feature vectors,\nuse reusable feature extraction code from the app/ package,\ncreate a complete feature table for all windows,\nunderstand why training and deployment must use the same feature extraction logic.",
+    "text": "How can raw sensor signals become something a machine learning model can understand?",
     "crumbs": [
       "<span class='chapter-number'>6</span>  <span class='chapter-title'>Feature Engineering</span>"
     ]
@@ -564,17 +564,27 @@
     "href": "modules/05_feature_engineering.html#setup",
     "title": "6  Feature Engineering",
     "section": "6.2 Setup",
-    "text": "6.2 Setup\n\nfrom pathlib import Path\nimport sys\n\nimport numpy as np\nimport pandas as pd\nimport matplotlib.pyplot as plt\n\ncurrent_path = Path.cwd().resolve()\n\nfor parent in [current_path] + list(current_path.parents):\n    if (parent / \"app\").exists():\n        PROJECT_ROOT = parent\n        break\nelse:\n    raise RuntimeError(\"Could not find project root containing app/ directory.\")\n\nsys.path.insert(0, str(PROJECT_ROOT))\n\nfrom app.config import WINDOW_SIZE\nfrom app.data_loader import load_wisdm_phone_accel\nfrom app.windowing import create_windows\nfrom app.feature_extraction import extract_features\nfrom app.pipeline import add_magnitude, windows_to_features\n\nDATA_DIR = PROJECT_ROOT / \"data\"\n\ndf = load_wisdm_phone_accel(DATA_DIR)\ndf = add_magnitude(df)\n\n\n\n\n\n\n\nImportantSoftware Engineering Principle\n\n\n\nThe feature extraction logic lives in app/feature_extraction.py.\nThe workbook imports and uses this function instead of redefining it.\nThis ensures that training and live prediction use the same implementation.",
+    "text": "6.2 Setup\nWe use reusable project code for loading, windowing and feature extraction.\nThe important idea is not the syntax.\nThe important idea is how motion becomes numbers that can be compared.\n\nfrom pathlib import Path\nimport sys\n\nimport matplotlib.pyplot as plt\nimport pandas as pd\n\ncurrent_path = Path.cwd().resolve()\n\nfor parent in [current_path] + list(current_path.parents):\n    if (parent / \"app\").exists():\n        PROJECT_ROOT = parent\n        break\nelse:\n    raise RuntimeError(\"Could not find project root containing app/ directory.\")\n\nsys.path.insert(0, str(PROJECT_ROOT))\n\nfrom app.config import WINDOW_SIZE\nfrom app.data_loader import load_wisdm_phone_accel\nfrom app.feature_extraction import extract_features\nfrom app.pipeline import add_magnitude, windows_to_features\nfrom app.windowing import create_windows\n\nDATA_DIR = PROJECT_ROOT / \"data\"\n\ndf = load_wisdm_phone_accel(DATA_DIR)\ndf = add_magnitude(df)",
     "crumbs": [
       "<span class='chapter-number'>6</span>  <span class='chapter-title'>Feature Engineering</span>"
     ]
   },
   {
-    "objectID": "modules/05_feature_engineering.html#why-feature-engineering",
-    "href": "modules/05_feature_engineering.html#why-feature-engineering",
+    "objectID": "modules/05_feature_engineering.html#why-raw-signals-are-difficult-for-classical-ml",
+    "href": "modules/05_feature_engineering.html#why-raw-signals-are-difficult-for-classical-ml",
     "title": "6  Feature Engineering",
-    "section": "6.3 Why Feature Engineering?",
-    "text": "6.3 Why Feature Engineering?\nA sensor window contains many raw measurements.\nFor example, with a window size of 100 samples and four signals (x, y, z, magnitude), one window contains 400 raw values.\nClassical machine learning models such as Random Forests usually work better with structured tabular features.\nFeature engineering transforms a window into a compact numerical summary.\n\n\n\n\n\nflowchart LR\n\nA[Sensor Window]\n--&gt;B[Feature Extraction]\n\nB--&gt;C[Feature Vector]\n\nC--&gt;D[Machine Learning Model]",
+    "section": "6.3 Why Raw Signals Are Difficult For Classical ML",
+    "text": "6.3 Why Raw Signals Are Difficult For Classical ML\nA window still contains many measurements.\nWith 100 samples and four signals, one window contains 400 raw values.\nThat is a lot of detail, but not yet much meaning.\nClassical machine learning models such as Random Forests usually work best with structured feature tables: one row per example, one column per meaningful descriptor.\nAn analogy:\nImagine describing a song to someone.\nYou could send every audio sample.\nOr you could describe tempo, loudness, rhythm and energy.\nThe second description loses some detail, but it captures useful structure.\nFeature engineering does the same for sensor windows.\nIt summarizes behavior instead of asking the model to memorize every sample.",
+    "crumbs": [
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Feature Engineering</span>"
+    ]
+  },
+  {
+    "objectID": "modules/05_feature_engineering.html#what-is-a-feature",
+    "href": "modules/05_feature_engineering.html#what-is-a-feature",
+    "title": "6  Feature Engineering",
+    "section": "6.4 What Is A Feature?",
+    "text": "6.4 What Is A Feature?\nA feature is not just another measurement.\nA feature is information extracted from many measurements.\nFor one signal window, we can compute descriptors such as average level, variability, extremes and movement intensity.\n\n\n\n\n\nflowchart TD\n  A[Signal Window]\n  --&gt; B[Mean]\n  --&gt; C[Standard Deviation]\n  --&gt; D[Maximum]\n  --&gt; E[Energy]\n  --&gt; F[Feature Vector]\n\n\n\n\n\n\nThe feature vector is the compact mathematical description that the model sees.\nThe raw signal is still important.\nBut the model receives the summary.\n\n\n\n\n\n\nTipEngineering Insight\n\n\n\nFeature engineering is knowledge compression.\nHundreds of measurements become a compact mathematical representation. Good Feature Vectors preserve information that helps distinguish activities.",
     "crumbs": [
       "<span class='chapter-number'>6</span>  <span class='chapter-title'>Feature Engineering</span>"
     ]
@@ -583,88 +593,68 @@
     "objectID": "modules/05_feature_engineering.html#our-feature-set",
     "href": "modules/05_feature_engineering.html#our-feature-set",
     "title": "6  Feature Engineering",
-    "section": "6.4 Our Feature Set",
-    "text": "6.4 Our Feature Set\nFor each signal\nx, y, z, magnitude\nwe compute:\n\n\n\nFeature\nMeaning\n\n\n\n\nmean\naverage signal level\n\n\nstd\nvariability\n\n\nmin\nsmallest value\n\n\nmax\nlargest value\n\n\nenergy\noverall signal intensity\n\n\n\nThis gives\n\\[\n4 \\times 5 = 20\n\\]\nfeatures per window.",
+    "section": "6.5 Our Feature Set",
+    "text": "6.5 Our Feature Set\nFor each signal, we compute the same set of descriptors.\nSignals:\nx, y, z, magnitude\nFeatures:\n\n\n\n\n\n\n\n\nFeature\nWhat it describes\nWhy it helps\n\n\n\n\nmean\nAverage signal level\nCaptures orientation and baseline acceleration\n\n\nstandard deviation\nVariability\nHigher for dynamic movement\n\n\nminimum\nLowest observed value\nCaptures one side of the movement range\n\n\nmaximum\nHighest observed value\nCaptures extreme movement\n\n\nenergy\nSum of squared values\nCaptures overall movement intensity\n\n\n\nThis gives:\n\\[\n4 \\times 5 = 20\n\\]\nfeatures per window.\nThis table answers:\n\nWhat information might distinguish one activity from another?\n\nWalking should usually have more variability and higher energy than sitting or standing.\nSitting and standing may have similar energy, which is why they can be harder to separate.",
     "crumbs": [
       "<span class='chapter-number'>6</span>  <span class='chapter-title'>Feature Engineering</span>"
     ]
   },
   {
-    "objectID": "modules/05_feature_engineering.html#step-1-create-one-example-window",
-    "href": "modules/05_feature_engineering.html#step-1-create-one-example-window",
+    "objectID": "modules/05_feature_engineering.html#from-physics-to-mathematics",
+    "href": "modules/05_feature_engineering.html#from-physics-to-mathematics",
     "title": "6  Feature Engineering",
-    "section": "6.5 Step 1 — Create One Example Window",
-    "text": "6.5 Step 1 — Create One Example Window\n\nwalking_df = (\n    df[df[\"activity\"] == \"walking\"]\n    .sort_values(\"timestamp\")\n    .copy()\n)\n\nwindows = create_windows(\n    walking_df,\n    window_size=WINDOW_SIZE,\n)\n\nexample_window = windows[0]\n\nexample_window.head()\n\n\n\n\n\n\n\n\nsubject_id\nactivity_code\ntimestamp\nx\ny\nz\nactivity\nmagnitude\n\n\n\n\n303991\n1623\nA\n2520219142823\n-0.152512\n-8.585220\n-1.219192\nwalking\n8.672698\n\n\n303992\n1623\nA\n2520269496827\n0.999466\n-8.196548\n-0.758926\nwalking\n8.292063\n\n\n303993\n1623\nA\n2520319850830\n0.450241\n-8.701187\n-1.290024\nwalking\n8.807811\n\n\n303994\n1623\nA\n2520370204834\n-0.042175\n-9.739563\n-1.787415\nwalking\n9.902309\n\n\n303995\n1623\nA\n2520420558838\n3.551483\n-10.745132\n-1.266403\nwalking\n11.387479",
+    "section": "6.6 From Physics To Mathematics",
+    "text": "6.6 From Physics To Mathematics\nAccelerometers measure physical motion.\nFeature engineering converts that motion into numbers.\nMachine learning compares numerical patterns.\n\n\n\n\n\nflowchart LR\n  A[Physical motion]\n  --&gt; B[Accelerometer measurements]\n  --&gt; C[Window]\n  --&gt; D[Feature Vector]\n  --&gt; E[Pattern comparison]\n\n\n\n\n\n\nThis is one of the central ideas of the project.\nThe model does not know what walking looks like.\nIt learns that certain numerical patterns tend to correspond to walking, sitting or standing.",
     "crumbs": [
       "<span class='chapter-number'>6</span>  <span class='chapter-title'>Feature Engineering</span>"
     ]
   },
   {
-    "objectID": "modules/05_feature_engineering.html#step-2-extract-features-from-one-window",
-    "href": "modules/05_feature_engineering.html#step-2-extract-features-from-one-window",
+    "objectID": "modules/05_feature_engineering.html#why-does-walking-have-higher-energy",
+    "href": "modules/05_feature_engineering.html#why-does-walking-have-higher-energy",
     "title": "6  Feature Engineering",
-    "section": "6.6 Step 2 — Extract Features from One Window",
-    "text": "6.6 Step 2 — Extract Features from One Window\n\nexample_features = extract_features(example_window)\n\npd.Series(example_features)\n\nmean_x                  0.719130\nstd_x                   2.459520\nmin_x                  -5.262344\nmax_x                   5.583405\nenergy_x              650.589595\nmean_y                 -9.682053\nstd_y                   3.874742\nmin_y                 -18.635117\nmax_y                  -2.588074\nenergy_y            10860.564142\nmean_z                 -1.843645\nstd_z                   4.266389\nmin_z                 -17.696304\nmax_z                   6.950653\nenergy_z             2141.907743\nmean_magnitude         10.765137\nstd_magnitude           4.566283\nmin_magnitude           3.196334\nmax_magnitude          25.331639\nenergy_magnitude    13653.061480\ndtype: float64\n\n\n\nlen(example_features)\n\n20\n\n\n\n6.6.1 Expected Output\nThe output should contain 20 features.",
+    "section": "6.7 Why Does Walking Have Higher Energy?",
+    "text": "6.7 Why Does Walking Have Higher Energy?\nWe compare a walking window with a sitting window.\n\nwalking_window = create_windows(\n    df[df[\"activity\"] == \"walking\"].sort_values(\"timestamp\"),\n    window_size=WINDOW_SIZE,\n)[0]\n\nsitting_window = create_windows(\n    df[df[\"activity\"] == \"sitting\"].sort_values(\"timestamp\"),\n    window_size=WINDOW_SIZE,\n)[0]\n\nplt.figure(figsize=(12, 4))\nplt.plot(walking_window[\"magnitude\"].reset_index(drop=True), label=\"walking\")\nplt.plot(sitting_window[\"magnitude\"].reset_index(drop=True), label=\"sitting\")\nplt.title(\"Walking and Sitting Magnitude Windows\")\nplt.xlabel(\"Sample inside the window\")\nplt.ylabel(\"Acceleration magnitude\")\nplt.legend()\nplt.show()\n\n\n\n\n\n\n\n\nWhat should you observe?\nWalking usually produces repeated changes in acceleration magnitude.\nSitting is often flatter because the phone moves less.\nEnergy is computed as:\n\\[\nEnergy = \\sum_i x_i^2\n\\]\nSquaring makes larger movements count more.\nSo a dynamic activity like walking often produces higher energy than a static activity like sitting.\nNow we inspect the actual feature values.\n\ncomparison = pd.DataFrame(\n    [\n        {\"activity\": \"walking\", **extract_features(walking_window)},\n        {\"activity\": \"sitting\", **extract_features(sitting_window)},\n    ]\n)\n\ncomparison[\n    [\n        \"activity\",\n        \"std_magnitude\",\n        \"max_magnitude\",\n        \"energy_magnitude\",\n    ]\n]\n\n\n\n\n\n\n\n\nactivity\nstd_magnitude\nmax_magnitude\nenergy_magnitude\n\n\n\n\n0\nwalking\n4.566283\n25.331639\n13653.06148\n\n\n1\nsitting\n1.491087\n17.177679\n10810.68680\n\n\n\n\n\n\n\nThis table answers:\n\nDo the mathematical descriptors reflect what we saw in the plot?\n\nThe point is not that one feature solves the whole problem.\nThe point is that features translate visual movement patterns into numbers.",
     "crumbs": [
       "<span class='chapter-number'>6</span>  <span class='chapter-title'>Feature Engineering</span>"
     ]
   },
   {
-    "objectID": "modules/05_feature_engineering.html#step-3-understand-the-energy-feature",
-    "href": "modules/05_feature_engineering.html#step-3-understand-the-energy-feature",
+    "objectID": "modules/05_feature_engineering.html#building-a-feature-table",
+    "href": "modules/05_feature_engineering.html#building-a-feature-table",
     "title": "6  Feature Engineering",
-    "section": "6.7 Step 3 — Understand the Energy Feature",
-    "text": "6.7 Step 3 — Understand the Energy Feature\nEnergy is computed as\n\\[\nEnergy = \\sum_i x_i^2\n\\]\nIt is often useful because dynamic activities such as walking usually produce higher signal intensity than static activities such as sitting or standing.\n\nexample_window[\"magnitude\"].head()\n\n303991     8.672698\n303992     8.292063\n303993     8.807811\n303994     9.902309\n303995    11.387479\nName: magnitude, dtype: float64\n\n\n\nenergy_magnitude = np.sum(example_window[\"magnitude\"] ** 2)\n\nenergy_magnitude\n\nnp.float64(13653.061479592923)",
+    "section": "6.8 Building A Feature Table",
+    "text": "6.8 Building A Feature Table\nOne window becomes one feature vector.\nMany windows become a feature matrix.\nThat matrix is what the machine learning model uses.\n\n\n\n\n\nflowchart TD\n  A[One Window]\n  --&gt; B[One Feature Vector]\n  --&gt; C[Many Windows]\n  --&gt; D[Feature Matrix]\n\n\n\n\n\n\nThe feature table has one row per window.\nFeature columns describe movement.\nMetadata columns keep the activity label and subject identifier.\n\nfeatures_df = windows_to_features(\n    df,\n    window_size=WINDOW_SIZE,\n)\n\nfeatures_df.head()\n\n\n\n\n\n\n\n\nmean_x\nstd_x\nmin_x\nmax_x\nenergy_x\nmean_y\nstd_y\nmin_y\nmax_y\nenergy_y\n...\nmin_z\nmax_z\nenergy_z\nmean_magnitude\nstd_magnitude\nmin_magnitude\nmax_magnitude\nenergy_magnitude\nactivity\nsubject_id\n\n\n\n\n0\n3.845516\n0.351159\n2.627441\n4.488892\n1491.007201\n4.827262\n0.436838\n4.073685\n5.965424\n2349.137987\n...\n5.959335\n7.402969\n4640.551276\n9.207905\n0.147174\n8.731387\n9.622650\n8480.696464\nsitting\n1600\n\n\n1\n4.069495\n0.031640\n3.964447\n4.144730\n1656.178255\n4.641167\n0.033818\n4.552872\n4.714188\n2154.156314\n...\n6.724777\n6.911865\n4645.141345\n9.195336\n0.023712\n9.138906\n9.270484\n8455.475914\nsitting\n1600\n\n\n2\n4.098965\n0.035909\n3.981873\n4.173141\n1680.278813\n4.643016\n0.034376\n4.534317\n4.727310\n2155.876513\n...\n6.690735\n6.880447\n4619.970527\n9.195681\n0.026681\n9.118430\n9.268516\n8456.125854\nsitting\n1600\n\n\n3\n4.150756\n0.041034\n4.053879\n4.252579\n1723.044535\n4.669522\n0.044667\n4.566193\n4.779709\n2180.641454\n...\n6.620407\n6.872528\n4558.969006\n9.199233\n0.025996\n9.137887\n9.260945\n8462.654995\nsitting\n1600\n\n\n4\n4.135481\n0.049281\n3.972107\n4.287186\n1710.460832\n4.656202\n0.051068\n4.526337\n4.816910\n2168.279808\n...\n6.640717\n6.892288\n4575.211893\n9.194487\n0.030782\n9.120189\n9.279861\n8453.952534\nsitting\n1600\n\n\n\n\n5 rows × 22 columns\n\n\n\n\nfeature_table_summary = pd.DataFrame(\n    [\n        {\n            \"question\": \"How many windows?\",\n            \"answer\": len(features_df),\n            \"why it matters\": \"Each window becomes one training example.\",\n        },\n        {\n            \"question\": \"How many feature columns?\",\n            \"answer\": len([c for c in features_df.columns if c not in [\"activity\", \"subject_id\"]]),\n            \"why it matters\": \"This is the numerical description the model receives.\",\n        },\n        {\n            \"question\": \"How many subjects?\",\n            \"answer\": features_df[\"subject_id\"].nunique(),\n            \"why it matters\": \"Subject IDs support realistic evaluation later.\",\n        },\n        {\n            \"question\": \"Missing feature values?\",\n            \"answer\": int(features_df.isna().sum().sum()),\n            \"why it matters\": \"Missing values can break training or distort results.\",\n        },\n    ]\n)\n\nfeature_table_summary\n\n\n\n\n\n\n\n\nquestion\nanswer\nwhy it matters\n\n\n\n\n0\nHow many windows?\n8066\nEach window becomes one training example.\n\n\n1\nHow many feature columns?\n20\nThis is the numerical description the model re...\n\n\n2\nHow many subjects?\n51\nSubject IDs support realistic evaluation later.\n\n\n3\nMissing feature values?\n0\nMissing values can break training or distort r...\n\n\n\n\n\n\n\nThis table answers:\n\nIs the feature table ready to become a machine learning dataset?",
     "crumbs": [
       "<span class='chapter-number'>6</span>  <span class='chapter-title'>Feature Engineering</span>"
     ]
   },
   {
-    "objectID": "modules/05_feature_engineering.html#step-4-convert-all-windows-into-features",
-    "href": "modules/05_feature_engineering.html#step-4-convert-all-windows-into-features",
+    "objectID": "modules/05_feature_engineering.html#the-project-implementation",
+    "href": "modules/05_feature_engineering.html#the-project-implementation",
     "title": "6  Feature Engineering",
-    "section": "6.8 Step 4 — Convert All Windows into Features",
-    "text": "6.8 Step 4 — Convert All Windows into Features\n\n6.8.1 Goal\nWe now create one feature row per window.\nWindows are created separately per subject and activity.\n\nwindows_to_features\n\n&lt;function app.pipeline.windows_to_features(df: pandas.DataFrame, window_size: int = 100) -&gt; pandas.DataFrame&gt;\n\n\n\nfeatures_df = windows_to_features(\n    df,\n    window_size=WINDOW_SIZE,\n)\n\nfeatures_df.head()\n\n\n\n\n\n\n\n\nmean_x\nstd_x\nmin_x\nmax_x\nenergy_x\nmean_y\nstd_y\nmin_y\nmax_y\nenergy_y\n...\nmin_z\nmax_z\nenergy_z\nmean_magnitude\nstd_magnitude\nmin_magnitude\nmax_magnitude\nenergy_magnitude\nactivity\nsubject_id\n\n\n\n\n0\n3.845516\n0.351159\n2.627441\n4.488892\n1491.007201\n4.827262\n0.436838\n4.073685\n5.965424\n2349.137987\n...\n5.959335\n7.402969\n4640.551276\n9.207905\n0.147174\n8.731387\n9.622650\n8480.696464\nsitting\n1600\n\n\n1\n4.069495\n0.031640\n3.964447\n4.144730\n1656.178255\n4.641167\n0.033818\n4.552872\n4.714188\n2154.156314\n...\n6.724777\n6.911865\n4645.141345\n9.195336\n0.023712\n9.138906\n9.270484\n8455.475914\nsitting\n1600\n\n\n2\n4.098965\n0.035909\n3.981873\n4.173141\n1680.278813\n4.643016\n0.034376\n4.534317\n4.727310\n2155.876513\n...\n6.690735\n6.880447\n4619.970527\n9.195681\n0.026681\n9.118430\n9.268516\n8456.125854\nsitting\n1600\n\n\n3\n4.150756\n0.041034\n4.053879\n4.252579\n1723.044535\n4.669522\n0.044667\n4.566193\n4.779709\n2180.641454\n...\n6.620407\n6.872528\n4558.969006\n9.199233\n0.025996\n9.137887\n9.260945\n8462.654995\nsitting\n1600\n\n\n4\n4.135481\n0.049281\n3.972107\n4.287186\n1710.460832\n4.656202\n0.051068\n4.526337\n4.816910\n2168.279808\n...\n6.640717\n6.892288\n4575.211893\n9.194487\n0.030782\n9.120189\n9.279861\n8453.952534\nsitting\n1600\n\n\n\n\n5 rows × 22 columns",
+    "section": "6.9 The Project Implementation",
+    "text": "6.9 The Project Implementation\nThe reusable feature extraction logic lives in app.feature_extraction.\nThis chapter does not redefine it.\nIt imports extract_features() and uses windows_to_features() from the project pipeline.\nThat matters because training and live prediction must use the same feature logic.\nIf the model is trained with one feature definition and deployed with another, predictions become unreliable.",
     "crumbs": [
       "<span class='chapter-number'>6</span>  <span class='chapter-title'>Feature Engineering</span>"
     ]
   },
   {
-    "objectID": "modules/05_feature_engineering.html#step-5-inspect-the-feature-table",
-    "href": "modules/05_feature_engineering.html#step-5-inspect-the-feature-table",
+    "objectID": "modules/05_feature_engineering.html#thinking-like-an-engineer",
+    "href": "modules/05_feature_engineering.html#thinking-like-an-engineer",
     "title": "6  Feature Engineering",
-    "section": "6.9 Step 5 — Inspect the Feature Table",
-    "text": "6.9 Step 5 — Inspect the Feature Table\n\nfeatures_df.shape\n\n(8066, 22)\n\n\n\nfeatures_df[\"activity\"].value_counts()\n\nactivity\nwalking     2773\nstanding    2672\nsitting     2621\nName: count, dtype: int64\n\n\n\nfeatures_df[\"subject_id\"].nunique()\n\n51\n\n\n\nfeatures_df.isna().sum().sum()\n\nnp.int64(0)\n\n\n\n6.9.1 Discussion\nAt this point, the continuous sensor data has been transformed into a tabular machine learning dataset.\nEach row represents one window.\nEach column represents one feature or metadata field.",
+    "section": "6.10 Thinking Like An Engineer",
+    "text": "6.10 Thinking Like An Engineer\nInstead of asking:\n\nWhich feature should I compute?\n\nask:\n\nWhat information distinguishes one activity from another?\n\nFor walking, useful information may include movement intensity, rhythm and variability.\nFor sitting versus standing, the difference may be smaller and may depend on phone placement.\nFeature engineering is where domain knowledge enters the machine learning pipeline.",
     "crumbs": [
       "<span class='chapter-number'>6</span>  <span class='chapter-title'>Feature Engineering</span>"
     ]
   },
   {
-    "objectID": "modules/05_feature_engineering.html#step-6-save-the-feature-table",
-    "href": "modules/05_feature_engineering.html#step-6-save-the-feature-table",
+    "objectID": "modules/05_feature_engineering.html#save-the-feature-table",
+    "href": "modules/05_feature_engineering.html#save-the-feature-table",
     "title": "6  Feature Engineering",
-    "section": "6.10 Step 6 — Save the Feature Table",
-    "text": "6.10 Step 6 — Save the Feature Table\n\nfeatures_df.to_csv(\n    DATA_DIR / \"features_df.csv\",\n    index=False,\n)\n\n\n\n\n\n\n\nNoteRemember\n\n\n\nSaving intermediate artifacts makes the pipeline easier to debug and reproduce.\nThe next chapters can load the feature table directly instead of recomputing it every time.",
-    "crumbs": [
-      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Feature Engineering</span>"
-    ]
-  },
-  {
-    "objectID": "modules/05_feature_engineering.html#think",
-    "href": "modules/05_feature_engineering.html#think",
-    "title": "6  Feature Engineering",
-    "section": "6.11 Think",
-    "text": "6.11 Think\nWhich feature do you expect to be most useful for distinguishing walking from standing?\n\nmean?\nstandard deviation?\nmaximum?\nenergy?\n\nWhy?",
-    "crumbs": [
-      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Feature Engineering</span>"
-    ]
-  },
-  {
-    "objectID": "modules/05_feature_engineering.html#common-pitfall",
-    "href": "modules/05_feature_engineering.html#common-pitfall",
-    "title": "6  Feature Engineering",
-    "section": "6.12 Common Pitfall",
-    "text": "6.12 Common Pitfall\n\n\n\n\n\n\nWarningTraining and Deployment Must Match\n\n\n\nIf you train a model using one feature extraction method but deploy it with a different method, predictions become unreliable.\nThat is why the project keeps feature extraction in app/feature_extraction.py.",
+    "section": "6.11 Save The Feature Table",
+    "text": "6.11 Save The Feature Table\nThe next chapters can load the feature table directly.\nSaving it makes the pipeline easier to reproduce and debug.\n\nfeatures_df.to_csv(\n    DATA_DIR / \"features_df.csv\",\n    index=False,\n)",
     "crumbs": [
       "<span class='chapter-number'>6</span>  <span class='chapter-title'>Feature Engineering</span>"
     ]
@@ -673,8 +663,8 @@
     "objectID": "modules/05_feature_engineering.html#checkpoint",
     "href": "modules/05_feature_engineering.html#checkpoint",
     "title": "6  Feature Engineering",
-    "section": "6.13 Checkpoint",
-    "text": "6.13 Checkpoint\nBefore continuing, you should be able to answer:\n\nWhy do we extract features from windows?\nWhy does a Random Forest work well with feature tables?\nWhat does the energy feature measure?\nHow many features do we compute per window?\nWhy must training and deployment use the same feature extraction logic?",
+    "section": "6.12 Checkpoint",
+    "text": "6.12 Checkpoint\nBefore continuing, you should be able to answer:\n\nWhy are raw windows difficult for classical machine learning?\nWhy is a feature more than one measurement?\nWhy might walking have higher energy than sitting?\nWhat does one row in the feature table represent?\nWhy must training and deployment use the same feature extraction logic?",
     "crumbs": [
       "<span class='chapter-number'>6</span>  <span class='chapter-title'>Feature Engineering</span>"
     ]
@@ -683,18 +673,28 @@
     "objectID": "modules/05_feature_engineering.html#further-exploration",
     "href": "modules/05_feature_engineering.html#further-exploration",
     "title": "6  Feature Engineering",
-    "section": "6.14 Further Exploration",
-    "text": "6.14 Further Exploration\nOptional: add one additional feature to app/feature_extraction.py, for example:\n\nmedian\nrange\ninterquartile range\n\nThen rerun this chapter.\nHow does the number of features change?",
+    "section": "6.13 Further Exploration",
+    "text": "6.13 Further Exploration\nOptional feature ideas:\n\nfrequency-domain features,\nentropy,\njerk,\ncorrelation between axes.\n\nThese can be useful later, but they are not required for the first reliable system.",
     "crumbs": [
       "<span class='chapter-number'>6</span>  <span class='chapter-title'>Feature Engineering</span>"
     ]
   },
   {
-    "objectID": "modules/05_feature_engineering.html#summary",
-    "href": "modules/05_feature_engineering.html#summary",
+    "objectID": "modules/05_feature_engineering.html#what-have-we-achieved",
+    "href": "modules/05_feature_engineering.html#what-have-we-achieved",
     "title": "6  Feature Engineering",
-    "section": "6.15 Summary",
-    "text": "6.15 Summary\nIn this chapter you learned\n\nwhy feature engineering is necessary,\nhow windows are transformed into feature vectors,\nhow reusable project code improves maintainability,\nhow to create a complete feature table,\nwhy consistent feature extraction is essential for deployment.\n\nIn the next chapter we will train a machine learning model using this feature table.",
+    "section": "6.14 What Have We Achieved?",
+    "text": "6.14 What Have We Achieved?\n\nWe explained why raw Windows are difficult for classical machine learning.\nWe described how features summarize motion across many measurements.\nWe connected physical acceleration to mathematical descriptors.\nWe built a Feature Matrix where each row represents one Window.\nWe reused app.feature_extraction for the project implementation.",
+    "crumbs": [
+      "<span class='chapter-number'>6</span>  <span class='chapter-title'>Feature Engineering</span>"
+    ]
+  },
+  {
+    "objectID": "modules/05_feature_engineering.html#what-comes-next",
+    "href": "modules/05_feature_engineering.html#what-comes-next",
+    "title": "6  Feature Engineering",
+    "section": "6.15 What Comes Next?",
+    "text": "6.15 What Comes Next?\nNow that we have a Feature Matrix and labels, we can train a Model. The next chapter explains how classical machine learning turns Feature Vectors into Predictions.",
     "crumbs": [
       "<span class='chapter-number'>6</span>  <span class='chapter-title'>Feature Engineering</span>"
     ]
@@ -704,27 +704,37 @@
     "href": "modules/06_machine_learning.html",
     "title": "7  Machine Learning",
     "section": "",
-    "text": "7.1 Learning Objectives\nAfter completing this chapter, you should be able to",
+    "text": "7.1 How Can A Computer Distinguish Walking From Standing Using Only Numbers?\nIn the previous chapter, we transformed raw sensor Windows into Feature Vectors.\nThat was the key step.\nThe model does not receive a video of a person walking. It does not understand posture, balance or intent.\nIt receives numbers such as mean, standard deviation, maximum and energy.\nThe central question of this chapter is:\nThe answer is pattern learning.\nflowchart LR\n  A[Sensor Stream] --&gt; B[Feature Vectors]\n  B --&gt; C[Patterns]\n  C --&gt; D[Prediction]\nFeature engineering and machine learning are inseparable.\nThe model can only learn patterns that are visible in the representation we give it.",
     "crumbs": [
       "<span class='chapter-number'>7</span>  <span class='chapter-title'>Machine Learning</span>"
     ]
   },
   {
-    "objectID": "modules/06_machine_learning.html#learning-objectives",
-    "href": "modules/06_machine_learning.html#learning-objectives",
+    "objectID": "modules/06_machine_learning.html#how-can-a-computer-distinguish-walking-from-standing-using-only-numbers",
+    "href": "modules/06_machine_learning.html#how-can-a-computer-distinguish-walking-from-standing-using-only-numbers",
     "title": "7  Machine Learning",
     "section": "",
-    "text": "load the feature table created in the previous chapter,\nseparate model features from labels and subject identifiers,\ntrain a Random Forest baseline model,\ninspect predictions and class probabilities,\nunderstand why reusable training code matters.",
+    "text": "How can a computer distinguish walking from standing using only numbers?",
     "crumbs": [
       "<span class='chapter-number'>7</span>  <span class='chapter-title'>Machine Learning</span>"
     ]
   },
   {
-    "objectID": "modules/06_machine_learning.html#setup",
-    "href": "modules/06_machine_learning.html#setup",
+    "objectID": "modules/06_machine_learning.html#from-features-to-decisions",
+    "href": "modules/06_machine_learning.html#from-features-to-decisions",
     "title": "7  Machine Learning",
-    "section": "7.2 Setup",
-    "text": "7.2 Setup\n\nfrom pathlib import Path\nimport sys\n\nimport pandas as pd\n\ncurrent_path = Path.cwd().resolve()\n\nfor parent in [current_path] + list(current_path.parents):\n    if (parent / \"app\").exists():\n        PROJECT_ROOT = parent\n        break\nelse:\n    raise RuntimeError(\"Could not find project root containing app/ directory.\")\n\nsys.path.insert(0, str(PROJECT_ROOT))\n\nfrom app.training import (\n    load_feature_table,\n    split_features_and_labels,\n    train_random_forest,\n)",
+    "section": "7.2 From Features To Decisions",
+    "text": "7.2 From Features To Decisions\nFeature Vectors are mathematical descriptions of Windows.\nMachine learning searches for patterns in those descriptions.\nPrediction is a comparison between a new Feature Vector and patterns learned from labeled examples.\n\n\n\n\n\nflowchart TD\n  A[Feature Vector]\n  --&gt; B[Compare With Learned Patterns]\n  --&gt; C[Estimate Class Probabilities]\n  --&gt; D[Choose Activity]\n\n\n\n\n\n\nFor example, a walking window may have higher magnitude variability and higher energy.\nA standing window may have lower variability.\nThe model learns statistical regularities like these.\nIt does not learn human meaning directly.\n\n\n\n\n\n\nTipEngineering Insight\n\n\n\nModels learn patterns, not meaning.\nThe Model has no understanding of human movement. It only learns statistical regularities in the Feature Matrix.",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Machine Learning</span>"
+    ]
+  },
+  {
+    "objectID": "modules/06_machine_learning.html#why-classical-machine-learning",
+    "href": "modules/06_machine_learning.html#why-classical-machine-learning",
+    "title": "7  Machine Learning",
+    "section": "7.3 Why Classical Machine Learning?",
+    "text": "7.3 Why Classical Machine Learning?\nFor this project, classical machine learning is the right starting point.\nIt is transparent enough to teach.\nIt trains quickly.\nIt works with relatively little data.\nIt fits naturally with tabular feature engineering.\nIt is easy to export and deploy.\nDeep learning can be powerful, especially for large raw-signal datasets. But it often requires more data, more compute and more careful tuning. It also makes the first engineering story harder to see.\nHere, we want students to understand the complete pipeline.\nClassical ML keeps the model simple enough that the system around it remains visible.",
     "crumbs": [
       "<span class='chapter-number'>7</span>  <span class='chapter-title'>Machine Learning</span>"
     ]
@@ -733,58 +743,58 @@
     "objectID": "modules/06_machine_learning.html#why-random-forest",
     "href": "modules/06_machine_learning.html#why-random-forest",
     "title": "7  Machine Learning",
-    "section": "7.3 Why Random Forest?",
-    "text": "7.3 Why Random Forest?\nWe use a Random Forest as the first model because it is a strong baseline for tabular feature data.\nA Random Forest is an ensemble of decision trees.\nIt is useful because it is\n\neasy to train,\nrobust,\nfast enough for this project,\nsuitable for tabular data,\nrelatively easy to explain.\n\n\n\n\n\n\n\nTipEngineering Insight\n\n\n\nA simple baseline model is often the best starting point.\nBefore using deep learning, always ask whether a simpler model already solves the problem well enough.",
+    "section": "7.4 Why Random Forest?",
+    "text": "7.4 Why Random Forest?\nRandom Forest is a good baseline for engineered wearable features.\nThink of it as a committee of experts.\nEach expert is a decision tree.\nA decision tree asks a sequence of simple questions:\n\nIs energy high?\nIs variability low?\nIs the maximum magnitude above a threshold?\nDoes this feature pattern look more like walking or sitting?\n\nOne tree can be fragile.\nIt may focus too much on one pattern.\nA Random Forest trains many different trees and lets them vote.\nThat gives us:\n\ndiversity, because different trees see different parts of the data,\nmajority vote, because no single tree decides alone,\nrobustness, because mistakes from one tree can be balanced by others,\nstrong performance on tabular feature data.\n\nThis is why Random Forest is a practical first model for this capstone.",
     "crumbs": [
       "<span class='chapter-number'>7</span>  <span class='chapter-title'>Machine Learning</span>"
     ]
   },
   {
-    "objectID": "modules/06_machine_learning.html#step-1-load-the-feature-table",
-    "href": "modules/06_machine_learning.html#step-1-load-the-feature-table",
+    "objectID": "modules/06_machine_learning.html#what-does-the-model-actually-learn",
+    "href": "modules/06_machine_learning.html#what-does-the-model-actually-learn",
     "title": "7  Machine Learning",
-    "section": "7.4 Step 1 — Load the Feature Table",
-    "text": "7.4 Step 1 — Load the Feature Table\nThe previous chapter saved one row per sensor window.\n\nfeatures_df = load_feature_table()\n\nfeatures_df.head()\n\n\n\n\n\n\n\n\nmean_x\nstd_x\nmin_x\nmax_x\nenergy_x\nmean_y\nstd_y\nmin_y\nmax_y\nenergy_y\n...\nmin_z\nmax_z\nenergy_z\nmean_magnitude\nstd_magnitude\nmin_magnitude\nmax_magnitude\nenergy_magnitude\nactivity\nsubject_id\n\n\n\n\n0\n3.845516\n0.351159\n2.627441\n4.488892\n1491.007201\n4.827262\n0.436838\n4.073685\n5.965424\n2349.137987\n...\n5.959335\n7.402969\n4640.551276\n9.207905\n0.147174\n8.731387\n9.622650\n8480.696464\nsitting\n1600\n\n\n1\n4.069495\n0.031640\n3.964447\n4.144730\n1656.178255\n4.641167\n0.033818\n4.552872\n4.714188\n2154.156314\n...\n6.724777\n6.911865\n4645.141345\n9.195336\n0.023712\n9.138906\n9.270484\n8455.475914\nsitting\n1600\n\n\n2\n4.098965\n0.035909\n3.981873\n4.173141\n1680.278813\n4.643016\n0.034376\n4.534317\n4.727310\n2155.876513\n...\n6.690735\n6.880447\n4619.970527\n9.195681\n0.026681\n9.118430\n9.268516\n8456.125854\nsitting\n1600\n\n\n3\n4.150756\n0.041034\n4.053879\n4.252579\n1723.044535\n4.669522\n0.044667\n4.566193\n4.779709\n2180.641454\n...\n6.620407\n6.872528\n4558.969006\n9.199233\n0.025996\n9.137887\n9.260945\n8462.654995\nsitting\n1600\n\n\n4\n4.135481\n0.049281\n3.972107\n4.287186\n1710.460832\n4.656202\n0.051068\n4.526337\n4.816910\n2168.279808\n...\n6.640717\n6.892288\n4575.211893\n9.194487\n0.030782\n9.120189\n9.279861\n8453.952534\nsitting\n1600\n\n\n\n\n5 rows × 22 columns\n\n\n\n\nfeatures_df.shape\n\n(8066, 22)\n\n\n\nfeatures_df[\"activity\"].value_counts()\n\nactivity\nwalking     2773\nstanding    2672\nsitting     2621\nName: count, dtype: int64",
+    "section": "7.5 What Does The Model Actually Learn?",
+    "text": "7.5 What Does The Model Actually Learn?\nThe model never truly learns walking, standing or sitting.\nIt learns numerical regions in feature space.\nConceptually, it learns rules like:\nhigh energy + high variability -&gt; often walking\nlow energy + low variability -&gt; often sitting or standing\nsimilar low-motion patterns -&gt; harder to separate\nThis is not a perfect map.\nActivities can overlap.\nSome sitting windows may look similar to standing windows. Some quiet walking windows may look less dynamic than expected. Some subjects move differently from others.\nThat overlap is why evaluation matters.",
     "crumbs": [
       "<span class='chapter-number'>7</span>  <span class='chapter-title'>Machine Learning</span>"
     ]
   },
   {
-    "objectID": "modules/06_machine_learning.html#step-2-split-features-labels-and-subjects",
-    "href": "modules/06_machine_learning.html#step-2-split-features-labels-and-subjects",
+    "objectID": "modules/06_machine_learning.html#training",
+    "href": "modules/06_machine_learning.html#training",
     "title": "7  Machine Learning",
-    "section": "7.5 Step 2 — Split Features, Labels and Subjects",
-    "text": "7.5 Step 2 — Split Features, Labels and Subjects\nThe model should learn from numerical features.\nIt should not use metadata such as subject_id as input.\n\nX, y, groups, feature_columns = split_features_and_labels(features_df)\n\nX.shape, y.shape, groups.shape\n\n((8066, 20), (8066,), (8066,))\n\n\n\nfeature_columns\n\n['mean_x',\n 'std_x',\n 'min_x',\n 'max_x',\n 'energy_x',\n 'mean_y',\n 'std_y',\n 'min_y',\n 'max_y',\n 'energy_y',\n 'mean_z',\n 'std_z',\n 'min_z',\n 'max_z',\n 'energy_z',\n 'mean_magnitude',\n 'std_magnitude',\n 'min_magnitude',\n 'max_magnitude',\n 'energy_magnitude']\n\n\n\n\n\n\n\n\nNoteRemember\n\n\n\nThe exact feature column order must be saved with the model.\nDuring deployment, live features must be passed to the model in the same order.",
+    "section": "7.6 Training",
+    "text": "7.6 Training\nTraining connects feature vectors with labels.\n\n\n\n\n\nflowchart TD\n  A[Feature Matrix]\n  --&gt; C[Learning Algorithm]\n  B[Labels]\n  --&gt; C\n  C --&gt; D[Trained Model]\n\n\n\n\n\n\nThe feature matrix contains one row per window.\nThe labels tell the model which activity each row represents.\nThe learning algorithm searches for patterns that connect feature values to labels.\nThe trained model stores those learned patterns so it can make predictions for new windows.",
     "crumbs": [
       "<span class='chapter-number'>7</span>  <span class='chapter-title'>Machine Learning</span>"
     ]
   },
   {
-    "objectID": "modules/06_machine_learning.html#step-3-train-the-baseline-model",
-    "href": "modules/06_machine_learning.html#step-3-train-the-baseline-model",
+    "objectID": "modules/06_machine_learning.html#why-can-models-make-mistakes",
+    "href": "modules/06_machine_learning.html#why-can-models-make-mistakes",
     "title": "7  Machine Learning",
-    "section": "7.6 Step 3 — Train the Baseline Model",
-    "text": "7.6 Step 3 — Train the Baseline Model\nWe now train a Random Forest on the complete feature table.\nThis gives us a baseline model artifact that later chapters can evaluate and export with metadata.\n\nbaseline_model = train_random_forest(X, y)\n\nbaseline_model\n\nRandomForestClassifier(n_estimators=200, random_state=42)In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.RandomForestClassifier?Documentation for RandomForestClassifieriFitted\n        \n            \n                Parameters\n                \n\n\n\n\n\n\n\n\n\nn_estimators  n_estimators: int, default=100\n\nThe number of trees in the forest.\n\n.. versionchanged:: 0.22\nThe default value of ``n_estimators`` changed from 10 to 100\nin 0.22.\n200\n\n\n\nrandom_state  random_state: int, RandomState instance or None, default=None\n\nControls both the randomness of the bootstrapping of the samples used\nwhen building trees (if ``bootstrap=True``) and the sampling of the\nfeatures to consider when looking for the best split at each node\n(if ``max_features &lt; n_features``).\nSee :term:`Glossary &lt;random_state&gt;` for details.\n42\n\n\n\ncriterion  criterion: {\"gini\", \"entropy\", \"log_loss\"}, default=\"gini\"\n\nThe function to measure the quality of a split. Supported criteria are\n\"gini\" for the Gini impurity and \"log_loss\" and \"entropy\" both for the\nShannon information gain, see :ref:`tree_mathematical_formulation`.\nNote: This parameter is tree-specific.\n'gini'\n\n\n\nmax_depth  max_depth: int, default=None\n\nThe maximum depth of the tree. If None, then nodes are expanded until\nall leaves are pure or until all leaves contain less than\nmin_samples_split samples.\nNone\n\n\n\nmin_samples_split  min_samples_split: int or float, default=2\n\nThe minimum number of samples required to split an internal node:\n\n- If int, then consider `min_samples_split` as the minimum number.\n- If float, then `min_samples_split` is a fraction and\n`ceil(min_samples_split * n_samples)` are the minimum\nnumber of samples for each split.\n\n.. versionchanged:: 0.18\nAdded float values for fractions.\n2\n\n\n\nmin_samples_leaf  min_samples_leaf: int or float, default=1\n\nThe minimum number of samples required to be at a leaf node.\nA split point at any depth will only be considered if it leaves at\nleast ``min_samples_leaf`` training samples in each of the left and\nright branches. This may have the effect of smoothing the model,\nespecially in regression.\n\n- If int, then consider `min_samples_leaf` as the minimum number.\n- If float, then `min_samples_leaf` is a fraction and\n`ceil(min_samples_leaf * n_samples)` are the minimum\nnumber of samples for each node.\n\n.. versionchanged:: 0.18\nAdded float values for fractions.\n1\n\n\n\nmin_weight_fraction_leaf  min_weight_fraction_leaf: float, default=0.0\n\nThe minimum weighted fraction of the sum total of weights (of all\nthe input samples) required to be at a leaf node. Samples have\nequal weight when sample_weight is not provided.\n0.0\n\n\n\nmax_features  max_features: {\"sqrt\", \"log2\", None}, int or float, default=\"sqrt\"\n\nThe number of features to consider when looking for the best split:\n\n- If int, then consider `max_features` features at each split.\n- If float, then `max_features` is a fraction and\n`max(1, int(max_features * n_features_in_))` features are considered at each\nsplit.\n- If \"sqrt\", then `max_features=sqrt(n_features)`.\n- If \"log2\", then `max_features=log2(n_features)`.\n- If None, then `max_features=n_features`.\n\n.. versionchanged:: 1.1\nThe default of `max_features` changed from `\"auto\"` to `\"sqrt\"`.\n\nNote: the search for a split does not stop until at least one\nvalid partition of the node samples is found, even if it requires to\neffectively inspect more than ``max_features`` features.\n'sqrt'\n\n\n\nmax_leaf_nodes  max_leaf_nodes: int, default=None\n\nGrow trees with ``max_leaf_nodes`` in best-first fashion.\nBest nodes are defined as relative reduction in impurity.\nIf None then unlimited number of leaf nodes.\nNone\n\n\n\nmin_impurity_decrease  min_impurity_decrease: float, default=0.0\n\nA node will be split if this split induces a decrease of the impurity\ngreater than or equal to this value.\n\nThe weighted impurity decrease equation is the following::\n\nN_t / N * (impurity - N_t_R / N_t * right_impurity\n- N_t_L / N_t * left_impurity)\n\nwhere ``N`` is the total number of samples, ``N_t`` is the number of\nsamples at the current node, ``N_t_L`` is the number of samples in the\nleft child, and ``N_t_R`` is the number of samples in the right child.\n\n``N``, ``N_t``, ``N_t_R`` and ``N_t_L`` all refer to the weighted sum,\nif ``sample_weight`` is passed.\n\n.. versionadded:: 0.19\n0.0\n\n\n\nbootstrap  bootstrap: bool, default=True\n\nWhether bootstrap samples are used when building trees. If False, the\nwhole dataset is used to build each tree.\nTrue\n\n\n\noob_score  oob_score: bool or callable, default=False\n\nWhether to use out-of-bag samples to estimate the generalization score.\nBy default, :func:`~sklearn.metrics.accuracy_score` is used.\nProvide a callable with signature `metric(y_true, y_pred)` to use a\ncustom metric. Only available if `bootstrap=True`.\n\nFor an illustration of out-of-bag (OOB) error estimation, see the example\n:ref:`sphx_glr_auto_examples_ensemble_plot_ensemble_oob.py`.\nFalse\n\n\n\nn_jobs  n_jobs: int, default=None\n\nThe number of jobs to run in parallel. :meth:`fit`, :meth:`predict`,\n:meth:`decision_path` and :meth:`apply` are all parallelized over the\ntrees. ``None`` means 1 unless in a :obj:`joblib.parallel_backend`\ncontext. ``-1`` means using all processors. See :term:`Glossary\n&lt;n_jobs&gt;` for more details.\nNone\n\n\n\nverbose  verbose: int, default=0\n\nControls the verbosity when fitting and predicting.\n0\n\n\n\nwarm_start  warm_start: bool, default=False\n\nWhen set to ``True``, reuse the solution of the previous call to fit\nand add more estimators to the ensemble, otherwise, just fit a whole\nnew forest. See :term:`Glossary &lt;warm_start&gt;` and\n:ref:`tree_ensemble_warm_start` for details.\nFalse\n\n\n\nclass_weight  class_weight: {\"balanced\", \"balanced_subsample\"}, dict or list of dicts, default=None\n\nWeights associated with classes in the form ``{class_label: weight}``.\nIf not given, all classes are supposed to have weight one. For\nmulti-output problems, a list of dicts can be provided in the same\norder as the columns of y.\n\nNote that for multioutput (including multilabel) weights should be\ndefined for each class of every column in its own dict. For example,\nfor four-class multilabel classification weights should be\n[{0: 1, 1: 1}, {0: 1, 1: 5}, {0: 1, 1: 1}, {0: 1, 1: 1}] instead of\n[{1:1}, {2:5}, {3:1}, {4:1}].\n\nThe \"balanced\" mode uses the values of y to automatically adjust\nweights inversely proportional to class frequencies in the input data\nas ``n_samples / (n_classes * np.bincount(y))``\n\nThe \"balanced_subsample\" mode is the same as \"balanced\" except that\nweights are computed based on the bootstrap sample for every tree\ngrown.\n\nFor multi-output, the weights of each column of y will be multiplied.\n\nNote that these weights will be multiplied with sample_weight (passed\nthrough the fit method) if sample_weight is specified.\nNone\n\n\n\nccp_alpha  ccp_alpha: non-negative float, default=0.0\n\nComplexity parameter used for Minimal Cost-Complexity Pruning. The\nsubtree with the largest cost complexity that is smaller than\n``ccp_alpha`` will be chosen. By default, no pruning is performed. See\n:ref:`minimal_cost_complexity_pruning` for details. See\n:ref:`sphx_glr_auto_examples_tree_plot_cost_complexity_pruning.py`\nfor an example of such pruning.\n\n.. versionadded:: 0.22\n0.0\n\n\n\nmax_samples  max_samples: int or float, default=None\n\nIf bootstrap is True, the number of samples to draw from X\nto train each base estimator.\n\n- If None (default), then draw `X.shape[0]` samples irrespective of\n`sample_weight`.\n- If int, then draw `max_samples` samples.\n- If float, then draw `max_samples * X.shape[0]` unweighted samples\nor `max_samples * sample_weight.sum()` weighted samples.\n\n.. versionadded:: 0.22\n\n.. versionchanged:: 1.9\nFloat `max_samples` is relative to `sample_weight.sum()` instead of\n`X.shape[0]` for weighted samples.\nNone\n\n\n\nmonotonic_cst  monotonic_cst: array-like of int of shape (n_features), default=None\n\nIndicates the monotonicity constraint to enforce on each feature.\n- 1: monotonic increase\n- 0: no constraint\n- -1: monotonic decrease\n\nIf monotonic_cst is None, no constraints are applied.\n\nMonotonicity constraints are not supported for:\n- multiclass classifications (i.e. when `n_classes &gt; 2`),\n- multioutput classifications (i.e. when `n_outputs_ &gt; 1`).\n\nThe constraints hold over the probability of the positive class.\n\nRead more in the :ref:`User Guide &lt;monotonic_cst_gbdt&gt;`.\n\n.. versionadded:: 1.4\nNone\n\n\n\n\n            \n        \n    \n        \n            \n                Fitted attributes\n                \n\n\n\n\n\n\n\n\nName\nType\nValue\n\n\nclasses_  classes_: ndarray of shape (n_classes,) or a list of such arrays\n\nThe classes labels (single output problem), or a list of arrays of\nclass labels (multi-output problem).\nndarray[object](3,)\n['sitting','standing','walking']\n\n\nestimator_  estimator_: :class:`~sklearn.tree.DecisionTreeClassifier`\n\nThe child estimator template used to create the collection of fitted\nsub-estimators.\n\n.. versionadded:: 1.2\n`base_estimator_` was renamed to `estimator_`.\nDecisionTreeClassifier\nDecisionTreeClassifier()\n\n\nestimators_  estimators_: list of DecisionTreeClassifier\n\nThe collection of fitted sub-estimators.\nlist\n[DecisionTreeC...te=1608637542), DecisionTreeC...te=1273642419), DecisionTreeC...te=1935803228), DecisionTreeC...ate=787846414), ...]\n\n\nestimators_samples_  estimators_samples_: list of arrays\n\nThe subset of drawn samples (i.e., the in-bag samples) for each base\nestimator. Each subset is defined by an array of the indices selected.\n\n.. versionadded:: 1.4\nlist\n[array([2523, ..., dtype=int32), array([4782, ..., dtype=int32), array([5462, ..., dtype=int32), array([2848, ..., dtype=int32), ...]\n\n\nfeature_importances_  feature_importances_: ndarray of shape (n_features,)\n\nThe impurity-based feature importances.\nThe higher, the more important the feature.\nThe importance of a feature is computed as the (normalized)\ntotal reduction of the criterion brought by that feature. It is also\nknown as the Gini importance.\n\nWarning: impurity-based feature importances can be misleading for\nhigh cardinality features (many unique values). See\n:func:`sklearn.inspection.permutation_importance` as an alternative.\nndarray[float64](20,)\n[0.02,0.08,0.02,...,0.06,0.08,0.04]\n\n\nfeature_names_in_  feature_names_in_: ndarray of shape (`n_features_in_`,)\n\nNames of features seen during :term:`fit`. Defined only when `X`\nhas feature names that are all strings.\n\n.. versionadded:: 1.0\nndarray[object](20,)\n['mean_x','std_x','min_x',...,'min_magnitude','max_magnitude', 'energy_magnitude']\n\n\nn_classes_  n_classes_: int or list\n\nThe number of classes (single output problem), or a list containing the\nnumber of classes for each output (multi-output problem).\nint\n3\n\n\nn_features_in_  n_features_in_: int\n\nNumber of features seen during :term:`fit`.\n\n.. versionadded:: 0.24\nint\n20\n\n\nn_outputs_  n_outputs_: int\n\nThe number of outputs when ``fit`` is performed.\nint\n1\n\n\n\n\n            \n        \n    \n\n\n\nbaseline_model.classes_\n\narray(['sitting', 'standing', 'walking'], dtype=object)",
+    "section": "7.7 Why Can Models Make Mistakes?",
+    "text": "7.7 Why Can Models Make Mistakes?\nModels make mistakes when the numerical patterns are not clear enough.\nIn wearable activity recognition, this can happen for several reasons.\nSitting and standing overlap because both are low-motion activities.\nMeasurements are noisy because sensors are imperfect.\nSubjects differ because people walk, sit and stand in different ways.\nPhone placement changes because a phone may be in a pocket, hand, bag or on a table.\nFeatures may be insufficient because simple statistics do not capture every useful pattern.\nMistakes are not just model failures.\nThey often reveal something important about the data representation.",
     "crumbs": [
       "<span class='chapter-number'>7</span>  <span class='chapter-title'>Machine Learning</span>"
     ]
   },
   {
-    "objectID": "modules/06_machine_learning.html#step-4-predict-one-window",
-    "href": "modules/06_machine_learning.html#step-4-predict-one-window",
+    "objectID": "modules/06_machine_learning.html#thinking-like-an-engineer",
+    "href": "modules/06_machine_learning.html#thinking-like-an-engineer",
     "title": "7  Machine Learning",
-    "section": "7.7 Step 4 — Predict One Window",
-    "text": "7.7 Step 4 — Predict One Window\nWe inspect one prediction to understand the model interface.\n\nsample = X.iloc[[0]]\n\nprediction = baseline_model.predict(sample)\n\nprediction\n\narray(['sitting'], dtype=object)\n\n\n\npd.DataFrame(\n    baseline_model.predict_proba(sample),\n    columns=baseline_model.classes_,\n)\n\n\n\n\n\n\n\n\nsitting\nstanding\nwalking\n\n\n\n\n0\n1.0\n0.0\n0.0\n\n\n\n\n\n\n\n\n7.7.1 Discussion\nThe model predicts one activity label.\nIt can also return probabilities for all known classes.\nThese probabilities will later be useful for dashboards and live prediction.",
+    "section": "7.8 Thinking Like An Engineer",
+    "text": "7.8 Thinking Like An Engineer\nInstead of asking:\n\nWhich model is best?\n\nask:\n\nDoes my representation contain enough information?\n\nIf the features do not distinguish sitting from standing, a more complex model may not fix the problem.\nIf the data does not represent new subjects well, high accuracy on familiar subjects may be misleading.\nModel choice matters.\nBut representation, data quality and evaluation matter just as much.",
     "crumbs": [
       "<span class='chapter-number'>7</span>  <span class='chapter-title'>Machine Learning</span>"
     ]
   },
   {
-    "objectID": "modules/06_machine_learning.html#checkpoint",
-    "href": "modules/06_machine_learning.html#checkpoint",
+    "objectID": "modules/06_machine_learning.html#the-project-implementation",
+    "href": "modules/06_machine_learning.html#the-project-implementation",
     "title": "7  Machine Learning",
-    "section": "7.8 Checkpoint",
-    "text": "7.8 Checkpoint\nBefore continuing, you should be able to answer:\n\nWhy is Random Forest a good baseline model?\nWhat are X, y and groups?\nWhy should subject_id not be used as a feature?\nWhy must the feature column order be saved?\nWhat is the difference between predict() and predict_proba()?",
+    "section": "7.9 The Project Implementation",
+    "text": "7.9 The Project Implementation\nThe reusable training logic lives in app.training.\nIt handles the project-level steps:\n\nloading the feature table,\nseparating features, labels and subject identifiers,\ntraining the Random Forest baseline,\nsaving model artifacts for later evaluation and deployment.\n\nThis chapter does not duplicate that implementation.\nThe important idea is that training consumes the feature table created in the previous chapter.",
     "crumbs": [
       "<span class='chapter-number'>7</span>  <span class='chapter-title'>Machine Learning</span>"
     ]
@@ -793,18 +803,38 @@
     "objectID": "modules/06_machine_learning.html#further-exploration",
     "href": "modules/06_machine_learning.html#further-exploration",
     "title": "7  Machine Learning",
-    "section": "7.9 Further Exploration",
-    "text": "7.9 Further Exploration\nOptional: change the number of trees from 200 to 50.\nDoes the prediction for the sample window change?\nWhat does this tell you about model stability?",
+    "section": "7.10 Further Exploration",
+    "text": "7.10 Further Exploration\nOptional models to explore later:\n\nGradient Boosting,\nXGBoost,\nLightGBM,\nDeep Learning.\n\nThese are useful next steps, but they are not required for the first reliable system.",
     "crumbs": [
       "<span class='chapter-number'>7</span>  <span class='chapter-title'>Machine Learning</span>"
     ]
   },
   {
-    "objectID": "modules/06_machine_learning.html#summary",
-    "href": "modules/06_machine_learning.html#summary",
+    "objectID": "modules/06_machine_learning.html#checkpoint",
+    "href": "modules/06_machine_learning.html#checkpoint",
     "title": "7  Machine Learning",
-    "section": "7.10 Summary",
-    "text": "7.10 Summary\nIn this chapter you learned how to\n\nload the saved feature table,\nsplit features, labels and subject identifiers,\ntrain a reusable Random Forest baseline,\ninspect one prediction and its probabilities.\n\nIn the next chapter we will evaluate whether the model generalizes to people it has never seen before.",
+    "section": "7.11 Checkpoint",
+    "text": "7.11 Checkpoint\nBefore continuing, you should be able to answer:\n\nWhy does the model need engineered features?\nWhy is Random Forest a good baseline for tabular features?\nWhat does it mean to say the model learns numerical regions?\nWhy can sitting and standing be confused?\nWhy are feature engineering and model training inseparable?",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Machine Learning</span>"
+    ]
+  },
+  {
+    "objectID": "modules/06_machine_learning.html#what-have-we-achieved",
+    "href": "modules/06_machine_learning.html#what-have-we-achieved",
+    "title": "7  Machine Learning",
+    "section": "7.12 What Have We Achieved?",
+    "text": "7.12 What Have We Achieved?\n\nWe connected Feature Vectors to activity Predictions.\nWe explained why classical machine learning is a strong baseline for this project.\nWe described Random Forests as a robust committee of decision trees.\nWe clarified that the Model learns numerical patterns, not human meaning.\nWe identified why Models can still make mistakes.",
+    "crumbs": [
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Machine Learning</span>"
+    ]
+  },
+  {
+    "objectID": "modules/06_machine_learning.html#what-comes-next",
+    "href": "modules/06_machine_learning.html#what-comes-next",
+    "title": "7  Machine Learning",
+    "section": "7.13 What Comes Next?",
+    "text": "7.13 What Comes Next?\nTraining a Model is not enough. The next chapter asks whether the Prediction will still work for people the Model has never seen before.",
     "crumbs": [
       "<span class='chapter-number'>7</span>  <span class='chapter-title'>Machine Learning</span>"
     ]
@@ -812,121 +842,171 @@
   {
     "objectID": "modules/07_evaluation.html",
     "href": "modules/07_evaluation.html",
-    "title": "8  Evaluation",
+    "title": "8  Evaluation And Generalization",
     "section": "",
-    "text": "8.1 Learning Objectives\nAfter completing this chapter, you should be able to",
+    "text": "8.1 Does Our Model Really Work On People It Has Never Seen Before?\nEvaluation is not just computing a score.\nEvaluation is asking whether the system will work in the real world.\nFor wearable activity recognition, the central question is often:\nA Model can look excellent under a random split and still fail to generalize to new subjects.\nThat gap is not an embarrassment.\nIt is one of the most important learning outcomes in wearable machine learning.",
     "crumbs": [
-      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Evaluation</span>"
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Evaluation And Generalization</span>"
     ]
   },
   {
-    "objectID": "modules/07_evaluation.html#learning-objectives",
-    "href": "modules/07_evaluation.html#learning-objectives",
-    "title": "8  Evaluation",
+    "objectID": "modules/07_evaluation.html#does-our-model-really-work-on-people-it-has-never-seen-before",
+    "href": "modules/07_evaluation.html#does-our-model-really-work-on-people-it-has-never-seen-before",
+    "title": "8  Evaluation And Generalization",
     "section": "",
-    "text": "explain why random train/test splits can be optimistic,\nevaluate a model with a subject-wise split,\nunderstand the leave-one-subject-out evaluation idea,\ncompare random split and subject-wise results,\nexport model metadata with evaluation results.",
+    "text": "Does our Model really work on people it has never seen before?\n\n\n\n\n\n\n\n\n\n\nTipEngineering Insight\n\n\n\nIf the system will be used on new people, the evaluation must test new people.",
     "crumbs": [
-      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Evaluation</span>"
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Evaluation And Generalization</span>"
     ]
   },
   {
     "objectID": "modules/07_evaluation.html#setup",
     "href": "modules/07_evaluation.html#setup",
-    "title": "8  Evaluation",
+    "title": "8  Evaluation And Generalization",
     "section": "8.2 Setup",
-    "text": "8.2 Setup\n\nfrom pathlib import Path\nimport sys\n\nimport pandas as pd\n\ncurrent_path = Path.cwd().resolve()\n\nfor parent in [current_path] + list(current_path.parents):\n    if (parent / \"app\").exists():\n        PROJECT_ROOT = parent\n        break\nelse:\n    raise RuntimeError(\"Could not find project root containing app/ directory.\")\n\nsys.path.insert(0, str(PROJECT_ROOT))\n\nfrom app.config import WINDOW_SIZE\nfrom app.evaluation import (\n    confusion_matrix_table,\n    evaluate_random_split,\n    evaluate_subject_split,\n    leave_one_subject_out_evaluation,\n    metrics_for_metadata,\n)\nfrom app.training import (\n    load_feature_table,\n    save_model_artifacts,\n    split_features_and_labels,\n    train_random_forest,\n)\n\n\nfeatures_df = load_feature_table()\nX, y, groups, feature_columns = split_features_and_labels(features_df)\n\nfeatures_df.shape\n\n(8066, 22)",
+    "text": "8.2 Setup\nWe use the reusable evaluation functions from app.evaluation.\nThe goal of this chapter is to interpret the evaluation strategies, not to duplicate their implementation.\n\nfrom pathlib import Path\nimport sys\n\nimport pandas as pd\n\ncurrent_path = Path.cwd().resolve()\n\nfor parent in [current_path] + list(current_path.parents):\n    if (parent / \"app\").exists():\n        PROJECT_ROOT = parent\n        break\nelse:\n    raise RuntimeError(\"Could not find project root containing app/ directory.\")\n\nsys.path.insert(0, str(PROJECT_ROOT))\n\nfrom app.config import WINDOW_SIZE\nfrom app.evaluation import (\n    evaluate_random_split,\n    evaluate_subject_split,\n    leave_one_subject_out_evaluation,\n    metrics_for_metadata,\n)\nfrom app.training import (\n    load_feature_table,\n    save_model_artifacts,\n    split_features_and_labels,\n    train_random_forest,\n)\n\n\nfeatures_df = load_feature_table()\nX, y, groups, feature_columns = split_features_and_labels(features_df)",
     "crumbs": [
-      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Evaluation</span>"
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Evaluation And Generalization</span>"
     ]
   },
   {
-    "objectID": "modules/07_evaluation.html#why-random-split-can-be-optimistic",
-    "href": "modules/07_evaluation.html#why-random-split-can-be-optimistic",
-    "title": "8  Evaluation",
-    "section": "8.3 Why Random Split Can Be Optimistic",
-    "text": "8.3 Why Random Split Can Be Optimistic\nA random split divides windows into training and test rows.\nThis is easy to do, but it can mix windows from the same person across both sets.\nFor wearable data, this matters because people move differently.\n\n\n\n\n\n\nWarningCommon Pitfall\n\n\n\nIf windows from the same subject appear in both training and test sets, the model may partly learn person-specific movement patterns.\nThe test score can then look better than performance on a completely new person.",
+    "objectID": "modules/07_evaluation.html#why-evaluation-is-not-just-accuracy",
+    "href": "modules/07_evaluation.html#why-evaluation-is-not-just-accuracy",
+    "title": "8  Evaluation And Generalization",
+    "section": "8.3 Why Evaluation Is Not Just Accuracy",
+    "text": "8.3 Why Evaluation Is Not Just Accuracy\nAccuracy is useful.\nIt gives one simple number: the fraction of predictions that were correct.\nBut accuracy can also be misleading.\nThe meaning of an accuracy score depends on how the test data was chosen.\nIn wearable sensing, deployment often means using the system with new people. That means the real evaluation question is not only:\n\nCan the model classify held-out rows?\n\nIt is:\n\nCan the model classify activities for subjects it did not see during training?\n\nThe difference between those two questions is the heart of this chapter.",
     "crumbs": [
-      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Evaluation</span>"
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Evaluation And Generalization</span>"
     ]
   },
   {
-    "objectID": "modules/07_evaluation.html#step-1-random-split-evaluation",
-    "href": "modules/07_evaluation.html#step-1-random-split-evaluation",
-    "title": "8  Evaluation",
-    "section": "8.4 Step 1 — Random Split Evaluation",
-    "text": "8.4 Step 1 — Random Split Evaluation\n\nrandom_result = evaluate_random_split(X, y)\n\nrandom_result[\"metrics\"][\"accuracy\"]\n\n0.9857496902106567\n\n\n\npd.DataFrame(random_result[\"metrics\"][\"classification_report\"]).T\n\n\n\n\n\n\n\n\nprecision\nrecall\nf1-score\nsupport\n\n\n\n\nsitting\n0.992233\n0.975191\n0.983638\n524.00000\n\n\nstanding\n0.983209\n0.985047\n0.984127\n535.00000\n\n\nwalking\n0.982238\n0.996396\n0.989267\n555.00000\n\n\naccuracy\n0.985750\n0.985750\n0.985750\n0.98575\n\n\nmacro avg\n0.985893\n0.985545\n0.985677\n1614.00000\n\n\nweighted avg\n0.985805\n0.985750\n0.985736\n1614.00000\n\n\n\n\n\n\n\n\nrandom_labels = random_result[\"metrics\"][\"labels\"]\nrandom_matrix = pd.DataFrame(\n    random_result[\"metrics\"][\"confusion_matrix\"],\n    index=[f\"true_{label}\" for label in random_labels],\n    columns=[f\"pred_{label}\" for label in random_labels],\n)\n\nrandom_matrix\n\n\n\n\n\n\n\n\npred_sitting\npred_standing\npred_walking\n\n\n\n\ntrue_sitting\n511\n9\n4\n\n\ntrue_standing\n2\n527\n6\n\n\ntrue_walking\n2\n0\n553\n\n\n\n\n\n\n\n\n8.4.1 Discussion\nThis score answers the question:\n\nCan the model classify unseen windows from a similar pool of subjects?\n\nThat is useful, but it is not the same as testing on a new person.",
+    "objectID": "modules/07_evaluation.html#random-split-the-first-result",
+    "href": "modules/07_evaluation.html#random-split-the-first-result",
+    "title": "8  Evaluation And Generalization",
+    "section": "8.4 Random Split: The First Result",
+    "text": "8.4 Random Split: The First Result\nA random split divides rows into train and test sets.\nIt is common because it is simple and works well for many tabular datasets.\nBut wearable datasets contain many windows from the same subjects.\nRandom splitting can place windows from one subject in both training and test.\n\n\n\n\n\nflowchart LR\n  A[Subject 1 windows] --&gt; C[Train]\n  A --&gt; D[Test]\n  B[Subject 2 windows] --&gt; C\n  B --&gt; D\n  E[Subject 3 windows] --&gt; C\n  E --&gt; D\n\n\n\n\n\n\nThis often gives high performance because the test data is very similar to the training data.\nThat can be a useful first result.\nBut for wearable data, it may be too optimistic.\n\nrandom_result = evaluate_random_split(X, y)\n\nrandom_result[\"metrics\"][\"accuracy\"]\n\n0.9857496902106567\n\n\nThis score answers:\n\nCan the model classify unseen windows from a familiar subject pool?\n\nThat is not the same as deployment to new people.",
     "crumbs": [
-      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Evaluation</span>"
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Evaluation And Generalization</span>"
     ]
   },
   {
-    "objectID": "modules/07_evaluation.html#step-2-subject-wise-evaluation",
-    "href": "modules/07_evaluation.html#step-2-subject-wise-evaluation",
-    "title": "8  Evaluation",
-    "section": "8.5 Step 2 — Subject-Wise Evaluation",
-    "text": "8.5 Step 2 — Subject-Wise Evaluation\nIn a subject-wise split, entire subjects are assigned to either training or test.\nThe model is evaluated on people it did not see during training.\n\nsubject_result = evaluate_subject_split(X, y, groups)\n\nsubject_result[\"metrics\"][\"accuracy\"]\n\n0.8678756476683938\n\n\n\nsubject_result[\"test_subjects\"]\n\n[1643, 1640, 1646, 1612, 1624, 1631, 1617, 1632, 1603, 1630, 1613]\n\n\n\npd.DataFrame(subject_result[\"metrics\"][\"classification_report\"]).T\n\n\n\n\n\n\n\n\nprecision\nrecall\nf1-score\nsupport\n\n\n\n\nsitting\n0.752013\n0.905039\n0.821460\n516.000000\n\n\nstanding\n0.895262\n0.698444\n0.784699\n514.000000\n\n\nwalking\n0.984674\n1.000000\n0.992278\n514.000000\n\n\naccuracy\n0.867876\n0.867876\n0.867876\n0.867876\n\n\nmacro avg\n0.877316\n0.867827\n0.866146\n1544.000000\n\n\nweighted avg\n0.877154\n0.867876\n0.866088\n1544.000000\n\n\n\n\n\n\n\n\nsubject_labels = subject_result[\"metrics\"][\"labels\"]\nsubject_matrix = pd.DataFrame(\n    subject_result[\"metrics\"][\"confusion_matrix\"],\n    index=[f\"true_{label}\" for label in subject_labels],\n    columns=[f\"pred_{label}\" for label in subject_labels],\n)\n\nsubject_matrix\n\n\n\n\n\n\n\n\npred_sitting\npred_standing\npred_walking\n\n\n\n\ntrue_sitting\n467\n42\n7\n\n\ntrue_standing\n154\n359\n1\n\n\ntrue_walking\n0\n0\n514\n\n\n\n\n\n\n\n\n8.5.1 Discussion\nThis score answers the more realistic deployment question:\n\nCan the model classify activities for people it has never seen before?\n\nThis is usually harder.\nSitting and standing are especially difficult because both can produce low-motion signals.",
+    "objectID": "modules/07_evaluation.html#the-leakage-problem",
+    "href": "modules/07_evaluation.html#the-leakage-problem",
+    "title": "8  Evaluation And Generalization",
+    "section": "8.5 The Leakage Problem",
+    "text": "8.5 The Leakage Problem\nWindows from the same person can look very similar.\nPeople differ in walking style, phone placement, body movement and recording conditions.\nIf the same subject appears in both train and test, the model may learn subject-specific patterns.\nThis is not intentional cheating.\nIt is a subtle evaluation design problem.\n\n\n\n\n\n\nWarningCommon Pitfall\n\n\n\nHigh accuracy can come from evaluating on data that is too similar to the training data.\n\n\nThe important question is not whether the random split score is wrong.\nThe important question is what it actually measures.",
     "crumbs": [
-      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Evaluation</span>"
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Evaluation And Generalization</span>"
     ]
   },
   {
-    "objectID": "modules/07_evaluation.html#step-3-compare-strategies",
-    "href": "modules/07_evaluation.html#step-3-compare-strategies",
-    "title": "8  Evaluation",
-    "section": "8.6 Step 3 — Compare Strategies",
-    "text": "8.6 Step 3 — Compare Strategies\n\ncomparison = pd.DataFrame(\n    [\n        {\n            \"strategy\": \"random_split\",\n            \"accuracy\": random_result[\"metrics\"][\"accuracy\"],\n            \"test_size\": random_result[\"test_size\"],\n        },\n        {\n            \"strategy\": \"subject_split\",\n            \"accuracy\": subject_result[\"metrics\"][\"accuracy\"],\n            \"test_size\": subject_result[\"test_size\"],\n        },\n    ]\n)\n\ncomparison\n\n\n\n\n\n\n\n\nstrategy\naccuracy\ntest_size\n\n\n\n\n0\nrandom_split\n0.985750\n1614\n\n\n1\nsubject_split\n0.867876\n1544\n\n\n\n\n\n\n\n\n8.6.1 Discussion\nIf the random split score is higher than the subject-wise score, that is not a bug.\nIt is evidence that generalization to new people is a harder problem than recognizing windows from familiar subjects.",
+    "objectID": "modules/07_evaluation.html#subject-wise-evaluation",
+    "href": "modules/07_evaluation.html#subject-wise-evaluation",
+    "title": "8  Evaluation And Generalization",
+    "section": "8.6 Subject-Wise Evaluation",
+    "text": "8.6 Subject-Wise Evaluation\nIn subject-wise evaluation, train subjects and test subjects are separated.\nThe model trains on one group of people and is tested on different people.\n\n\n\n\n\nflowchart LR\n  A[Train Subjects] --&gt; B[Model]\n  B --&gt; C[Test Subjects]\n  D[Subject 1, 2, 3, ...] --&gt; A\n  E[Subject 40, 41, 42, ...] --&gt; C\n\n\n\n\n\n\nThis better simulates deployment on a new user.\nAccuracy often drops.\nThat drop is informative, not a failure.\nIt tells us how much harder generalization is when the model cannot rely on familiar subject patterns.\n\nsubject_result = evaluate_subject_split(X, y, groups)\n\nsubject_result[\"metrics\"][\"accuracy\"]\n\n0.8678756476683938\n\n\nThis score answers:\n\nCan the model classify activities for people it has never seen before?\n\nFor wearable systems, this is often the more important question.",
     "crumbs": [
-      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Evaluation</span>"
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Evaluation And Generalization</span>"
     ]
   },
   {
-    "objectID": "modules/07_evaluation.html#step-4-loso-concept",
-    "href": "modules/07_evaluation.html#step-4-loso-concept",
-    "title": "8  Evaluation",
-    "section": "8.7 Step 4 — LOSO Concept",
-    "text": "8.7 Step 4 — LOSO Concept\nLeave-one-subject-out evaluation trains one model per subject.\nEach run holds out exactly one subject for testing and trains on all remaining subjects.\nThis gives a more detailed view of which subjects are easy or hard to generalize to.\nFor a teaching render, we run a small preview on the first five subjects.\n\nloso_preview = leave_one_subject_out_evaluation(\n    X,\n    y,\n    groups,\n    max_subjects=5,\n)\n\nloso_preview\n\n\n\n\n\n\n\n\nsubject_id\naccuracy\ntest_size\n\n\n\n\n0\n1600\n1.000000\n105\n\n\n1\n1601\n1.000000\n135\n\n\n2\n1602\n1.000000\n105\n\n\n3\n1603\n0.963504\n137\n\n\n4\n1604\n0.961905\n105\n\n\n\n\n\n\n\n\nloso_preview[\"accuracy\"].describe()\n\ncount    5.000000\nmean     0.985082\nstd      0.020436\nmin      0.961905\n25%      0.963504\n50%      1.000000\n75%      1.000000\nmax      1.000000\nName: accuracy, dtype: float64\n\n\n\n\n\n\n\n\nNoteRemember\n\n\n\nA full LOSO evaluation is useful, but it trains one model per subject.\nFor this dataset, that means 51 model fits.",
+    "objectID": "modules/07_evaluation.html#random-split-vs-subject-wise-split",
+    "href": "modules/07_evaluation.html#random-split-vs-subject-wise-split",
+    "title": "8  Evaluation And Generalization",
+    "section": "8.7 Random Split Vs Subject-Wise Split",
+    "text": "8.7 Random Split Vs Subject-Wise Split\nThe comparison is the lesson.\n\ncomparison = pd.DataFrame(\n    [\n        {\n            \"evaluation strategy\": \"Random split\",\n            \"accuracy\": random_result[\"metrics\"][\"accuracy\"],\n            \"test examples\": random_result[\"test_size\"],\n        },\n        {\n            \"evaluation strategy\": \"Subject-wise split\",\n            \"accuracy\": subject_result[\"metrics\"][\"accuracy\"],\n            \"test examples\": subject_result[\"test_size\"],\n        },\n    ]\n)\n\ncomparison\n\n\n\n\n\n\n\n\nevaluation strategy\naccuracy\ntest examples\n\n\n\n\n0\nRandom split\n0.985750\n1614\n\n\n1\nSubject-wise split\n0.867876\n1544\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nEvaluation strategy\nWhat is tested?\nTypical result\nRisk\n\n\n\n\nRandom split\nNew windows from a mixed subject pool\nOften high\nCan be too optimistic if subjects appear in both train and test\n\n\nSubject-wise split\nNew subjects held out from training\nOften lower\nDepends on which subjects are held out\n\n\nLOSO\nEvery subject is tested as the held-out subject once\nStrict and detailed\nComputationally more expensive\n\n\n\nIf the random split score is higher, do not panic.\nThat gap tells us that subject generalization is harder than row-level prediction.",
     "crumbs": [
-      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Evaluation</span>"
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Evaluation And Generalization</span>"
     ]
   },
   {
-    "objectID": "modules/07_evaluation.html#step-5-export-model-artifacts-and-metadata",
-    "href": "modules/07_evaluation.html#step-5-export-model-artifacts-and-metadata",
-    "title": "8  Evaluation",
-    "section": "8.8 Step 5 — Export Model Artifacts and Metadata",
-    "text": "8.8 Step 5 — Export Model Artifacts and Metadata\nWe train one final model on all available feature rows and save the artifacts needed later:\n\ntrained model,\nfeature column order,\nclass labels,\nmodel metadata,\nevaluation results.\n\n\nfinal_model = train_random_forest(X, y)\n\nmetadata = {\n    \"evaluation_results\": {\n        \"random_split\": metrics_for_metadata(random_result),\n        \"subject_split\": metrics_for_metadata(subject_result),\n        \"loso_preview\": loso_preview.to_dict(orient=\"records\"),\n    }\n}\n\nmodel_metadata = save_model_artifacts(\n    final_model,\n    feature_columns,\n    metadata=metadata,\n    window_size=WINDOW_SIZE,\n)\n\nmodel_metadata.keys()\n\ndict_keys(['model_type', 'window_size', 'feature_columns', 'class_labels', 'n_estimators', 'random_state', 'evaluation_results'])\n\n\n\n{\n    \"model_type\": model_metadata[\"model_type\"],\n    \"window_size\": model_metadata[\"window_size\"],\n    \"class_labels\": model_metadata[\"class_labels\"],\n}\n\n{'model_type': 'RandomForestClassifier',\n 'window_size': 100,\n 'class_labels': ['sitting', 'standing', 'walking']}",
+    "objectID": "modules/07_evaluation.html#interpreting-confusion-matrices",
+    "href": "modules/07_evaluation.html#interpreting-confusion-matrices",
+    "title": "8  Evaluation And Generalization",
+    "section": "8.8 Interpreting Confusion Matrices",
+    "text": "8.8 Interpreting Confusion Matrices\nA confusion matrix shows which activities are predicted correctly and which are confused.\nDiagonal entries are correct predictions.\nOff-diagonal entries are mistakes.\n\nrandom_labels = random_result[\"metrics\"][\"labels\"]\nrandom_matrix = pd.DataFrame(\n    random_result[\"metrics\"][\"confusion_matrix\"],\n    index=[f\"true_{label}\" for label in random_labels],\n    columns=[f\"pred_{label}\" for label in random_labels],\n)\n\nrandom_matrix\n\n\n\n\n\n\n\n\npred_sitting\npred_standing\npred_walking\n\n\n\n\ntrue_sitting\n511\n9\n4\n\n\ntrue_standing\n2\n527\n6\n\n\ntrue_walking\n2\n0\n553\n\n\n\n\n\n\n\nThis matrix tells us where the random split model succeeds and fails.\nWalking is often easier because it has stronger movement and higher energy.\nSitting and standing may be confused because both are low-motion states.\nNow inspect the subject-wise confusion matrix.\n\nsubject_labels = subject_result[\"metrics\"][\"labels\"]\nsubject_matrix = pd.DataFrame(\n    subject_result[\"metrics\"][\"confusion_matrix\"],\n    index=[f\"true_{label}\" for label in subject_labels],\n    columns=[f\"pred_{label}\" for label in subject_labels],\n)\n\nsubject_matrix\n\n\n\n\n\n\n\n\npred_sitting\npred_standing\npred_walking\n\n\n\n\ntrue_sitting\n467\n42\n7\n\n\ntrue_standing\n154\n359\n1\n\n\ntrue_walking\n0\n0\n514\n\n\n\n\n\n\n\nThis matrix is more realistic for deployment.\nIf sitting and standing are confused more often here, that is not surprising.\nIt means the distinction is less stable across people.",
     "crumbs": [
-      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Evaluation</span>"
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Evaluation And Generalization</span>"
     ]
   },
   {
-    "objectID": "modules/07_evaluation.html#checkpoint",
-    "href": "modules/07_evaluation.html#checkpoint",
-    "title": "8  Evaluation",
-    "section": "8.9 Checkpoint",
-    "text": "8.9 Checkpoint\nBefore continuing, you should be able to answer:\n\nWhy can a random split be optimistic?\nWhat changes in a subject-wise split?\nWhat does LOSO evaluate?\nWhy is generalization to new people harder?\nWhy do we save feature columns with the model?",
+    "objectID": "modules/07_evaluation.html#loso-concept",
+    "href": "modules/07_evaluation.html#loso-concept",
+    "title": "8  Evaluation And Generalization",
+    "section": "8.9 LOSO Concept",
+    "text": "8.9 LOSO Concept\nLeave-One-Subject-Out evaluation is stricter.\nThe idea is simple:\n\nHold out one subject.\nTrain on all other subjects.\nTest on the held-out subject.\nRepeat for each subject.\nAverage the performance.\n\nLOSO asks:\n\nHow well does the system generalize across all possible held-out subjects?\n\nFor a teaching render, we run a small preview on the first five subjects.\n\nloso_preview = leave_one_subject_out_evaluation(\n    X,\n    y,\n    groups,\n    max_subjects=5,\n)\n\nloso_preview\n\n\n\n\n\n\n\n\nsubject_id\naccuracy\ntest_size\n\n\n\n\n0\n1600\n1.000000\n105\n\n\n1\n1601\n1.000000\n135\n\n\n2\n1602\n1.000000\n105\n\n\n3\n1603\n0.963504\n137\n\n\n4\n1604\n0.961905\n105\n\n\n\n\n\n\n\nThis preview shows that subject-level performance can vary.\nSome people are easier for the model.\nSome people are harder.\nThat variation is exactly why subject-aware evaluation matters.",
     "crumbs": [
-      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Evaluation</span>"
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Evaluation And Generalization</span>"
+    ]
+  },
+  {
+    "objectID": "modules/07_evaluation.html#thinking-like-an-engineer",
+    "href": "modules/07_evaluation.html#thinking-like-an-engineer",
+    "title": "8  Evaluation And Generalization",
+    "section": "8.10 Thinking Like An Engineer",
+    "text": "8.10 Thinking Like An Engineer\nInstead of asking:\n\nHow high is my accuracy?\n\nask:\n\nDoes my evaluation simulate the way the system will be used?\n\nIf the system will be used by new people, then new people must appear in the test set.\nIf the system will be used on a new device, evaluation should eventually test device differences.\nIf the system will be used in a new session, evaluation should consider session differences.\nThe evaluation design is part of the engineering design.",
+    "crumbs": [
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Evaluation And Generalization</span>"
+    ]
+  },
+  {
+    "objectID": "modules/07_evaluation.html#the-project-implementation",
+    "href": "modules/07_evaluation.html#the-project-implementation",
+    "title": "8  Evaluation And Generalization",
+    "section": "8.11 The Project Implementation",
+    "text": "8.11 The Project Implementation\nThe reusable evaluation logic lives in app.evaluation.\nIt provides:\n\nrandom split evaluation,\nsubject-wise evaluation,\nLOSO-style evaluation,\nclassification reports,\nconfusion matrix support.\n\nThis chapter uses those functions so the evaluation logic stays consistent across the project.",
+    "crumbs": [
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Evaluation And Generalization</span>"
+    ]
+  },
+  {
+    "objectID": "modules/07_evaluation.html#save-evaluation-metadata",
+    "href": "modules/07_evaluation.html#save-evaluation-metadata",
+    "title": "8  Evaluation And Generalization",
+    "section": "8.12 Save Evaluation Metadata",
+    "text": "8.12 Save Evaluation Metadata\nThe project saves evaluation results with the model artifacts.\nThis makes the trained model easier to inspect later.\n\nfinal_model = train_random_forest(X, y)\n\nmetadata = {\n    \"evaluation_results\": {\n        \"random_split\": metrics_for_metadata(random_result),\n        \"subject_split\": metrics_for_metadata(subject_result),\n        \"loso_preview\": loso_preview.to_dict(orient=\"records\"),\n    }\n}\n\nmodel_metadata = save_model_artifacts(\n    final_model,\n    feature_columns,\n    metadata=metadata,\n    window_size=WINDOW_SIZE,\n)\n\n{\n    \"model_type\": model_metadata[\"model_type\"],\n    \"window_size\": model_metadata[\"window_size\"],\n    \"class_labels\": model_metadata[\"class_labels\"],\n}\n\n{'model_type': 'RandomForestClassifier',\n 'window_size': 100,\n 'class_labels': ['sitting', 'standing', 'walking']}",
+    "crumbs": [
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Evaluation And Generalization</span>"
     ]
   },
   {
     "objectID": "modules/07_evaluation.html#further-exploration",
     "href": "modules/07_evaluation.html#further-exploration",
-    "title": "8  Evaluation",
-    "section": "8.10 Further Exploration",
-    "text": "8.10 Further Exploration\nOptional: run LOSO for all subjects by removing max_subjects=5.\nHow much do subject-level accuracies vary?\nWhich activities are most often confused?",
+    "title": "8  Evaluation And Generalization",
+    "section": "8.13 Further Exploration",
+    "text": "8.13 Further Exploration\nOptional directions:\n\nstratified LOSO,\nsession-wise split,\ndevice-wise split,\ncalibration,\nconfidence thresholds.\n\nThese are advanced evaluation ideas, not required for the first system.",
     "crumbs": [
-      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Evaluation</span>"
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Evaluation And Generalization</span>"
     ]
   },
   {
-    "objectID": "modules/07_evaluation.html#summary",
-    "href": "modules/07_evaluation.html#summary",
-    "title": "8  Evaluation",
-    "section": "8.11 Summary",
-    "text": "8.11 Summary\nIn this chapter you learned how to\n\ncompare random split and subject-wise evaluation,\ninterpret why subject-wise evaluation is more realistic,\nuse a LOSO preview,\nexport model artifacts with metadata.\n\nThe next chapters will later turn these artifacts into a service and live demo.",
+    "objectID": "modules/07_evaluation.html#checkpoint",
+    "href": "modules/07_evaluation.html#checkpoint",
+    "title": "8  Evaluation And Generalization",
+    "section": "8.14 Checkpoint",
+    "text": "8.14 Checkpoint\nBefore continuing, you should be able to answer:\n\nWhy can random split accuracy be too optimistic?\nWhy does subject-wise evaluation better match deployment on new people?\nWhat does LOSO test?\nHow do you read diagonal and off-diagonal confusion matrix entries?\nWhy should evaluation match the deployment scenario?",
     "crumbs": [
-      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Evaluation</span>"
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Evaluation And Generalization</span>"
+    ]
+  },
+  {
+    "objectID": "modules/07_evaluation.html#what-have-we-achieved",
+    "href": "modules/07_evaluation.html#what-have-we-achieved",
+    "title": "8  Evaluation And Generalization",
+    "section": "8.15 What Have We Achieved?",
+    "text": "8.15 What Have We Achieved?\n\nWe explained why accuracy depends on the deployment scenario.\nWe identified how random splits can overestimate wearable sensing performance.\nWe separated subject-wise evaluation from ordinary random evaluation.\nWe interpreted confusion matrices as evidence about Model behavior.\nWe framed LOSO as a stricter test of generalization to new people.",
+    "crumbs": [
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Evaluation And Generalization</span>"
+    ]
+  },
+  {
+    "objectID": "modules/07_evaluation.html#what-comes-next",
+    "href": "modules/07_evaluation.html#what-comes-next",
+    "title": "8  Evaluation And Generalization",
+    "section": "8.16 What Comes Next?",
+    "text": "8.16 What Comes Next?\nOnce evaluation gives us a trustworthy baseline, the system needs a way to serve Predictions. The next chapter moves from evaluation to Deployment with FastAPI and Streamlit.",
+    "crumbs": [
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Evaluation And Generalization</span>"
     ]
   },
   {
@@ -934,7 +1014,117 @@
     "href": "modules/07_deployment.html",
     "title": "9  Deployment",
     "section": "",
-    "text": "This chapter turns the trained model into a reusable prediction service.",
+    "text": "9.1 Learning Objectives\nAfter completing this chapter, you should be able to",
+    "crumbs": [
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Deployment</span>"
+    ]
+  },
+  {
+    "objectID": "modules/07_deployment.html#learning-objectives",
+    "href": "modules/07_deployment.html#learning-objectives",
+    "title": "9  Deployment",
+    "section": "",
+    "text": "explain which model artifacts are needed for prediction,\nstart the FastAPI service,\ncheck API health,\nsend one prediction request,\nexplain how the Streamlit dashboard uses the same prediction code.",
+    "crumbs": [
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Deployment</span>"
+    ]
+  },
+  {
+    "objectID": "modules/07_deployment.html#model-artifacts",
+    "href": "modules/07_deployment.html#model-artifacts",
+    "title": "9  Deployment",
+    "section": "9.2 Model Artifacts",
+    "text": "9.2 Model Artifacts\nThe deployed prediction service uses files in the models/ directory.\nmodels/\n├── activity_model_random_forest.joblib\n├── feature_columns.joblib\n└── activity_labels.joblib\nThe most important artifact for deployment is the feature column list.\nThe live system must send features to the model in exactly the same order that was used during training.\n\n\n\n\n\n\nTipEngineering Insight\n\n\n\nDeployment is part of the machine learning system, not an afterthought.\nThe same Feature Vector definition must connect training, evaluation, API prediction, and the Streamlit dashboard.\n\n\n\n\n\n\n\n\nWarningCommon Pitfall\n\n\n\nIf the model was trained with one set of features but the API receives a different set, predictions are not reliable.\nThe API checks for missing and unexpected features before predicting.",
+    "crumbs": [
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Deployment</span>"
+    ]
+  },
+  {
+    "objectID": "modules/07_deployment.html#fastapi-service",
+    "href": "modules/07_deployment.html#fastapi-service",
+    "title": "9  Deployment",
+    "section": "9.3 FastAPI Service",
+    "text": "9.3 FastAPI Service\nFastAPI exposes the trained model as a small HTTP service.\nThe project keeps the API logic in app/api.py and the model loading/prediction logic in app/model_utils.py.\nStart the API from the project root:\nuv run uvicorn app.api:app --reload\nThe API will usually be available at:\nhttp://127.0.0.1:8000",
+    "crumbs": [
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Deployment</span>"
+    ]
+  },
+  {
+    "objectID": "modules/07_deployment.html#health-check",
+    "href": "modules/07_deployment.html#health-check",
+    "title": "9  Deployment",
+    "section": "9.4 Health Check",
+    "text": "9.4 Health Check\nUse the health endpoint to verify that the API can load the model artifacts.\ncurl http://127.0.0.1:8000/health\nExpected response:\n{\n  \"status\": \"ok\",\n  \"model_loaded\": true,\n  \"detail\": \"Model artifacts are available.\"\n}\nIf a model file is missing, the endpoint returns a clear message naming the missing artifact.",
+    "crumbs": [
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Deployment</span>"
+    ]
+  },
+  {
+    "objectID": "modules/07_deployment.html#prediction-request",
+    "href": "modules/07_deployment.html#prediction-request",
+    "title": "9  Deployment",
+    "section": "9.5 Prediction Request",
+    "text": "9.5 Prediction Request\nThe prediction endpoint is:\nPOST /predict\nIt expects one JSON object with a features field.\nThe feature names must match models/feature_columns.joblib.\nExample shape:\n{\n  \"features\": {\n    \"mean_x\": 0.0,\n    \"std_x\": 0.0,\n    \"min_x\": 0.0,\n    \"max_x\": 0.0,\n    \"energy_x\": 0.0\n  }\n}\nThe real request must include all 20 trained feature columns.\nThe response contains:\n{\n  \"activity\": \"walking\",\n  \"confidence\": 0.91,\n  \"probabilities\": {\n    \"sitting\": 0.02,\n    \"standing\": 0.07,\n    \"walking\": 0.91\n  }\n}\n\n\n\n\n\n\nNoteValidation\n\n\n\nIf features are missing, the API returns a validation error that names them.",
+    "crumbs": [
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Deployment</span>"
+    ]
+  },
+  {
+    "objectID": "modules/07_deployment.html#streamlit-dashboard",
+    "href": "modules/07_deployment.html#streamlit-dashboard",
+    "title": "9  Deployment",
+    "section": "9.6 Streamlit Dashboard",
+    "text": "9.6 Streamlit Dashboard\nThe Streamlit dashboard is the live demonstration UI.\nStart it from the project root:\nuv run streamlit run dashboard.py\nThe dashboard:\n\nreads live samples from phyphox,\nstores recent samples in LiveBuffer,\ncreates a Window,\nextracts a Feature Vector,\ncalls the same prediction service used by the API,\ndisplays the current activity and probabilities.\n\nThe API and dashboard share the same model artifact checks.\nThis reduces the chance that the web service and live demo behave differently.",
+    "crumbs": [
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Deployment</span>"
+    ]
+  },
+  {
+    "objectID": "modules/07_deployment.html#thinking-like-an-engineer",
+    "href": "modules/07_deployment.html#thinking-like-an-engineer",
+    "title": "9  Deployment",
+    "section": "9.7 Thinking Like An Engineer",
+    "text": "9.7 Thinking Like An Engineer\nInstead of asking:\n\nCan my notebook produce a prediction?\n\nask:\n\nCan another system request the same Prediction reliably?\n\nDeployment forces us to make assumptions explicit: artifact locations, feature names, input validation, output format, and failure messages.",
+    "crumbs": [
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Deployment</span>"
+    ]
+  },
+  {
+    "objectID": "modules/07_deployment.html#checkpoint",
+    "href": "modules/07_deployment.html#checkpoint",
+    "title": "9  Deployment",
+    "section": "9.8 Checkpoint",
+    "text": "9.8 Checkpoint\nBefore continuing, you should be able to answer:\n\nWhich model artifacts are needed for prediction?\nWhy must feature names match the training feature columns?\nWhat does /health check?\nWhat does /predict return?\nWhy should the API and dashboard use the same prediction service?",
+    "crumbs": [
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Deployment</span>"
+    ]
+  },
+  {
+    "objectID": "modules/07_deployment.html#further-exploration",
+    "href": "modules/07_deployment.html#further-exploration",
+    "title": "9  Deployment",
+    "section": "9.9 Further Exploration",
+    "text": "9.9 Further Exploration\nOptional: intentionally remove one feature from a /predict request.\nWhich error message does the API return?\nHow does that help debug deployment problems?",
+    "crumbs": [
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Deployment</span>"
+    ]
+  },
+  {
+    "objectID": "modules/07_deployment.html#what-have-we-achieved",
+    "href": "modules/07_deployment.html#what-have-we-achieved",
+    "title": "9  Deployment",
+    "section": "9.10 What Have We Achieved?",
+    "text": "9.10 What Have We Achieved?\n\nWe identified the model artifacts needed for Deployment.\nWe explained why feature columns must match the trained Feature Matrix.\nWe started and tested the FastAPI prediction service.\nWe connected the API and Streamlit dashboard to the same prediction path.\nWe practiced treating validation errors as part of system reliability.",
+    "crumbs": [
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Deployment</span>"
+    ]
+  },
+  {
+    "objectID": "modules/07_deployment.html#what-comes-next",
+    "href": "modules/07_deployment.html#what-comes-next",
+    "title": "9  Deployment",
+    "section": "9.11 What Comes Next?",
+    "text": "9.11 What Comes Next?\nDeployment gives us a service that can return Predictions. The final major chapter connects that service to a real phone Sensor Stream for Live Prediction.",
     "crumbs": [
       "<span class='chapter-number'>9</span>  <span class='chapter-title'>Deployment</span>"
     ]
@@ -944,7 +1134,117 @@
     "href": "modules/08_live_prediction.html",
     "title": "10  Live Prediction",
     "section": "",
-    "text": "This chapter connects phyphox, Streamlit, and the trained model for live activity recognition.",
+    "text": "10.1 Learning Objectives\nAfter completing this chapter, you should be able to",
+    "crumbs": [
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Live Prediction</span>"
+    ]
+  },
+  {
+    "objectID": "modules/08_live_prediction.html#learning-objectives",
+    "href": "modules/08_live_prediction.html#learning-objectives",
+    "title": "10  Live Prediction",
+    "section": "",
+    "text": "configure phyphox remote access,\nexplain why the phone and laptop must be on the same network,\ndescribe the live prediction pipeline,\nrun the Streamlit dashboard,\ntroubleshoot common live demo failures.",
+    "crumbs": [
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Live Prediction</span>"
+    ]
+  },
+  {
+    "objectID": "modules/08_live_prediction.html#phyphox-setup",
+    "href": "modules/08_live_prediction.html#phyphox-setup",
+    "title": "10  Live Prediction",
+    "section": "10.2 phyphox Setup",
+    "text": "10.2 phyphox Setup\nInstall phyphox on your smartphone.\nOpen an acceleration experiment and enable remote access.\nphyphox will show a URL such as:\nhttp://192.168.178.45:8080\nEnter this URL in the Streamlit dashboard.\n\n\n\n\n\n\nWarningNetwork Requirement\n\n\n\nThe phone and laptop must be able to reach each other on the local network.\nUniversity WiFi networks such as eduroam often block direct device-to-device communication.\nIf the laptop cannot open the phyphox URL in a browser, the dashboard cannot read sensor data either.\n\n\nRecommended network options:\n\nsmartphone hotspot,\nlocal home WiFi,\ntravel router,\nlab router configured for local device communication.",
+    "crumbs": [
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Live Prediction</span>"
+    ]
+  },
+  {
+    "objectID": "modules/08_live_prediction.html#start-the-dashboard",
+    "href": "modules/08_live_prediction.html#start-the-dashboard",
+    "title": "10  Live Prediction",
+    "section": "10.3 Start the Dashboard",
+    "text": "10.3 Start the Dashboard\nFrom the project root:\nuv run streamlit run dashboard.py\nThe dashboard lets you configure:\n\nphyphox URL,\nwindow size,\ndemo duration.\n\nThe demo is intentionally time-limited so that it cannot run forever by accident.",
+    "crumbs": [
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Live Prediction</span>"
+    ]
+  },
+  {
+    "objectID": "modules/08_live_prediction.html#live-prediction-pipeline",
+    "href": "modules/08_live_prediction.html#live-prediction-pipeline",
+    "title": "10  Live Prediction",
+    "section": "10.4 Live Prediction Pipeline",
+    "text": "10.4 Live Prediction Pipeline\nThe live pipeline is:\nphyphox\n→ PhyphoxClient\n→ LiveBuffer\n→ Window\n→ Feature Vector\n→ prediction service\n→ Streamlit dashboard\nPhyphoxClient reads the latest x, y and z acceleration values.\nLiveBuffer stores the most recent samples until a full Window is available.\nThe Window is converted to the same Feature Vector used during training.\nThe prediction service loads the trained Random Forest Model and returns:\n\npredicted activity,\nconfidence,\nclass probabilities.\n\n\n\n\n\n\n\nTipEngineering Insight\n\n\n\nLive Prediction is where hidden assumptions become visible.\nSampling rate, network access, buffer size, feature order, and model artifacts all have to work at the same time.",
+    "crumbs": [
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Live Prediction</span>"
+    ]
+  },
+  {
+    "objectID": "modules/08_live_prediction.html#dashboard-states",
+    "href": "modules/08_live_prediction.html#dashboard-states",
+    "title": "10  Live Prediction",
+    "section": "10.5 Dashboard States",
+    "text": "10.5 Dashboard States\nThe dashboard shows the current live demo state:\n\n\n\nState\nMeaning\n\n\n\n\nWaiting\nThe demo has not started yet\n\n\nCollecting samples\nThe buffer is filling\n\n\nPredicting\nA full window is available\n\n\nError\nphyphox or model prediction failed\n\n\nFinished\nThe configured demo duration ended\n\n\n\nThese states make live demos easier to debug in front of a class.",
+    "crumbs": [
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Live Prediction</span>"
+    ]
+  },
+  {
+    "objectID": "modules/08_live_prediction.html#thinking-like-an-engineer",
+    "href": "modules/08_live_prediction.html#thinking-like-an-engineer",
+    "title": "10  Live Prediction",
+    "section": "10.6 Thinking Like An Engineer",
+    "text": "10.6 Thinking Like An Engineer\nInstead of asking:\n\nDoes the Model work?\n\nask:\n\nCan the complete live system keep producing Predictions when real-world conditions change?\n\nIn a classroom demo, the most likely failures may be networking, phone setup, timing, or missing artifacts rather than machine learning accuracy.",
+    "crumbs": [
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Live Prediction</span>"
+    ]
+  },
+  {
+    "objectID": "modules/08_live_prediction.html#troubleshooting",
+    "href": "modules/08_live_prediction.html#troubleshooting",
+    "title": "10  Live Prediction",
+    "section": "10.7 Troubleshooting",
+    "text": "10.7 Troubleshooting\n\n10.7.1 phyphox URL Does Not Open\nCheck that remote access is enabled in phyphox.\nMake sure the phone and laptop are on the same network.\nIf you are on eduroam, try a phone hotspot or a local router.\n\n\n10.7.2 Dashboard Shows a Timeout\nThe laptop can see the URL but the response is too slow.\nMove both devices closer to the access point or use a simpler local network.\n\n\n10.7.3 Missing Buffer Error\nMake sure the correct phyphox experiment is open and producing acceleration buffers named accX, accY and accZ.\n\n\n10.7.4 Model Artifact Error\nConfirm that these files exist:\nmodels/activity_model_random_forest.joblib\nmodels/feature_columns.joblib\nmodels/activity_labels.joblib\nIf they are missing, rerun the training/export step before the live demo.",
+    "crumbs": [
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Live Prediction</span>"
+    ]
+  },
+  {
+    "objectID": "modules/08_live_prediction.html#checkpoint",
+    "href": "modules/08_live_prediction.html#checkpoint",
+    "title": "10  Live Prediction",
+    "section": "10.8 Checkpoint",
+    "text": "10.8 Checkpoint\nBefore continuing, you should be able to answer:\n\nWhy can eduroam block the live demo?\nWhat does the live buffer store?\nWhen does the dashboard start predicting?\nWhy must live feature extraction match training feature extraction?\nWhat should you check first if phyphox cannot connect?",
+    "crumbs": [
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Live Prediction</span>"
+    ]
+  },
+  {
+    "objectID": "modules/08_live_prediction.html#further-exploration",
+    "href": "modules/08_live_prediction.html#further-exploration",
+    "title": "10  Live Prediction",
+    "section": "10.9 Further Exploration",
+    "text": "10.9 Further Exploration\nOptional: compare predictions with two different window sizes.\nHow does a smaller window affect responsiveness?\nHow does a larger window affect stability?",
+    "crumbs": [
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Live Prediction</span>"
+    ]
+  },
+  {
+    "objectID": "modules/08_live_prediction.html#what-have-we-achieved",
+    "href": "modules/08_live_prediction.html#what-have-we-achieved",
+    "title": "10  Live Prediction",
+    "section": "10.10 What Have We Achieved?",
+    "text": "10.10 What Have We Achieved?\n\nWe connected phyphox Sensor Stream data to the project pipeline.\nWe traced the live path from LiveBuffer to Window to Feature Vector to Prediction.\nWe explained why eduroam and other managed networks can block the demo.\nWe interpreted dashboard states as debugging signals.\nWe prepared a troubleshooting checklist for reliable Live Prediction.",
+    "crumbs": [
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Live Prediction</span>"
+    ]
+  },
+  {
+    "objectID": "modules/08_live_prediction.html#what-comes-next",
+    "href": "modules/08_live_prediction.html#what-comes-next",
+    "title": "10  Live Prediction",
+    "section": "10.11 What Comes Next?",
+    "text": "10.11 What Comes Next?\nYou have now followed the full system from raw Sensor Stream to Live Prediction. The remaining project materials help you review, teach, and verify the complete workbook.",
     "crumbs": [
       "<span class='chapter-number'>10</span>  <span class='chapter-title'>Live Prediction</span>"
     ]

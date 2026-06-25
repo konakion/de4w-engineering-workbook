@@ -1,38 +1,93 @@
-from fastapi import FastAPI
+from typing import Any
 
-from app.model_utils import predict_from_features
+from fastapi import FastAPI, HTTPException
+from pydantic import BaseModel, Field
+
+from app.model_utils import (
+    FeatureMismatchError,
+    ModelArtifactError,
+    get_prediction_service,
+    predict_from_features,
+)
+
+
+class PredictionRequest(BaseModel):
+    """
+    Feature payload for one activity prediction.
+    """
+
+    features: dict[str, float] = Field(
+        ...,
+        description="Feature dictionary produced by app.feature_extraction.extract_features.",
+    )
+
+
+class PredictionResponse(BaseModel):
+    """
+    Activity prediction returned by the API.
+    """
+
+    activity: str
+    confidence: float
+    probabilities: dict[str, float]
+
+
+class HealthResponse(BaseModel):
+    """
+    Health status for the prediction API.
+    """
+
+    status: str
+    model_loaded: bool
+    detail: str
 
 
 app = FastAPI(
     title="DE4W Activity Recognition API",
     description="A small API for activity recognition from accelerometer features.",
-    version="0.1.0",
+    version="0.3.0",
 )
 
 
-@app.get("/")
-def root() -> dict[str, str]:
+@app.get("/", response_model=HealthResponse)
+def root() -> HealthResponse:
     """
-    Health check endpoint.
+    Root endpoint mirroring /health.
     """
-    return {
-        "message": "DE4W Activity Recognition API is running."
-    }
+    return health()
 
 
-@app.post("/predict")
-def predict(features: dict[str, float]) -> dict:
+@app.get("/health", response_model=HealthResponse)
+def health() -> HealthResponse:
+    """
+    Report whether model artifacts can be loaded.
+    """
+    service = get_prediction_service()
+
+    try:
+        service.load()
+    except ModelArtifactError as exc:
+        return HealthResponse(
+            status="error",
+            model_loaded=False,
+            detail=str(exc),
+        )
+
+    return HealthResponse(
+        status="ok",
+        model_loaded=True,
+        detail="Model artifacts are available.",
+    )
+
+
+@app.post("/predict", response_model=PredictionResponse)
+def predict(request: PredictionRequest) -> dict[str, Any]:
     """
     Predict an activity from extracted accelerometer features.
-
-    Parameters
-    ----------
-    features:
-        Dictionary containing all model features.
-
-    Returns
-    -------
-    dict
-        Predicted activity, confidence and class probabilities.
     """
-    return predict_from_features(features)
+    try:
+        return predict_from_features(request.features)
+    except FeatureMismatchError as exc:
+        raise HTTPException(status_code=422, detail=str(exc)) from exc
+    except ModelArtifactError as exc:
+        raise HTTPException(status_code=503, detail=str(exc)) from exc

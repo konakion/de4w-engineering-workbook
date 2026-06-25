@@ -1,26 +1,49 @@
 # Feature Engineering
 
-## Learning Objectives
+::: {.callout-note}
+## Why this chapter matters
 
-After completing this chapter, you should be able to
+Windows organize time, but they are still raw measurements. Feature engineering turns each Window into a Feature Vector, which is the bridge between physical motion and a machine learning Model.
+:::
 
-- explain why feature engineering is needed for classical machine learning,
-- convert sensor windows into numerical feature vectors,
-- use reusable feature extraction code from the `app/` package,
-- create a complete feature table for all windows,
-- understand why training and deployment must use the same feature extraction logic.
+## How Can A Computer Recognize Walking Without Ever Seeing A Person?
+
+A computer does not see a person walking.
+
+It sees numbers.
+
+In this project, those numbers come from accelerometer Windows: x, y, z and magnitude values sampled over time.
+
+The central question of this chapter is:
+
+> How can raw sensor signals become something a machine learning model can understand?
+
+The answer is feature engineering.
+
+Feature engineering transforms raw physical measurements into mathematical descriptions of behavior.
+
+```{mermaid}
+flowchart LR
+  A[Raw sensor signals] --> B[Mathematical descriptors]
+  B --> C[Machine Learning]
+```
 
 ---
 
 ## Setup
 
+We use reusable project code for loading, windowing and feature extraction.
+
+The important idea is not the syntax.
+
+The important idea is how motion becomes numbers that can be compared.
+
 ```{python}
 from pathlib import Path
 import sys
 
-import numpy as np
-import pandas as pd
 import matplotlib.pyplot as plt
+import pandas as pd
 
 current_path = Path.cwd().resolve()
 
@@ -35,9 +58,9 @@ sys.path.insert(0, str(PROJECT_ROOT))
 
 from app.config import WINDOW_SIZE
 from app.data_loader import load_wisdm_phone_accel
-from app.windowing import create_windows
 from app.feature_extraction import extract_features
 from app.pipeline import add_magnitude, windows_to_features
+from app.windowing import create_windows
 
 DATA_DIR = PROJECT_ROOT / "data"
 
@@ -45,60 +68,89 @@ df = load_wisdm_phone_accel(DATA_DIR)
 df = add_magnitude(df)
 ```
 
-::: {.callout-important}
-## Software Engineering Principle
+---
 
-The feature extraction logic lives in `app/feature_extraction.py`.
+## Why Raw Signals Are Difficult For Classical ML
 
-The workbook imports and uses this function instead of redefining it.
+A window still contains many measurements.
 
-This ensures that training and live prediction use the same implementation.
-:::
+With 100 samples and four signals, one window contains 400 raw values.
+
+That is a lot of detail, but not yet much meaning.
+
+Classical machine learning models such as Random Forests usually work best with structured feature tables: one row per example, one column per meaningful descriptor.
+
+An analogy:
+
+Imagine describing a song to someone.
+
+You could send every audio sample.
+
+Or you could describe tempo, loudness, rhythm and energy.
+
+The second description loses some detail, but it captures useful structure.
+
+Feature engineering does the same for sensor windows.
+
+It summarizes behavior instead of asking the model to memorize every sample.
 
 ---
 
-## Why Feature Engineering?
+## What Is A Feature?
 
-A sensor window contains many raw measurements.
+A feature is not just another measurement.
 
-For example, with a window size of 100 samples and four signals (`x`, `y`, `z`, `magnitude`), one window contains 400 raw values.
+A feature is information extracted from many measurements.
 
-Classical machine learning models such as Random Forests usually work better with structured tabular features.
-
-Feature engineering transforms a window into a compact numerical summary.
+For one signal window, we can compute descriptors such as average level, variability, extremes and movement intensity.
 
 ```{mermaid}
-flowchart LR
-
-A[Sensor Window]
--->B[Feature Extraction]
-
-B-->C[Feature Vector]
-
-C-->D[Machine Learning Model]
+flowchart TD
+  A[Signal Window]
+  --> B[Mean]
+  --> C[Standard Deviation]
+  --> D[Maximum]
+  --> E[Energy]
+  --> F[Feature Vector]
 ```
+
+The feature vector is the compact mathematical description that the model sees.
+
+The raw signal is still important.
+
+But the model receives the summary.
+
+::: {.callout-tip}
+## Engineering Insight
+
+Feature engineering is knowledge compression.
+
+Hundreds of measurements become a compact mathematical representation. Good Feature Vectors preserve information that helps distinguish activities.
+:::
 
 ---
 
 ## Our Feature Set
 
-For each signal
+For each signal, we compute the same set of descriptors.
+
+Signals:
 
 ```text
 x, y, z, magnitude
 ```
 
-we compute:
+Features:
 
-| Feature | Meaning |
-|---------|---------|
-| mean | average signal level |
-| std | variability |
-| min | smallest value |
-| max | largest value |
-| energy | overall signal intensity |
+| Feature | What it describes | Why it helps |
+|---|---|---|
+| mean | Average signal level | Captures orientation and baseline acceleration |
+| standard deviation | Variability | Higher for dynamic movement |
+| minimum | Lowest observed value | Captures one side of the movement range |
+| maximum | Highest observed value | Captures extreme movement |
+| energy | Sum of squared values | Captures overall movement intensity |
 
-This gives
+This gives:
 
 $$
 4 \times 5 = 20
@@ -106,80 +158,133 @@ $$
 
 features per window.
 
+This table answers:
+
+> What information might distinguish one activity from another?
+
+Walking should usually have more variability and higher energy than sitting or standing.
+
+Sitting and standing may have similar energy, which is why they can be harder to separate.
+
 ---
 
-## Step 1 — Create One Example Window
+## From Physics To Mathematics
+
+Accelerometers measure physical motion.
+
+Feature engineering converts that motion into numbers.
+
+Machine learning compares numerical patterns.
+
+```{mermaid}
+flowchart LR
+  A[Physical motion]
+  --> B[Accelerometer measurements]
+  --> C[Window]
+  --> D[Feature Vector]
+  --> E[Pattern comparison]
+```
+
+This is one of the central ideas of the project.
+
+The model does not know what walking looks like.
+
+It learns that certain numerical patterns tend to correspond to walking, sitting or standing.
+
+---
+
+## Why Does Walking Have Higher Energy?
+
+We compare a walking window with a sitting window.
 
 ```{python}
-walking_df = (
-    df[df["activity"] == "walking"]
-    .sort_values("timestamp")
-    .copy()
-)
-
-windows = create_windows(
-    walking_df,
+walking_window = create_windows(
+    df[df["activity"] == "walking"].sort_values("timestamp"),
     window_size=WINDOW_SIZE,
-)
+)[0]
 
-example_window = windows[0]
+sitting_window = create_windows(
+    df[df["activity"] == "sitting"].sort_values("timestamp"),
+    window_size=WINDOW_SIZE,
+)[0]
 
-example_window.head()
+plt.figure(figsize=(12, 4))
+plt.plot(walking_window["magnitude"].reset_index(drop=True), label="walking")
+plt.plot(sitting_window["magnitude"].reset_index(drop=True), label="sitting")
+plt.title("Walking and Sitting Magnitude Windows")
+plt.xlabel("Sample inside the window")
+plt.ylabel("Acceleration magnitude")
+plt.legend()
+plt.show()
 ```
 
----
+What should you observe?
 
-## Step 2 — Extract Features from One Window
+Walking usually produces repeated changes in acceleration magnitude.
 
-```{python}
-example_features = extract_features(example_window)
+Sitting is often flatter because the phone moves less.
 
-pd.Series(example_features)
-```
-
-```{python}
-len(example_features)
-```
-
-### Expected Output
-
-The output should contain 20 features.
-
----
-
-## Step 3 — Understand the Energy Feature
-
-Energy is computed as
+Energy is computed as:
 
 $$
 Energy = \sum_i x_i^2
 $$
 
-It is often useful because dynamic activities such as walking usually produce higher signal intensity than static activities such as sitting or standing.
+Squaring makes larger movements count more.
+
+So a dynamic activity like walking often produces higher energy than a static activity like sitting.
+
+Now we inspect the actual feature values.
 
 ```{python}
-example_window["magnitude"].head()
+comparison = pd.DataFrame(
+    [
+        {"activity": "walking", **extract_features(walking_window)},
+        {"activity": "sitting", **extract_features(sitting_window)},
+    ]
+)
+
+comparison[
+    [
+        "activity",
+        "std_magnitude",
+        "max_magnitude",
+        "energy_magnitude",
+    ]
+]
 ```
 
-```{python}
-energy_magnitude = np.sum(example_window["magnitude"] ** 2)
+This table answers:
 
-energy_magnitude
-```
+> Do the mathematical descriptors reflect what we saw in the plot?
+
+The point is not that one feature solves the whole problem.
+
+The point is that features translate visual movement patterns into numbers.
 
 ---
 
-## Step 4 — Convert All Windows into Features
+## Building A Feature Table
 
-### Goal
+One window becomes one feature vector.
 
-We now create one feature row per window.
+Many windows become a feature matrix.
 
-Windows are created separately per subject and activity.
+That matrix is what the machine learning model uses.
 
-```{python}
-windows_to_features
+```{mermaid}
+flowchart TD
+  A[One Window]
+  --> B[One Feature Vector]
+  --> C[Many Windows]
+  --> D[Feature Matrix]
 ```
+
+The feature table has one row per window.
+
+Feature columns describe movement.
+
+Metadata columns keep the activity label and subject identifier.
 
 ```{python}
 features_df = windows_to_features(
@@ -190,37 +295,78 @@ features_df = windows_to_features(
 features_df.head()
 ```
 
+```{python}
+feature_table_summary = pd.DataFrame(
+    [
+        {
+            "question": "How many windows?",
+            "answer": len(features_df),
+            "why it matters": "Each window becomes one training example.",
+        },
+        {
+            "question": "How many feature columns?",
+            "answer": len([c for c in features_df.columns if c not in ["activity", "subject_id"]]),
+            "why it matters": "This is the numerical description the model receives.",
+        },
+        {
+            "question": "How many subjects?",
+            "answer": features_df["subject_id"].nunique(),
+            "why it matters": "Subject IDs support realistic evaluation later.",
+        },
+        {
+            "question": "Missing feature values?",
+            "answer": int(features_df.isna().sum().sum()),
+            "why it matters": "Missing values can break training or distort results.",
+        },
+    ]
+)
+
+feature_table_summary
+```
+
+This table answers:
+
+> Is the feature table ready to become a machine learning dataset?
+
 ---
 
-## Step 5 — Inspect the Feature Table
+## The Project Implementation
 
-```{python}
-features_df.shape
-```
+The reusable feature extraction logic lives in `app.feature_extraction`.
 
-```{python}
-features_df["activity"].value_counts()
-```
+This chapter does not redefine it.
 
-```{python}
-features_df["subject_id"].nunique()
-```
+It imports `extract_features()` and uses `windows_to_features()` from the project pipeline.
 
-```{python}
-features_df.isna().sum().sum()
-```
+That matters because training and live prediction must use the same feature logic.
 
-### Discussion
-
-At this point, the continuous sensor data has been transformed into a tabular machine learning dataset.
-
-Each row represents one window.
-
-Each column represents one feature or metadata field.
+If the model is trained with one feature definition and deployed with another, predictions become unreliable.
 
 ---
 
-## Step 6 — Save the Feature Table
+## Thinking Like An Engineer
+
+Instead of asking:
+
+> Which feature should I compute?
+
+ask:
+
+> What information distinguishes one activity from another?
+
+For walking, useful information may include movement intensity, rhythm and variability.
+
+For sitting versus standing, the difference may be smaller and may depend on phone placement.
+
+Feature engineering is where domain knowledge enters the machine learning pipeline.
+
+---
+
+## Save The Feature Table
+
+The next chapters can load the feature table directly.
+
+Saving it makes the pipeline easier to reproduce and debug.
 
 ```{python}
 features_df.to_csv(
@@ -229,75 +375,41 @@ features_df.to_csv(
 )
 ```
 
-::: {.callout-note}
-## Remember
-
-Saving intermediate artifacts makes the pipeline easier to debug and reproduce.
-
-The next chapters can load the feature table directly instead of recomputing it every time.
-:::
-
----
-
-## Think
-
-Which feature do you expect to be most useful for distinguishing walking from standing?
-
-- mean?
-- standard deviation?
-- maximum?
-- energy?
-
-Why?
-
----
-
-## Common Pitfall
-
-::: {.callout-warning}
-## Training and Deployment Must Match
-
-If you train a model using one feature extraction method but deploy it with a different method, predictions become unreliable.
-
-That is why the project keeps feature extraction in `app/feature_extraction.py`.
-:::
-
 ---
 
 ## Checkpoint
 
 Before continuing, you should be able to answer:
 
-1. Why do we extract features from windows?
-2. Why does a Random Forest work well with feature tables?
-3. What does the energy feature measure?
-4. How many features do we compute per window?
+1. Why are raw windows difficult for classical machine learning?
+2. Why is a feature more than one measurement?
+3. Why might walking have higher energy than sitting?
+4. What does one row in the feature table represent?
 5. Why must training and deployment use the same feature extraction logic?
 
 ---
 
 ## Further Exploration
 
-Optional: add one additional feature to `app/feature_extraction.py`, for example:
+Optional feature ideas:
 
-- median
-- range
-- interquartile range
+- frequency-domain features,
+- entropy,
+- jerk,
+- correlation between axes.
 
-Then rerun this chapter.
-
-How does the number of features change?
+These can be useful later, but they are not required for the first reliable system.
 
 ---
 
-## Summary
+## What Have We Achieved?
 
-In this chapter you learned
+- We explained why raw Windows are difficult for classical machine learning.
+- We described how features summarize motion across many measurements.
+- We connected physical acceleration to mathematical descriptors.
+- We built a Feature Matrix where each row represents one Window.
+- We reused `app.feature_extraction` for the project implementation.
 
-- why feature engineering is necessary,
-- how windows are transformed into feature vectors,
-- how reusable project code improves maintainability,
-- how to create a complete feature table,
-- why consistent feature extraction is essential for deployment.
+## What Comes Next?
 
-In the next chapter we will train a machine learning model using this feature table.
+Now that we have a Feature Matrix and labels, we can train a Model. The next chapter explains how classical machine learning turns Feature Vectors into Predictions.

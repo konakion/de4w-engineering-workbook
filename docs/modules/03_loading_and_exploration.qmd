@@ -1,63 +1,54 @@
 # Loading and Exploring the Data
 
-## Learning Objectives
+::: {.callout-note}
+## Why this chapter matters
 
-After completing this chapter, you should be able to
+Before a Sensor Stream becomes a Feature Matrix, we need to check whether the data is usable. This chapter teaches the habit that protects every later result: validate and understand the dataset before trusting a Model.
+:::
 
-- load one WISDM phone accelerometer file,
-- load all participant files into one DataFrame,
-- map activity codes to readable activity names,
-- restrict the dataset to selected target activities,
-- inspect class distribution and subject distribution,
-- compute and visualize acceleration magnitude,
-- estimate the sampling rate from timestamps.
+## Never Trust Your Data
 
----
+Every machine learning project starts with a quiet but important rule:
 
-## Why This Chapter Matters
+> Never trust your data.
 
-Before we create windows, extract features, or train a model, we need to make sure that we can load and understand the raw data.
+This does not mean we assume the dataset is bad.
 
-This chapter turns a folder of raw text files into a structured table that we can analyze and process further.
+It means we verify what is actually there before we build anything on top of it.
+
+Models only learn from the data we give them. If the data is incomplete, mislabeled, imbalanced, noisy or structured differently than we expect, the model will learn those problems too.
+
+Tables help us count things.
+
+Plots help us see things.
+
+Both matter.
+
+Visualization often reveals problems that are invisible in a summary table: spikes, flat signals, strange transitions, sensor noise or activity patterns that look less distinct than expected.
 
 ::: {.callout-tip}
 ## Engineering Insight
 
-A clean data loading step is one of the most important parts of a reproducible machine learning project.
-
-If the loading logic is unclear or inconsistent, every later result becomes questionable.
+Experienced ML engineers often spend much more time exploring and validating data than training models. A strong model cannot rescue a weak understanding of the dataset.
 :::
 
 ---
 
-## Step 1 — Import Required Libraries
+## Setup
 
-### Goal
+We use reusable project functions to load the dataset.
 
-We import the libraries needed for data loading, numerical processing and visualization.
+The important part of this chapter is not the Python syntax.
+
+The important part is what we check and why.
 
 ```{python}
 from pathlib import Path
 import sys
 
-import numpy as np
-import pandas as pd
 import matplotlib.pyplot as plt
-```
+import pandas as pd
 
-### Expected Output
-
-This cell should run without errors.
-
----
-
-## Step 2 — Configure Project Paths
-
-### Goal
-
-We define where the project root and the data directory are located.
-
-```{python}
 current_path = Path.cwd().resolve()
 
 for parent in [current_path] + list(current_path.parents):
@@ -70,107 +61,8 @@ else:
 sys.path.insert(0, str(PROJECT_ROOT))
 
 from app.config import DATA_DIR
-from app.data_loader import (
-    ACTIVITY_MAP,
-    TARGET_ACTIVITIES,
-    load_single_wisdm_file,
-    load_wisdm_phone_accel,
-)
+from app.data_loader import TARGET_ACTIVITIES, load_wisdm_phone_accel
 from app.pipeline import add_magnitude
-
-
-print("Project root:", PROJECT_ROOT)
-print("Data directory:", DATA_DIR)
-```
-
-### Expected Output
-
-The output should point to your project folder and the `data/` directory.
-
-::: {.callout-warning}
-## Common Pitfall
-
-If the printed path does not point to your project folder, you may have started Quarto from the wrong directory.
-:::
-
----
-
-## Step 3 — Define Activity Mapping
-
-### Goal
-
-The raw WISDM files use activity codes such as `A`, `D`, and `E`.
-
-We map these codes to readable names.
-
-```{python}
-ACTIVITY_MAP
-```
-
-```{python}
-TARGET_ACTIVITIES
-```
-
-### Discussion
-
-We keep the complete mapping even though we currently use only three activities.
-
-This makes it easier to extend the project later.
-
----
-
-## Step 4 — Inspect Available Files
-
-### Goal
-
-Before loading the data, we check which raw files are available.
-
-```{python}
-files = sorted(DATA_DIR.glob("data_*_accel_phone.txt"))
-
-len(files), files[:5]
-```
-
-### Expected Output
-
-You should see approximately 51 files, one per participant.
-
----
-
-## Step 5 — Load One Participant File
-
-### Goal
-
-We first load a single file to understand the raw structure.
-
-```{python}
-load_single_wisdm_file
-```
-
-```{python}
-df_one = load_single_wisdm_file(files[0])
-
-df_one.head()
-```
-
-### Expected Output
-
-You should see a table with the columns:
-
-```text
-subject_id, activity_code, timestamp, x, y, z, activity
-```
-
----
-
-## Step 6 — Load All Participant Files
-
-### Goal
-
-We now load all phone accelerometer files and combine them into a single DataFrame.
-
-```{python}
-load_wisdm_phone_accel
 ```
 
 ```{python}
@@ -179,102 +71,171 @@ df = load_wisdm_phone_accel(
     target_activities=TARGET_ACTIVITIES,
 )
 
-df.head()
-```
-
----
-
-## Step 7 — Inspect the Dataset
-
-### Goal
-
-We check the size, classes and number of subjects.
-
-```{python}
-df.shape
-```
-
-```{python}
-df["activity"].value_counts()
-```
-
-```{python}
-df["subject_id"].nunique()
-```
-
-### Discussion
-
-At this point, we should verify that
-
-- all expected subjects were loaded,
-- all target activities are present,
-- the class distribution is not extremely imbalanced.
-
----
-
-## Step 8 — Add Acceleration Magnitude
-
-### Goal
-
-We compute the magnitude of the three-dimensional acceleration vector.
-
-$$
-m = \sqrt{x^2 + y^2 + z^2}
-$$
-
-```{python}
 df = add_magnitude(df)
-
-df.head()
 ```
-
-### Discussion
-
-The magnitude combines all three axes into one signal.
-
-It is often easier to interpret than individual axes because it is less sensitive to phone orientation.
 
 ---
 
-## Step 9 — Plot One Activity
+## Why Explore Data Before Building Models?
 
-### Goal
+Before training, we need to ask:
 
-We visualize x, y, z and magnitude for one activity.
+- What did we actually load?
+- Which subjects are represented?
+- Which activities are represented?
+- How many samples do we have?
+- Do the signals look physically plausible?
+- Are there obvious problems that would make evaluation misleading?
+
+Bad data creates bad models.
+
+Sometimes the problem is dramatic, such as missing files.
+
+Sometimes it is subtle, such as one activity being recorded much more often than another, or one subject contributing far more data than the rest.
+
+A professional data engineer does not wait for the model to fail.
+
+They inspect the data first.
+
+---
+
+## What Does Our Dataset Look Like?
+
+This first table answers the basic question:
+
+> What kind of dataset are we about to use?
 
 ```{python}
-activity = "walking"
+dataset_summary = pd.DataFrame(
+    [
+        {
+            "question": "How many samples?",
+            "answer": len(df),
+            "engineering meaning": "More samples can help, but only if they represent the real problem.",
+        },
+        {
+            "question": "How many subjects?",
+            "answer": df["subject_id"].nunique(),
+            "engineering meaning": "More subjects make generalization to new people more realistic.",
+        },
+        {
+            "question": "Which activities?",
+            "answer": ", ".join(sorted(df["activity"].unique())),
+            "engineering meaning": "The model can only learn activities present in the data.",
+        },
+        {
+            "question": "Which signal dimensions?",
+            "answer": "x, y, z, magnitude",
+            "engineering meaning": "These are the raw movement signals we will later summarize.",
+        },
+    ]
+)
 
-sample = (
-    df[df["activity"] == activity]
+dataset_summary
+```
+
+Every number tells us something.
+
+The number of samples tells us the scale of the data.
+
+The number of subjects tells us whether we can test generalization across people.
+
+The activity list tells us what the model can and cannot learn.
+
+The signal dimensions tell us what physical measurements are available.
+
+Now we check whether the classes are roughly balanced.
+
+```{python}
+activity_counts = (
+    df["activity"]
+    .value_counts()
+    .rename_axis("activity")
+    .reset_index(name="samples")
+)
+
+activity_counts
+```
+
+This table answers:
+
+> Is one activity dominating the dataset?
+
+If one class is much larger than the others, accuracy can become misleading. A model might perform well overall while still doing poorly on the smaller classes.
+
+We also check the number of samples per subject.
+
+```{python}
+subject_counts = (
+    df.groupby("subject_id")
+    .size()
+    .describe()
+    .to_frame(name="samples per subject")
+)
+
+subject_counts
+```
+
+This table answers:
+
+> Do subjects contribute similar amounts of data?
+
+Large differences matter because models may become biased toward subjects with more recordings.
+
+---
+
+## Looking At The Signals
+
+Sensor values are physical measurements.
+
+They are not abstract numbers.
+
+A phone accelerometer measures acceleration along three axes: x, y and z.
+
+The signal includes several effects:
+
+- gravity,
+- dynamic acceleration from movement,
+- noise,
+- variability from phone placement and subject behavior.
+
+We first inspect one walking segment.
+
+```{python}
+walking_sample = (
+    df[df["activity"] == "walking"]
+    .sort_values("timestamp")
     .head(400)
     .reset_index(drop=True)
 )
 
 plt.figure(figsize=(12, 4))
-plt.plot(sample["x"], label="x")
-plt.plot(sample["y"], label="y")
-plt.plot(sample["z"], label="z")
-plt.plot(sample["magnitude"], label="magnitude", linewidth=2)
-
-plt.title(f"Phone accelerometer signal: {activity}")
+plt.plot(walking_sample["x"], label="x")
+plt.plot(walking_sample["y"], label="y")
+plt.plot(walking_sample["z"], label="z")
+plt.plot(walking_sample["magnitude"], label="magnitude", linewidth=2)
+plt.title("Walking accelerometer signal")
 plt.xlabel("Sample")
-plt.ylabel("Acceleration [m/s²]")
+plt.ylabel("Acceleration")
 plt.legend()
 plt.show()
 ```
 
-### Discussion
+How should we read this figure?
 
-Walking usually produces a more dynamic and periodic signal than sitting or standing.
+The individual axes depend on how the phone is oriented.
+
+Gravity contributes to the signal even when the phone is not moving.
+
+Walking adds dynamic acceleration, so the signal changes repeatedly over time.
+
+The magnitude line combines x, y and z into one movement-strength signal. It is not perfect, but it is often easier to interpret than any single axis.
 
 ---
 
-## Step 10 — Compare Activities
+## What Can We Already Observe?
 
-### Goal
-
-We compare the magnitude signal for walking, sitting and standing.
+Now we compare the three target activities.
 
 ```{python}
 plt.figure(figsize=(12, 5))
@@ -287,28 +248,37 @@ for activity in TARGET_ACTIVITIES:
     )
     plt.plot(signal, label=activity)
 
-plt.title("Magnitude comparison")
+plt.title("Magnitude comparison across activities")
 plt.xlabel("Sample")
-plt.ylabel("Magnitude")
+plt.ylabel("Acceleration magnitude")
 plt.legend()
 plt.show()
 ```
 
-### Discussion
+This plot is not a model.
 
-Walking should usually be easier to distinguish because it contains stronger and more regular movement.
+It is an engineering sanity check.
 
-Sitting and standing are more similar and may be harder to separate.
+Ask yourself:
+
+- Can you already see why walking may be easier to classify?
+- Do sitting and standing look more similar?
+- Are there spikes or unusual regions?
+- Does the signal look plausible for human movement?
+
+Walking usually has stronger and more repeated movement.
+
+Sitting and standing are lower-motion states. They may be meaningful in real life, but they are harder to separate from accelerometer data alone.
+
+That observation will matter later when we evaluate the model.
 
 ---
 
-## Step 11 — Estimate the Sampling Rate
-
-### Goal
+## Sampling Rate Sanity Check
 
 The WISDM documentation states that the data was collected at approximately 20 Hz.
 
-We estimate the sampling rate from timestamps.
+We should still verify that assumption from the timestamps.
 
 ```{python}
 subject = df["subject_id"].iloc[0]
@@ -320,21 +290,64 @@ sample = df[
 ].sort_values("timestamp")
 
 dt = sample["timestamp"].diff().dropna()
+estimated_sampling_rate = 1e9 / dt.mean()
 
-sampling_rate = 1e9 / dt.mean()
-
-sampling_rate
+estimated_sampling_rate
 ```
 
-### Expected Output
+This number answers:
 
-The result should be close to 20 Hz.
+> How much real time does one sample represent?
 
-::: {.callout-note}
-## Remember
+That matters because window size is measured in samples.
 
-Documentation is important, but data engineers should still verify assumptions directly from the data.
-:::
+A 100-sample window means something different at 20 Hz than it would at 100 Hz.
+
+---
+
+## Data Quality Checklist
+
+Before modeling, a data engineer should build a checklist.
+
+| Check | Why it matters |
+|---|---|
+| Missing values | Missing x, y or z values can break feature extraction or create misleading statistics. |
+| Unexpected timestamps | Irregular timing changes the meaning of a fixed-size window. |
+| Constant signals | A flat signal may indicate a sensor problem or a recording that contains no useful movement. |
+| Sensor spikes | Extreme values can dominate features such as maximum and energy. |
+| Different recording lengths | Some subjects or activities may influence the model more than others. |
+| Class imbalance | Accuracy can hide poor performance on smaller classes. |
+| Subject imbalance | Evaluation can become biased toward heavily represented participants. |
+
+This checklist is not bureaucracy.
+
+It protects the rest of the pipeline.
+
+Every later step depends on the assumptions we accept here.
+
+---
+
+## Thinking Like An Engineer
+
+A beginner might ask:
+
+> Can I train a model?
+
+An engineer asks:
+
+> What assumptions am I making about the data?
+
+For this dataset, we are already making several assumptions:
+
+- activity labels are correct enough to learn from,
+- the sampling rate is close enough to 20 Hz,
+- windows will capture meaningful movement,
+- the selected activities are represented well enough,
+- subject differences are important and should be evaluated later.
+
+The point of exploration is to make those assumptions visible.
+
+Once assumptions are visible, we can test them.
 
 ---
 
@@ -342,32 +355,36 @@ Documentation is important, but data engineers should still verify assumptions d
 
 Before continuing, you should be able to answer:
 
-1. Why do we load one file before loading all files?
-2. Why do we keep the subject identifier?
-3. What is acceleration magnitude?
-4. Why are sitting and standing harder to distinguish than walking?
-5. Why is the sampling rate important for the next chapter?
+1. Why should we inspect data before training a model?
+2. Why can visualization reveal problems that tables miss?
+3. Why might walking be easier to classify than sitting or standing?
+4. Why does subject imbalance matter?
+5. Why is the sampling rate important for windowing?
 
 ---
 
 ## Further Exploration
 
-Optional: modify the target activity selection so that the dataset also includes `jogging`.
+Optional investigations:
 
-Which parts of the pipeline would change?
+- compare the same activity for two different subjects,
+- compare signal histograms across activities,
+- look for unusually flat or spiky signal segments.
+
+These are not required for the first pass.
+
+They are examples of how professional data exploration can go deeper.
 
 ---
 
-## Summary
+## What Have We Achieved?
 
-In this chapter you learned how to
+- We loaded the selected WISDM activities into a usable table.
+- We inspected subjects, activities, samples, and signal dimensions.
+- We interpreted accelerometer plots instead of trusting tables alone.
+- We built a checklist for common Sensor Stream quality problems.
+- We practiced asking what assumptions the data supports.
 
-- load one raw WISDM file,
-- load all participant files,
-- map activity codes,
-- inspect class and subject distributions,
-- compute acceleration magnitude,
-- visualize raw signals,
-- estimate sampling rate.
+## What Comes Next?
 
-In the next chapter we will transform the continuous sensor stream into fixed-size windows.
+Exploration shows us that the data is continuous, but machine learning needs fixed-size observations. The next chapter turns the Sensor Stream into Windows.

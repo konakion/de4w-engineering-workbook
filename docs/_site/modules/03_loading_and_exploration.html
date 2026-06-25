@@ -111,35 +111,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 </head>
 
@@ -222,7 +193,7 @@ window.Quarto = {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../modules/07_evaluation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Evaluation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Evaluation And Generalization</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -247,65 +218,19 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#learning-objectives" id="toc-learning-objectives" class="nav-link active" data-scroll-target="#learning-objectives"><span class="header-section-number">4.1</span> Learning Objectives</a></li>
-  <li><a href="#why-this-chapter-matters" id="toc-why-this-chapter-matters" class="nav-link" data-scroll-target="#why-this-chapter-matters"><span class="header-section-number">4.2</span> Why This Chapter Matters</a></li>
-  <li><a href="#step-1-import-required-libraries" id="toc-step-1-import-required-libraries" class="nav-link" data-scroll-target="#step-1-import-required-libraries"><span class="header-section-number">4.3</span> Step 1 — Import Required Libraries</a>
-  <ul class="collapse">
-  <li><a href="#goal" id="toc-goal" class="nav-link" data-scroll-target="#goal"><span class="header-section-number">4.3.1</span> Goal</a></li>
-  <li><a href="#expected-output" id="toc-expected-output" class="nav-link" data-scroll-target="#expected-output"><span class="header-section-number">4.3.2</span> Expected Output</a></li>
-  </ul></li>
-  <li><a href="#step-2-configure-project-paths" id="toc-step-2-configure-project-paths" class="nav-link" data-scroll-target="#step-2-configure-project-paths"><span class="header-section-number">4.4</span> Step 2 — Configure Project Paths</a>
-  <ul class="collapse">
-  <li><a href="#goal-1" id="toc-goal-1" class="nav-link" data-scroll-target="#goal-1"><span class="header-section-number">4.4.1</span> Goal</a></li>
-  <li><a href="#expected-output-1" id="toc-expected-output-1" class="nav-link" data-scroll-target="#expected-output-1"><span class="header-section-number">4.4.2</span> Expected Output</a></li>
-  </ul></li>
-  <li><a href="#step-3-define-activity-mapping" id="toc-step-3-define-activity-mapping" class="nav-link" data-scroll-target="#step-3-define-activity-mapping"><span class="header-section-number">4.5</span> Step 3 — Define Activity Mapping</a>
-  <ul class="collapse">
-  <li><a href="#goal-2" id="toc-goal-2" class="nav-link" data-scroll-target="#goal-2"><span class="header-section-number">4.5.1</span> Goal</a></li>
-  <li><a href="#discussion" id="toc-discussion" class="nav-link" data-scroll-target="#discussion"><span class="header-section-number">4.5.2</span> Discussion</a></li>
-  </ul></li>
-  <li><a href="#step-4-inspect-available-files" id="toc-step-4-inspect-available-files" class="nav-link" data-scroll-target="#step-4-inspect-available-files"><span class="header-section-number">4.6</span> Step 4 — Inspect Available Files</a>
-  <ul class="collapse">
-  <li><a href="#goal-3" id="toc-goal-3" class="nav-link" data-scroll-target="#goal-3"><span class="header-section-number">4.6.1</span> Goal</a></li>
-  <li><a href="#expected-output-2" id="toc-expected-output-2" class="nav-link" data-scroll-target="#expected-output-2"><span class="header-section-number">4.6.2</span> Expected Output</a></li>
-  </ul></li>
-  <li><a href="#step-5-load-one-participant-file" id="toc-step-5-load-one-participant-file" class="nav-link" data-scroll-target="#step-5-load-one-participant-file"><span class="header-section-number">4.7</span> Step 5 — Load One Participant File</a>
-  <ul class="collapse">
-  <li><a href="#goal-4" id="toc-goal-4" class="nav-link" data-scroll-target="#goal-4"><span class="header-section-number">4.7.1</span> Goal</a></li>
-  <li><a href="#expected-output-3" id="toc-expected-output-3" class="nav-link" data-scroll-target="#expected-output-3"><span class="header-section-number">4.7.2</span> Expected Output</a></li>
-  </ul></li>
-  <li><a href="#step-6-load-all-participant-files" id="toc-step-6-load-all-participant-files" class="nav-link" data-scroll-target="#step-6-load-all-participant-files"><span class="header-section-number">4.8</span> Step 6 — Load All Participant Files</a>
-  <ul class="collapse">
-  <li><a href="#goal-5" id="toc-goal-5" class="nav-link" data-scroll-target="#goal-5"><span class="header-section-number">4.8.1</span> Goal</a></li>
-  </ul></li>
-  <li><a href="#step-7-inspect-the-dataset" id="toc-step-7-inspect-the-dataset" class="nav-link" data-scroll-target="#step-7-inspect-the-dataset"><span class="header-section-number">4.9</span> Step 7 — Inspect the Dataset</a>
-  <ul class="collapse">
-  <li><a href="#goal-6" id="toc-goal-6" class="nav-link" data-scroll-target="#goal-6"><span class="header-section-number">4.9.1</span> Goal</a></li>
-  <li><a href="#discussion-1" id="toc-discussion-1" class="nav-link" data-scroll-target="#discussion-1"><span class="header-section-number">4.9.2</span> Discussion</a></li>
-  </ul></li>
-  <li><a href="#step-8-add-acceleration-magnitude" id="toc-step-8-add-acceleration-magnitude" class="nav-link" data-scroll-target="#step-8-add-acceleration-magnitude"><span class="header-section-number">4.10</span> Step 8 — Add Acceleration Magnitude</a>
-  <ul class="collapse">
-  <li><a href="#goal-7" id="toc-goal-7" class="nav-link" data-scroll-target="#goal-7"><span class="header-section-number">4.10.1</span> Goal</a></li>
-  <li><a href="#discussion-2" id="toc-discussion-2" class="nav-link" data-scroll-target="#discussion-2"><span class="header-section-number">4.10.2</span> Discussion</a></li>
-  </ul></li>
-  <li><a href="#step-9-plot-one-activity" id="toc-step-9-plot-one-activity" class="nav-link" data-scroll-target="#step-9-plot-one-activity"><span class="header-section-number">4.11</span> Step 9 — Plot One Activity</a>
-  <ul class="collapse">
-  <li><a href="#goal-8" id="toc-goal-8" class="nav-link" data-scroll-target="#goal-8"><span class="header-section-number">4.11.1</span> Goal</a></li>
-  <li><a href="#discussion-3" id="toc-discussion-3" class="nav-link" data-scroll-target="#discussion-3"><span class="header-section-number">4.11.2</span> Discussion</a></li>
-  </ul></li>
-  <li><a href="#step-10-compare-activities" id="toc-step-10-compare-activities" class="nav-link" data-scroll-target="#step-10-compare-activities"><span class="header-section-number">4.12</span> Step 10 — Compare Activities</a>
-  <ul class="collapse">
-  <li><a href="#goal-9" id="toc-goal-9" class="nav-link" data-scroll-target="#goal-9"><span class="header-section-number">4.12.1</span> Goal</a></li>
-  <li><a href="#discussion-4" id="toc-discussion-4" class="nav-link" data-scroll-target="#discussion-4"><span class="header-section-number">4.12.2</span> Discussion</a></li>
-  </ul></li>
-  <li><a href="#step-11-estimate-the-sampling-rate" id="toc-step-11-estimate-the-sampling-rate" class="nav-link" data-scroll-target="#step-11-estimate-the-sampling-rate"><span class="header-section-number">4.13</span> Step 11 — Estimate the Sampling Rate</a>
-  <ul class="collapse">
-  <li><a href="#goal-10" id="toc-goal-10" class="nav-link" data-scroll-target="#goal-10"><span class="header-section-number">4.13.1</span> Goal</a></li>
-  <li><a href="#expected-output-4" id="toc-expected-output-4" class="nav-link" data-scroll-target="#expected-output-4"><span class="header-section-number">4.13.2</span> Expected Output</a></li>
-  </ul></li>
-  <li><a href="#checkpoint" id="toc-checkpoint" class="nav-link" data-scroll-target="#checkpoint"><span class="header-section-number">4.14</span> Checkpoint</a></li>
-  <li><a href="#further-exploration" id="toc-further-exploration" class="nav-link" data-scroll-target="#further-exploration"><span class="header-section-number">4.15</span> Further Exploration</a></li>
-  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary"><span class="header-section-number">4.16</span> Summary</a></li>
+  <li><a href="#never-trust-your-data" id="toc-never-trust-your-data" class="nav-link active" data-scroll-target="#never-trust-your-data"><span class="header-section-number">4.1</span> Never Trust Your Data</a></li>
+  <li><a href="#setup" id="toc-setup" class="nav-link" data-scroll-target="#setup"><span class="header-section-number">4.2</span> Setup</a></li>
+  <li><a href="#why-explore-data-before-building-models" id="toc-why-explore-data-before-building-models" class="nav-link" data-scroll-target="#why-explore-data-before-building-models"><span class="header-section-number">4.3</span> Why Explore Data Before Building Models?</a></li>
+  <li><a href="#what-does-our-dataset-look-like" id="toc-what-does-our-dataset-look-like" class="nav-link" data-scroll-target="#what-does-our-dataset-look-like"><span class="header-section-number">4.4</span> What Does Our Dataset Look Like?</a></li>
+  <li><a href="#looking-at-the-signals" id="toc-looking-at-the-signals" class="nav-link" data-scroll-target="#looking-at-the-signals"><span class="header-section-number">4.5</span> Looking At The Signals</a></li>
+  <li><a href="#what-can-we-already-observe" id="toc-what-can-we-already-observe" class="nav-link" data-scroll-target="#what-can-we-already-observe"><span class="header-section-number">4.6</span> What Can We Already Observe?</a></li>
+  <li><a href="#sampling-rate-sanity-check" id="toc-sampling-rate-sanity-check" class="nav-link" data-scroll-target="#sampling-rate-sanity-check"><span class="header-section-number">4.7</span> Sampling Rate Sanity Check</a></li>
+  <li><a href="#data-quality-checklist" id="toc-data-quality-checklist" class="nav-link" data-scroll-target="#data-quality-checklist"><span class="header-section-number">4.8</span> Data Quality Checklist</a></li>
+  <li><a href="#thinking-like-an-engineer" id="toc-thinking-like-an-engineer" class="nav-link" data-scroll-target="#thinking-like-an-engineer"><span class="header-section-number">4.9</span> Thinking Like An Engineer</a></li>
+  <li><a href="#checkpoint" id="toc-checkpoint" class="nav-link" data-scroll-target="#checkpoint"><span class="header-section-number">4.10</span> Checkpoint</a></li>
+  <li><a href="#further-exploration" id="toc-further-exploration" class="nav-link" data-scroll-target="#further-exploration"><span class="header-section-number">4.11</span> Further Exploration</a></li>
+  <li><a href="#what-have-we-achieved" id="toc-what-have-we-achieved" class="nav-link" data-scroll-target="#what-have-we-achieved"><span class="header-section-number">4.12</span> What Have We Achieved?</a></li>
+  <li><a href="#what-comes-next" id="toc-what-comes-next" class="nav-link" data-scroll-target="#what-comes-next"><span class="header-section-number">4.13</span> What Comes Next?</a></li>
   </ul>
 </nav>
     </div>
@@ -331,24 +256,32 @@ window.Quarto = {
 </header>
 
 
-<section id="learning-objectives" class="level2" data-number="4.1">
-<h2 data-number="4.1" class="anchored" data-anchor-id="learning-objectives"><span class="header-section-number">4.1</span> Learning Objectives</h2>
-<p>After completing this chapter, you should be able to</p>
-<ul>
-<li>load one WISDM phone accelerometer file,</li>
-<li>load all participant files into one DataFrame,</li>
-<li>map activity codes to readable activity names,</li>
-<li>restrict the dataset to selected target activities,</li>
-<li>inspect class distribution and subject distribution,</li>
-<li>compute and visualize acceleration magnitude,</li>
-<li>estimate the sampling rate from timestamps.</li>
-</ul>
-<hr>
-</section>
-<section id="why-this-chapter-matters" class="level2" data-number="4.2">
-<h2 data-number="4.2" class="anchored" data-anchor-id="why-this-chapter-matters"><span class="header-section-number">4.2</span> Why This Chapter Matters</h2>
-<p>Before we create windows, extract features, or train a model, we need to make sure that we can load and understand the raw data.</p>
-<p>This chapter turns a folder of raw text files into a structured table that we can analyze and process further.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Why this chapter matters
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Before a Sensor Stream becomes a Feature Matrix, we need to check whether the data is usable. This chapter teaches the habit that protects every later result: validate and understand the dataset before trusting a Model.</p>
+</div>
+</div>
+<section id="never-trust-your-data" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="never-trust-your-data"><span class="header-section-number">4.1</span> Never Trust Your Data</h2>
+<p>Every machine learning project starts with a quiet but important rule:</p>
+<blockquote class="blockquote">
+<p>Never trust your data.</p>
+</blockquote>
+<p>This does not mean we assume the dataset is bad.</p>
+<p>It means we verify what is actually there before we build anything on top of it.</p>
+<p>Models only learn from the data we give them. If the data is incomplete, mislabeled, imbalanced, noisy or structured differently than we expect, the model will learn those problems too.</p>
+<p>Tables help us count things.</p>
+<p>Plots help us see things.</p>
+<p>Both matter.</p>
+<p>Visualization often reveals problems that are invisible in a summary table: spikes, flat signals, strange transitions, sensor noise or activity patterns that look less distinct than expected.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -359,398 +292,100 @@ window.Quarto = {
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>A clean data loading step is one of the most important parts of a reproducible machine learning project.</p>
-<p>If the loading logic is unclear or inconsistent, every later result becomes questionable.</p>
+<p>Experienced ML engineers often spend much more time exploring and validating data than training models. A strong model cannot rescue a weak understanding of the dataset.</p>
 </div>
 </div>
 <hr>
 </section>
-<section id="step-1-import-required-libraries" class="level2" data-number="4.3">
-<h2 data-number="4.3" class="anchored" data-anchor-id="step-1-import-required-libraries"><span class="header-section-number">4.3</span> Step 1 — Import Required Libraries</h2>
-<section id="goal" class="level3" data-number="4.3.1">
-<h3 data-number="4.3.1" class="anchored" data-anchor-id="goal"><span class="header-section-number">4.3.1</span> Goal</h3>
-<p>We import the libraries needed for data loading, numerical processing and visualization.</p>
-<div id="e10b7b99" class="cell" data-execution_count="1">
+<section id="setup" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="setup"><span class="header-section-number">4.2</span> Setup</h2>
+<p>We use reusable project functions to load the dataset.</p>
+<p>The important part of this chapter is not the Python syntax.</p>
+<p>The important part is what we check and why.</p>
+<div id="cc402706" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pathlib <span class="im">import</span> Path</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>current_path <span class="op">=</span> Path.cwd().resolve()</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> parent <span class="kw">in</span> [current_path] <span class="op">+</span> <span class="bu">list</span>(current_path.parents):</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (parent <span class="op">/</span> <span class="st">"app"</span>).exists():</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>        PROJECT_ROOT <span class="op">=</span> parent</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>        <span class="cf">break</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">raise</span> <span class="pp">RuntimeError</span>(<span class="st">"Could not find project root containing app/ directory."</span>)</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>sys.path.insert(<span class="dv">0</span>, <span class="bu">str</span>(PROJECT_ROOT))</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> app.config <span class="im">import</span> DATA_DIR</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> app.data_loader <span class="im">import</span> TARGET_ACTIVITIES, load_wisdm_phone_accel</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> app.pipeline <span class="im">import</span> add_magnitude</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-</section>
-<section id="expected-output" class="level3" data-number="4.3.2">
-<h3 data-number="4.3.2" class="anchored" data-anchor-id="expected-output"><span class="header-section-number">4.3.2</span> Expected Output</h3>
-<p>This cell should run without errors.</p>
-<hr>
-</section>
-</section>
-<section id="step-2-configure-project-paths" class="level2" data-number="4.4">
-<h2 data-number="4.4" class="anchored" data-anchor-id="step-2-configure-project-paths"><span class="header-section-number">4.4</span> Step 2 — Configure Project Paths</h2>
-<section id="goal-1" class="level3" data-number="4.4.1">
-<h3 data-number="4.4.1" class="anchored" data-anchor-id="goal-1"><span class="header-section-number">4.4.1</span> Goal</h3>
-<p>We define where the project root and the data directory are located.</p>
-<div id="be06badc" class="cell" data-execution_count="2">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>current_path <span class="op">=</span> Path.cwd().resolve()</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> parent <span class="kw">in</span> [current_path] <span class="op">+</span> <span class="bu">list</span>(current_path.parents):</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (parent <span class="op">/</span> <span class="st">"app"</span>).exists():</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>        PROJECT_ROOT <span class="op">=</span> parent</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>        <span class="cf">break</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">raise</span> <span class="pp">RuntimeError</span>(<span class="st">"Could not find project root containing app/ directory."</span>)</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>sys.path.insert(<span class="dv">0</span>, <span class="bu">str</span>(PROJECT_ROOT))</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> app.config <span class="im">import</span> DATA_DIR</span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> app.data_loader <span class="im">import</span> (</span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    ACTIVITY_MAP,</span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    TARGET_ACTIVITIES,</span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>    load_single_wisdm_file,</span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>    load_wisdm_phone_accel,</span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> app.pipeline <span class="im">import</span> add_magnitude</span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Project root:"</span>, PROJECT_ROOT)</span>
-<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Data directory:"</span>, DATA_DIR)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Project root: /Users/konak/HPI/Vorlesungen/Data Engineering for Wearables SS2026/Mini-Project/de4w-engineering-workbook
-Data directory: /Users/konak/HPI/Vorlesungen/Data Engineering for Wearables SS2026/Mini-Project/de4w-engineering-workbook/data</code></pre>
-</div>
-</div>
-</section>
-<section id="expected-output-1" class="level3" data-number="4.4.2">
-<h3 data-number="4.4.2" class="anchored" data-anchor-id="expected-output-1"><span class="header-section-number">4.4.2</span> Expected Output</h3>
-<p>The output should point to your project folder and the <code>data/</code> directory.</p>
-<div class="callout callout-style-default callout-warning callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Warning</span>Common Pitfall
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>If the printed path does not point to your project folder, you may have started Quarto from the wrong directory.</p>
-</div>
+<div id="b77b746a" class="cell" data-execution_count="2">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> load_wisdm_phone_accel(</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    DATA_DIR,</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    target_activities<span class="op">=</span>TARGET_ACTIVITIES,</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> add_magnitude(df)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <hr>
 </section>
-</section>
-<section id="step-3-define-activity-mapping" class="level2" data-number="4.5">
-<h2 data-number="4.5" class="anchored" data-anchor-id="step-3-define-activity-mapping"><span class="header-section-number">4.5</span> Step 3 — Define Activity Mapping</h2>
-<section id="goal-2" class="level3" data-number="4.5.1">
-<h3 data-number="4.5.1" class="anchored" data-anchor-id="goal-2"><span class="header-section-number">4.5.1</span> Goal</h3>
-<p>The raw WISDM files use activity codes such as <code>A</code>, <code>D</code>, and <code>E</code>.</p>
-<p>We map these codes to readable names.</p>
-<div id="c4dba95b" class="cell" data-execution_count="3">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>ACTIVITY_MAP</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="3">
-<pre><code>{'A': 'walking',
- 'B': 'jogging',
- 'C': 'stairs',
- 'D': 'sitting',
- 'E': 'standing',
- 'F': 'typing',
- 'G': 'brushing_teeth',
- 'H': 'eating_soup',
- 'I': 'eating_chips',
- 'J': 'eating_pasta',
- 'K': 'drinking',
- 'L': 'eating_sandwich',
- 'M': 'kicking',
- 'O': 'catch',
- 'P': 'dribbling',
- 'Q': 'writing',
- 'R': 'clapping',
- 'S': 'folding_clothes'}</code></pre>
-</div>
-</div>
-<div id="1c91503f" class="cell" data-execution_count="4">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>TARGET_ACTIVITIES</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="4">
-<pre><code>['walking', 'sitting', 'standing']</code></pre>
-</div>
-</div>
-</section>
-<section id="discussion" class="level3" data-number="4.5.2">
-<h3 data-number="4.5.2" class="anchored" data-anchor-id="discussion"><span class="header-section-number">4.5.2</span> Discussion</h3>
-<p>We keep the complete mapping even though we currently use only three activities.</p>
-<p>This makes it easier to extend the project later.</p>
-<hr>
-</section>
-</section>
-<section id="step-4-inspect-available-files" class="level2" data-number="4.6">
-<h2 data-number="4.6" class="anchored" data-anchor-id="step-4-inspect-available-files"><span class="header-section-number">4.6</span> Step 4 — Inspect Available Files</h2>
-<section id="goal-3" class="level3" data-number="4.6.1">
-<h3 data-number="4.6.1" class="anchored" data-anchor-id="goal-3"><span class="header-section-number">4.6.1</span> Goal</h3>
-<p>Before loading the data, we check which raw files are available.</p>
-<div id="b0c6f7d2" class="cell" data-execution_count="5">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>files <span class="op">=</span> <span class="bu">sorted</span>(DATA_DIR.glob(<span class="st">"data_*_accel_phone.txt"</span>))</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="bu">len</span>(files), files[:<span class="dv">5</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="5">
-<pre><code>(51,
- [PosixPath('/Users/konak/HPI/Vorlesungen/Data Engineering for Wearables SS2026/Mini-Project/de4w-engineering-workbook/data/data_1600_accel_phone.txt'),
-  PosixPath('/Users/konak/HPI/Vorlesungen/Data Engineering for Wearables SS2026/Mini-Project/de4w-engineering-workbook/data/data_1601_accel_phone.txt'),
-  PosixPath('/Users/konak/HPI/Vorlesungen/Data Engineering for Wearables SS2026/Mini-Project/de4w-engineering-workbook/data/data_1602_accel_phone.txt'),
-  PosixPath('/Users/konak/HPI/Vorlesungen/Data Engineering for Wearables SS2026/Mini-Project/de4w-engineering-workbook/data/data_1603_accel_phone.txt'),
-  PosixPath('/Users/konak/HPI/Vorlesungen/Data Engineering for Wearables SS2026/Mini-Project/de4w-engineering-workbook/data/data_1604_accel_phone.txt')])</code></pre>
-</div>
-</div>
-</section>
-<section id="expected-output-2" class="level3" data-number="4.6.2">
-<h3 data-number="4.6.2" class="anchored" data-anchor-id="expected-output-2"><span class="header-section-number">4.6.2</span> Expected Output</h3>
-<p>You should see approximately 51 files, one per participant.</p>
-<hr>
-</section>
-</section>
-<section id="step-5-load-one-participant-file" class="level2" data-number="4.7">
-<h2 data-number="4.7" class="anchored" data-anchor-id="step-5-load-one-participant-file"><span class="header-section-number">4.7</span> Step 5 — Load One Participant File</h2>
-<section id="goal-4" class="level3" data-number="4.7.1">
-<h3 data-number="4.7.1" class="anchored" data-anchor-id="goal-4"><span class="header-section-number">4.7.1</span> Goal</h3>
-<p>We first load a single file to understand the raw structure.</p>
-<div id="be4ab6ac" class="cell" data-execution_count="6">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>load_single_wisdm_file</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="6">
-<pre><code>&lt;function app.data_loader.load_single_wisdm_file(file_path: pathlib.Path) -&gt; pandas.DataFrame&gt;</code></pre>
-</div>
-</div>
-<div id="5f06c9cc" class="cell" data-execution_count="7">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>df_one <span class="op">=</span> load_single_wisdm_file(files[<span class="dv">0</span>])</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>df_one.head()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="7">
-<div>
-
-
-<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
-<thead>
-<tr class="header">
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th">subject_id</th>
-<th data-quarto-table-cell-role="th">activity_code</th>
-<th data-quarto-table-cell-role="th">timestamp</th>
-<th data-quarto-table-cell-role="th">x</th>
-<th data-quarto-table-cell-role="th">y</th>
-<th data-quarto-table-cell-role="th">z</th>
-<th data-quarto-table-cell-role="th">activity</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">0</th>
-<td>1600</td>
-<td>A</td>
-<td>252207666810782</td>
-<td>-0.364761</td>
-<td>8.793503</td>
-<td>1.055084</td>
-<td>walking</td>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">1</th>
-<td>1600</td>
-<td>A</td>
-<td>252207717164786</td>
-<td>-0.879730</td>
-<td>9.768784</td>
-<td>1.016998</td>
-<td>walking</td>
-</tr>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">2</th>
-<td>1600</td>
-<td>A</td>
-<td>252207767518790</td>
-<td>2.001495</td>
-<td>11.109070</td>
-<td>2.619156</td>
-<td>walking</td>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">3</th>
-<td>1600</td>
-<td>A</td>
-<td>252207817872794</td>
-<td>0.450623</td>
-<td>12.651642</td>
-<td>0.184555</td>
-<td>walking</td>
-</tr>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">4</th>
-<td>1600</td>
-<td>A</td>
-<td>252207868226798</td>
-<td>-2.164352</td>
-<td>13.928436</td>
-<td>-4.422485</td>
-<td>walking</td>
-</tr>
-</tbody>
-</table>
-
-</div>
-</div>
-</div>
-</section>
-<section id="expected-output-3" class="level3" data-number="4.7.2">
-<h3 data-number="4.7.2" class="anchored" data-anchor-id="expected-output-3"><span class="header-section-number">4.7.2</span> Expected Output</h3>
-<p>You should see a table with the columns:</p>
-<pre class="text"><code>subject_id, activity_code, timestamp, x, y, z, activity</code></pre>
-<hr>
-</section>
-</section>
-<section id="step-6-load-all-participant-files" class="level2" data-number="4.8">
-<h2 data-number="4.8" class="anchored" data-anchor-id="step-6-load-all-participant-files"><span class="header-section-number">4.8</span> Step 6 — Load All Participant Files</h2>
-<section id="goal-5" class="level3" data-number="4.8.1">
-<h3 data-number="4.8.1" class="anchored" data-anchor-id="goal-5"><span class="header-section-number">4.8.1</span> Goal</h3>
-<p>We now load all phone accelerometer files and combine them into a single DataFrame.</p>
-<div id="17d3a26f" class="cell" data-execution_count="8">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>load_wisdm_phone_accel</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="8">
-<pre><code>&lt;function app.data_loader.load_wisdm_phone_accel(data_dir: pathlib.Path, target_activities: collections.abc.Sequence[str] | None = ['walking', 'sitting', 'standing']) -&gt; pandas.DataFrame&gt;</code></pre>
-</div>
-</div>
-<div id="052c13eb" class="cell" data-execution_count="9">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> load_wisdm_phone_accel(</span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>    DATA_DIR,</span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>    target_activities<span class="op">=</span>TARGET_ACTIVITIES,</span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>df.head()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="9">
-<div>
-
-
-<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
-<thead>
-<tr class="header">
-<th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th">subject_id</th>
-<th data-quarto-table-cell-role="th">activity_code</th>
-<th data-quarto-table-cell-role="th">timestamp</th>
-<th data-quarto-table-cell-role="th">x</th>
-<th data-quarto-table-cell-role="th">y</th>
-<th data-quarto-table-cell-role="th">z</th>
-<th data-quarto-table-cell-role="th">activity</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">0</th>
-<td>1600</td>
-<td>A</td>
-<td>252207666810782</td>
-<td>-0.364761</td>
-<td>8.793503</td>
-<td>1.055084</td>
-<td>walking</td>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">1</th>
-<td>1600</td>
-<td>A</td>
-<td>252207717164786</td>
-<td>-0.879730</td>
-<td>9.768784</td>
-<td>1.016998</td>
-<td>walking</td>
-</tr>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">2</th>
-<td>1600</td>
-<td>A</td>
-<td>252207767518790</td>
-<td>2.001495</td>
-<td>11.109070</td>
-<td>2.619156</td>
-<td>walking</td>
-</tr>
-<tr class="even">
-<th data-quarto-table-cell-role="th">3</th>
-<td>1600</td>
-<td>A</td>
-<td>252207817872794</td>
-<td>0.450623</td>
-<td>12.651642</td>
-<td>0.184555</td>
-<td>walking</td>
-</tr>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">4</th>
-<td>1600</td>
-<td>A</td>
-<td>252207868226798</td>
-<td>-2.164352</td>
-<td>13.928436</td>
-<td>-4.422485</td>
-<td>walking</td>
-</tr>
-</tbody>
-</table>
-
-</div>
-</div>
-</div>
-<hr>
-</section>
-</section>
-<section id="step-7-inspect-the-dataset" class="level2" data-number="4.9">
-<h2 data-number="4.9" class="anchored" data-anchor-id="step-7-inspect-the-dataset"><span class="header-section-number">4.9</span> Step 7 — Inspect the Dataset</h2>
-<section id="goal-6" class="level3" data-number="4.9.1">
-<h3 data-number="4.9.1" class="anchored" data-anchor-id="goal-6"><span class="header-section-number">4.9.1</span> Goal</h3>
-<p>We check the size, classes and number of subjects.</p>
-<div id="44142d9b" class="cell" data-execution_count="10">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>df.shape</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="10">
-<pre><code>(814013, 7)</code></pre>
-</div>
-</div>
-<div id="552da307" class="cell" data-execution_count="11">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"activity"</span>].value_counts()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="11">
-<pre><code>activity
-walking     279817
-standing    269604
-sitting     264592
-Name: count, dtype: int64</code></pre>
-</div>
-</div>
-<div id="d59281f8" class="cell" data-execution_count="12">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"subject_id"</span>].nunique()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="12">
-<pre><code>51</code></pre>
-</div>
-</div>
-</section>
-<section id="discussion-1" class="level3" data-number="4.9.2">
-<h3 data-number="4.9.2" class="anchored" data-anchor-id="discussion-1"><span class="header-section-number">4.9.2</span> Discussion</h3>
-<p>At this point, we should verify that</p>
+<section id="why-explore-data-before-building-models" class="level2" data-number="4.3">
+<h2 data-number="4.3" class="anchored" data-anchor-id="why-explore-data-before-building-models"><span class="header-section-number">4.3</span> Why Explore Data Before Building Models?</h2>
+<p>Before training, we need to ask:</p>
 <ul>
-<li>all expected subjects were loaded,</li>
-<li>all target activities are present,</li>
-<li>the class distribution is not extremely imbalanced.</li>
+<li>What did we actually load?</li>
+<li>Which subjects are represented?</li>
+<li>Which activities are represented?</li>
+<li>How many samples do we have?</li>
+<li>Do the signals look physically plausible?</li>
+<li>Are there obvious problems that would make evaluation misleading?</li>
 </ul>
+<p>Bad data creates bad models.</p>
+<p>Sometimes the problem is dramatic, such as missing files.</p>
+<p>Sometimes it is subtle, such as one activity being recorded much more often than another, or one subject contributing far more data than the rest.</p>
+<p>A professional data engineer does not wait for the model to fail.</p>
+<p>They inspect the data first.</p>
 <hr>
 </section>
-</section>
-<section id="step-8-add-acceleration-magnitude" class="level2" data-number="4.10">
-<h2 data-number="4.10" class="anchored" data-anchor-id="step-8-add-acceleration-magnitude"><span class="header-section-number">4.10</span> Step 8 — Add Acceleration Magnitude</h2>
-<section id="goal-7" class="level3" data-number="4.10.1">
-<h3 data-number="4.10.1" class="anchored" data-anchor-id="goal-7"><span class="header-section-number">4.10.1</span> Goal</h3>
-<p>We compute the magnitude of the three-dimensional acceleration vector.</p>
-<p><span class="math display">\[
-m = \sqrt{x^2 + y^2 + z^2}
-\]</span></p>
-<div id="d3d1496f" class="cell" data-execution_count="13">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> add_magnitude(df)</span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>df.head()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="13">
+<section id="what-does-our-dataset-look-like" class="level2" data-number="4.4">
+<h2 data-number="4.4" class="anchored" data-anchor-id="what-does-our-dataset-look-like"><span class="header-section-number">4.4</span> What Does Our Dataset Look Like?</h2>
+<p>This first table answers the basic question:</p>
+<blockquote class="blockquote">
+<p>What kind of dataset are we about to use?</p>
+</blockquote>
+<div id="80ea226b" class="cell" data-execution_count="3">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>dataset_summary <span class="op">=</span> pd.DataFrame(</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    [</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>        {</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>            <span class="st">"question"</span>: <span class="st">"How many samples?"</span>,</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>            <span class="st">"answer"</span>: <span class="bu">len</span>(df),</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>            <span class="st">"engineering meaning"</span>: <span class="st">"More samples can help, but only if they represent the real problem."</span>,</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>        },</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>        {</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>            <span class="st">"question"</span>: <span class="st">"How many subjects?"</span>,</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>            <span class="st">"answer"</span>: df[<span class="st">"subject_id"</span>].nunique(),</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>            <span class="st">"engineering meaning"</span>: <span class="st">"More subjects make generalization to new people more realistic."</span>,</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>        },</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>        {</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>            <span class="st">"question"</span>: <span class="st">"Which activities?"</span>,</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>            <span class="st">"answer"</span>: <span class="st">", "</span>.join(<span class="bu">sorted</span>(df[<span class="st">"activity"</span>].unique())),</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>            <span class="st">"engineering meaning"</span>: <span class="st">"The model can only learn activities present in the data."</span>,</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>        },</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>        {</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>            <span class="st">"question"</span>: <span class="st">"Which signal dimensions?"</span>,</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>            <span class="st">"answer"</span>: <span class="st">"x, y, z, magnitude"</span>,</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>            <span class="st">"engineering meaning"</span>: <span class="st">"These are the raw movement signals we will later summarize."</span>,</span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>        },</span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>    ]</span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>dataset_summary</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="3">
 <div>
 
 
@@ -758,71 +393,35 @@ m = \sqrt{x^2 + y^2 + z^2}
 <thead>
 <tr class="header">
 <th data-quarto-table-cell-role="th"></th>
-<th data-quarto-table-cell-role="th">subject_id</th>
-<th data-quarto-table-cell-role="th">activity_code</th>
-<th data-quarto-table-cell-role="th">timestamp</th>
-<th data-quarto-table-cell-role="th">x</th>
-<th data-quarto-table-cell-role="th">y</th>
-<th data-quarto-table-cell-role="th">z</th>
-<th data-quarto-table-cell-role="th">activity</th>
-<th data-quarto-table-cell-role="th">magnitude</th>
+<th data-quarto-table-cell-role="th">question</th>
+<th data-quarto-table-cell-role="th">answer</th>
+<th data-quarto-table-cell-role="th">engineering meaning</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">0</th>
-<td>1600</td>
-<td>A</td>
-<td>252207666810782</td>
-<td>-0.364761</td>
-<td>8.793503</td>
-<td>1.055084</td>
-<td>walking</td>
-<td>8.864082</td>
+<td>How many samples?</td>
+<td>814013</td>
+<td>More samples can help, but only if they repres...</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">1</th>
-<td>1600</td>
-<td>A</td>
-<td>252207717164786</td>
-<td>-0.879730</td>
-<td>9.768784</td>
-<td>1.016998</td>
-<td>walking</td>
-<td>9.860900</td>
+<td>How many subjects?</td>
+<td>51</td>
+<td>More subjects make generalization to new peopl...</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">2</th>
-<td>1600</td>
-<td>A</td>
-<td>252207767518790</td>
-<td>2.001495</td>
-<td>11.109070</td>
-<td>2.619156</td>
-<td>walking</td>
-<td>11.587812</td>
+<td>Which activities?</td>
+<td>sitting, standing, walking</td>
+<td>The model can only learn activities present in...</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">3</th>
-<td>1600</td>
-<td>A</td>
-<td>252207817872794</td>
-<td>0.450623</td>
-<td>12.651642</td>
-<td>0.184555</td>
-<td>walking</td>
-<td>12.661010</td>
-</tr>
-<tr class="odd">
-<th data-quarto-table-cell-role="th">4</th>
-<td>1600</td>
-<td>A</td>
-<td>252207868226798</td>
-<td>-2.164352</td>
-<td>13.928436</td>
-<td>-4.422485</td>
-<td>walking</td>
-<td>14.773088</td>
+<td>Which signal dimensions?</td>
+<td>x, y, z, magnitude</td>
+<td>These are the raw movement signals we will lat...</td>
 </tr>
 </tbody>
 </table>
@@ -830,166 +429,352 @@ m = \sqrt{x^2 + y^2 + z^2}
 </div>
 </div>
 </div>
-</section>
-<section id="discussion-2" class="level3" data-number="4.10.2">
-<h3 data-number="4.10.2" class="anchored" data-anchor-id="discussion-2"><span class="header-section-number">4.10.2</span> Discussion</h3>
-<p>The magnitude combines all three axes into one signal.</p>
-<p>It is often easier to interpret than individual axes because it is less sensitive to phone orientation.</p>
+<p>Every number tells us something.</p>
+<p>The number of samples tells us the scale of the data.</p>
+<p>The number of subjects tells us whether we can test generalization across people.</p>
+<p>The activity list tells us what the model can and cannot learn.</p>
+<p>The signal dimensions tell us what physical measurements are available.</p>
+<p>Now we check whether the classes are roughly balanced.</p>
+<div id="63fbf4e8" class="cell" data-execution_count="4">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>activity_counts <span class="op">=</span> (</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    df[<span class="st">"activity"</span>]</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    .value_counts()</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    .rename_axis(<span class="st">"activity"</span>)</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    .reset_index(name<span class="op">=</span><span class="st">"samples"</span>)</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>activity_counts</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="4">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">activity</th>
+<th data-quarto-table-cell-role="th">samples</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">0</th>
+<td>walking</td>
+<td>279817</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">1</th>
+<td>standing</td>
+<td>269604</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">2</th>
+<td>sitting</td>
+<td>264592</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p>This table answers:</p>
+<blockquote class="blockquote">
+<p>Is one activity dominating the dataset?</p>
+</blockquote>
+<p>If one class is much larger than the others, accuracy can become misleading. A model might perform well overall while still doing poorly on the smaller classes.</p>
+<p>We also check the number of samples per subject.</p>
+<div id="87303a7d" class="cell" data-execution_count="5">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>subject_counts <span class="op">=</span> (</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    df.groupby(<span class="st">"subject_id"</span>)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    .size()</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    .describe()</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    .to_frame(name<span class="op">=</span><span class="st">"samples per subject"</span>)</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>subject_counts</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="5">
+<div>
+
+
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">samples per subject</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">count</th>
+<td>51.000000</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">mean</th>
+<td>15961.039216</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">std</th>
+<td>6580.439581</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">min</th>
+<td>10717.000000</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">25%</th>
+<td>10719.000000</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">50%</th>
+<td>13532.000000</td>
+</tr>
+<tr class="odd">
+<th data-quarto-table-cell-role="th">75%</th>
+<td>21477.500000</td>
+</tr>
+<tr class="even">
+<th data-quarto-table-cell-role="th">max</th>
+<td>27294.000000</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p>This table answers:</p>
+<blockquote class="blockquote">
+<p>Do subjects contribute similar amounts of data?</p>
+</blockquote>
+<p>Large differences matter because models may become biased toward subjects with more recordings.</p>
 <hr>
 </section>
-</section>
-<section id="step-9-plot-one-activity" class="level2" data-number="4.11">
-<h2 data-number="4.11" class="anchored" data-anchor-id="step-9-plot-one-activity"><span class="header-section-number">4.11</span> Step 9 — Plot One Activity</h2>
-<section id="goal-8" class="level3" data-number="4.11.1">
-<h3 data-number="4.11.1" class="anchored" data-anchor-id="goal-8"><span class="header-section-number">4.11.1</span> Goal</h3>
-<p>We visualize x, y, z and magnitude for one activity.</p>
-<div id="a7665d32" class="cell" data-execution_count="14">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>activity <span class="op">=</span> <span class="st">"walking"</span></span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>sample <span class="op">=</span> (</span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>    df[df[<span class="st">"activity"</span>] <span class="op">==</span> activity]</span>
-<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>    .head(<span class="dv">400</span>)</span>
-<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>    .reset_index(drop<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">4</span>))</span>
-<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>plt.plot(sample[<span class="st">"x"</span>], label<span class="op">=</span><span class="st">"x"</span>)</span>
-<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a>plt.plot(sample[<span class="st">"y"</span>], label<span class="op">=</span><span class="st">"y"</span>)</span>
-<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a>plt.plot(sample[<span class="st">"z"</span>], label<span class="op">=</span><span class="st">"z"</span>)</span>
-<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a>plt.plot(sample[<span class="st">"magnitude"</span>], label<span class="op">=</span><span class="st">"magnitude"</span>, linewidth<span class="op">=</span><span class="dv">2</span>)</span>
-<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="ss">f"Phone accelerometer signal: </span><span class="sc">{</span>activity<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb24-16"><a href="#cb24-16" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Sample"</span>)</span>
-<span id="cb24-17"><a href="#cb24-17" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Acceleration [m/s²]"</span>)</span>
-<span id="cb24-18"><a href="#cb24-18" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
-<span id="cb24-19"><a href="#cb24-19" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="looking-at-the-signals" class="level2" data-number="4.5">
+<h2 data-number="4.5" class="anchored" data-anchor-id="looking-at-the-signals"><span class="header-section-number">4.5</span> Looking At The Signals</h2>
+<p>Sensor values are physical measurements.</p>
+<p>They are not abstract numbers.</p>
+<p>A phone accelerometer measures acceleration along three axes: x, y and z.</p>
+<p>The signal includes several effects:</p>
+<ul>
+<li>gravity,</li>
+<li>dynamic acceleration from movement,</li>
+<li>noise,</li>
+<li>variability from phone placement and subject behavior.</li>
+</ul>
+<p>We first inspect one walking segment.</p>
+<div id="20e3cffd" class="cell" data-execution_count="6">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>walking_sample <span class="op">=</span> (</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    df[df[<span class="st">"activity"</span>] <span class="op">==</span> <span class="st">"walking"</span>]</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    .sort_values(<span class="st">"timestamp"</span>)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    .head(<span class="dv">400</span>)</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    .reset_index(drop<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">4</span>))</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>plt.plot(walking_sample[<span class="st">"x"</span>], label<span class="op">=</span><span class="st">"x"</span>)</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>plt.plot(walking_sample[<span class="st">"y"</span>], label<span class="op">=</span><span class="st">"y"</span>)</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>plt.plot(walking_sample[<span class="st">"z"</span>], label<span class="op">=</span><span class="st">"z"</span>)</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>plt.plot(walking_sample[<span class="st">"magnitude"</span>], label<span class="op">=</span><span class="st">"magnitude"</span>, linewidth<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Walking accelerometer signal"</span>)</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Sample"</span>)</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Acceleration"</span>)</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="03_loading_and_exploration_files/figure-html/cell-15-output-1.png" width="969" height="377" class="figure-img"></p>
+<p><img src="03_loading_and_exploration_files/figure-html/cell-7-output-1.png" width="969" height="377" class="figure-img"></p>
 </figure>
 </div>
 </div>
 </div>
-</section>
-<section id="discussion-3" class="level3" data-number="4.11.2">
-<h3 data-number="4.11.2" class="anchored" data-anchor-id="discussion-3"><span class="header-section-number">4.11.2</span> Discussion</h3>
-<p>Walking usually produces a more dynamic and periodic signal than sitting or standing.</p>
+<p>How should we read this figure?</p>
+<p>The individual axes depend on how the phone is oriented.</p>
+<p>Gravity contributes to the signal even when the phone is not moving.</p>
+<p>Walking adds dynamic acceleration, so the signal changes repeatedly over time.</p>
+<p>The magnitude line combines x, y and z into one movement-strength signal. It is not perfect, but it is often easier to interpret than any single axis.</p>
 <hr>
 </section>
-</section>
-<section id="step-10-compare-activities" class="level2" data-number="4.12">
-<h2 data-number="4.12" class="anchored" data-anchor-id="step-10-compare-activities"><span class="header-section-number">4.12</span> Step 10 — Compare Activities</h2>
-<section id="goal-9" class="level3" data-number="4.12.1">
-<h3 data-number="4.12.1" class="anchored" data-anchor-id="goal-9"><span class="header-section-number">4.12.1</span> Goal</h3>
-<p>We compare the magnitude signal for walking, sitting and standing.</p>
-<div id="6433716a" class="cell" data-execution_count="15">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">5</span>))</span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> activity <span class="kw">in</span> TARGET_ACTIVITIES:</span>
-<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>    signal <span class="op">=</span> (</span>
-<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>        df[df[<span class="st">"activity"</span>] <span class="op">==</span> activity][<span class="st">"magnitude"</span>]</span>
-<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>        .head(<span class="dv">400</span>)</span>
-<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>        .reset_index(drop<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>    plt.plot(signal, label<span class="op">=</span>activity)</span>
-<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Magnitude comparison"</span>)</span>
-<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Sample"</span>)</span>
-<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Magnitude"</span>)</span>
-<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
-<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="what-can-we-already-observe" class="level2" data-number="4.6">
+<h2 data-number="4.6" class="anchored" data-anchor-id="what-can-we-already-observe"><span class="header-section-number">4.6</span> What Can We Already Observe?</h2>
+<p>Now we compare the three target activities.</p>
+<div id="3f83ec62" class="cell" data-execution_count="7">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">5</span>))</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> activity <span class="kw">in</span> TARGET_ACTIVITIES:</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    signal <span class="op">=</span> (</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>        df[df[<span class="st">"activity"</span>] <span class="op">==</span> activity][<span class="st">"magnitude"</span>]</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>        .head(<span class="dv">400</span>)</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>        .reset_index(drop<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    plt.plot(signal, label<span class="op">=</span>activity)</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Magnitude comparison across activities"</span>)</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Sample"</span>)</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Acceleration magnitude"</span>)</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="03_loading_and_exploration_files/figure-html/cell-16-output-1.png" width="970" height="451" class="figure-img"></p>
+<p><img src="03_loading_and_exploration_files/figure-html/cell-8-output-1.png" width="970" height="451" class="figure-img"></p>
 </figure>
 </div>
 </div>
 </div>
-</section>
-<section id="discussion-4" class="level3" data-number="4.12.2">
-<h3 data-number="4.12.2" class="anchored" data-anchor-id="discussion-4"><span class="header-section-number">4.12.2</span> Discussion</h3>
-<p>Walking should usually be easier to distinguish because it contains stronger and more regular movement.</p>
-<p>Sitting and standing are more similar and may be harder to separate.</p>
+<p>This plot is not a model.</p>
+<p>It is an engineering sanity check.</p>
+<p>Ask yourself:</p>
+<ul>
+<li>Can you already see why walking may be easier to classify?</li>
+<li>Do sitting and standing look more similar?</li>
+<li>Are there spikes or unusual regions?</li>
+<li>Does the signal look plausible for human movement?</li>
+</ul>
+<p>Walking usually has stronger and more repeated movement.</p>
+<p>Sitting and standing are lower-motion states. They may be meaningful in real life, but they are harder to separate from accelerometer data alone.</p>
+<p>That observation will matter later when we evaluate the model.</p>
 <hr>
 </section>
-</section>
-<section id="step-11-estimate-the-sampling-rate" class="level2" data-number="4.13">
-<h2 data-number="4.13" class="anchored" data-anchor-id="step-11-estimate-the-sampling-rate"><span class="header-section-number">4.13</span> Step 11 — Estimate the Sampling Rate</h2>
-<section id="goal-10" class="level3" data-number="4.13.1">
-<h3 data-number="4.13.1" class="anchored" data-anchor-id="goal-10"><span class="header-section-number">4.13.1</span> Goal</h3>
+<section id="sampling-rate-sanity-check" class="level2" data-number="4.7">
+<h2 data-number="4.7" class="anchored" data-anchor-id="sampling-rate-sanity-check"><span class="header-section-number">4.7</span> Sampling Rate Sanity Check</h2>
 <p>The WISDM documentation states that the data was collected at approximately 20 Hz.</p>
-<p>We estimate the sampling rate from timestamps.</p>
-<div id="b8fbd14a" class="cell" data-execution_count="16">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>subject <span class="op">=</span> df[<span class="st">"subject_id"</span>].iloc[<span class="dv">0</span>]</span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>activity <span class="op">=</span> <span class="st">"walking"</span></span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>sample <span class="op">=</span> df[</span>
-<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>    (df[<span class="st">"subject_id"</span>] <span class="op">==</span> subject)</span>
-<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>    <span class="op">&amp;</span> (df[<span class="st">"activity"</span>] <span class="op">==</span> activity)</span>
-<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>].sort_values(<span class="st">"timestamp"</span>)</span>
-<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>dt <span class="op">=</span> sample[<span class="st">"timestamp"</span>].diff().dropna()</span>
-<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>sampling_rate <span class="op">=</span> <span class="fl">1e9</span> <span class="op">/</span> dt.mean()</span>
-<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a>sampling_rate</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="16">
+<p>We should still verify that assumption from the timestamps.</p>
+<div id="0e648979" class="cell" data-execution_count="8">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>subject <span class="op">=</span> df[<span class="st">"subject_id"</span>].iloc[<span class="dv">0</span>]</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>activity <span class="op">=</span> <span class="st">"walking"</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>sample <span class="op">=</span> df[</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    (df[<span class="st">"subject_id"</span>] <span class="op">==</span> subject)</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    <span class="op">&amp;</span> (df[<span class="st">"activity"</span>] <span class="op">==</span> activity)</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>].sort_values(<span class="st">"timestamp"</span>)</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>dt <span class="op">=</span> sample[<span class="st">"timestamp"</span>].diff().dropna()</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>estimated_sampling_rate <span class="op">=</span> <span class="fl">1e9</span> <span class="op">/</span> dt.mean()</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>estimated_sampling_rate</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="8">
 <pre><code>np.float64(19.85939378331699)</code></pre>
 </div>
 </div>
-</section>
-<section id="expected-output-4" class="level3" data-number="4.13.2">
-<h3 data-number="4.13.2" class="anchored" data-anchor-id="expected-output-4"><span class="header-section-number">4.13.2</span> Expected Output</h3>
-<p>The result should be close to 20 Hz.</p>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Note</span>Remember
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Documentation is important, but data engineers should still verify assumptions directly from the data.</p>
-</div>
-</div>
+<p>This number answers:</p>
+<blockquote class="blockquote">
+<p>How much real time does one sample represent?</p>
+</blockquote>
+<p>That matters because window size is measured in samples.</p>
+<p>A 100-sample window means something different at 20 Hz than it would at 100 Hz.</p>
 <hr>
 </section>
+<section id="data-quality-checklist" class="level2" data-number="4.8">
+<h2 data-number="4.8" class="anchored" data-anchor-id="data-quality-checklist"><span class="header-section-number">4.8</span> Data Quality Checklist</h2>
+<p>Before modeling, a data engineer should build a checklist.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Check</th>
+<th>Why it matters</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Missing values</td>
+<td>Missing x, y or z values can break feature extraction or create misleading statistics.</td>
+</tr>
+<tr class="even">
+<td>Unexpected timestamps</td>
+<td>Irregular timing changes the meaning of a fixed-size window.</td>
+</tr>
+<tr class="odd">
+<td>Constant signals</td>
+<td>A flat signal may indicate a sensor problem or a recording that contains no useful movement.</td>
+</tr>
+<tr class="even">
+<td>Sensor spikes</td>
+<td>Extreme values can dominate features such as maximum and energy.</td>
+</tr>
+<tr class="odd">
+<td>Different recording lengths</td>
+<td>Some subjects or activities may influence the model more than others.</td>
+</tr>
+<tr class="even">
+<td>Class imbalance</td>
+<td>Accuracy can hide poor performance on smaller classes.</td>
+</tr>
+<tr class="odd">
+<td>Subject imbalance</td>
+<td>Evaluation can become biased toward heavily represented participants.</td>
+</tr>
+</tbody>
+</table>
+<p>This checklist is not bureaucracy.</p>
+<p>It protects the rest of the pipeline.</p>
+<p>Every later step depends on the assumptions we accept here.</p>
+<hr>
 </section>
-<section id="checkpoint" class="level2" data-number="4.14">
-<h2 data-number="4.14" class="anchored" data-anchor-id="checkpoint"><span class="header-section-number">4.14</span> Checkpoint</h2>
+<section id="thinking-like-an-engineer" class="level2" data-number="4.9">
+<h2 data-number="4.9" class="anchored" data-anchor-id="thinking-like-an-engineer"><span class="header-section-number">4.9</span> Thinking Like An Engineer</h2>
+<p>A beginner might ask:</p>
+<blockquote class="blockquote">
+<p>Can I train a model?</p>
+</blockquote>
+<p>An engineer asks:</p>
+<blockquote class="blockquote">
+<p>What assumptions am I making about the data?</p>
+</blockquote>
+<p>For this dataset, we are already making several assumptions:</p>
+<ul>
+<li>activity labels are correct enough to learn from,</li>
+<li>the sampling rate is close enough to 20 Hz,</li>
+<li>windows will capture meaningful movement,</li>
+<li>the selected activities are represented well enough,</li>
+<li>subject differences are important and should be evaluated later.</li>
+</ul>
+<p>The point of exploration is to make those assumptions visible.</p>
+<p>Once assumptions are visible, we can test them.</p>
+<hr>
+</section>
+<section id="checkpoint" class="level2" data-number="4.10">
+<h2 data-number="4.10" class="anchored" data-anchor-id="checkpoint"><span class="header-section-number">4.10</span> Checkpoint</h2>
 <p>Before continuing, you should be able to answer:</p>
 <ol type="1">
-<li>Why do we load one file before loading all files?</li>
-<li>Why do we keep the subject identifier?</li>
-<li>What is acceleration magnitude?</li>
-<li>Why are sitting and standing harder to distinguish than walking?</li>
-<li>Why is the sampling rate important for the next chapter?</li>
+<li>Why should we inspect data before training a model?</li>
+<li>Why can visualization reveal problems that tables miss?</li>
+<li>Why might walking be easier to classify than sitting or standing?</li>
+<li>Why does subject imbalance matter?</li>
+<li>Why is the sampling rate important for windowing?</li>
 </ol>
 <hr>
 </section>
-<section id="further-exploration" class="level2" data-number="4.15">
-<h2 data-number="4.15" class="anchored" data-anchor-id="further-exploration"><span class="header-section-number">4.15</span> Further Exploration</h2>
-<p>Optional: modify the target activity selection so that the dataset also includes <code>jogging</code>.</p>
-<p>Which parts of the pipeline would change?</p>
+<section id="further-exploration" class="level2" data-number="4.11">
+<h2 data-number="4.11" class="anchored" data-anchor-id="further-exploration"><span class="header-section-number">4.11</span> Further Exploration</h2>
+<p>Optional investigations:</p>
+<ul>
+<li>compare the same activity for two different subjects,</li>
+<li>compare signal histograms across activities,</li>
+<li>look for unusually flat or spiky signal segments.</li>
+</ul>
+<p>These are not required for the first pass.</p>
+<p>They are examples of how professional data exploration can go deeper.</p>
 <hr>
 </section>
-<section id="summary" class="level2" data-number="4.16">
-<h2 data-number="4.16" class="anchored" data-anchor-id="summary"><span class="header-section-number">4.16</span> Summary</h2>
-<p>In this chapter you learned how to</p>
+<section id="what-have-we-achieved" class="level2" data-number="4.12">
+<h2 data-number="4.12" class="anchored" data-anchor-id="what-have-we-achieved"><span class="header-section-number">4.12</span> What Have We Achieved?</h2>
 <ul>
-<li>load one raw WISDM file,</li>
-<li>load all participant files,</li>
-<li>map activity codes,</li>
-<li>inspect class and subject distributions,</li>
-<li>compute acceleration magnitude,</li>
-<li>visualize raw signals,</li>
-<li>estimate sampling rate.</li>
+<li>We loaded the selected WISDM activities into a usable table.</li>
+<li>We inspected subjects, activities, samples, and signal dimensions.</li>
+<li>We interpreted accelerometer plots instead of trusting tables alone.</li>
+<li>We built a checklist for common Sensor Stream quality problems.</li>
+<li>We practiced asking what assumptions the data supports.</li>
 </ul>
-<p>In the next chapter we will transform the continuous sensor stream into fixed-size windows.</p>
+</section>
+<section id="what-comes-next" class="level2" data-number="4.13">
+<h2 data-number="4.13" class="anchored" data-anchor-id="what-comes-next"><span class="header-section-number">4.13</span> What Comes Next?</h2>
+<p>Exploration shows us that the data is continuous, but machine learning needs fixed-size observations. The next chapter turns the Sensor Stream into Windows.</p>
 
 
 </section>

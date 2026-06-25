@@ -1,159 +1,244 @@
 # Machine Learning
 
-## Learning Objectives
+::: {.callout-note}
+## Why this chapter matters
 
-After completing this chapter, you should be able to
+Feature engineering gives us numbers; machine learning turns those numbers into activity Predictions. This chapter explains how a Random Forest Model learns patterns in the Feature Matrix without needing to understand human movement.
+:::
 
-- load the feature table created in the previous chapter,
-- separate model features from labels and subject identifiers,
-- train a Random Forest baseline model,
-- inspect predictions and class probabilities,
-- understand why reusable training code matters.
+## How Can A Computer Distinguish Walking From Standing Using Only Numbers?
+
+In the previous chapter, we transformed raw sensor Windows into Feature Vectors.
+
+That was the key step.
+
+The model does not receive a video of a person walking. It does not understand posture, balance or intent.
+
+It receives numbers such as mean, standard deviation, maximum and energy.
+
+The central question of this chapter is:
+
+> How can a computer distinguish walking from standing using only numbers?
+
+The answer is pattern learning.
+
+```{mermaid}
+flowchart LR
+  A[Sensor Stream] --> B[Feature Vectors]
+  B --> C[Patterns]
+  C --> D[Prediction]
+```
+
+Feature engineering and machine learning are inseparable.
+
+The model can only learn patterns that are visible in the representation we give it.
 
 ---
 
-## Setup
+## From Features To Decisions
 
-```{python}
-from pathlib import Path
-import sys
+Feature Vectors are mathematical descriptions of Windows.
 
-import pandas as pd
+Machine learning searches for patterns in those descriptions.
 
-current_path = Path.cwd().resolve()
+Prediction is a comparison between a new Feature Vector and patterns learned from labeled examples.
 
-for parent in [current_path] + list(current_path.parents):
-    if (parent / "app").exists():
-        PROJECT_ROOT = parent
-        break
-else:
-    raise RuntimeError("Could not find project root containing app/ directory.")
-
-sys.path.insert(0, str(PROJECT_ROOT))
-
-from app.training import (
-    load_feature_table,
-    split_features_and_labels,
-    train_random_forest,
-)
+```{mermaid}
+flowchart TD
+  A[Feature Vector]
+  --> B[Compare With Learned Patterns]
+  --> C[Estimate Class Probabilities]
+  --> D[Choose Activity]
 ```
+
+For example, a walking window may have higher magnitude variability and higher energy.
+
+A standing window may have lower variability.
+
+The model learns statistical regularities like these.
+
+It does not learn human meaning directly.
+
+::: {.callout-tip}
+## Engineering Insight
+
+Models learn patterns, not meaning.
+
+The Model has no understanding of human movement. It only learns statistical regularities in the Feature Matrix.
+:::
+
+---
+
+## Why Classical Machine Learning?
+
+For this project, classical machine learning is the right starting point.
+
+It is transparent enough to teach.
+
+It trains quickly.
+
+It works with relatively little data.
+
+It fits naturally with tabular feature engineering.
+
+It is easy to export and deploy.
+
+Deep learning can be powerful, especially for large raw-signal datasets. But it often requires more data, more compute and more careful tuning. It also makes the first engineering story harder to see.
+
+Here, we want students to understand the complete pipeline.
+
+Classical ML keeps the model simple enough that the system around it remains visible.
 
 ---
 
 ## Why Random Forest?
 
-We use a Random Forest as the first model because it is a strong baseline for tabular feature data.
+Random Forest is a good baseline for engineered wearable features.
 
-A Random Forest is an ensemble of decision trees.
+Think of it as a committee of experts.
 
-It is useful because it is
+Each expert is a decision tree.
 
-- easy to train,
-- robust,
-- fast enough for this project,
-- suitable for tabular data,
-- relatively easy to explain.
+A decision tree asks a sequence of simple questions:
 
-::: {.callout-tip}
-## Engineering Insight
+- Is energy high?
+- Is variability low?
+- Is the maximum magnitude above a threshold?
+- Does this feature pattern look more like walking or sitting?
 
-A simple baseline model is often the best starting point.
+One tree can be fragile.
 
-Before using deep learning, always ask whether a simpler model already solves the problem well enough.
-:::
+It may focus too much on one pattern.
 
----
+A Random Forest trains many different trees and lets them vote.
 
-## Step 1 — Load the Feature Table
+That gives us:
 
-The previous chapter saved one row per sensor window.
+- diversity, because different trees see different parts of the data,
+- majority vote, because no single tree decides alone,
+- robustness, because mistakes from one tree can be balanced by others,
+- strong performance on tabular feature data.
 
-```{python}
-features_df = load_feature_table()
-
-features_df.head()
-```
-
-```{python}
-features_df.shape
-```
-
-```{python}
-features_df["activity"].value_counts()
-```
+This is why Random Forest is a practical first model for this capstone.
 
 ---
 
-## Step 2 — Split Features, Labels and Subjects
+## What Does The Model Actually Learn?
 
-The model should learn from numerical features.
+The model never truly learns walking, standing or sitting.
 
-It should not use metadata such as `subject_id` as input.
+It learns numerical regions in feature space.
 
-```{python}
-X, y, groups, feature_columns = split_features_and_labels(features_df)
+Conceptually, it learns rules like:
 
-X.shape, y.shape, groups.shape
+```text
+high energy + high variability -> often walking
+low energy + low variability -> often sitting or standing
+similar low-motion patterns -> harder to separate
 ```
 
-```{python}
-feature_columns
-```
+This is not a perfect map.
 
-::: {.callout-note}
-## Remember
+Activities can overlap.
 
-The exact feature column order must be saved with the model.
+Some sitting windows may look similar to standing windows. Some quiet walking windows may look less dynamic than expected. Some subjects move differently from others.
 
-During deployment, live features must be passed to the model in the same order.
-:::
+That overlap is why evaluation matters.
 
 ---
 
-## Step 3 — Train the Baseline Model
+## Training
 
-We now train a Random Forest on the complete feature table.
+Training connects feature vectors with labels.
 
-This gives us a baseline model artifact that later chapters can evaluate and export with metadata.
-
-```{python}
-baseline_model = train_random_forest(X, y)
-
-baseline_model
+```{mermaid}
+flowchart TD
+  A[Feature Matrix]
+  --> C[Learning Algorithm]
+  B[Labels]
+  --> C
+  C --> D[Trained Model]
 ```
 
-```{python}
-baseline_model.classes_
-```
+The feature matrix contains one row per window.
+
+The labels tell the model which activity each row represents.
+
+The learning algorithm searches for patterns that connect feature values to labels.
+
+The trained model stores those learned patterns so it can make predictions for new windows.
 
 ---
 
-## Step 4 — Predict One Window
+## Why Can Models Make Mistakes?
 
-We inspect one prediction to understand the model interface.
+Models make mistakes when the numerical patterns are not clear enough.
 
-```{python}
-sample = X.iloc[[0]]
+In wearable activity recognition, this can happen for several reasons.
 
-prediction = baseline_model.predict(sample)
+Sitting and standing overlap because both are low-motion activities.
 
-prediction
-```
+Measurements are noisy because sensors are imperfect.
 
-```{python}
-pd.DataFrame(
-    baseline_model.predict_proba(sample),
-    columns=baseline_model.classes_,
-)
-```
+Subjects differ because people walk, sit and stand in different ways.
 
-### Discussion
+Phone placement changes because a phone may be in a pocket, hand, bag or on a table.
 
-The model predicts one activity label.
+Features may be insufficient because simple statistics do not capture every useful pattern.
 
-It can also return probabilities for all known classes.
+Mistakes are not just model failures.
 
-These probabilities will later be useful for dashboards and live prediction.
+They often reveal something important about the data representation.
+
+---
+
+## Thinking Like An Engineer
+
+Instead of asking:
+
+> Which model is best?
+
+ask:
+
+> Does my representation contain enough information?
+
+If the features do not distinguish sitting from standing, a more complex model may not fix the problem.
+
+If the data does not represent new subjects well, high accuracy on familiar subjects may be misleading.
+
+Model choice matters.
+
+But representation, data quality and evaluation matter just as much.
+
+---
+
+## The Project Implementation
+
+The reusable training logic lives in `app.training`.
+
+It handles the project-level steps:
+
+- loading the feature table,
+- separating features, labels and subject identifiers,
+- training the Random Forest baseline,
+- saving model artifacts for later evaluation and deployment.
+
+This chapter does not duplicate that implementation.
+
+The important idea is that training consumes the feature table created in the previous chapter.
+
+---
+
+## Further Exploration
+
+Optional models to explore later:
+
+- Gradient Boosting,
+- XGBoost,
+- LightGBM,
+- Deep Learning.
+
+These are useful next steps, but they are not required for the first reliable system.
 
 ---
 
@@ -161,31 +246,22 @@ These probabilities will later be useful for dashboards and live prediction.
 
 Before continuing, you should be able to answer:
 
-1. Why is Random Forest a good baseline model?
-2. What are `X`, `y` and `groups`?
-3. Why should `subject_id` not be used as a feature?
-4. Why must the feature column order be saved?
-5. What is the difference between `predict()` and `predict_proba()`?
+1. Why does the model need engineered features?
+2. Why is Random Forest a good baseline for tabular features?
+3. What does it mean to say the model learns numerical regions?
+4. Why can sitting and standing be confused?
+5. Why are feature engineering and model training inseparable?
 
 ---
 
-## Further Exploration
+## What Have We Achieved?
 
-Optional: change the number of trees from `200` to `50`.
+- We connected Feature Vectors to activity Predictions.
+- We explained why classical machine learning is a strong baseline for this project.
+- We described Random Forests as a robust committee of decision trees.
+- We clarified that the Model learns numerical patterns, not human meaning.
+- We identified why Models can still make mistakes.
 
-Does the prediction for the sample window change?
+## What Comes Next?
 
-What does this tell you about model stability?
-
----
-
-## Summary
-
-In this chapter you learned how to
-
-- load the saved feature table,
-- split features, labels and subject identifiers,
-- train a reusable Random Forest baseline,
-- inspect one prediction and its probabilities.
-
-In the next chapter we will evaluate whether the model generalizes to people it has never seen before.
+Training a Model is not enough. The next chapter asks whether the Prediction will still work for people the Model has never seen before.

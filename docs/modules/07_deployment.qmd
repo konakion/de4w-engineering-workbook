@@ -1,3 +1,217 @@
 # Deployment
 
-This chapter turns the trained model into a reusable prediction service.
+::: {.callout-note}
+## Why this chapter matters
+
+A Model only becomes useful when another program can ask it for a Prediction. This chapter turns the trained artifact into a small Deployment so the wearable AI system can be tested through an API and a dashboard.
+:::
+
+## Learning Objectives
+
+After completing this chapter, you should be able to
+
+- explain which model artifacts are needed for prediction,
+- start the FastAPI service,
+- check API health,
+- send one prediction request,
+- explain how the Streamlit dashboard uses the same prediction code.
+
+---
+
+## Model Artifacts
+
+The deployed prediction service uses files in the `models/` directory.
+
+```text
+models/
+├── activity_model_random_forest.joblib
+├── feature_columns.joblib
+└── activity_labels.joblib
+```
+
+The most important artifact for deployment is the feature column list.
+
+The live system must send features to the model in exactly the same order that was used during training.
+
+::: {.callout-tip}
+## Engineering Insight
+
+Deployment is part of the machine learning system, not an afterthought.
+
+The same Feature Vector definition must connect training, evaluation, API prediction, and the Streamlit dashboard.
+:::
+
+::: {.callout-warning}
+## Common Pitfall
+
+If the model was trained with one set of features but the API receives a different set, predictions are not reliable.
+
+The API checks for missing and unexpected features before predicting.
+:::
+
+---
+
+## FastAPI Service
+
+FastAPI exposes the trained model as a small HTTP service.
+
+The project keeps the API logic in `app/api.py` and the model loading/prediction logic in `app/model_utils.py`.
+
+Start the API from the project root:
+
+```bash
+uv run uvicorn app.api:app --reload
+```
+
+The API will usually be available at:
+
+```text
+http://127.0.0.1:8000
+```
+
+---
+
+## Health Check
+
+Use the health endpoint to verify that the API can load the model artifacts.
+
+```bash
+curl http://127.0.0.1:8000/health
+```
+
+Expected response:
+
+```json
+{
+  "status": "ok",
+  "model_loaded": true,
+  "detail": "Model artifacts are available."
+}
+```
+
+If a model file is missing, the endpoint returns a clear message naming the missing artifact.
+
+---
+
+## Prediction Request
+
+The prediction endpoint is:
+
+```text
+POST /predict
+```
+
+It expects one JSON object with a `features` field.
+
+The feature names must match `models/feature_columns.joblib`.
+
+Example shape:
+
+```json
+{
+  "features": {
+    "mean_x": 0.0,
+    "std_x": 0.0,
+    "min_x": 0.0,
+    "max_x": 0.0,
+    "energy_x": 0.0
+  }
+}
+```
+
+The real request must include all 20 trained feature columns.
+
+The response contains:
+
+```json
+{
+  "activity": "walking",
+  "confidence": 0.91,
+  "probabilities": {
+    "sitting": 0.02,
+    "standing": 0.07,
+    "walking": 0.91
+  }
+}
+```
+
+::: {.callout-note}
+## Validation
+
+If features are missing, the API returns a validation error that names them.
+:::
+
+---
+
+## Streamlit Dashboard
+
+The Streamlit dashboard is the live demonstration UI.
+
+Start it from the project root:
+
+```bash
+uv run streamlit run dashboard.py
+```
+
+The dashboard:
+
+- reads live samples from phyphox,
+- stores recent samples in `LiveBuffer`,
+- creates a Window,
+- extracts a Feature Vector,
+- calls the same prediction service used by the API,
+- displays the current activity and probabilities.
+
+The API and dashboard share the same model artifact checks.
+
+This reduces the chance that the web service and live demo behave differently.
+
+---
+
+## Thinking Like An Engineer
+
+Instead of asking:
+
+> Can my notebook produce a prediction?
+
+ask:
+
+> Can another system request the same Prediction reliably?
+
+Deployment forces us to make assumptions explicit: artifact locations, feature names, input validation, output format, and failure messages.
+
+---
+
+## Checkpoint
+
+Before continuing, you should be able to answer:
+
+1. Which model artifacts are needed for prediction?
+2. Why must feature names match the training feature columns?
+3. What does `/health` check?
+4. What does `/predict` return?
+5. Why should the API and dashboard use the same prediction service?
+
+---
+
+## Further Exploration
+
+Optional: intentionally remove one feature from a `/predict` request.
+
+Which error message does the API return?
+
+How does that help debug deployment problems?
+
+---
+
+## What Have We Achieved?
+
+- We identified the model artifacts needed for Deployment.
+- We explained why feature columns must match the trained Feature Matrix.
+- We started and tested the FastAPI prediction service.
+- We connected the API and Streamlit dashboard to the same prediction path.
+- We practiced treating validation errors as part of system reliability.
+
+## What Comes Next?
+
+Deployment gives us a service that can return Predictions. The final major chapter connects that service to a real phone Sensor Stream for Live Prediction.

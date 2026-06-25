@@ -1,18 +1,40 @@
-# Evaluation
+# Evaluation And Generalization
 
-## Learning Objectives
+::: {.callout-note}
+## Why this chapter matters
 
-After completing this chapter, you should be able to
+Evaluation tells us whether a Model is ready for the world it will actually face. In wearable sensing, the crucial question is whether Predictions generalize beyond the people whose data appeared during training.
+:::
 
-- explain why random train/test splits can be optimistic,
-- evaluate a model with a subject-wise split,
-- understand the leave-one-subject-out evaluation idea,
-- compare random split and subject-wise results,
-- export model metadata with evaluation results.
+## Does Our Model Really Work On People It Has Never Seen Before?
+
+Evaluation is not just computing a score.
+
+Evaluation is asking whether the system will work in the real world.
+
+For wearable activity recognition, the central question is often:
+
+> Does our Model really work on people it has never seen before?
+
+A Model can look excellent under a random split and still fail to generalize to new subjects.
+
+That gap is not an embarrassment.
+
+It is one of the most important learning outcomes in wearable machine learning.
+
+::: {.callout-tip}
+## Engineering Insight
+
+If the system will be used on new people, the evaluation must test new people.
+:::
 
 ---
 
 ## Setup
+
+We use the reusable evaluation functions from `app.evaluation`.
+
+The goal of this chapter is to interpret the evaluation strategies, not to duplicate their implementation.
 
 ```{python}
 from pathlib import Path
@@ -33,7 +55,6 @@ sys.path.insert(0, str(PROJECT_ROOT))
 
 from app.config import WINDOW_SIZE
 from app.evaluation import (
-    confusion_matrix_table,
     evaluate_random_split,
     evaluate_subject_split,
     leave_one_subject_out_evaluation,
@@ -50,31 +71,57 @@ from app.training import (
 ```{python}
 features_df = load_feature_table()
 X, y, groups, feature_columns = split_features_and_labels(features_df)
-
-features_df.shape
 ```
 
 ---
 
-## Why Random Split Can Be Optimistic
+## Why Evaluation Is Not Just Accuracy
 
-A random split divides windows into training and test rows.
+Accuracy is useful.
 
-This is easy to do, but it can mix windows from the same person across both sets.
+It gives one simple number: the fraction of predictions that were correct.
 
-For wearable data, this matters because people move differently.
+But accuracy can also be misleading.
 
-::: {.callout-warning}
-## Common Pitfall
+The meaning of an accuracy score depends on how the test data was chosen.
 
-If windows from the same subject appear in both training and test sets, the model may partly learn person-specific movement patterns.
+In wearable sensing, deployment often means using the system with new people. That means the real evaluation question is not only:
 
-The test score can then look better than performance on a completely new person.
-:::
+> Can the model classify held-out rows?
+
+It is:
+
+> Can the model classify activities for subjects it did not see during training?
+
+The difference between those two questions is the heart of this chapter.
 
 ---
 
-## Step 1 — Random Split Evaluation
+## Random Split: The First Result
+
+A random split divides rows into train and test sets.
+
+It is common because it is simple and works well for many tabular datasets.
+
+But wearable datasets contain many windows from the same subjects.
+
+Random splitting can place windows from one subject in both training and test.
+
+```{mermaid}
+flowchart LR
+  A[Subject 1 windows] --> C[Train]
+  A --> D[Test]
+  B[Subject 2 windows] --> C
+  B --> D
+  E[Subject 3 windows] --> C
+  E --> D
+```
+
+This often gives high performance because the test data is very similar to the training data.
+
+That can be a useful first result.
+
+But for wearable data, it may be too optimistic.
 
 ```{python}
 random_result = evaluate_random_split(X, y)
@@ -82,9 +129,116 @@ random_result = evaluate_random_split(X, y)
 random_result["metrics"]["accuracy"]
 ```
 
-```{python}
-pd.DataFrame(random_result["metrics"]["classification_report"]).T
+This score answers:
+
+> Can the model classify unseen windows from a familiar subject pool?
+
+That is not the same as deployment to new people.
+
+---
+
+## The Leakage Problem
+
+Windows from the same person can look very similar.
+
+People differ in walking style, phone placement, body movement and recording conditions.
+
+If the same subject appears in both train and test, the model may learn subject-specific patterns.
+
+This is not intentional cheating.
+
+It is a subtle evaluation design problem.
+
+::: {.callout-warning}
+## Common Pitfall
+
+High accuracy can come from evaluating on data that is too similar to the training data.
+:::
+
+The important question is not whether the random split score is wrong.
+
+The important question is what it actually measures.
+
+---
+
+## Subject-Wise Evaluation
+
+In subject-wise evaluation, train subjects and test subjects are separated.
+
+The model trains on one group of people and is tested on different people.
+
+```{mermaid}
+flowchart LR
+  A[Train Subjects] --> B[Model]
+  B --> C[Test Subjects]
+  D[Subject 1, 2, 3, ...] --> A
+  E[Subject 40, 41, 42, ...] --> C
 ```
+
+This better simulates deployment on a new user.
+
+Accuracy often drops.
+
+That drop is informative, not a failure.
+
+It tells us how much harder generalization is when the model cannot rely on familiar subject patterns.
+
+```{python}
+subject_result = evaluate_subject_split(X, y, groups)
+
+subject_result["metrics"]["accuracy"]
+```
+
+This score answers:
+
+> Can the model classify activities for people it has never seen before?
+
+For wearable systems, this is often the more important question.
+
+---
+
+## Random Split Vs Subject-Wise Split
+
+The comparison is the lesson.
+
+```{python}
+comparison = pd.DataFrame(
+    [
+        {
+            "evaluation strategy": "Random split",
+            "accuracy": random_result["metrics"]["accuracy"],
+            "test examples": random_result["test_size"],
+        },
+        {
+            "evaluation strategy": "Subject-wise split",
+            "accuracy": subject_result["metrics"]["accuracy"],
+            "test examples": subject_result["test_size"],
+        },
+    ]
+)
+
+comparison
+```
+
+| Evaluation strategy | What is tested? | Typical result | Risk |
+|---|---|---|---|
+| Random split | New windows from a mixed subject pool | Often high | Can be too optimistic if subjects appear in both train and test |
+| Subject-wise split | New subjects held out from training | Often lower | Depends on which subjects are held out |
+| LOSO | Every subject is tested as the held-out subject once | Strict and detailed | Computationally more expensive |
+
+If the random split score is higher, do not panic.
+
+That gap tells us that subject generalization is harder than row-level prediction.
+
+---
+
+## Interpreting Confusion Matrices
+
+A confusion matrix shows which activities are predicted correctly and which are confused.
+
+Diagonal entries are correct predictions.
+
+Off-diagonal entries are mistakes.
 
 ```{python}
 random_labels = random_result["metrics"]["labels"]
@@ -97,35 +251,13 @@ random_matrix = pd.DataFrame(
 random_matrix
 ```
 
-### Discussion
+This matrix tells us where the random split model succeeds and fails.
 
-This score answers the question:
+Walking is often easier because it has stronger movement and higher energy.
 
-> Can the model classify unseen windows from a similar pool of subjects?
+Sitting and standing may be confused because both are low-motion states.
 
-That is useful, but it is not the same as testing on a new person.
-
----
-
-## Step 2 — Subject-Wise Evaluation
-
-In a subject-wise split, entire subjects are assigned to either training or test.
-
-The model is evaluated on people it did not see during training.
-
-```{python}
-subject_result = evaluate_subject_split(X, y, groups)
-
-subject_result["metrics"]["accuracy"]
-```
-
-```{python}
-subject_result["test_subjects"]
-```
-
-```{python}
-pd.DataFrame(subject_result["metrics"]["classification_report"]).T
-```
+Now inspect the subject-wise confusion matrix.
 
 ```{python}
 subject_labels = subject_result["metrics"]["labels"]
@@ -138,54 +270,29 @@ subject_matrix = pd.DataFrame(
 subject_matrix
 ```
 
-### Discussion
+This matrix is more realistic for deployment.
 
-This score answers the more realistic deployment question:
+If sitting and standing are confused more often here, that is not surprising.
 
-> Can the model classify activities for people it has never seen before?
-
-This is usually harder.
-
-Sitting and standing are especially difficult because both can produce low-motion signals.
+It means the distinction is less stable across people.
 
 ---
 
-## Step 3 — Compare Strategies
+## LOSO Concept
 
-```{python}
-comparison = pd.DataFrame(
-    [
-        {
-            "strategy": "random_split",
-            "accuracy": random_result["metrics"]["accuracy"],
-            "test_size": random_result["test_size"],
-        },
-        {
-            "strategy": "subject_split",
-            "accuracy": subject_result["metrics"]["accuracy"],
-            "test_size": subject_result["test_size"],
-        },
-    ]
-)
+Leave-One-Subject-Out evaluation is stricter.
 
-comparison
-```
+The idea is simple:
 
-### Discussion
+1. Hold out one subject.
+2. Train on all other subjects.
+3. Test on the held-out subject.
+4. Repeat for each subject.
+5. Average the performance.
 
-If the random split score is higher than the subject-wise score, that is not a bug.
+LOSO asks:
 
-It is evidence that generalization to new people is a harder problem than recognizing windows from familiar subjects.
-
----
-
-## Step 4 — LOSO Concept
-
-Leave-one-subject-out evaluation trains one model per subject.
-
-Each run holds out exactly one subject for testing and trains on all remaining subjects.
-
-This gives a more detailed view of which subjects are easy or hard to generalize to.
+> How well does the system generalize across all possible held-out subjects?
 
 For a teaching render, we run a small preview on the first five subjects.
 
@@ -200,29 +307,57 @@ loso_preview = leave_one_subject_out_evaluation(
 loso_preview
 ```
 
-```{python}
-loso_preview["accuracy"].describe()
-```
+This preview shows that subject-level performance can vary.
 
-::: {.callout-note}
-## Remember
+Some people are easier for the model.
 
-A full LOSO evaluation is useful, but it trains one model per subject.
+Some people are harder.
 
-For this dataset, that means 51 model fits.
-:::
+That variation is exactly why subject-aware evaluation matters.
 
 ---
 
-## Step 5 — Export Model Artifacts and Metadata
+## Thinking Like An Engineer
 
-We train one final model on all available feature rows and save the artifacts needed later:
+Instead of asking:
 
-- trained model,
-- feature column order,
-- class labels,
-- model metadata,
-- evaluation results.
+> How high is my accuracy?
+
+ask:
+
+> Does my evaluation simulate the way the system will be used?
+
+If the system will be used by new people, then new people must appear in the test set.
+
+If the system will be used on a new device, evaluation should eventually test device differences.
+
+If the system will be used in a new session, evaluation should consider session differences.
+
+The evaluation design is part of the engineering design.
+
+---
+
+## The Project Implementation
+
+The reusable evaluation logic lives in `app.evaluation`.
+
+It provides:
+
+- random split evaluation,
+- subject-wise evaluation,
+- LOSO-style evaluation,
+- classification reports,
+- confusion matrix support.
+
+This chapter uses those functions so the evaluation logic stays consistent across the project.
+
+---
+
+## Save Evaluation Metadata
+
+The project saves evaluation results with the model artifacts.
+
+This makes the trained model easier to inspect later.
 
 ```{python}
 final_model = train_random_forest(X, y)
@@ -242,10 +377,6 @@ model_metadata = save_model_artifacts(
     window_size=WINDOW_SIZE,
 )
 
-model_metadata.keys()
-```
-
-```{python}
 {
     "model_type": model_metadata["model_type"],
     "window_size": model_metadata["window_size"],
@@ -255,35 +386,40 @@ model_metadata.keys()
 
 ---
 
+## Further Exploration
+
+Optional directions:
+
+- stratified LOSO,
+- session-wise split,
+- device-wise split,
+- calibration,
+- confidence thresholds.
+
+These are advanced evaluation ideas, not required for the first system.
+
+---
+
 ## Checkpoint
 
 Before continuing, you should be able to answer:
 
-1. Why can a random split be optimistic?
-2. What changes in a subject-wise split?
-3. What does LOSO evaluate?
-4. Why is generalization to new people harder?
-5. Why do we save feature columns with the model?
+1. Why can random split accuracy be too optimistic?
+2. Why does subject-wise evaluation better match deployment on new people?
+3. What does LOSO test?
+4. How do you read diagonal and off-diagonal confusion matrix entries?
+5. Why should evaluation match the deployment scenario?
 
 ---
 
-## Further Exploration
+## What Have We Achieved?
 
-Optional: run LOSO for all subjects by removing `max_subjects=5`.
+- We explained why accuracy depends on the deployment scenario.
+- We identified how random splits can overestimate wearable sensing performance.
+- We separated subject-wise evaluation from ordinary random evaluation.
+- We interpreted confusion matrices as evidence about Model behavior.
+- We framed LOSO as a stricter test of generalization to new people.
 
-How much do subject-level accuracies vary?
+## What Comes Next?
 
-Which activities are most often confused?
-
----
-
-## Summary
-
-In this chapter you learned how to
-
-- compare random split and subject-wise evaluation,
-- interpret why subject-wise evaluation is more realistic,
-- use a LOSO preview,
-- export model artifacts with metadata.
-
-The next chapters will later turn these artifacts into a service and live demo.
+Once evaluation gives us a trustworthy baseline, the system needs a way to serve Predictions. The next chapter moves from evaluation to Deployment with FastAPI and Streamlit.

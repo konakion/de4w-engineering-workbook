@@ -1,3 +1,204 @@
 # Live Prediction
 
-This chapter connects phyphox, Streamlit, and the trained model for live activity recognition.
+::: {.callout-note}
+## Why this chapter matters
+
+Live Prediction closes the loop between a real phone Sensor Stream and the trained Model. This chapter shows how all earlier components work together when data arrives continuously and the system has to respond in real time.
+:::
+
+## Learning Objectives
+
+After completing this chapter, you should be able to
+
+- configure phyphox remote access,
+- explain why the phone and laptop must be on the same network,
+- describe the live prediction pipeline,
+- run the Streamlit dashboard,
+- troubleshoot common live demo failures.
+
+---
+
+## phyphox Setup
+
+Install phyphox on your smartphone.
+
+Open an acceleration experiment and enable remote access.
+
+phyphox will show a URL such as:
+
+```text
+http://192.168.178.45:8080
+```
+
+Enter this URL in the Streamlit dashboard.
+
+::: {.callout-warning}
+## Network Requirement
+
+The phone and laptop must be able to reach each other on the local network.
+
+University WiFi networks such as eduroam often block direct device-to-device communication.
+
+If the laptop cannot open the phyphox URL in a browser, the dashboard cannot read sensor data either.
+:::
+
+Recommended network options:
+
+- smartphone hotspot,
+- local home WiFi,
+- travel router,
+- lab router configured for local device communication.
+
+---
+
+## Start the Dashboard
+
+From the project root:
+
+```bash
+uv run streamlit run dashboard.py
+```
+
+The dashboard lets you configure:
+
+- phyphox URL,
+- window size,
+- demo duration.
+
+The demo is intentionally time-limited so that it cannot run forever by accident.
+
+---
+
+## Live Prediction Pipeline
+
+The live pipeline is:
+
+```text
+phyphox
+→ PhyphoxClient
+→ LiveBuffer
+→ Window
+→ Feature Vector
+→ prediction service
+→ Streamlit dashboard
+```
+
+`PhyphoxClient` reads the latest x, y and z acceleration values.
+
+`LiveBuffer` stores the most recent samples until a full Window is available.
+
+The Window is converted to the same Feature Vector used during training.
+
+The prediction service loads the trained Random Forest Model and returns:
+
+- predicted activity,
+- confidence,
+- class probabilities.
+
+::: {.callout-tip}
+## Engineering Insight
+
+Live Prediction is where hidden assumptions become visible.
+
+Sampling rate, network access, buffer size, feature order, and model artifacts all have to work at the same time.
+:::
+
+---
+
+## Dashboard States
+
+The dashboard shows the current live demo state:
+
+| State | Meaning |
+|---|---|
+| Waiting | The demo has not started yet |
+| Collecting samples | The buffer is filling |
+| Predicting | A full window is available |
+| Error | phyphox or model prediction failed |
+| Finished | The configured demo duration ended |
+
+These states make live demos easier to debug in front of a class.
+
+---
+
+## Thinking Like An Engineer
+
+Instead of asking:
+
+> Does the Model work?
+
+ask:
+
+> Can the complete live system keep producing Predictions when real-world conditions change?
+
+In a classroom demo, the most likely failures may be networking, phone setup, timing, or missing artifacts rather than machine learning accuracy.
+
+---
+
+## Troubleshooting
+
+### phyphox URL Does Not Open
+
+Check that remote access is enabled in phyphox.
+
+Make sure the phone and laptop are on the same network.
+
+If you are on eduroam, try a phone hotspot or a local router.
+
+### Dashboard Shows a Timeout
+
+The laptop can see the URL but the response is too slow.
+
+Move both devices closer to the access point or use a simpler local network.
+
+### Missing Buffer Error
+
+Make sure the correct phyphox experiment is open and producing acceleration buffers named `accX`, `accY` and `accZ`.
+
+### Model Artifact Error
+
+Confirm that these files exist:
+
+```text
+models/activity_model_random_forest.joblib
+models/feature_columns.joblib
+models/activity_labels.joblib
+```
+
+If they are missing, rerun the training/export step before the live demo.
+
+---
+
+## Checkpoint
+
+Before continuing, you should be able to answer:
+
+1. Why can eduroam block the live demo?
+2. What does the live buffer store?
+3. When does the dashboard start predicting?
+4. Why must live feature extraction match training feature extraction?
+5. What should you check first if phyphox cannot connect?
+
+---
+
+## Further Exploration
+
+Optional: compare predictions with two different window sizes.
+
+How does a smaller window affect responsiveness?
+
+How does a larger window affect stability?
+
+---
+
+## What Have We Achieved?
+
+- We connected phyphox Sensor Stream data to the project pipeline.
+- We traced the live path from `LiveBuffer` to Window to Feature Vector to Prediction.
+- We explained why eduroam and other managed networks can block the demo.
+- We interpreted dashboard states as debugging signals.
+- We prepared a troubleshooting checklist for reliable Live Prediction.
+
+## What Comes Next?
+
+You have now followed the full system from raw Sensor Stream to Live Prediction. The remaining project materials help you review, teach, and verify the complete workbook.

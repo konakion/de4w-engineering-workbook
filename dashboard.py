@@ -10,8 +10,8 @@ from app.config import (
 )
 from app.feature_extraction import extract_features
 from app.live_buffer import LiveBuffer
-from app.model_utils import predict_from_features
-from app.phyphox_client import PhyphoxClient
+from app.model_utils import FeatureMismatchError, ModelArtifactError, predict_from_features
+from app.phyphox_client import PhyphoxClient, PhyphoxClientError
 
 
 st.set_page_config(
@@ -31,69 +31,92 @@ phone_url = st.text_input(
     value=DEFAULT_PHYPHOX_URL,
 )
 
-window_size = st.number_input(
-    "Window size",
-    min_value=20,
-    max_value=500,
-    value=WINDOW_SIZE,
-    step=10,
-)
+settings_col, action_col = st.columns([2, 1])
 
-duration = st.number_input(
-    "Demo duration [s]",
-    min_value=10,
-    max_value=300,
-    value=60,
-    step=10,
-)
+with settings_col:
+    window_size = st.number_input(
+        "Window size",
+        min_value=20,
+        max_value=500,
+        value=WINDOW_SIZE,
+        step=10,
+    )
 
-start = st.button("Start live demo")
+    duration = st.number_input(
+        "Demo duration [s]",
+        min_value=10,
+        max_value=300,
+        value=60,
+        step=10,
+    )
+
+with action_col:
+    st.write("")
+    st.write("")
+    start = st.button("Start live demo", type="primary")
 
 status_placeholder = st.empty()
+progress_placeholder = st.empty()
 prediction_placeholder = st.empty()
 probability_placeholder = st.empty()
 signal_placeholder = st.empty()
 
+if not start:
+    status_placeholder.info("Waiting. Enter the phyphox URL and start the live demo.")
+
 if start:
     client = PhyphoxClient(phone_url)
-    buffer = LiveBuffer(window_size=window_size)
-
+    buffer = LiveBuffer(window_size=int(window_size))
     start_time = time.time()
 
-    while time.time() - start_time < duration:
-        x, y, z = client.get_acceleration()
-        buffer.add_sample(x, y, z)
+    status_placeholder.info("Collecting samples from phyphox...")
 
-        status_placeholder.write(
-            f"Collected samples: {len(buffer.x_buffer)} / {window_size}"
-        )
+    try:
+        while time.time() - start_time < duration:
+            x, y, z = client.get_acceleration()
+            buffer.add_sample(x, y, z)
 
-        if buffer.is_ready():
-            window = buffer.get_window()
-            features = extract_features(window)
-            result = predict_from_features(features)
-
-            prediction_placeholder.metric(
-                "Current Activity",
-                result["activity"],
-                f'{result["confidence"]:.2f} confidence',
+            collected = buffer.sample_count()
+            progress_placeholder.progress(
+                min(collected / int(window_size), 1.0),
+                text=f"Collecting samples: {collected} / {int(window_size)}",
             )
 
-            probabilities_df = pd.DataFrame(
-                list(result["probabilities"].items()),
-                columns=["activity", "probability"],
-            )
+            if buffer.is_ready():
+                status_placeholder.info("Predicting current activity...")
 
-            probability_placeholder.bar_chart(
-                probabilities_df,
-                x="activity",
-                y="probability",
-            )
+                window = buffer.get_window()
+                features = extract_features(window)
+                result = predict_from_features(features)
 
-            signal_placeholder.line_chart(
-                window[["x", "y", "z", "magnitude"]]
-            )
+                prediction_placeholder.metric(
+                    "Current Activity",
+                    result["activity"],
+                    f'{result["confidence"]:.2f} confidence',
+                )
 
-        time.sleep(SAMPLE_INTERVAL_SECONDS)
+                probabilities_df = pd.DataFrame(
+                    list(result["probabilities"].items()),
+                    columns=["activity", "probability"],
+                )
 
-    status_placeholder.success("Demo finished.")
+                probability_placeholder.bar_chart(
+                    probabilities_df,
+                    x="activity",
+                    y="probability",
+                )
+
+                signal_placeholder.line_chart(
+                    window[["x", "y", "z", "magnitude"]]
+                )
+
+            time.sleep(SAMPLE_INTERVAL_SECONDS)
+
+    except PhyphoxClientError as exc:
+        status_placeholder.error(str(exc))
+    except (ModelArtifactError, FeatureMismatchError) as exc:
+        status_placeholder.error(str(exc))
+    except Exception as exc:
+        status_placeholder.error(f"Unexpected live demo error: {exc}")
+    else:
+        status_placeholder.success("Finished live demo.")

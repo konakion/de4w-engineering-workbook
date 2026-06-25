@@ -1,9 +1,10 @@
+from collections.abc import Sequence
 from pathlib import Path
 
 import pandas as pd
 
 
-ACTIVITY_MAP = {
+ACTIVITY_MAP: dict[str, str] = {
     "A": "walking",
     "B": "jogging",
     "C": "stairs",
@@ -24,7 +25,7 @@ ACTIVITY_MAP = {
     "S": "folding_clothes",
 }
 
-TARGET_ACTIVITIES = ["walking", "sitting", "standing"]
+TARGET_ACTIVITIES: list[str] = ["walking", "sitting", "standing"]
 
 
 def load_single_wisdm_file(file_path: Path) -> pd.DataFrame:
@@ -65,7 +66,7 @@ def load_single_wisdm_file(file_path: Path) -> pd.DataFrame:
 
 def load_wisdm_phone_accel(
     data_dir: Path,
-    target_activities: list[str] | None = TARGET_ACTIVITIES,
+    target_activities: Sequence[str] | None = TARGET_ACTIVITIES,
 ) -> pd.DataFrame:
     """
     Load all WISDM phone accelerometer files from a directory.

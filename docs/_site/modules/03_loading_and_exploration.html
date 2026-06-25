@@ -298,7 +298,7 @@ window.Quarto = {
   <li><a href="#expected-output-4" id="toc-expected-output-4" class="nav-link" data-scroll-target="#expected-output-4"><span class="header-section-number">4.13.2</span> Expected Output</a></li>
   </ul></li>
   <li><a href="#checkpoint" id="toc-checkpoint" class="nav-link" data-scroll-target="#checkpoint"><span class="header-section-number">4.14</span> Checkpoint</a></li>
-  <li><a href="#mini-challenge" id="toc-mini-challenge" class="nav-link" data-scroll-target="#mini-challenge"><span class="header-section-number">4.15</span> Mini Challenge</a></li>
+  <li><a href="#further-exploration" id="toc-further-exploration" class="nav-link" data-scroll-target="#further-exploration"><span class="header-section-number">4.15</span> Further Exploration</a></li>
   <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary"><span class="header-section-number">4.16</span> Summary</a></li>
   </ul>
 </nav>
@@ -364,12 +364,13 @@ window.Quarto = {
 <section id="goal" class="level3" data-number="4.3.1">
 <h3 data-number="4.3.1" class="anchored" data-anchor-id="goal"><span class="header-section-number">4.3.1</span> Goal</h3>
 <p>We import the libraries needed for data loading, numerical processing and visualization.</p>
-<div id="289982e9" class="cell" data-execution_count="1">
+<div id="e10b7b99" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pathlib <span class="im">import</span> Path</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="expected-output" class="level3" data-number="4.3.2">
@@ -383,16 +384,33 @@ window.Quarto = {
 <section id="goal-1" class="level3" data-number="4.4.1">
 <h3 data-number="4.4.1" class="anchored" data-anchor-id="goal-1"><span class="header-section-number">4.4.1</span> Goal</h3>
 <p>We define where the project root and the data directory are located.</p>
-<div id="b90e6ffc" class="cell" data-execution_count="2">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>PROJECT_ROOT <span class="op">=</span> Path.cwd().parents[<span class="dv">1</span>]</span>
+<div id="be06badc" class="cell" data-execution_count="2">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>current_path <span class="op">=</span> Path.cwd().resolve()</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>DATA_DIR <span class="op">=</span> PROJECT_ROOT <span class="op">/</span> <span class="st">"data"</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Project root:"</span>, PROJECT_ROOT)</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Data directory:"</span>, DATA_DIR)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> parent <span class="kw">in</span> [current_path] <span class="op">+</span> <span class="bu">list</span>(current_path.parents):</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (parent <span class="op">/</span> <span class="st">"app"</span>).exists():</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>        PROJECT_ROOT <span class="op">=</span> parent</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>        <span class="cf">break</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">raise</span> <span class="pp">RuntimeError</span>(<span class="st">"Could not find project root containing app/ directory."</span>)</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>sys.path.insert(<span class="dv">0</span>, <span class="bu">str</span>(PROJECT_ROOT))</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> app.config <span class="im">import</span> DATA_DIR</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> app.data_loader <span class="im">import</span> (</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    ACTIVITY_MAP,</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    TARGET_ACTIVITIES,</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>    load_single_wisdm_file,</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>    load_wisdm_phone_accel,</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> app.pipeline <span class="im">import</span> add_magnitude</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Project root:"</span>, PROJECT_ROOT)</span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Data directory:"</span>, DATA_DIR)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Project root: /Users/konak/HPI/Vorlesungen/Data Engineering for Wearables SS2026/Mini-Project/de4w_activity_app
-Data directory: /Users/konak/HPI/Vorlesungen/Data Engineering for Wearables SS2026/Mini-Project/de4w_activity_app/data</code></pre>
+<pre><code>Project root: /Users/konak/HPI/Vorlesungen/Data Engineering for Wearables SS2026/Mini-Project/de4w-engineering-workbook
+Data directory: /Users/konak/HPI/Vorlesungen/Data Engineering for Wearables SS2026/Mini-Project/de4w-engineering-workbook/data</code></pre>
 </div>
 </div>
 </section>
@@ -421,33 +439,34 @@ Data directory: /Users/konak/HPI/Vorlesungen/Data Engineering for Wearables SS20
 <h3 data-number="4.5.1" class="anchored" data-anchor-id="goal-2"><span class="header-section-number">4.5.1</span> Goal</h3>
 <p>The raw WISDM files use activity codes such as <code>A</code>, <code>D</code>, and <code>E</code>.</p>
 <p>We map these codes to readable names.</p>
-<div id="a9094440" class="cell" data-execution_count="3">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>ACTIVITY_MAP <span class="op">=</span> {</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"A"</span>: <span class="st">"walking"</span>,</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"B"</span>: <span class="st">"jogging"</span>,</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"C"</span>: <span class="st">"stairs"</span>,</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"D"</span>: <span class="st">"sitting"</span>,</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"E"</span>: <span class="st">"standing"</span>,</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"F"</span>: <span class="st">"typing"</span>,</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">"G"</span>: <span class="st">"brushing_teeth"</span>,</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">"H"</span>: <span class="st">"eating_soup"</span>,</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">"I"</span>: <span class="st">"eating_chips"</span>,</span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">"J"</span>: <span class="st">"eating_pasta"</span>,</span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">"K"</span>: <span class="st">"drinking"</span>,</span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>    <span class="st">"L"</span>: <span class="st">"eating_sandwich"</span>,</span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>    <span class="st">"M"</span>: <span class="st">"kicking"</span>,</span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>    <span class="st">"O"</span>: <span class="st">"catch"</span>,</span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>    <span class="st">"P"</span>: <span class="st">"dribbling"</span>,</span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>    <span class="st">"Q"</span>: <span class="st">"writing"</span>,</span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>    <span class="st">"R"</span>: <span class="st">"clapping"</span>,</span>
-<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>    <span class="st">"S"</span>: <span class="st">"folding_clothes"</span>,</span>
-<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>TARGET_ACTIVITIES <span class="op">=</span> [</span>
-<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>    <span class="st">"walking"</span>,</span>
-<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>    <span class="st">"sitting"</span>,</span>
-<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>    <span class="st">"standing"</span>,</span>
-<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="c4dba95b" class="cell" data-execution_count="3">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>ACTIVITY_MAP</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="3">
+<pre><code>{'A': 'walking',
+ 'B': 'jogging',
+ 'C': 'stairs',
+ 'D': 'sitting',
+ 'E': 'standing',
+ 'F': 'typing',
+ 'G': 'brushing_teeth',
+ 'H': 'eating_soup',
+ 'I': 'eating_chips',
+ 'J': 'eating_pasta',
+ 'K': 'drinking',
+ 'L': 'eating_sandwich',
+ 'M': 'kicking',
+ 'O': 'catch',
+ 'P': 'dribbling',
+ 'Q': 'writing',
+ 'R': 'clapping',
+ 'S': 'folding_clothes'}</code></pre>
+</div>
+</div>
+<div id="1c91503f" class="cell" data-execution_count="4">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>TARGET_ACTIVITIES</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="4">
+<pre><code>['walking', 'sitting', 'standing']</code></pre>
+</div>
 </div>
 </section>
 <section id="discussion" class="level3" data-number="4.5.2">
@@ -462,17 +481,17 @@ Data directory: /Users/konak/HPI/Vorlesungen/Data Engineering for Wearables SS20
 <section id="goal-3" class="level3" data-number="4.6.1">
 <h3 data-number="4.6.1" class="anchored" data-anchor-id="goal-3"><span class="header-section-number">4.6.1</span> Goal</h3>
 <p>Before loading the data, we check which raw files are available.</p>
-<div id="afcdda50" class="cell" data-execution_count="4">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>files <span class="op">=</span> <span class="bu">sorted</span>(DATA_DIR.glob(<span class="st">"data_*_accel_phone.txt"</span>))</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="bu">len</span>(files), files[:<span class="dv">5</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="4">
+<div id="b0c6f7d2" class="cell" data-execution_count="5">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>files <span class="op">=</span> <span class="bu">sorted</span>(DATA_DIR.glob(<span class="st">"data_*_accel_phone.txt"</span>))</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="bu">len</span>(files), files[:<span class="dv">5</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="5">
 <pre><code>(51,
- [PosixPath('/Users/konak/HPI/Vorlesungen/Data Engineering for Wearables SS2026/Mini-Project/de4w_activity_app/data/data_1600_accel_phone.txt'),
-  PosixPath('/Users/konak/HPI/Vorlesungen/Data Engineering for Wearables SS2026/Mini-Project/de4w_activity_app/data/data_1601_accel_phone.txt'),
-  PosixPath('/Users/konak/HPI/Vorlesungen/Data Engineering for Wearables SS2026/Mini-Project/de4w_activity_app/data/data_1602_accel_phone.txt'),
-  PosixPath('/Users/konak/HPI/Vorlesungen/Data Engineering for Wearables SS2026/Mini-Project/de4w_activity_app/data/data_1603_accel_phone.txt'),
-  PosixPath('/Users/konak/HPI/Vorlesungen/Data Engineering for Wearables SS2026/Mini-Project/de4w_activity_app/data/data_1604_accel_phone.txt')])</code></pre>
+ [PosixPath('/Users/konak/HPI/Vorlesungen/Data Engineering for Wearables SS2026/Mini-Project/de4w-engineering-workbook/data/data_1600_accel_phone.txt'),
+  PosixPath('/Users/konak/HPI/Vorlesungen/Data Engineering for Wearables SS2026/Mini-Project/de4w-engineering-workbook/data/data_1601_accel_phone.txt'),
+  PosixPath('/Users/konak/HPI/Vorlesungen/Data Engineering for Wearables SS2026/Mini-Project/de4w-engineering-workbook/data/data_1602_accel_phone.txt'),
+  PosixPath('/Users/konak/HPI/Vorlesungen/Data Engineering for Wearables SS2026/Mini-Project/de4w-engineering-workbook/data/data_1603_accel_phone.txt'),
+  PosixPath('/Users/konak/HPI/Vorlesungen/Data Engineering for Wearables SS2026/Mini-Project/de4w-engineering-workbook/data/data_1604_accel_phone.txt')])</code></pre>
 </div>
 </div>
 </section>
@@ -487,45 +506,17 @@ Data directory: /Users/konak/HPI/Vorlesungen/Data Engineering for Wearables SS20
 <section id="goal-4" class="level3" data-number="4.7.1">
 <h3 data-number="4.7.1" class="anchored" data-anchor-id="goal-4"><span class="header-section-number">4.7.1</span> Goal</h3>
 <p>We first load a single file to understand the raw structure.</p>
-<div id="618b76fd" class="cell" data-execution_count="5">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> load_single_wisdm_file(file_path: Path) <span class="op">-&gt;</span> pd.DataFrame:</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co">    Load one WISDM phone accelerometer file.</span></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="co">    Parameters</span></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co">    ----------</span></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="co">    file_path:</span></span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="co">        Path to one raw WISDM phone accelerometer text file.</span></span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="co">    Returns</span></span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="co">    -------</span></span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="co">    pandas.DataFrame</span></span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="co">        DataFrame containing subject_id, activity_code, timestamp, x, y, z and activity.</span></span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
-<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>    df <span class="op">=</span> pd.read_csv(</span>
-<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>        file_path,</span>
-<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>        header<span class="op">=</span><span class="va">None</span>,</span>
-<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>        names<span class="op">=</span>[<span class="st">"subject_id"</span>, <span class="st">"activity_code"</span>, <span class="st">"timestamp"</span>, <span class="st">"x"</span>, <span class="st">"y"</span>, <span class="st">"z"</span>],</span>
-<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>        sep<span class="op">=</span><span class="st">","</span>,</span>
-<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>    <span class="co"># The last value in each row contains a trailing semicolon.</span></span>
-<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>    df[<span class="st">"z"</span>] <span class="op">=</span> (</span>
-<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>        df[<span class="st">"z"</span>]</span>
-<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>        .astype(<span class="bu">str</span>)</span>
-<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>        .<span class="bu">str</span>.replace(<span class="st">";"</span>, <span class="st">""</span>, regex<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a>        .astype(<span class="bu">float</span>)</span>
-<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a>    df[<span class="st">"activity"</span>] <span class="op">=</span> df[<span class="st">"activity_code"</span>].<span class="bu">map</span>(ACTIVITY_MAP)</span>
-<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> df</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<div id="8315a946" class="cell" data-execution_count="6">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>df_one <span class="op">=</span> load_single_wisdm_file(files[<span class="dv">0</span>])</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>df_one.head()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="be4ab6ac" class="cell" data-execution_count="6">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>load_single_wisdm_file</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="6">
+<pre><code>&lt;function app.data_loader.load_single_wisdm_file(file_path: pathlib.Path) -&gt; pandas.DataFrame&gt;</code></pre>
+</div>
+</div>
+<div id="5f06c9cc" class="cell" data-execution_count="7">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>df_one <span class="op">=</span> load_single_wisdm_file(files[<span class="dv">0</span>])</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>df_one.head()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="7">
 <div>
 
 
@@ -612,54 +603,20 @@ Data directory: /Users/konak/HPI/Vorlesungen/Data Engineering for Wearables SS20
 <section id="goal-5" class="level3" data-number="4.8.1">
 <h3 data-number="4.8.1" class="anchored" data-anchor-id="goal-5"><span class="header-section-number">4.8.1</span> Goal</h3>
 <p>We now load all phone accelerometer files and combine them into a single DataFrame.</p>
-<div id="38301cbc" class="cell" data-execution_count="7">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> load_wisdm_phone_accel(</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    data_dir: Path,</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    target_activities: <span class="bu">list</span>[<span class="bu">str</span>] <span class="op">|</span> <span class="va">None</span> <span class="op">=</span> <span class="va">None</span>,</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>) <span class="op">-&gt;</span> pd.DataFrame:</span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="co">    Load all WISDM phone accelerometer files from a directory.</span></span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="co">    Parameters</span></span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="co">    ----------</span></span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="co">    data_dir:</span></span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="co">        Directory containing files named data_*_accel_phone.txt.</span></span>
-<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a><span class="co">    target_activities:</span></span>
-<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a><span class="co">        Optional list of activity names to keep.</span></span>
-<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a><span class="co">    Returns</span></span>
-<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a><span class="co">    -------</span></span>
-<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a><span class="co">    pandas.DataFrame</span></span>
-<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a><span class="co">        Combined DataFrame containing all selected subjects and activities.</span></span>
-<span id="cb10-20"><a href="#cb10-20" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
-<span id="cb10-21"><a href="#cb10-21" aria-hidden="true" tabindex="-1"></a>    files <span class="op">=</span> <span class="bu">sorted</span>(data_dir.glob(<span class="st">"data_*_accel_phone.txt"</span>))</span>
-<span id="cb10-22"><a href="#cb10-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-23"><a href="#cb10-23" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="kw">not</span> files:</span>
-<span id="cb10-24"><a href="#cb10-24" aria-hidden="true" tabindex="-1"></a>        <span class="cf">raise</span> <span class="pp">FileNotFoundError</span>(</span>
-<span id="cb10-25"><a href="#cb10-25" aria-hidden="true" tabindex="-1"></a>            <span class="ss">f"No WISDM phone accelerometer files found in </span><span class="sc">{</span>data_dir<span class="sc">}</span><span class="ss">."</span></span>
-<span id="cb10-26"><a href="#cb10-26" aria-hidden="true" tabindex="-1"></a>        )</span>
-<span id="cb10-27"><a href="#cb10-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-28"><a href="#cb10-28" aria-hidden="true" tabindex="-1"></a>    dataframes <span class="op">=</span> []</span>
-<span id="cb10-29"><a href="#cb10-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-30"><a href="#cb10-30" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> file_path <span class="kw">in</span> files:</span>
-<span id="cb10-31"><a href="#cb10-31" aria-hidden="true" tabindex="-1"></a>        df_file <span class="op">=</span> load_single_wisdm_file(file_path)</span>
-<span id="cb10-32"><a href="#cb10-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-33"><a href="#cb10-33" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> target_activities <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
-<span id="cb10-34"><a href="#cb10-34" aria-hidden="true" tabindex="-1"></a>            df_file <span class="op">=</span> df_file[df_file[<span class="st">"activity"</span>].isin(target_activities)]</span>
-<span id="cb10-35"><a href="#cb10-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-36"><a href="#cb10-36" aria-hidden="true" tabindex="-1"></a>        dataframes.append(df_file)</span>
-<span id="cb10-37"><a href="#cb10-37" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-38"><a href="#cb10-38" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> pd.concat(dataframes, ignore_index<span class="op">=</span><span class="va">True</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<div id="700e8961" class="cell" data-execution_count="8">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> load_wisdm_phone_accel(</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    DATA_DIR,</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    target_activities<span class="op">=</span>TARGET_ACTIVITIES,</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>df.head()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="17d3a26f" class="cell" data-execution_count="8">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>load_wisdm_phone_accel</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="8">
+<pre><code>&lt;function app.data_loader.load_wisdm_phone_accel(data_dir: pathlib.Path, target_activities: collections.abc.Sequence[str] | None = ['walking', 'sitting', 'standing']) -&gt; pandas.DataFrame&gt;</code></pre>
+</div>
+</div>
+<div id="052c13eb" class="cell" data-execution_count="9">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> load_wisdm_phone_accel(</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>    DATA_DIR,</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>    target_activities<span class="op">=</span>TARGET_ACTIVITIES,</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>df.head()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="9">
 <div>
 
 
@@ -741,15 +698,15 @@ Data directory: /Users/konak/HPI/Vorlesungen/Data Engineering for Wearables SS20
 <section id="goal-6" class="level3" data-number="4.9.1">
 <h3 data-number="4.9.1" class="anchored" data-anchor-id="goal-6"><span class="header-section-number">4.9.1</span> Goal</h3>
 <p>We check the size, classes and number of subjects.</p>
-<div id="11786649" class="cell" data-execution_count="9">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>df.shape</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="9">
+<div id="44142d9b" class="cell" data-execution_count="10">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>df.shape</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="10">
 <pre><code>(814013, 7)</code></pre>
 </div>
 </div>
-<div id="23ca9a0c" class="cell" data-execution_count="10">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"activity"</span>].value_counts()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="10">
+<div id="552da307" class="cell" data-execution_count="11">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"activity"</span>].value_counts()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="11">
 <pre><code>activity
 walking     279817
 standing    269604
@@ -757,9 +714,9 @@ sitting     264592
 Name: count, dtype: int64</code></pre>
 </div>
 </div>
-<div id="9360905f" class="cell" data-execution_count="11">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"subject_id"</span>].nunique()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="11">
+<div id="d59281f8" class="cell" data-execution_count="12">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"subject_id"</span>].nunique()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="12">
 <pre><code>51</code></pre>
 </div>
 </div>
@@ -783,15 +740,11 @@ Name: count, dtype: int64</code></pre>
 <p><span class="math display">\[
 m = \sqrt{x^2 + y^2 + z^2}
 \]</span></p>
-<div id="ce5228a2" class="cell" data-execution_count="12">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"magnitude"</span>] <span class="op">=</span> np.sqrt(</span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>    df[<span class="st">"x"</span>] <span class="op">**</span> <span class="dv">2</span></span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>    <span class="op">+</span> df[<span class="st">"y"</span>] <span class="op">**</span> <span class="dv">2</span></span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>    <span class="op">+</span> df[<span class="st">"z"</span>] <span class="op">**</span> <span class="dv">2</span></span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>df.head()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="12">
+<div id="d3d1496f" class="cell" data-execution_count="13">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> add_magnitude(df)</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>df.head()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="13">
 <div>
 
 
@@ -884,30 +837,30 @@ m = \sqrt{x^2 + y^2 + z^2}
 <section id="goal-8" class="level3" data-number="4.11.1">
 <h3 data-number="4.11.1" class="anchored" data-anchor-id="goal-8"><span class="header-section-number">4.11.1</span> Goal</h3>
 <p>We visualize x, y, z and magnitude for one activity.</p>
-<div id="69f27311" class="cell" data-execution_count="13">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>activity <span class="op">=</span> <span class="st">"walking"</span></span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>sample <span class="op">=</span> (</span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>    df[df[<span class="st">"activity"</span>] <span class="op">==</span> activity]</span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>    .head(<span class="dv">400</span>)</span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>    .reset_index(drop<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">4</span>))</span>
-<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>plt.plot(sample[<span class="st">"x"</span>], label<span class="op">=</span><span class="st">"x"</span>)</span>
-<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>plt.plot(sample[<span class="st">"y"</span>], label<span class="op">=</span><span class="st">"y"</span>)</span>
-<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>plt.plot(sample[<span class="st">"z"</span>], label<span class="op">=</span><span class="st">"z"</span>)</span>
-<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>plt.plot(sample[<span class="st">"magnitude"</span>], label<span class="op">=</span><span class="st">"magnitude"</span>, linewidth<span class="op">=</span><span class="dv">2</span>)</span>
-<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="ss">f"Phone accelerometer signal: </span><span class="sc">{</span>activity<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Sample"</span>)</span>
-<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Acceleration [m/s²]"</span>)</span>
-<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
-<span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="a7665d32" class="cell" data-execution_count="14">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>activity <span class="op">=</span> <span class="st">"walking"</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>sample <span class="op">=</span> (</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>    df[df[<span class="st">"activity"</span>] <span class="op">==</span> activity]</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>    .head(<span class="dv">400</span>)</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>    .reset_index(drop<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">4</span>))</span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>plt.plot(sample[<span class="st">"x"</span>], label<span class="op">=</span><span class="st">"x"</span>)</span>
+<span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a>plt.plot(sample[<span class="st">"y"</span>], label<span class="op">=</span><span class="st">"y"</span>)</span>
+<span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a>plt.plot(sample[<span class="st">"z"</span>], label<span class="op">=</span><span class="st">"z"</span>)</span>
+<span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a>plt.plot(sample[<span class="st">"magnitude"</span>], label<span class="op">=</span><span class="st">"magnitude"</span>, linewidth<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="ss">f"Phone accelerometer signal: </span><span class="sc">{</span>activity<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb24-16"><a href="#cb24-16" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Sample"</span>)</span>
+<span id="cb24-17"><a href="#cb24-17" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Acceleration [m/s²]"</span>)</span>
+<span id="cb24-18"><a href="#cb24-18" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb24-19"><a href="#cb24-19" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="03_loading_and_exploration_files/figure-html/cell-14-output-1.png" width="969" height="377" class="figure-img"></p>
+<p><img src="03_loading_and_exploration_files/figure-html/cell-15-output-1.png" width="969" height="377" class="figure-img"></p>
 </figure>
 </div>
 </div>
@@ -924,26 +877,26 @@ m = \sqrt{x^2 + y^2 + z^2}
 <section id="goal-9" class="level3" data-number="4.12.1">
 <h3 data-number="4.12.1" class="anchored" data-anchor-id="goal-9"><span class="header-section-number">4.12.1</span> Goal</h3>
 <p>We compare the magnitude signal for walking, sitting and standing.</p>
-<div id="93ba5679" class="cell" data-execution_count="14">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">5</span>))</span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> activity <span class="kw">in</span> TARGET_ACTIVITIES:</span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>    signal <span class="op">=</span> (</span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>        df[df[<span class="st">"activity"</span>] <span class="op">==</span> activity][<span class="st">"magnitude"</span>]</span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>        .head(<span class="dv">400</span>)</span>
-<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>        .reset_index(drop<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>    plt.plot(signal, label<span class="op">=</span>activity)</span>
-<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Magnitude comparison"</span>)</span>
-<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Sample"</span>)</span>
-<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Magnitude"</span>)</span>
-<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
-<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="6433716a" class="cell" data-execution_count="15">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">5</span>))</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> activity <span class="kw">in</span> TARGET_ACTIVITIES:</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>    signal <span class="op">=</span> (</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>        df[df[<span class="st">"activity"</span>] <span class="op">==</span> activity][<span class="st">"magnitude"</span>]</span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>        .head(<span class="dv">400</span>)</span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>        .reset_index(drop<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>    plt.plot(signal, label<span class="op">=</span>activity)</span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Magnitude comparison"</span>)</span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">"Sample"</span>)</span>
+<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">"Magnitude"</span>)</span>
+<span id="cb25-14"><a href="#cb25-14" aria-hidden="true" tabindex="-1"></a>plt.legend()</span>
+<span id="cb25-15"><a href="#cb25-15" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="03_loading_and_exploration_files/figure-html/cell-15-output-1.png" width="970" height="451" class="figure-img"></p>
+<p><img src="03_loading_and_exploration_files/figure-html/cell-16-output-1.png" width="970" height="451" class="figure-img"></p>
 </figure>
 </div>
 </div>
@@ -962,21 +915,21 @@ m = \sqrt{x^2 + y^2 + z^2}
 <h3 data-number="4.13.1" class="anchored" data-anchor-id="goal-10"><span class="header-section-number">4.13.1</span> Goal</h3>
 <p>The WISDM documentation states that the data was collected at approximately 20 Hz.</p>
 <p>We estimate the sampling rate from timestamps.</p>
-<div id="203b2506" class="cell" data-execution_count="15">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>subject <span class="op">=</span> df[<span class="st">"subject_id"</span>].iloc[<span class="dv">0</span>]</span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>activity <span class="op">=</span> <span class="st">"walking"</span></span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>sample <span class="op">=</span> df[</span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>    (df[<span class="st">"subject_id"</span>] <span class="op">==</span> subject)</span>
-<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>    <span class="op">&amp;</span> (df[<span class="st">"activity"</span>] <span class="op">==</span> activity)</span>
-<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>].sort_values(<span class="st">"timestamp"</span>)</span>
-<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>dt <span class="op">=</span> sample[<span class="st">"timestamp"</span>].diff().dropna()</span>
-<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a>sampling_rate <span class="op">=</span> <span class="fl">1e9</span> <span class="op">/</span> dt.mean()</span>
-<span id="cb21-12"><a href="#cb21-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-13"><a href="#cb21-13" aria-hidden="true" tabindex="-1"></a>sampling_rate</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="15">
+<div id="b8fbd14a" class="cell" data-execution_count="16">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>subject <span class="op">=</span> df[<span class="st">"subject_id"</span>].iloc[<span class="dv">0</span>]</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>activity <span class="op">=</span> <span class="st">"walking"</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>sample <span class="op">=</span> df[</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>    (df[<span class="st">"subject_id"</span>] <span class="op">==</span> subject)</span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>    <span class="op">&amp;</span> (df[<span class="st">"activity"</span>] <span class="op">==</span> activity)</span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>].sort_values(<span class="st">"timestamp"</span>)</span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a>dt <span class="op">=</span> sample[<span class="st">"timestamp"</span>].diff().dropna()</span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a>sampling_rate <span class="op">=</span> <span class="fl">1e9</span> <span class="op">/</span> dt.mean()</span>
+<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a>sampling_rate</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="16">
 <pre><code>np.float64(19.85939378331699)</code></pre>
 </div>
 </div>
@@ -1012,9 +965,9 @@ m = \sqrt{x^2 + y^2 + z^2}
 </ol>
 <hr>
 </section>
-<section id="mini-challenge" class="level2" data-number="4.15">
-<h2 data-number="4.15" class="anchored" data-anchor-id="mini-challenge"><span class="header-section-number">4.15</span> Mini Challenge</h2>
-<p>Modify the code so that the dataset also includes <code>jogging</code>.</p>
+<section id="further-exploration" class="level2" data-number="4.15">
+<h2 data-number="4.15" class="anchored" data-anchor-id="further-exploration"><span class="header-section-number">4.15</span> Further Exploration</h2>
+<p>Optional: modify the target activity selection so that the dataset also includes <code>jogging</code>.</p>
 <p>Which parts of the pipeline would change?</p>
 <hr>
 </section>

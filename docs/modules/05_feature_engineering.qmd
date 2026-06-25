@@ -34,17 +34,15 @@ else:
 sys.path.insert(0, str(PROJECT_ROOT))
 
 from app.config import WINDOW_SIZE
-from app.data_loader import TARGET_ACTIVITIES, load_wisdm_phone_accel
+from app.data_loader import load_wisdm_phone_accel
 from app.windowing import create_windows
 from app.feature_extraction import extract_features
+from app.pipeline import add_magnitude, windows_to_features
 
 DATA_DIR = PROJECT_ROOT / "data"
 
 df = load_wisdm_phone_accel(DATA_DIR)
-
-df["magnitude"] = np.sqrt(
-    df["x"] ** 2 + df["y"] ** 2 + df["z"] ** 2
-)
+df = add_magnitude(df)
 ```
 
 ::: {.callout-important}
@@ -180,51 +178,7 @@ We now create one feature row per window.
 Windows are created separately per subject and activity.
 
 ```{python}
-def windows_to_features(
-    df: pd.DataFrame,
-    window_size: int = WINDOW_SIZE,
-) -> pd.DataFrame:
-    """
-    Convert raw sensor data into a feature table.
-
-    Windows are created separately for each subject and activity.
-
-    Parameters
-    ----------
-    df:
-        Sensor DataFrame containing subject_id, activity and timestamp.
-
-    window_size:
-        Number of samples per window.
-
-    Returns
-    -------
-    pandas.DataFrame
-        Feature table with one row per window.
-    """
-    rows = []
-
-    for activity in TARGET_ACTIVITIES:
-        activity_df = df[df["activity"] == activity]
-
-        for subject_id in sorted(activity_df["subject_id"].unique()):
-            subject_df = (
-                activity_df[activity_df["subject_id"] == subject_id]
-                .sort_values("timestamp")
-            )
-
-            windows = create_windows(
-                subject_df,
-                window_size=window_size,
-            )
-
-            for window in windows:
-                feature_row = extract_features(window)
-                feature_row["activity"] = activity
-                feature_row["subject_id"] = subject_id
-                rows.append(feature_row)
-
-    return pd.DataFrame(rows)
+windows_to_features
 ```
 
 ```{python}
@@ -322,9 +276,9 @@ Before continuing, you should be able to answer:
 
 ---
 
-## Mini Challenge
+## Further Exploration
 
-Add one additional feature to `app/feature_extraction.py`, for example:
+Optional: add one additional feature to `app/feature_extraction.py`, for example:
 
 - median
 - range

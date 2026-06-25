@@ -257,9 +257,9 @@ Before continuing, you should be able to answer:
 
 ---
 
-## Mini Challenge
+## Further Exploration
 
-Change the number of trees from `200` to `50`.
+Optional: change the number of trees from `200` to `50`.
 
 Does the accuracy change?
 

@@ -266,7 +266,7 @@ window.Quarto = {
   <li><a href="#think" id="toc-think" class="nav-link" data-scroll-target="#think"><span class="header-section-number">6.11</span> Think</a></li>
   <li><a href="#common-pitfall" id="toc-common-pitfall" class="nav-link" data-scroll-target="#common-pitfall"><span class="header-section-number">6.12</span> Common Pitfall</a></li>
   <li><a href="#checkpoint" id="toc-checkpoint" class="nav-link" data-scroll-target="#checkpoint"><span class="header-section-number">6.13</span> Checkpoint</a></li>
-  <li><a href="#mini-challenge" id="toc-mini-challenge" class="nav-link" data-scroll-target="#mini-challenge"><span class="header-section-number">6.14</span> Mini Challenge</a></li>
+  <li><a href="#further-exploration" id="toc-further-exploration" class="nav-link" data-scroll-target="#further-exploration"><span class="header-section-number">6.14</span> Further Exploration</a></li>
   <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary"><span class="header-section-number">6.15</span> Summary</a></li>
   </ul>
 </nav>
@@ -307,7 +307,7 @@ window.Quarto = {
 </section>
 <section id="setup" class="level2" data-number="6.2">
 <h2 data-number="6.2" class="anchored" data-anchor-id="setup"><span class="header-section-number">6.2</span> Setup</h2>
-<div id="80485fb8" class="cell" data-execution_count="1">
+<div id="493b6fd0" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pathlib <span class="im">import</span> Path</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -327,17 +327,15 @@ window.Quarto = {
 <span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>sys.path.insert(<span class="dv">0</span>, <span class="bu">str</span>(PROJECT_ROOT))</span>
 <span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> app.config <span class="im">import</span> WINDOW_SIZE</span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> app.data_loader <span class="im">import</span> TARGET_ACTIVITIES, load_wisdm_phone_accel</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> app.data_loader <span class="im">import</span> load_wisdm_phone_accel</span>
 <span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> app.windowing <span class="im">import</span> create_windows</span>
 <span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> app.feature_extraction <span class="im">import</span> extract_features</span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>DATA_DIR <span class="op">=</span> PROJECT_ROOT <span class="op">/</span> <span class="st">"data"</span></span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> load_wisdm_phone_accel(DATA_DIR)</span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"magnitude"</span>] <span class="op">=</span> np.sqrt(</span>
-<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>    df[<span class="st">"x"</span>] <span class="op">**</span> <span class="dv">2</span> <span class="op">+</span> df[<span class="st">"y"</span>] <span class="op">**</span> <span class="dv">2</span> <span class="op">+</span> df[<span class="st">"z"</span>] <span class="op">**</span> <span class="dv">2</span></span>
-<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> app.pipeline <span class="im">import</span> add_magnitude, windows_to_features</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>DATA_DIR <span class="op">=</span> PROJECT_ROOT <span class="op">/</span> <span class="st">"data"</span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> load_wisdm_phone_accel(DATA_DIR)</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> add_magnitude(df)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -427,7 +425,7 @@ C--&gt;D[Machine Learning Model]
 </section>
 <section id="step-1-create-one-example-window" class="level2" data-number="6.5">
 <h2 data-number="6.5" class="anchored" data-anchor-id="step-1-create-one-example-window"><span class="header-section-number">6.5</span> Step 1 — Create One Example Window</h2>
-<div id="7174e75b" class="cell" data-execution_count="2">
+<div id="c8a20f58" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>walking_df <span class="op">=</span> (</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    df[df[<span class="st">"activity"</span>] <span class="op">==</span> <span class="st">"walking"</span>]</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    .sort_values(<span class="st">"timestamp"</span>)</span>
@@ -526,7 +524,7 @@ C--&gt;D[Machine Learning Model]
 </section>
 <section id="step-2-extract-features-from-one-window" class="level2" data-number="6.6">
 <h2 data-number="6.6" class="anchored" data-anchor-id="step-2-extract-features-from-one-window"><span class="header-section-number">6.6</span> Step 2 — Extract Features from One Window</h2>
-<div id="2541e9b9" class="cell" data-execution_count="3">
+<div id="8b559309" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>example_features <span class="op">=</span> extract_features(example_window)</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>pd.Series(example_features)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -554,7 +552,7 @@ energy_magnitude    13653.061480
 dtype: float64</code></pre>
 </div>
 </div>
-<div id="5d987478" class="cell" data-execution_count="4">
+<div id="3a6f490b" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="bu">len</span>(example_features)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="4">
 <pre><code>20</code></pre>
@@ -573,7 +571,7 @@ dtype: float64</code></pre>
 Energy = \sum_i x_i^2
 \]</span></p>
 <p>It is often useful because dynamic activities such as walking usually produce higher signal intensity than static activities such as sitting or standing.</p>
-<div id="a0045d4f" class="cell" data-execution_count="5">
+<div id="b2bdeba6" class="cell" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>example_window[<span class="st">"magnitude"</span>].head()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="5">
 <pre><code>303991     8.672698
@@ -584,7 +582,7 @@ Energy = \sum_i x_i^2
 Name: magnitude, dtype: float64</code></pre>
 </div>
 </div>
-<div id="06fb520f" class="cell" data-execution_count="6">
+<div id="992548cf" class="cell" data-execution_count="6">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>energy_magnitude <span class="op">=</span> np.<span class="bu">sum</span>(example_window[<span class="st">"magnitude"</span>] <span class="op">**</span> <span class="dv">2</span>)</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>energy_magnitude</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -600,60 +598,19 @@ Name: magnitude, dtype: float64</code></pre>
 <h3 data-number="6.8.1" class="anchored" data-anchor-id="goal"><span class="header-section-number">6.8.1</span> Goal</h3>
 <p>We now create one feature row per window.</p>
 <p>Windows are created separately per subject and activity.</p>
-<div id="ed8e9528" class="cell" data-execution_count="7">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> windows_to_features(</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>    df: pd.DataFrame,</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    window_size: <span class="bu">int</span> <span class="op">=</span> WINDOW_SIZE,</span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>) <span class="op">-&gt;</span> pd.DataFrame:</span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="co">    Convert raw sensor data into a feature table.</span></span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="co">    Windows are created separately for each subject and activity.</span></span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="co">    Parameters</span></span>
-<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a><span class="co">    ----------</span></span>
-<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a><span class="co">    df:</span></span>
-<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a><span class="co">        Sensor DataFrame containing subject_id, activity and timestamp.</span></span>
-<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a><span class="co">    window_size:</span></span>
-<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a><span class="co">        Number of samples per window.</span></span>
-<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a><span class="co">    Returns</span></span>
-<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a><span class="co">    -------</span></span>
-<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a><span class="co">    pandas.DataFrame</span></span>
-<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a><span class="co">        Feature table with one row per window.</span></span>
-<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
-<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a>    rows <span class="op">=</span> []</span>
-<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> activity <span class="kw">in</span> TARGET_ACTIVITIES:</span>
-<span id="cb12-26"><a href="#cb12-26" aria-hidden="true" tabindex="-1"></a>        activity_df <span class="op">=</span> df[df[<span class="st">"activity"</span>] <span class="op">==</span> activity]</span>
-<span id="cb12-27"><a href="#cb12-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-28"><a href="#cb12-28" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> subject_id <span class="kw">in</span> <span class="bu">sorted</span>(activity_df[<span class="st">"subject_id"</span>].unique()):</span>
-<span id="cb12-29"><a href="#cb12-29" aria-hidden="true" tabindex="-1"></a>            subject_df <span class="op">=</span> (</span>
-<span id="cb12-30"><a href="#cb12-30" aria-hidden="true" tabindex="-1"></a>                activity_df[activity_df[<span class="st">"subject_id"</span>] <span class="op">==</span> subject_id]</span>
-<span id="cb12-31"><a href="#cb12-31" aria-hidden="true" tabindex="-1"></a>                .sort_values(<span class="st">"timestamp"</span>)</span>
-<span id="cb12-32"><a href="#cb12-32" aria-hidden="true" tabindex="-1"></a>            )</span>
-<span id="cb12-33"><a href="#cb12-33" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-34"><a href="#cb12-34" aria-hidden="true" tabindex="-1"></a>            windows <span class="op">=</span> create_windows(</span>
-<span id="cb12-35"><a href="#cb12-35" aria-hidden="true" tabindex="-1"></a>                subject_df,</span>
-<span id="cb12-36"><a href="#cb12-36" aria-hidden="true" tabindex="-1"></a>                window_size<span class="op">=</span>window_size,</span>
-<span id="cb12-37"><a href="#cb12-37" aria-hidden="true" tabindex="-1"></a>            )</span>
-<span id="cb12-38"><a href="#cb12-38" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-39"><a href="#cb12-39" aria-hidden="true" tabindex="-1"></a>            <span class="cf">for</span> window <span class="kw">in</span> windows:</span>
-<span id="cb12-40"><a href="#cb12-40" aria-hidden="true" tabindex="-1"></a>                feature_row <span class="op">=</span> extract_features(window)</span>
-<span id="cb12-41"><a href="#cb12-41" aria-hidden="true" tabindex="-1"></a>                feature_row[<span class="st">"activity"</span>] <span class="op">=</span> activity</span>
-<span id="cb12-42"><a href="#cb12-42" aria-hidden="true" tabindex="-1"></a>                feature_row[<span class="st">"subject_id"</span>] <span class="op">=</span> subject_id</span>
-<span id="cb12-43"><a href="#cb12-43" aria-hidden="true" tabindex="-1"></a>                rows.append(feature_row)</span>
-<span id="cb12-44"><a href="#cb12-44" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-45"><a href="#cb12-45" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> pd.DataFrame(rows)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="efcc4272" class="cell" data-execution_count="7">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>windows_to_features</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="7">
+<pre><code>&lt;function app.pipeline.windows_to_features(df: pandas.DataFrame, window_size: int = 100) -&gt; pandas.DataFrame&gt;</code></pre>
 </div>
-<div id="30009e35" class="cell" data-execution_count="8">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>features_df <span class="op">=</span> windows_to_features(</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    df,</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>    window_size<span class="op">=</span>WINDOW_SIZE,</span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>features_df.head()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="60d6aa33" class="cell" data-execution_count="8">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>features_df <span class="op">=</span> windows_to_features(</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>    df,</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    window_size<span class="op">=</span>WINDOW_SIZE,</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>features_df.head()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="8">
 <div>
 
@@ -688,122 +645,122 @@ Name: magnitude, dtype: float64</code></pre>
 <tbody>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">0</th>
-<td>-1.000110</td>
-<td>1.892580</td>
-<td>-6.492264</td>
-<td>3.651398</td>
-<td>454.626037</td>
-<td>9.619472</td>
-<td>3.986348</td>
-<td>2.684174</td>
-<td>18.676529</td>
-<td>10826.630357</td>
+<td>3.845516</td>
+<td>0.351159</td>
+<td>2.627441</td>
+<td>4.488892</td>
+<td>1491.007201</td>
+<td>4.827262</td>
+<td>0.436838</td>
+<td>4.073685</td>
+<td>5.965424</td>
+<td>2349.137987</td>
 <td>...</td>
-<td>-4.935730</td>
-<td>6.472199</td>
-<td>441.051585</td>
-<td>10.036322</td>
-<td>4.081904</td>
-<td>2.954282</td>
-<td>19.337960</td>
-<td>11722.307978</td>
-<td>walking</td>
+<td>5.959335</td>
+<td>7.402969</td>
+<td>4640.551276</td>
+<td>9.207905</td>
+<td>0.147174</td>
+<td>8.731387</td>
+<td>9.622650</td>
+<td>8480.696464</td>
+<td>sitting</td>
 <td>1600</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">1</th>
-<td>-1.344509</td>
-<td>2.100092</td>
-<td>-8.082993</td>
-<td>2.628891</td>
-<td>617.398405</td>
-<td>9.521806</td>
-<td>4.066769</td>
-<td>1.647736</td>
-<td>18.787323</td>
-<td>10703.800290</td>
+<td>4.069495</td>
+<td>0.031640</td>
+<td>3.964447</td>
+<td>4.144730</td>
+<td>1656.178255</td>
+<td>4.641167</td>
+<td>0.033818</td>
+<td>4.552872</td>
+<td>4.714188</td>
+<td>2154.156314</td>
 <td>...</td>
-<td>-9.686493</td>
-<td>8.261765</td>
-<td>613.495476</td>
-<td>10.067197</td>
-<td>4.263836</td>
-<td>2.317188</td>
-<td>21.165828</td>
-<td>11934.694171</td>
-<td>walking</td>
+<td>6.724777</td>
+<td>6.911865</td>
+<td>4645.141345</td>
+<td>9.195336</td>
+<td>0.023712</td>
+<td>9.138906</td>
+<td>9.270484</td>
+<td>8455.475914</td>
+<td>sitting</td>
 <td>1600</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">2</th>
-<td>-1.513662</td>
-<td>2.453901</td>
-<td>-8.111908</td>
-<td>3.641586</td>
-<td>825.258859</td>
-<td>9.580595</td>
-<td>4.107310</td>
-<td>1.222855</td>
-<td>18.672226</td>
-<td>10848.909078</td>
+<td>4.098965</td>
+<td>0.035909</td>
+<td>3.981873</td>
+<td>4.173141</td>
+<td>1680.278813</td>
+<td>4.643016</td>
+<td>0.034376</td>
+<td>4.534317</td>
+<td>4.727310</td>
+<td>2155.876513</td>
 <td>...</td>
-<td>-7.444763</td>
-<td>8.010345</td>
-<td>617.453834</td>
-<td>10.205469</td>
-<td>4.353638</td>
-<td>2.008688</td>
-<td>20.879614</td>
-<td>12291.621772</td>
-<td>walking</td>
+<td>6.690735</td>
+<td>6.880447</td>
+<td>4619.970527</td>
+<td>9.195681</td>
+<td>0.026681</td>
+<td>9.118430</td>
+<td>9.268516</td>
+<td>8456.125854</td>
+<td>sitting</td>
 <td>1600</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">3</th>
-<td>-1.496280</td>
-<td>2.116861</td>
-<td>-8.181854</td>
-<td>3.257019</td>
-<td>667.514539</td>
-<td>9.551068</td>
-<td>4.078216</td>
-<td>1.483902</td>
-<td>18.526184</td>
-<td>10768.842824</td>
+<td>4.150756</td>
+<td>0.041034</td>
+<td>4.053879</td>
+<td>4.252579</td>
+<td>1723.044535</td>
+<td>4.669522</td>
+<td>0.044667</td>
+<td>4.566193</td>
+<td>4.779709</td>
+<td>2180.641454</td>
 <td>...</td>
-<td>-6.522125</td>
-<td>4.545944</td>
-<td>418.363595</td>
-<td>10.028709</td>
-<td>4.260721</td>
-<td>2.306182</td>
-<td>18.917277</td>
-<td>11854.720957</td>
-<td>walking</td>
+<td>6.620407</td>
+<td>6.872528</td>
+<td>4558.969006</td>
+<td>9.199233</td>
+<td>0.025996</td>
+<td>9.137887</td>
+<td>9.260945</td>
+<td>8462.654995</td>
+<td>sitting</td>
 <td>1600</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">4</th>
-<td>-1.644037</td>
-<td>2.244849</td>
-<td>-8.546417</td>
-<td>5.301727</td>
-<td>769.181090</td>
-<td>9.362707</td>
-<td>3.838999</td>
-<td>1.363663</td>
-<td>18.914047</td>
-<td>10225.081870</td>
+<td>4.135481</td>
+<td>0.049281</td>
+<td>3.972107</td>
+<td>4.287186</td>
+<td>1710.460832</td>
+<td>4.656202</td>
+<td>0.051068</td>
+<td>4.526337</td>
+<td>4.816910</td>
+<td>2168.279808</td>
 <td>...</td>
-<td>-6.078949</td>
-<td>6.125534</td>
-<td>548.564670</td>
-<td>9.976820</td>
-<td>4.006477</td>
-<td>1.887441</td>
-<td>18.943003</td>
-<td>11542.827630</td>
-<td>walking</td>
+<td>6.640717</td>
+<td>6.892288</td>
+<td>4575.211893</td>
+<td>9.194487</td>
+<td>0.030782</td>
+<td>9.120189</td>
+<td>9.279861</td>
+<td>8453.952534</td>
+<td>sitting</td>
 <td>1600</td>
 </tr>
 </tbody>
@@ -818,30 +775,30 @@ Name: magnitude, dtype: float64</code></pre>
 </section>
 <section id="step-5-inspect-the-feature-table" class="level2" data-number="6.9">
 <h2 data-number="6.9" class="anchored" data-anchor-id="step-5-inspect-the-feature-table"><span class="header-section-number">6.9</span> Step 5 — Inspect the Feature Table</h2>
-<div id="98f182e8" class="cell" data-execution_count="9">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>features_df.shape</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="0f29a118" class="cell" data-execution_count="9">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>features_df.shape</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="9">
-<pre><code>(8060, 22)</code></pre>
+<pre><code>(8066, 22)</code></pre>
 </div>
 </div>
-<div id="c227eddc" class="cell" data-execution_count="10">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>features_df[<span class="st">"activity"</span>].value_counts()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="ea872e60" class="cell" data-execution_count="10">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>features_df[<span class="st">"activity"</span>].value_counts()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="10">
 <pre><code>activity
-walking     2772
-standing    2670
-sitting     2618
+walking     2773
+standing    2672
+sitting     2621
 Name: count, dtype: int64</code></pre>
 </div>
 </div>
-<div id="7445fa4d" class="cell" data-execution_count="11">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>features_df[<span class="st">"subject_id"</span>].nunique()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="6727b332" class="cell" data-execution_count="11">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>features_df[<span class="st">"subject_id"</span>].nunique()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="11">
 <pre><code>51</code></pre>
 </div>
 </div>
-<div id="bdc9b97a" class="cell" data-execution_count="12">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>features_df.isna().<span class="bu">sum</span>().<span class="bu">sum</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="a21a28a6" class="cell" data-execution_count="12">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>features_df.isna().<span class="bu">sum</span>().<span class="bu">sum</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="12">
 <pre><code>np.int64(0)</code></pre>
 </div>
@@ -856,11 +813,11 @@ Name: count, dtype: int64</code></pre>
 </section>
 <section id="step-6-save-the-feature-table" class="level2" data-number="6.10">
 <h2 data-number="6.10" class="anchored" data-anchor-id="step-6-save-the-feature-table"><span class="header-section-number">6.10</span> Step 6 — Save the Feature Table</h2>
-<div id="1839842e" class="cell" data-execution_count="13">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>features_df.to_csv(</span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>    DATA_DIR <span class="op">/</span> <span class="st">"features_df.csv"</span>,</span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>    index<span class="op">=</span><span class="va">False</span>,</span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="67ef2de0" class="cell" data-execution_count="13">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>features_df.to_csv(</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>    DATA_DIR <span class="op">/</span> <span class="st">"features_df.csv"</span>,</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>    index<span class="op">=</span><span class="va">False</span>,</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -920,9 +877,9 @@ Name: count, dtype: int64</code></pre>
 </ol>
 <hr>
 </section>
-<section id="mini-challenge" class="level2" data-number="6.14">
-<h2 data-number="6.14" class="anchored" data-anchor-id="mini-challenge"><span class="header-section-number">6.14</span> Mini Challenge</h2>
-<p>Add one additional feature to <code>app/feature_extraction.py</code>, for example:</p>
+<section id="further-exploration" class="level2" data-number="6.14">
+<h2 data-number="6.14" class="anchored" data-anchor-id="further-exploration"><span class="header-section-number">6.14</span> Further Exploration</h2>
+<p>Optional: add one additional feature to <code>app/feature_extraction.py</code>, for example:</p>
 <ul>
 <li>median</li>
 <li>range</li>

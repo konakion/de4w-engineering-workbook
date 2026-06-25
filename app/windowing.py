@@ -23,9 +23,12 @@ def create_windows(
     list[pandas.DataFrame]
         List of sensor windows.
     """
-    windows = []
+    if window_size <= 0:
+        raise ValueError("window_size must be positive")
 
-    for start in range(0, len(df) - window_size, window_size):
+    windows: list[pd.DataFrame] = []
+
+    for start in range(0, len(df) - window_size + 1, window_size):
         end = start + window_size
         windows.append(df.iloc[start:end])
 
@@ -54,7 +57,7 @@ def create_grouped_windows(
     list[pandas.DataFrame]
         List of windows created per subject and activity.
     """
-    all_windows = []
+    all_windows: list[pd.DataFrame] = []
 
     for activity in sorted(df["activity"].unique()):
         activity_df = df[df["activity"] == activity]

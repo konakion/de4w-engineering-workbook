@@ -235,7 +235,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </ul></li>
   <li><a href="#think" id="toc-think" class="nav-link" data-scroll-target="#think"><span class="header-section-number">7.13</span> Think</a></li>
   <li><a href="#checkpoint" id="toc-checkpoint" class="nav-link" data-scroll-target="#checkpoint"><span class="header-section-number">7.14</span> Checkpoint</a></li>
-  <li><a href="#mini-challenge" id="toc-mini-challenge" class="nav-link" data-scroll-target="#mini-challenge"><span class="header-section-number">7.15</span> Mini Challenge</a></li>
+  <li><a href="#further-exploration" id="toc-further-exploration" class="nav-link" data-scroll-target="#further-exploration"><span class="header-section-number">7.15</span> Further Exploration</a></li>
   <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary"><span class="header-section-number">7.16</span> Summary</a></li>
   </ul>
 </nav>
@@ -277,7 +277,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="setup" class="level2" data-number="7.2">
 <h2 data-number="7.2" class="anchored" data-anchor-id="setup"><span class="header-section-number">7.2</span> Setup</h2>
-<div id="c575cec3" class="cell" data-execution_count="1">
+<div id="40263898" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pathlib <span class="im">import</span> Path</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -339,7 +339,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="step-1-inspect-the-feature-table" class="level2" data-number="7.4">
 <h2 data-number="7.4" class="anchored" data-anchor-id="step-1-inspect-the-feature-table"><span class="header-section-number">7.4</span> Step 1 — Inspect the Feature Table</h2>
-<div id="5a79d581" class="cell" data-execution_count="2">
+<div id="d086f7ae" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>features_df.head()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="2">
 <div>
@@ -375,122 +375,122 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tbody>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">0</th>
-<td>-1.000110</td>
-<td>1.892580</td>
-<td>-6.492264</td>
-<td>3.651398</td>
-<td>454.626037</td>
-<td>9.619472</td>
-<td>3.986348</td>
-<td>2.684174</td>
-<td>18.676529</td>
-<td>10826.630357</td>
+<td>3.845516</td>
+<td>0.351159</td>
+<td>2.627441</td>
+<td>4.488892</td>
+<td>1491.007201</td>
+<td>4.827262</td>
+<td>0.436838</td>
+<td>4.073685</td>
+<td>5.965424</td>
+<td>2349.137987</td>
 <td>...</td>
-<td>-4.935730</td>
-<td>6.472199</td>
-<td>441.051585</td>
-<td>10.036322</td>
-<td>4.081904</td>
-<td>2.954282</td>
-<td>19.337960</td>
-<td>11722.307978</td>
-<td>walking</td>
+<td>5.959335</td>
+<td>7.402969</td>
+<td>4640.551276</td>
+<td>9.207905</td>
+<td>0.147174</td>
+<td>8.731387</td>
+<td>9.622650</td>
+<td>8480.696464</td>
+<td>sitting</td>
 <td>1600</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">1</th>
-<td>-1.344509</td>
-<td>2.100092</td>
-<td>-8.082993</td>
-<td>2.628891</td>
-<td>617.398405</td>
-<td>9.521806</td>
-<td>4.066769</td>
-<td>1.647736</td>
-<td>18.787323</td>
-<td>10703.800290</td>
+<td>4.069495</td>
+<td>0.031640</td>
+<td>3.964447</td>
+<td>4.144730</td>
+<td>1656.178255</td>
+<td>4.641167</td>
+<td>0.033818</td>
+<td>4.552872</td>
+<td>4.714188</td>
+<td>2154.156314</td>
 <td>...</td>
-<td>-9.686493</td>
-<td>8.261765</td>
-<td>613.495476</td>
-<td>10.067197</td>
-<td>4.263836</td>
-<td>2.317188</td>
-<td>21.165828</td>
-<td>11934.694171</td>
-<td>walking</td>
+<td>6.724777</td>
+<td>6.911865</td>
+<td>4645.141345</td>
+<td>9.195336</td>
+<td>0.023712</td>
+<td>9.138906</td>
+<td>9.270484</td>
+<td>8455.475914</td>
+<td>sitting</td>
 <td>1600</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">2</th>
-<td>-1.513662</td>
-<td>2.453901</td>
-<td>-8.111908</td>
-<td>3.641586</td>
-<td>825.258859</td>
-<td>9.580595</td>
-<td>4.107310</td>
-<td>1.222855</td>
-<td>18.672226</td>
-<td>10848.909078</td>
+<td>4.098965</td>
+<td>0.035909</td>
+<td>3.981873</td>
+<td>4.173141</td>
+<td>1680.278813</td>
+<td>4.643016</td>
+<td>0.034376</td>
+<td>4.534317</td>
+<td>4.727310</td>
+<td>2155.876513</td>
 <td>...</td>
-<td>-7.444763</td>
-<td>8.010345</td>
-<td>617.453834</td>
-<td>10.205469</td>
-<td>4.353638</td>
-<td>2.008688</td>
-<td>20.879614</td>
-<td>12291.621772</td>
-<td>walking</td>
+<td>6.690735</td>
+<td>6.880447</td>
+<td>4619.970527</td>
+<td>9.195681</td>
+<td>0.026681</td>
+<td>9.118430</td>
+<td>9.268516</td>
+<td>8456.125854</td>
+<td>sitting</td>
 <td>1600</td>
 </tr>
 <tr class="even">
 <th data-quarto-table-cell-role="th">3</th>
-<td>-1.496280</td>
-<td>2.116861</td>
-<td>-8.181854</td>
-<td>3.257019</td>
-<td>667.514539</td>
-<td>9.551068</td>
-<td>4.078216</td>
-<td>1.483902</td>
-<td>18.526184</td>
-<td>10768.842824</td>
+<td>4.150756</td>
+<td>0.041034</td>
+<td>4.053879</td>
+<td>4.252579</td>
+<td>1723.044535</td>
+<td>4.669522</td>
+<td>0.044667</td>
+<td>4.566193</td>
+<td>4.779709</td>
+<td>2180.641454</td>
 <td>...</td>
-<td>-6.522125</td>
-<td>4.545944</td>
-<td>418.363595</td>
-<td>10.028709</td>
-<td>4.260721</td>
-<td>2.306182</td>
-<td>18.917277</td>
-<td>11854.720957</td>
-<td>walking</td>
+<td>6.620407</td>
+<td>6.872528</td>
+<td>4558.969006</td>
+<td>9.199233</td>
+<td>0.025996</td>
+<td>9.137887</td>
+<td>9.260945</td>
+<td>8462.654995</td>
+<td>sitting</td>
 <td>1600</td>
 </tr>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">4</th>
-<td>-1.644037</td>
-<td>2.244849</td>
-<td>-8.546417</td>
-<td>5.301727</td>
-<td>769.181090</td>
-<td>9.362707</td>
-<td>3.838999</td>
-<td>1.363663</td>
-<td>18.914047</td>
-<td>10225.081870</td>
+<td>4.135481</td>
+<td>0.049281</td>
+<td>3.972107</td>
+<td>4.287186</td>
+<td>1710.460832</td>
+<td>4.656202</td>
+<td>0.051068</td>
+<td>4.526337</td>
+<td>4.816910</td>
+<td>2168.279808</td>
 <td>...</td>
-<td>-6.078949</td>
-<td>6.125534</td>
-<td>548.564670</td>
-<td>9.976820</td>
-<td>4.006477</td>
-<td>1.887441</td>
-<td>18.943003</td>
-<td>11542.827630</td>
-<td>walking</td>
+<td>6.640717</td>
+<td>6.892288</td>
+<td>4575.211893</td>
+<td>9.194487</td>
+<td>0.030782</td>
+<td>9.120189</td>
+<td>9.279861</td>
+<td>8453.952534</td>
+<td>sitting</td>
 <td>1600</td>
 </tr>
 </tbody>
@@ -500,19 +500,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<div id="98b7b0c1" class="cell" data-execution_count="3">
+<div id="9a955440" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>features_df.shape</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="3">
-<pre><code>(8060, 22)</code></pre>
+<pre><code>(8066, 22)</code></pre>
 </div>
 </div>
-<div id="e18a5845" class="cell" data-execution_count="4">
+<div id="9729f8d6" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>features_df[<span class="st">"activity"</span>].value_counts()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="4">
 <pre><code>activity
-walking     2772
-standing    2670
-sitting     2618
+walking     2773
+standing    2672
+sitting     2621
 Name: count, dtype: int64</code></pre>
 </div>
 </div>
@@ -522,7 +522,7 @@ Name: count, dtype: int64</code></pre>
 <h2 data-number="7.5" class="anchored" data-anchor-id="step-2-define-features-and-target"><span class="header-section-number">7.5</span> Step 2 — Define Features and Target</h2>
 <p>The model should learn from numerical features.</p>
 <p>It should not use metadata such as <code>subject_id</code> as input.</p>
-<div id="bbc945c1" class="cell" data-execution_count="5">
+<div id="8c59c6f4" class="cell" data-execution_count="5">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>feature_columns <span class="op">=</span> [</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    column</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> column <span class="kw">in</span> features_df.columns</span>
@@ -534,7 +534,7 @@ Name: count, dtype: int64</code></pre>
 <span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>X.shape, y.shape</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="5">
-<pre><code>((8060, 20), (8060,))</code></pre>
+<pre><code>((8066, 20), (8066,))</code></pre>
 </div>
 </div>
 <hr>
@@ -543,7 +543,7 @@ Name: count, dtype: int64</code></pre>
 <h2 data-number="7.6" class="anchored" data-anchor-id="step-3-random-traintest-split"><span class="header-section-number">7.6</span> Step 3 — Random Train/Test Split</h2>
 <p>We first use a random train/test split.</p>
 <p>This is a common first evaluation strategy.</p>
-<div id="f9262b72" class="cell" data-execution_count="6">
+<div id="2accdb74" class="cell" data-execution_count="6">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>X_train, X_test, y_train, y_test <span class="op">=</span> train_test_split(</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    X,</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    y,</span>
@@ -552,10 +552,10 @@ Name: count, dtype: int64</code></pre>
 <span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    stratify<span class="op">=</span>y,</span>
 <span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div id="d8f2408f" class="cell" data-execution_count="7">
+<div id="6a61a48b" class="cell" data-execution_count="7">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>X_train.shape, X_test.shape</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="7">
-<pre><code>((6448, 20), (1612, 20))</code></pre>
+<pre><code>((6452, 20), (1614, 20))</code></pre>
 </div>
 </div>
 <div class="callout callout-style-default callout-warning callout-titled">
@@ -577,7 +577,7 @@ Name: count, dtype: int64</code></pre>
 </section>
 <section id="step-4-train-the-random-forest" class="level2" data-number="7.7">
 <h2 data-number="7.7" class="anchored" data-anchor-id="step-4-train-the-random-forest"><span class="header-section-number">7.7</span> Step 4 — Train the Random Forest</h2>
-<div id="de57aa6f" class="cell" data-execution_count="8">
+<div id="683524cf" class="cell" data-execution_count="8">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>rf <span class="op">=</span> RandomForestClassifier(</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>    n_estimators<span class="op">=</span><span class="dv">200</span>,</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    random_state<span class="op">=</span><span class="dv">42</span>,</span>
@@ -1637,7 +1637,7 @@ Warning: impurity-based feature importances can be misleading for<br>
 high cardinality features (many unique values). See<br>
 :func:`sklearn.inspection.permutation_importance` as an alternative.</span></a></td>
 <td class="fitted-att-type">ndarray[float64](20,)</td>
-<td>[0.02,0.07,0.01,...,0.06,0.08,0.04]</td>
+<td>[0.02,0.08,0.01,...,0.06,0.08,0.03]</td>
 </tr>
 <tr class="default odd">
 <td class="param"><a href="https://scikit-learn.org/1.9/modules/generated/sklearn.ensemble.RandomForestClassifier.html#:~:text=feature_names_in_,-ndarray%20of%20shape%20%28n_features_in_%2C%29" class="param-doc-link" style="anchor-name: --doc-link-feature_names_in_;" rel="noreferrer" target="_blank">feature_names_in_ <span class="param-doc-description" style="position-anchor: --doc-link-feature_names_in_;"> feature_names_in_: ndarray of shape (`n_features_in_`,)<br>
@@ -1855,25 +1855,26 @@ forceTheme('sk-container-id-1');</script>
 </section>
 <section id="step-5-predict-on-the-test-set" class="level2" data-number="7.8">
 <h2 data-number="7.8" class="anchored" data-anchor-id="step-5-predict-on-the-test-set"><span class="header-section-number">7.8</span> Step 5 — Predict on the Test Set</h2>
-<div id="84783159" class="cell" data-execution_count="9">
+<div id="22727d57" class="cell" data-execution_count="9">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>y_pred <span class="op">=</span> rf.predict(X_test)</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>y_pred[:<span class="dv">10</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="9">
-<pre><code>array(['standing', 'sitting', 'walking', 'walking', 'walking', 'walking',
-       'standing', 'walking', 'walking', 'standing'], dtype=object)</code></pre>
+<pre><code>array(['standing', 'walking', 'standing', 'standing', 'sitting',
+       'sitting', 'standing', 'standing', 'walking', 'walking'],
+      dtype=object)</code></pre>
 </div>
 </div>
 <hr>
 </section>
 <section id="step-6-evaluate-accuracy" class="level2" data-number="7.9">
 <h2 data-number="7.9" class="anchored" data-anchor-id="step-6-evaluate-accuracy"><span class="header-section-number">7.9</span> Step 6 — Evaluate Accuracy</h2>
-<div id="64727047" class="cell" data-execution_count="10">
+<div id="57fd019e" class="cell" data-execution_count="10">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>random_split_accuracy <span class="op">=</span> accuracy_score(y_test, y_pred)</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>random_split_accuracy</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="10">
-<pre><code>0.989454094292804</code></pre>
+<pre><code>0.9857496902106567</code></pre>
 </div>
 </div>
 <section id="discussion" class="level3" data-number="7.9.1">
@@ -1885,18 +1886,18 @@ forceTheme('sk-container-id-1');</script>
 </section>
 <section id="step-7-classification-report" class="level2" data-number="7.10">
 <h2 data-number="7.10" class="anchored" data-anchor-id="step-7-classification-report"><span class="header-section-number">7.10</span> Step 7 — Classification Report</h2>
-<div id="5013d466" class="cell" data-execution_count="11">
+<div id="f4ca097f" class="cell" data-execution_count="11">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(classification_report(y_test, y_pred))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>              precision    recall  f1-score   support
 
-     sitting       0.99      0.98      0.99       524
-    standing       0.99      0.99      0.99       534
-     walking       0.98      1.00      0.99       554
+     sitting       0.99      0.98      0.98       524
+    standing       0.98      0.99      0.98       535
+     walking       0.98      1.00      0.99       555
 
-    accuracy                           0.99      1612
-   macro avg       0.99      0.99      0.99      1612
-weighted avg       0.99      0.99      0.99      1612
+    accuracy                           0.99      1614
+   macro avg       0.99      0.99      0.99      1614
+weighted avg       0.99      0.99      0.99      1614
 </code></pre>
 </div>
 </div>
@@ -1905,7 +1906,7 @@ weighted avg       0.99      0.99      0.99      1612
 </section>
 <section id="step-8-confusion-matrix" class="level2" data-number="7.11">
 <h2 data-number="7.11" class="anchored" data-anchor-id="step-8-confusion-matrix"><span class="header-section-number">7.11</span> Step 8 — Confusion Matrix</h2>
-<div id="8c194730" class="cell" data-execution_count="12">
+<div id="c1cfa8a9" class="cell" data-execution_count="12">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>ConfusionMatrixDisplay.from_estimator(</span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>    rf,</span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>    X_test,</span>
@@ -1930,7 +1931,7 @@ weighted avg       0.99      0.99      0.99      1612
 </section>
 <section id="step-9-predict-one-window" class="level2" data-number="7.12">
 <h2 data-number="7.12" class="anchored" data-anchor-id="step-9-predict-one-window"><span class="header-section-number">7.12</span> Step 9 — Predict One Window</h2>
-<div id="c6ead418" class="cell" data-execution_count="13">
+<div id="c0b2214d" class="cell" data-execution_count="13">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>sample <span class="op">=</span> X_test.iloc[[<span class="dv">0</span>]]</span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>prediction <span class="op">=</span> rf.predict(sample)</span>
@@ -1940,7 +1941,7 @@ weighted avg       0.99      0.99      0.99      1612
 <pre><code>array(['standing'], dtype=object)</code></pre>
 </div>
 </div>
-<div id="a26e9c54" class="cell" data-execution_count="14">
+<div id="62f18966" class="cell" data-execution_count="14">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>pd.DataFrame(</span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>    rf.predict_proba(sample),</span>
 <span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>    columns<span class="op">=</span>rf.classes_,</span>
@@ -1961,8 +1962,8 @@ weighted avg       0.99      0.99      0.99      1612
 <tbody>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">0</th>
-<td>0.025</td>
-<td>0.975</td>
+<td>0.01</td>
+<td>0.99</td>
 <td>0.0</td>
 </tr>
 </tbody>
@@ -1997,9 +1998,9 @@ weighted avg       0.99      0.99      0.99      1612
 </ol>
 <hr>
 </section>
-<section id="mini-challenge" class="level2" data-number="7.15">
-<h2 data-number="7.15" class="anchored" data-anchor-id="mini-challenge"><span class="header-section-number">7.15</span> Mini Challenge</h2>
-<p>Change the number of trees from <code>200</code> to <code>50</code>.</p>
+<section id="further-exploration" class="level2" data-number="7.15">
+<h2 data-number="7.15" class="anchored" data-anchor-id="further-exploration"><span class="header-section-number">7.15</span> Further Exploration</h2>
+<p>Optional: change the number of trees from <code>200</code> to <code>50</code>.</p>
 <p>Does the accuracy change?</p>
 <p>What does this tell you about the stability of the model?</p>
 <hr>

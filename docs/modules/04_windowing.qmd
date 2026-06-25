@@ -34,15 +34,13 @@ sys.path.insert(0, str(PROJECT_ROOT))
 
 from app.config import WINDOW_SIZE
 from app.data_loader import load_wisdm_phone_accel
+from app.pipeline import add_magnitude
 from app.windowing import create_windows, create_grouped_windows
 
 DATA_DIR = PROJECT_ROOT / "data"
 
 df = load_wisdm_phone_accel(DATA_DIR)
-
-df["magnitude"] = np.sqrt(
-    df["x"] ** 2 + df["y"] ** 2 + df["z"] ** 2
-)
+df = add_magnitude(df)
 ```
 
 ::: {.callout-important}

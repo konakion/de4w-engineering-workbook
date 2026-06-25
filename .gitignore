@@ -1,0 +1,38 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Virtual environments and uv
+.venv/
+venv/
+env/
+.python-version
+
+# Jupyter
+.ipynb_checkpoints/
+*.quarto_ipynb
+
+# Quarto generated output and caches
+.quarto/
+_freeze/
+docs/.quarto/
+docs/_freeze/
+docs/_site/
+docs/**/*_files/
+docs/**/*.html
+docs/**/*.pdf
+
+# Local generated artifacts
+*.log
+.env
+.env.*
+
+# macOS
+.DS_Store
+

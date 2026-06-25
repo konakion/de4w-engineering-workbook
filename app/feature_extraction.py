@@ -2,6 +2,9 @@ import numpy as np
 import pandas as pd
 
 
+FEATURE_AXES: tuple[str, ...] = ("x", "y", "z", "magnitude")
+
+
 def extract_features(window: pd.DataFrame) -> dict[str, float]:
     """
     Extract statistical features from one accelerometer window.
@@ -19,9 +22,9 @@ def extract_features(window: pd.DataFrame) -> dict[str, float]:
     dict
         Feature dictionary used by the trained model.
     """
-    features = {}
+    features: dict[str, float] = {}
 
-    for axis in ["x", "y", "z", "magnitude"]:
+    for axis in FEATURE_AXES:
         signal = window[axis]
 
         features[f"mean_{axis}"] = float(signal.mean())

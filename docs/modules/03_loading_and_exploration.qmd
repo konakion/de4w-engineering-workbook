@@ -38,6 +38,7 @@ We import the libraries needed for data loading, numerical processing and visual
 
 ```{python}
 from pathlib import Path
+import sys
 
 import numpy as np
 import pandas as pd
@@ -57,9 +58,26 @@ This cell should run without errors.
 We define where the project root and the data directory are located.
 
 ```{python}
-PROJECT_ROOT = Path.cwd().parents[1]
+current_path = Path.cwd().resolve()
 
-DATA_DIR = PROJECT_ROOT / "data"
+for parent in [current_path] + list(current_path.parents):
+    if (parent / "app").exists():
+        PROJECT_ROOT = parent
+        break
+else:
+    raise RuntimeError("Could not find project root containing app/ directory.")
+
+sys.path.insert(0, str(PROJECT_ROOT))
+
+from app.config import DATA_DIR
+from app.data_loader import (
+    ACTIVITY_MAP,
+    TARGET_ACTIVITIES,
+    load_single_wisdm_file,
+    load_wisdm_phone_accel,
+)
+from app.pipeline import add_magnitude
+
 
 print("Project root:", PROJECT_ROOT)
 print("Data directory:", DATA_DIR)
@@ -86,32 +104,11 @@ The raw WISDM files use activity codes such as `A`, `D`, and `E`.
 We map these codes to readable names.
 
 ```{python}
-ACTIVITY_MAP = {
-    "A": "walking",
-    "B": "jogging",
-    "C": "stairs",
-    "D": "sitting",
-    "E": "standing",
-    "F": "typing",
-    "G": "brushing_teeth",
-    "H": "eating_soup",
-    "I": "eating_chips",
-    "J": "eating_pasta",
-    "K": "drinking",
-    "L": "eating_sandwich",
-    "M": "kicking",
-    "O": "catch",
-    "P": "dribbling",
-    "Q": "writing",
-    "R": "clapping",
-    "S": "folding_clothes",
-}
+ACTIVITY_MAP
+```
 
-TARGET_ACTIVITIES = [
-    "walking",
-    "sitting",
-    "standing",
-]
+```{python}
+TARGET_ACTIVITIES
 ```
 
 ### Discussion
@@ -147,38 +144,7 @@ You should see approximately 51 files, one per participant.
 We first load a single file to understand the raw structure.
 
 ```{python}
-def load_single_wisdm_file(file_path: Path) -> pd.DataFrame:
-    """
-    Load one WISDM phone accelerometer file.
-
-    Parameters
-    ----------
-    file_path:
-        Path to one raw WISDM phone accelerometer text file.
-
-    Returns
-    -------
-    pandas.DataFrame
-        DataFrame containing subject_id, activity_code, timestamp, x, y, z and activity.
-    """
-    df = pd.read_csv(
-        file_path,
-        header=None,
-        names=["subject_id", "activity_code", "timestamp", "x", "y", "z"],
-        sep=",",
-    )
-
-    # The last value in each row contains a trailing semicolon.
-    df["z"] = (
-        df["z"]
-        .astype(str)
-        .str.replace(";", "", regex=False)
-        .astype(float)
-    )
-
-    df["activity"] = df["activity_code"].map(ACTIVITY_MAP)
-
-    return df
+load_single_wisdm_file
 ```
 
 ```{python}
@@ -204,44 +170,7 @@ subject_id, activity_code, timestamp, x, y, z, activity
 We now load all phone accelerometer files and combine them into a single DataFrame.
 
 ```{python}
-def load_wisdm_phone_accel(
-    data_dir: Path,
-    target_activities: list[str] | None = None,
-) -> pd.DataFrame:
-    """
-    Load all WISDM phone accelerometer files from a directory.
-
-    Parameters
-    ----------
-    data_dir:
-        Directory containing files named data_*_accel_phone.txt.
-
-    target_activities:
-        Optional list of activity names to keep.
-
-    Returns
-    -------
-    pandas.DataFrame
-        Combined DataFrame containing all selected subjects and activities.
-    """
-    files = sorted(data_dir.glob("data_*_accel_phone.txt"))
-
-    if not files:
-        raise FileNotFoundError(
-            f"No WISDM phone accelerometer files found in {data_dir}."
-        )
-
-    dataframes = []
-
-    for file_path in files:
-        df_file = load_single_wisdm_file(file_path)
-
-        if target_activities is not None:
-            df_file = df_file[df_file["activity"].isin(target_activities)]
-
-        dataframes.append(df_file)
-
-    return pd.concat(dataframes, ignore_index=True)
+load_wisdm_phone_accel
 ```
 
 ```{python}
@@ -294,11 +223,7 @@ m = \sqrt{x^2 + y^2 + z^2}
 $$
 
 ```{python}
-df["magnitude"] = np.sqrt(
-    df["x"] ** 2
-    + df["y"] ** 2
-    + df["z"] ** 2
-)
+df = add_magnitude(df)
 
 df.head()
 ```
@@ -425,9 +350,9 @@ Before continuing, you should be able to answer:
 
 ---
 
-## Mini Challenge
+## Further Exploration
 
-Modify the code so that the dataset also includes `jogging`.
+Optional: modify the target activity selection so that the dataset also includes `jogging`.
 
 Which parts of the pipeline would change?
 

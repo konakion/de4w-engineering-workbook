@@ -714,7 +714,7 @@
     "href": "modules/06_machine_learning.html#learning-objectives",
     "title": "7  Machine Learning",
     "section": "",
-    "text": "load the feature table created in the previous chapter,\ndefine feature columns and target labels,\ntrain a Random Forest classifier,\ncreate predictions on unseen windows,\nevaluate the model with accuracy and a classification report,\nunderstand why a simple baseline model is valuable.",
+    "text": "load the feature table created in the previous chapter,\nseparate model features from labels and subject identifiers,\ntrain a Random Forest baseline model,\ninspect predictions and class probabilities,\nunderstand why reusable training code matters.",
     "crumbs": [
       "<span class='chapter-number'>7</span>  <span class='chapter-title'>Machine Learning</span>"
     ]
@@ -724,7 +724,7 @@
     "href": "modules/06_machine_learning.html#setup",
     "title": "7  Machine Learning",
     "section": "7.2 Setup",
-    "text": "7.2 Setup\n\nfrom pathlib import Path\nimport sys\n\nimport pandas as pd\nimport matplotlib.pyplot as plt\n\nfrom sklearn.ensemble import RandomForestClassifier\nfrom sklearn.metrics import (\n    accuracy_score,\n    classification_report,\n    ConfusionMatrixDisplay,\n)\nfrom sklearn.model_selection import train_test_split\n\ncurrent_path = Path.cwd().resolve()\n\nfor parent in [current_path] + list(current_path.parents):\n    if (parent / \"app\").exists():\n        PROJECT_ROOT = parent\n        break\nelse:\n    raise RuntimeError(\"Could not find project root containing app/ directory.\")\n\nsys.path.insert(0, str(PROJECT_ROOT))\n\nDATA_DIR = PROJECT_ROOT / \"data\"\n\nfeatures_df = pd.read_csv(DATA_DIR / \"features_df.csv\")",
+    "text": "7.2 Setup\n\nfrom pathlib import Path\nimport sys\n\nimport pandas as pd\n\ncurrent_path = Path.cwd().resolve()\n\nfor parent in [current_path] + list(current_path.parents):\n    if (parent / \"app\").exists():\n        PROJECT_ROOT = parent\n        break\nelse:\n    raise RuntimeError(\"Could not find project root containing app/ directory.\")\n\nsys.path.insert(0, str(PROJECT_ROOT))\n\nfrom app.training import (\n    load_feature_table,\n    split_features_and_labels,\n    train_random_forest,\n)",
     "crumbs": [
       "<span class='chapter-number'>7</span>  <span class='chapter-title'>Machine Learning</span>"
     ]
@@ -734,107 +734,47 @@
     "href": "modules/06_machine_learning.html#why-random-forest",
     "title": "7  Machine Learning",
     "section": "7.3 Why Random Forest?",
-    "text": "7.3 Why Random Forest?\nWe use a Random Forest as our first model because it is a strong baseline for tabular feature data.\nA Random Forest is an ensemble of decision trees.\nIt is useful because it is\n\neasy to train,\nrobust,\nfast enough for this project,\nsuitable for tabular data,\nrelatively easy to explain.\n\n\n\n\n\n\n\nTipEngineering Insight\n\n\n\nA simple baseline model is often the best starting point.\nBefore using deep learning, always ask whether a simpler model already solves the problem well enough.",
+    "text": "7.3 Why Random Forest?\nWe use a Random Forest as the first model because it is a strong baseline for tabular feature data.\nA Random Forest is an ensemble of decision trees.\nIt is useful because it is\n\neasy to train,\nrobust,\nfast enough for this project,\nsuitable for tabular data,\nrelatively easy to explain.\n\n\n\n\n\n\n\nTipEngineering Insight\n\n\n\nA simple baseline model is often the best starting point.\nBefore using deep learning, always ask whether a simpler model already solves the problem well enough.",
     "crumbs": [
       "<span class='chapter-number'>7</span>  <span class='chapter-title'>Machine Learning</span>"
     ]
   },
   {
-    "objectID": "modules/06_machine_learning.html#step-1-inspect-the-feature-table",
-    "href": "modules/06_machine_learning.html#step-1-inspect-the-feature-table",
+    "objectID": "modules/06_machine_learning.html#step-1-load-the-feature-table",
+    "href": "modules/06_machine_learning.html#step-1-load-the-feature-table",
     "title": "7  Machine Learning",
-    "section": "7.4 Step 1 — Inspect the Feature Table",
-    "text": "7.4 Step 1 — Inspect the Feature Table\n\nfeatures_df.head()\n\n\n\n\n\n\n\n\nmean_x\nstd_x\nmin_x\nmax_x\nenergy_x\nmean_y\nstd_y\nmin_y\nmax_y\nenergy_y\n...\nmin_z\nmax_z\nenergy_z\nmean_magnitude\nstd_magnitude\nmin_magnitude\nmax_magnitude\nenergy_magnitude\nactivity\nsubject_id\n\n\n\n\n0\n3.845516\n0.351159\n2.627441\n4.488892\n1491.007201\n4.827262\n0.436838\n4.073685\n5.965424\n2349.137987\n...\n5.959335\n7.402969\n4640.551276\n9.207905\n0.147174\n8.731387\n9.622650\n8480.696464\nsitting\n1600\n\n\n1\n4.069495\n0.031640\n3.964447\n4.144730\n1656.178255\n4.641167\n0.033818\n4.552872\n4.714188\n2154.156314\n...\n6.724777\n6.911865\n4645.141345\n9.195336\n0.023712\n9.138906\n9.270484\n8455.475914\nsitting\n1600\n\n\n2\n4.098965\n0.035909\n3.981873\n4.173141\n1680.278813\n4.643016\n0.034376\n4.534317\n4.727310\n2155.876513\n...\n6.690735\n6.880447\n4619.970527\n9.195681\n0.026681\n9.118430\n9.268516\n8456.125854\nsitting\n1600\n\n\n3\n4.150756\n0.041034\n4.053879\n4.252579\n1723.044535\n4.669522\n0.044667\n4.566193\n4.779709\n2180.641454\n...\n6.620407\n6.872528\n4558.969006\n9.199233\n0.025996\n9.137887\n9.260945\n8462.654995\nsitting\n1600\n\n\n4\n4.135481\n0.049281\n3.972107\n4.287186\n1710.460832\n4.656202\n0.051068\n4.526337\n4.816910\n2168.279808\n...\n6.640717\n6.892288\n4575.211893\n9.194487\n0.030782\n9.120189\n9.279861\n8453.952534\nsitting\n1600\n\n\n\n\n5 rows × 22 columns\n\n\n\n\nfeatures_df.shape\n\n(8066, 22)\n\n\n\nfeatures_df[\"activity\"].value_counts()\n\nactivity\nwalking     2773\nstanding    2672\nsitting     2621\nName: count, dtype: int64",
+    "section": "7.4 Step 1 — Load the Feature Table",
+    "text": "7.4 Step 1 — Load the Feature Table\nThe previous chapter saved one row per sensor window.\n\nfeatures_df = load_feature_table()\n\nfeatures_df.head()\n\n\n\n\n\n\n\n\nmean_x\nstd_x\nmin_x\nmax_x\nenergy_x\nmean_y\nstd_y\nmin_y\nmax_y\nenergy_y\n...\nmin_z\nmax_z\nenergy_z\nmean_magnitude\nstd_magnitude\nmin_magnitude\nmax_magnitude\nenergy_magnitude\nactivity\nsubject_id\n\n\n\n\n0\n3.845516\n0.351159\n2.627441\n4.488892\n1491.007201\n4.827262\n0.436838\n4.073685\n5.965424\n2349.137987\n...\n5.959335\n7.402969\n4640.551276\n9.207905\n0.147174\n8.731387\n9.622650\n8480.696464\nsitting\n1600\n\n\n1\n4.069495\n0.031640\n3.964447\n4.144730\n1656.178255\n4.641167\n0.033818\n4.552872\n4.714188\n2154.156314\n...\n6.724777\n6.911865\n4645.141345\n9.195336\n0.023712\n9.138906\n9.270484\n8455.475914\nsitting\n1600\n\n\n2\n4.098965\n0.035909\n3.981873\n4.173141\n1680.278813\n4.643016\n0.034376\n4.534317\n4.727310\n2155.876513\n...\n6.690735\n6.880447\n4619.970527\n9.195681\n0.026681\n9.118430\n9.268516\n8456.125854\nsitting\n1600\n\n\n3\n4.150756\n0.041034\n4.053879\n4.252579\n1723.044535\n4.669522\n0.044667\n4.566193\n4.779709\n2180.641454\n...\n6.620407\n6.872528\n4558.969006\n9.199233\n0.025996\n9.137887\n9.260945\n8462.654995\nsitting\n1600\n\n\n4\n4.135481\n0.049281\n3.972107\n4.287186\n1710.460832\n4.656202\n0.051068\n4.526337\n4.816910\n2168.279808\n...\n6.640717\n6.892288\n4575.211893\n9.194487\n0.030782\n9.120189\n9.279861\n8453.952534\nsitting\n1600\n\n\n\n\n5 rows × 22 columns\n\n\n\n\nfeatures_df.shape\n\n(8066, 22)\n\n\n\nfeatures_df[\"activity\"].value_counts()\n\nactivity\nwalking     2773\nstanding    2672\nsitting     2621\nName: count, dtype: int64",
     "crumbs": [
       "<span class='chapter-number'>7</span>  <span class='chapter-title'>Machine Learning</span>"
     ]
   },
   {
-    "objectID": "modules/06_machine_learning.html#step-2-define-features-and-target",
-    "href": "modules/06_machine_learning.html#step-2-define-features-and-target",
+    "objectID": "modules/06_machine_learning.html#step-2-split-features-labels-and-subjects",
+    "href": "modules/06_machine_learning.html#step-2-split-features-labels-and-subjects",
     "title": "7  Machine Learning",
-    "section": "7.5 Step 2 — Define Features and Target",
-    "text": "7.5 Step 2 — Define Features and Target\nThe model should learn from numerical features.\nIt should not use metadata such as subject_id as input.\n\nfeature_columns = [\n    column\n    for column in features_df.columns\n    if column not in [\"activity\", \"subject_id\"]\n]\n\nX = features_df[feature_columns]\ny = features_df[\"activity\"]\n\nX.shape, y.shape\n\n((8066, 20), (8066,))",
+    "section": "7.5 Step 2 — Split Features, Labels and Subjects",
+    "text": "7.5 Step 2 — Split Features, Labels and Subjects\nThe model should learn from numerical features.\nIt should not use metadata such as subject_id as input.\n\nX, y, groups, feature_columns = split_features_and_labels(features_df)\n\nX.shape, y.shape, groups.shape\n\n((8066, 20), (8066,), (8066,))\n\n\n\nfeature_columns\n\n['mean_x',\n 'std_x',\n 'min_x',\n 'max_x',\n 'energy_x',\n 'mean_y',\n 'std_y',\n 'min_y',\n 'max_y',\n 'energy_y',\n 'mean_z',\n 'std_z',\n 'min_z',\n 'max_z',\n 'energy_z',\n 'mean_magnitude',\n 'std_magnitude',\n 'min_magnitude',\n 'max_magnitude',\n 'energy_magnitude']\n\n\n\n\n\n\n\n\nNoteRemember\n\n\n\nThe exact feature column order must be saved with the model.\nDuring deployment, live features must be passed to the model in the same order.",
     "crumbs": [
       "<span class='chapter-number'>7</span>  <span class='chapter-title'>Machine Learning</span>"
     ]
   },
   {
-    "objectID": "modules/06_machine_learning.html#step-3-random-traintest-split",
-    "href": "modules/06_machine_learning.html#step-3-random-traintest-split",
+    "objectID": "modules/06_machine_learning.html#step-3-train-the-baseline-model",
+    "href": "modules/06_machine_learning.html#step-3-train-the-baseline-model",
     "title": "7  Machine Learning",
-    "section": "7.6 Step 3 — Random Train/Test Split",
-    "text": "7.6 Step 3 — Random Train/Test Split\nWe first use a random train/test split.\nThis is a common first evaluation strategy.\n\nX_train, X_test, y_train, y_test = train_test_split(\n    X,\n    y,\n    test_size=0.2,\n    random_state=42,\n    stratify=y,\n)\n\n\nX_train.shape, X_test.shape\n\n((6452, 20), (1614, 20))\n\n\n\n\n\n\n\n\nWarningCommon Pitfall\n\n\n\nA random split may place windows from the same participant in both training and test sets.\nThis can make the evaluation look better than it really is.\nWe will address this in the next chapter.",
+    "section": "7.6 Step 3 — Train the Baseline Model",
+    "text": "7.6 Step 3 — Train the Baseline Model\nWe now train a Random Forest on the complete feature table.\nThis gives us a baseline model artifact that later chapters can evaluate and export with metadata.\n\nbaseline_model = train_random_forest(X, y)\n\nbaseline_model\n\nRandomForestClassifier(n_estimators=200, random_state=42)In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.RandomForestClassifier?Documentation for RandomForestClassifieriFitted\n        \n            \n                Parameters\n                \n\n\n\n\n\n\n\n\n\nn_estimators  n_estimators: int, default=100\n\nThe number of trees in the forest.\n\n.. versionchanged:: 0.22\nThe default value of ``n_estimators`` changed from 10 to 100\nin 0.22.\n200\n\n\n\nrandom_state  random_state: int, RandomState instance or None, default=None\n\nControls both the randomness of the bootstrapping of the samples used\nwhen building trees (if ``bootstrap=True``) and the sampling of the\nfeatures to consider when looking for the best split at each node\n(if ``max_features &lt; n_features``).\nSee :term:`Glossary &lt;random_state&gt;` for details.\n42\n\n\n\ncriterion  criterion: {\"gini\", \"entropy\", \"log_loss\"}, default=\"gini\"\n\nThe function to measure the quality of a split. Supported criteria are\n\"gini\" for the Gini impurity and \"log_loss\" and \"entropy\" both for the\nShannon information gain, see :ref:`tree_mathematical_formulation`.\nNote: This parameter is tree-specific.\n'gini'\n\n\n\nmax_depth  max_depth: int, default=None\n\nThe maximum depth of the tree. If None, then nodes are expanded until\nall leaves are pure or until all leaves contain less than\nmin_samples_split samples.\nNone\n\n\n\nmin_samples_split  min_samples_split: int or float, default=2\n\nThe minimum number of samples required to split an internal node:\n\n- If int, then consider `min_samples_split` as the minimum number.\n- If float, then `min_samples_split` is a fraction and\n`ceil(min_samples_split * n_samples)` are the minimum\nnumber of samples for each split.\n\n.. versionchanged:: 0.18\nAdded float values for fractions.\n2\n\n\n\nmin_samples_leaf  min_samples_leaf: int or float, default=1\n\nThe minimum number of samples required to be at a leaf node.\nA split point at any depth will only be considered if it leaves at\nleast ``min_samples_leaf`` training samples in each of the left and\nright branches. This may have the effect of smoothing the model,\nespecially in regression.\n\n- If int, then consider `min_samples_leaf` as the minimum number.\n- If float, then `min_samples_leaf` is a fraction and\n`ceil(min_samples_leaf * n_samples)` are the minimum\nnumber of samples for each node.\n\n.. versionchanged:: 0.18\nAdded float values for fractions.\n1\n\n\n\nmin_weight_fraction_leaf  min_weight_fraction_leaf: float, default=0.0\n\nThe minimum weighted fraction of the sum total of weights (of all\nthe input samples) required to be at a leaf node. Samples have\nequal weight when sample_weight is not provided.\n0.0\n\n\n\nmax_features  max_features: {\"sqrt\", \"log2\", None}, int or float, default=\"sqrt\"\n\nThe number of features to consider when looking for the best split:\n\n- If int, then consider `max_features` features at each split.\n- If float, then `max_features` is a fraction and\n`max(1, int(max_features * n_features_in_))` features are considered at each\nsplit.\n- If \"sqrt\", then `max_features=sqrt(n_features)`.\n- If \"log2\", then `max_features=log2(n_features)`.\n- If None, then `max_features=n_features`.\n\n.. versionchanged:: 1.1\nThe default of `max_features` changed from `\"auto\"` to `\"sqrt\"`.\n\nNote: the search for a split does not stop until at least one\nvalid partition of the node samples is found, even if it requires to\neffectively inspect more than ``max_features`` features.\n'sqrt'\n\n\n\nmax_leaf_nodes  max_leaf_nodes: int, default=None\n\nGrow trees with ``max_leaf_nodes`` in best-first fashion.\nBest nodes are defined as relative reduction in impurity.\nIf None then unlimited number of leaf nodes.\nNone\n\n\n\nmin_impurity_decrease  min_impurity_decrease: float, default=0.0\n\nA node will be split if this split induces a decrease of the impurity\ngreater than or equal to this value.\n\nThe weighted impurity decrease equation is the following::\n\nN_t / N * (impurity - N_t_R / N_t * right_impurity\n- N_t_L / N_t * left_impurity)\n\nwhere ``N`` is the total number of samples, ``N_t`` is the number of\nsamples at the current node, ``N_t_L`` is the number of samples in the\nleft child, and ``N_t_R`` is the number of samples in the right child.\n\n``N``, ``N_t``, ``N_t_R`` and ``N_t_L`` all refer to the weighted sum,\nif ``sample_weight`` is passed.\n\n.. versionadded:: 0.19\n0.0\n\n\n\nbootstrap  bootstrap: bool, default=True\n\nWhether bootstrap samples are used when building trees. If False, the\nwhole dataset is used to build each tree.\nTrue\n\n\n\noob_score  oob_score: bool or callable, default=False\n\nWhether to use out-of-bag samples to estimate the generalization score.\nBy default, :func:`~sklearn.metrics.accuracy_score` is used.\nProvide a callable with signature `metric(y_true, y_pred)` to use a\ncustom metric. Only available if `bootstrap=True`.\n\nFor an illustration of out-of-bag (OOB) error estimation, see the example\n:ref:`sphx_glr_auto_examples_ensemble_plot_ensemble_oob.py`.\nFalse\n\n\n\nn_jobs  n_jobs: int, default=None\n\nThe number of jobs to run in parallel. :meth:`fit`, :meth:`predict`,\n:meth:`decision_path` and :meth:`apply` are all parallelized over the\ntrees. ``None`` means 1 unless in a :obj:`joblib.parallel_backend`\ncontext. ``-1`` means using all processors. See :term:`Glossary\n&lt;n_jobs&gt;` for more details.\nNone\n\n\n\nverbose  verbose: int, default=0\n\nControls the verbosity when fitting and predicting.\n0\n\n\n\nwarm_start  warm_start: bool, default=False\n\nWhen set to ``True``, reuse the solution of the previous call to fit\nand add more estimators to the ensemble, otherwise, just fit a whole\nnew forest. See :term:`Glossary &lt;warm_start&gt;` and\n:ref:`tree_ensemble_warm_start` for details.\nFalse\n\n\n\nclass_weight  class_weight: {\"balanced\", \"balanced_subsample\"}, dict or list of dicts, default=None\n\nWeights associated with classes in the form ``{class_label: weight}``.\nIf not given, all classes are supposed to have weight one. For\nmulti-output problems, a list of dicts can be provided in the same\norder as the columns of y.\n\nNote that for multioutput (including multilabel) weights should be\ndefined for each class of every column in its own dict. For example,\nfor four-class multilabel classification weights should be\n[{0: 1, 1: 1}, {0: 1, 1: 5}, {0: 1, 1: 1}, {0: 1, 1: 1}] instead of\n[{1:1}, {2:5}, {3:1}, {4:1}].\n\nThe \"balanced\" mode uses the values of y to automatically adjust\nweights inversely proportional to class frequencies in the input data\nas ``n_samples / (n_classes * np.bincount(y))``\n\nThe \"balanced_subsample\" mode is the same as \"balanced\" except that\nweights are computed based on the bootstrap sample for every tree\ngrown.\n\nFor multi-output, the weights of each column of y will be multiplied.\n\nNote that these weights will be multiplied with sample_weight (passed\nthrough the fit method) if sample_weight is specified.\nNone\n\n\n\nccp_alpha  ccp_alpha: non-negative float, default=0.0\n\nComplexity parameter used for Minimal Cost-Complexity Pruning. The\nsubtree with the largest cost complexity that is smaller than\n``ccp_alpha`` will be chosen. By default, no pruning is performed. See\n:ref:`minimal_cost_complexity_pruning` for details. See\n:ref:`sphx_glr_auto_examples_tree_plot_cost_complexity_pruning.py`\nfor an example of such pruning.\n\n.. versionadded:: 0.22\n0.0\n\n\n\nmax_samples  max_samples: int or float, default=None\n\nIf bootstrap is True, the number of samples to draw from X\nto train each base estimator.\n\n- If None (default), then draw `X.shape[0]` samples irrespective of\n`sample_weight`.\n- If int, then draw `max_samples` samples.\n- If float, then draw `max_samples * X.shape[0]` unweighted samples\nor `max_samples * sample_weight.sum()` weighted samples.\n\n.. versionadded:: 0.22\n\n.. versionchanged:: 1.9\nFloat `max_samples` is relative to `sample_weight.sum()` instead of\n`X.shape[0]` for weighted samples.\nNone\n\n\n\nmonotonic_cst  monotonic_cst: array-like of int of shape (n_features), default=None\n\nIndicates the monotonicity constraint to enforce on each feature.\n- 1: monotonic increase\n- 0: no constraint\n- -1: monotonic decrease\n\nIf monotonic_cst is None, no constraints are applied.\n\nMonotonicity constraints are not supported for:\n- multiclass classifications (i.e. when `n_classes &gt; 2`),\n- multioutput classifications (i.e. when `n_outputs_ &gt; 1`).\n\nThe constraints hold over the probability of the positive class.\n\nRead more in the :ref:`User Guide &lt;monotonic_cst_gbdt&gt;`.\n\n.. versionadded:: 1.4\nNone\n\n\n\n\n            \n        \n    \n        \n            \n                Fitted attributes\n                \n\n\n\n\n\n\n\n\nName\nType\nValue\n\n\nclasses_  classes_: ndarray of shape (n_classes,) or a list of such arrays\n\nThe classes labels (single output problem), or a list of arrays of\nclass labels (multi-output problem).\nndarray[object](3,)\n['sitting','standing','walking']\n\n\nestimator_  estimator_: :class:`~sklearn.tree.DecisionTreeClassifier`\n\nThe child estimator template used to create the collection of fitted\nsub-estimators.\n\n.. versionadded:: 1.2\n`base_estimator_` was renamed to `estimator_`.\nDecisionTreeClassifier\nDecisionTreeClassifier()\n\n\nestimators_  estimators_: list of DecisionTreeClassifier\n\nThe collection of fitted sub-estimators.\nlist\n[DecisionTreeC...te=1608637542), DecisionTreeC...te=1273642419), DecisionTreeC...te=1935803228), DecisionTreeC...ate=787846414), ...]\n\n\nestimators_samples_  estimators_samples_: list of arrays\n\nThe subset of drawn samples (i.e., the in-bag samples) for each base\nestimator. Each subset is defined by an array of the indices selected.\n\n.. versionadded:: 1.4\nlist\n[array([2523, ..., dtype=int32), array([4782, ..., dtype=int32), array([5462, ..., dtype=int32), array([2848, ..., dtype=int32), ...]\n\n\nfeature_importances_  feature_importances_: ndarray of shape (n_features,)\n\nThe impurity-based feature importances.\nThe higher, the more important the feature.\nThe importance of a feature is computed as the (normalized)\ntotal reduction of the criterion brought by that feature. It is also\nknown as the Gini importance.\n\nWarning: impurity-based feature importances can be misleading for\nhigh cardinality features (many unique values). See\n:func:`sklearn.inspection.permutation_importance` as an alternative.\nndarray[float64](20,)\n[0.02,0.08,0.02,...,0.06,0.08,0.04]\n\n\nfeature_names_in_  feature_names_in_: ndarray of shape (`n_features_in_`,)\n\nNames of features seen during :term:`fit`. Defined only when `X`\nhas feature names that are all strings.\n\n.. versionadded:: 1.0\nndarray[object](20,)\n['mean_x','std_x','min_x',...,'min_magnitude','max_magnitude', 'energy_magnitude']\n\n\nn_classes_  n_classes_: int or list\n\nThe number of classes (single output problem), or a list containing the\nnumber of classes for each output (multi-output problem).\nint\n3\n\n\nn_features_in_  n_features_in_: int\n\nNumber of features seen during :term:`fit`.\n\n.. versionadded:: 0.24\nint\n20\n\n\nn_outputs_  n_outputs_: int\n\nThe number of outputs when ``fit`` is performed.\nint\n1\n\n\n\n\n            \n        \n    \n\n\n\nbaseline_model.classes_\n\narray(['sitting', 'standing', 'walking'], dtype=object)",
     "crumbs": [
       "<span class='chapter-number'>7</span>  <span class='chapter-title'>Machine Learning</span>"
     ]
   },
   {
-    "objectID": "modules/06_machine_learning.html#step-4-train-the-random-forest",
-    "href": "modules/06_machine_learning.html#step-4-train-the-random-forest",
+    "objectID": "modules/06_machine_learning.html#step-4-predict-one-window",
+    "href": "modules/06_machine_learning.html#step-4-predict-one-window",
     "title": "7  Machine Learning",
-    "section": "7.7 Step 4 — Train the Random Forest",
-    "text": "7.7 Step 4 — Train the Random Forest\n\nrf = RandomForestClassifier(\n    n_estimators=200,\n    random_state=42,\n)\n\nrf.fit(X_train, y_train)\n\nRandomForestClassifier(n_estimators=200, random_state=42)In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.RandomForestClassifier?Documentation for RandomForestClassifieriFitted\n        \n            \n                Parameters\n                \n\n\n\n\n\n\n\n\n\nn_estimators  n_estimators: int, default=100\n\nThe number of trees in the forest.\n\n.. versionchanged:: 0.22\nThe default value of ``n_estimators`` changed from 10 to 100\nin 0.22.\n200\n\n\n\nrandom_state  random_state: int, RandomState instance or None, default=None\n\nControls both the randomness of the bootstrapping of the samples used\nwhen building trees (if ``bootstrap=True``) and the sampling of the\nfeatures to consider when looking for the best split at each node\n(if ``max_features &lt; n_features``).\nSee :term:`Glossary &lt;random_state&gt;` for details.\n42\n\n\n\ncriterion  criterion: {\"gini\", \"entropy\", \"log_loss\"}, default=\"gini\"\n\nThe function to measure the quality of a split. Supported criteria are\n\"gini\" for the Gini impurity and \"log_loss\" and \"entropy\" both for the\nShannon information gain, see :ref:`tree_mathematical_formulation`.\nNote: This parameter is tree-specific.\n'gini'\n\n\n\nmax_depth  max_depth: int, default=None\n\nThe maximum depth of the tree. If None, then nodes are expanded until\nall leaves are pure or until all leaves contain less than\nmin_samples_split samples.\nNone\n\n\n\nmin_samples_split  min_samples_split: int or float, default=2\n\nThe minimum number of samples required to split an internal node:\n\n- If int, then consider `min_samples_split` as the minimum number.\n- If float, then `min_samples_split` is a fraction and\n`ceil(min_samples_split * n_samples)` are the minimum\nnumber of samples for each split.\n\n.. versionchanged:: 0.18\nAdded float values for fractions.\n2\n\n\n\nmin_samples_leaf  min_samples_leaf: int or float, default=1\n\nThe minimum number of samples required to be at a leaf node.\nA split point at any depth will only be considered if it leaves at\nleast ``min_samples_leaf`` training samples in each of the left and\nright branches. This may have the effect of smoothing the model,\nespecially in regression.\n\n- If int, then consider `min_samples_leaf` as the minimum number.\n- If float, then `min_samples_leaf` is a fraction and\n`ceil(min_samples_leaf * n_samples)` are the minimum\nnumber of samples for each node.\n\n.. versionchanged:: 0.18\nAdded float values for fractions.\n1\n\n\n\nmin_weight_fraction_leaf  min_weight_fraction_leaf: float, default=0.0\n\nThe minimum weighted fraction of the sum total of weights (of all\nthe input samples) required to be at a leaf node. Samples have\nequal weight when sample_weight is not provided.\n0.0\n\n\n\nmax_features  max_features: {\"sqrt\", \"log2\", None}, int or float, default=\"sqrt\"\n\nThe number of features to consider when looking for the best split:\n\n- If int, then consider `max_features` features at each split.\n- If float, then `max_features` is a fraction and\n`max(1, int(max_features * n_features_in_))` features are considered at each\nsplit.\n- If \"sqrt\", then `max_features=sqrt(n_features)`.\n- If \"log2\", then `max_features=log2(n_features)`.\n- If None, then `max_features=n_features`.\n\n.. versionchanged:: 1.1\nThe default of `max_features` changed from `\"auto\"` to `\"sqrt\"`.\n\nNote: the search for a split does not stop until at least one\nvalid partition of the node samples is found, even if it requires to\neffectively inspect more than ``max_features`` features.\n'sqrt'\n\n\n\nmax_leaf_nodes  max_leaf_nodes: int, default=None\n\nGrow trees with ``max_leaf_nodes`` in best-first fashion.\nBest nodes are defined as relative reduction in impurity.\nIf None then unlimited number of leaf nodes.\nNone\n\n\n\nmin_impurity_decrease  min_impurity_decrease: float, default=0.0\n\nA node will be split if this split induces a decrease of the impurity\ngreater than or equal to this value.\n\nThe weighted impurity decrease equation is the following::\n\nN_t / N * (impurity - N_t_R / N_t * right_impurity\n- N_t_L / N_t * left_impurity)\n\nwhere ``N`` is the total number of samples, ``N_t`` is the number of\nsamples at the current node, ``N_t_L`` is the number of samples in the\nleft child, and ``N_t_R`` is the number of samples in the right child.\n\n``N``, ``N_t``, ``N_t_R`` and ``N_t_L`` all refer to the weighted sum,\nif ``sample_weight`` is passed.\n\n.. versionadded:: 0.19\n0.0\n\n\n\nbootstrap  bootstrap: bool, default=True\n\nWhether bootstrap samples are used when building trees. If False, the\nwhole dataset is used to build each tree.\nTrue\n\n\n\noob_score  oob_score: bool or callable, default=False\n\nWhether to use out-of-bag samples to estimate the generalization score.\nBy default, :func:`~sklearn.metrics.accuracy_score` is used.\nProvide a callable with signature `metric(y_true, y_pred)` to use a\ncustom metric. Only available if `bootstrap=True`.\n\nFor an illustration of out-of-bag (OOB) error estimation, see the example\n:ref:`sphx_glr_auto_examples_ensemble_plot_ensemble_oob.py`.\nFalse\n\n\n\nn_jobs  n_jobs: int, default=None\n\nThe number of jobs to run in parallel. :meth:`fit`, :meth:`predict`,\n:meth:`decision_path` and :meth:`apply` are all parallelized over the\ntrees. ``None`` means 1 unless in a :obj:`joblib.parallel_backend`\ncontext. ``-1`` means using all processors. See :term:`Glossary\n&lt;n_jobs&gt;` for more details.\nNone\n\n\n\nverbose  verbose: int, default=0\n\nControls the verbosity when fitting and predicting.\n0\n\n\n\nwarm_start  warm_start: bool, default=False\n\nWhen set to ``True``, reuse the solution of the previous call to fit\nand add more estimators to the ensemble, otherwise, just fit a whole\nnew forest. See :term:`Glossary &lt;warm_start&gt;` and\n:ref:`tree_ensemble_warm_start` for details.\nFalse\n\n\n\nclass_weight  class_weight: {\"balanced\", \"balanced_subsample\"}, dict or list of dicts, default=None\n\nWeights associated with classes in the form ``{class_label: weight}``.\nIf not given, all classes are supposed to have weight one. For\nmulti-output problems, a list of dicts can be provided in the same\norder as the columns of y.\n\nNote that for multioutput (including multilabel) weights should be\ndefined for each class of every column in its own dict. For example,\nfor four-class multilabel classification weights should be\n[{0: 1, 1: 1}, {0: 1, 1: 5}, {0: 1, 1: 1}, {0: 1, 1: 1}] instead of\n[{1:1}, {2:5}, {3:1}, {4:1}].\n\nThe \"balanced\" mode uses the values of y to automatically adjust\nweights inversely proportional to class frequencies in the input data\nas ``n_samples / (n_classes * np.bincount(y))``\n\nThe \"balanced_subsample\" mode is the same as \"balanced\" except that\nweights are computed based on the bootstrap sample for every tree\ngrown.\n\nFor multi-output, the weights of each column of y will be multiplied.\n\nNote that these weights will be multiplied with sample_weight (passed\nthrough the fit method) if sample_weight is specified.\nNone\n\n\n\nccp_alpha  ccp_alpha: non-negative float, default=0.0\n\nComplexity parameter used for Minimal Cost-Complexity Pruning. The\nsubtree with the largest cost complexity that is smaller than\n``ccp_alpha`` will be chosen. By default, no pruning is performed. See\n:ref:`minimal_cost_complexity_pruning` for details. See\n:ref:`sphx_glr_auto_examples_tree_plot_cost_complexity_pruning.py`\nfor an example of such pruning.\n\n.. versionadded:: 0.22\n0.0\n\n\n\nmax_samples  max_samples: int or float, default=None\n\nIf bootstrap is True, the number of samples to draw from X\nto train each base estimator.\n\n- If None (default), then draw `X.shape[0]` samples irrespective of\n`sample_weight`.\n- If int, then draw `max_samples` samples.\n- If float, then draw `max_samples * X.shape[0]` unweighted samples\nor `max_samples * sample_weight.sum()` weighted samples.\n\n.. versionadded:: 0.22\n\n.. versionchanged:: 1.9\nFloat `max_samples` is relative to `sample_weight.sum()` instead of\n`X.shape[0]` for weighted samples.\nNone\n\n\n\nmonotonic_cst  monotonic_cst: array-like of int of shape (n_features), default=None\n\nIndicates the monotonicity constraint to enforce on each feature.\n- 1: monotonic increase\n- 0: no constraint\n- -1: monotonic decrease\n\nIf monotonic_cst is None, no constraints are applied.\n\nMonotonicity constraints are not supported for:\n- multiclass classifications (i.e. when `n_classes &gt; 2`),\n- multioutput classifications (i.e. when `n_outputs_ &gt; 1`).\n\nThe constraints hold over the probability of the positive class.\n\nRead more in the :ref:`User Guide &lt;monotonic_cst_gbdt&gt;`.\n\n.. versionadded:: 1.4\nNone\n\n\n\n\n            \n        \n    \n        \n            \n                Fitted attributes\n                \n\n\n\n\n\n\n\n\nName\nType\nValue\n\n\nclasses_  classes_: ndarray of shape (n_classes,) or a list of such arrays\n\nThe classes labels (single output problem), or a list of arrays of\nclass labels (multi-output problem).\nndarray[object](3,)\n['sitting','standing','walking']\n\n\nestimator_  estimator_: :class:`~sklearn.tree.DecisionTreeClassifier`\n\nThe child estimator template used to create the collection of fitted\nsub-estimators.\n\n.. versionadded:: 1.2\n`base_estimator_` was renamed to `estimator_`.\nDecisionTreeClassifier\nDecisionTreeClassifier()\n\n\nestimators_  estimators_: list of DecisionTreeClassifier\n\nThe collection of fitted sub-estimators.\nlist\n[DecisionTreeC...te=1608637542), DecisionTreeC...te=1273642419), DecisionTreeC...te=1935803228), DecisionTreeC...ate=787846414), ...]\n\n\nestimators_samples_  estimators_samples_: list of arrays\n\nThe subset of drawn samples (i.e., the in-bag samples) for each base\nestimator. Each subset is defined by an array of the indices selected.\n\n.. versionadded:: 1.4\nlist\n[array([2523, ..., dtype=int32), array([4782, ..., dtype=int32), array([5462, ..., dtype=int32), array([2848, ..., dtype=int32), ...]\n\n\nfeature_importances_  feature_importances_: ndarray of shape (n_features,)\n\nThe impurity-based feature importances.\nThe higher, the more important the feature.\nThe importance of a feature is computed as the (normalized)\ntotal reduction of the criterion brought by that feature. It is also\nknown as the Gini importance.\n\nWarning: impurity-based feature importances can be misleading for\nhigh cardinality features (many unique values). See\n:func:`sklearn.inspection.permutation_importance` as an alternative.\nndarray[float64](20,)\n[0.02,0.08,0.01,...,0.06,0.08,0.03]\n\n\nfeature_names_in_  feature_names_in_: ndarray of shape (`n_features_in_`,)\n\nNames of features seen during :term:`fit`. Defined only when `X`\nhas feature names that are all strings.\n\n.. versionadded:: 1.0\nndarray[object](20,)\n['mean_x','std_x','min_x',...,'min_magnitude','max_magnitude', 'energy_magnitude']\n\n\nn_classes_  n_classes_: int or list\n\nThe number of classes (single output problem), or a list containing the\nnumber of classes for each output (multi-output problem).\nint\n3\n\n\nn_features_in_  n_features_in_: int\n\nNumber of features seen during :term:`fit`.\n\n.. versionadded:: 0.24\nint\n20\n\n\nn_outputs_  n_outputs_: int\n\nThe number of outputs when ``fit`` is performed.\nint\n1",
-    "crumbs": [
-      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Machine Learning</span>"
-    ]
-  },
-  {
-    "objectID": "modules/06_machine_learning.html#step-5-predict-on-the-test-set",
-    "href": "modules/06_machine_learning.html#step-5-predict-on-the-test-set",
-    "title": "7  Machine Learning",
-    "section": "7.8 Step 5 — Predict on the Test Set",
-    "text": "7.8 Step 5 — Predict on the Test Set\n\ny_pred = rf.predict(X_test)\n\ny_pred[:10]\n\narray(['standing', 'walking', 'standing', 'standing', 'sitting',\n       'sitting', 'standing', 'standing', 'walking', 'walking'],\n      dtype=object)",
-    "crumbs": [
-      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Machine Learning</span>"
-    ]
-  },
-  {
-    "objectID": "modules/06_machine_learning.html#step-6-evaluate-accuracy",
-    "href": "modules/06_machine_learning.html#step-6-evaluate-accuracy",
-    "title": "7  Machine Learning",
-    "section": "7.9 Step 6 — Evaluate Accuracy",
-    "text": "7.9 Step 6 — Evaluate Accuracy\n\nrandom_split_accuracy = accuracy_score(y_test, y_pred)\n\nrandom_split_accuracy\n\n0.9857496902106567\n\n\n\n7.9.1 Discussion\nAccuracy tells us the fraction of correctly classified windows.\nHowever, accuracy alone does not tell us which classes are confused.",
-    "crumbs": [
-      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Machine Learning</span>"
-    ]
-  },
-  {
-    "objectID": "modules/06_machine_learning.html#step-7-classification-report",
-    "href": "modules/06_machine_learning.html#step-7-classification-report",
-    "title": "7  Machine Learning",
-    "section": "7.10 Step 7 — Classification Report",
-    "text": "7.10 Step 7 — Classification Report\n\nprint(classification_report(y_test, y_pred))\n\n              precision    recall  f1-score   support\n\n     sitting       0.99      0.98      0.98       524\n    standing       0.98      0.99      0.98       535\n     walking       0.98      1.00      0.99       555\n\n    accuracy                           0.99      1614\n   macro avg       0.99      0.99      0.99      1614\nweighted avg       0.99      0.99      0.99      1614\n\n\n\nThe classification report shows precision, recall and F1-score for each class.",
-    "crumbs": [
-      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Machine Learning</span>"
-    ]
-  },
-  {
-    "objectID": "modules/06_machine_learning.html#step-8-confusion-matrix",
-    "href": "modules/06_machine_learning.html#step-8-confusion-matrix",
-    "title": "7  Machine Learning",
-    "section": "7.11 Step 8 — Confusion Matrix",
-    "text": "7.11 Step 8 — Confusion Matrix\n\nConfusionMatrixDisplay.from_estimator(\n    rf,\n    X_test,\n    y_test,\n)\n\nplt.show()\n\n\n\n\n\n\n\n\n\n7.11.1 Discussion\nThe confusion matrix helps us see which activities are confused with each other.\nFor this dataset, walking is usually easier to classify than sitting and standing.",
-    "crumbs": [
-      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Machine Learning</span>"
-    ]
-  },
-  {
-    "objectID": "modules/06_machine_learning.html#step-9-predict-one-window",
-    "href": "modules/06_machine_learning.html#step-9-predict-one-window",
-    "title": "7  Machine Learning",
-    "section": "7.12 Step 9 — Predict One Window",
-    "text": "7.12 Step 9 — Predict One Window\n\nsample = X_test.iloc[[0]]\n\nprediction = rf.predict(sample)\n\nprediction\n\narray(['standing'], dtype=object)\n\n\n\npd.DataFrame(\n    rf.predict_proba(sample),\n    columns=rf.classes_,\n)\n\n\n\n\n\n\n\n\nsitting\nstanding\nwalking\n\n\n\n\n0\n0.01\n0.99\n0.0\n\n\n\n\n\n\n\n\n7.12.1 Discussion\nThe model not only predicts a class but can also estimate class probabilities.\nThese probabilities will later be useful in the dashboard.",
-    "crumbs": [
-      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Machine Learning</span>"
-    ]
-  },
-  {
-    "objectID": "modules/06_machine_learning.html#think",
-    "href": "modules/06_machine_learning.html#think",
-    "title": "7  Machine Learning",
-    "section": "7.13 Think",
-    "text": "7.13 Think\nThe model may achieve very high accuracy with a random split.\nDoes that mean the system will work equally well on a completely new person?\nWhy or why not?",
+    "section": "7.7 Step 4 — Predict One Window",
+    "text": "7.7 Step 4 — Predict One Window\nWe inspect one prediction to understand the model interface.\n\nsample = X.iloc[[0]]\n\nprediction = baseline_model.predict(sample)\n\nprediction\n\narray(['sitting'], dtype=object)\n\n\n\npd.DataFrame(\n    baseline_model.predict_proba(sample),\n    columns=baseline_model.classes_,\n)\n\n\n\n\n\n\n\n\nsitting\nstanding\nwalking\n\n\n\n\n0\n1.0\n0.0\n0.0\n\n\n\n\n\n\n\n\n7.7.1 Discussion\nThe model predicts one activity label.\nIt can also return probabilities for all known classes.\nThese probabilities will later be useful for dashboards and live prediction.",
     "crumbs": [
       "<span class='chapter-number'>7</span>  <span class='chapter-title'>Machine Learning</span>"
     ]
@@ -843,8 +783,8 @@
     "objectID": "modules/06_machine_learning.html#checkpoint",
     "href": "modules/06_machine_learning.html#checkpoint",
     "title": "7  Machine Learning",
-    "section": "7.14 Checkpoint",
-    "text": "7.14 Checkpoint\nBefore continuing, you should be able to answer:\n\nWhy is Random Forest a good baseline model?\nWhat are X and y?\nWhy should subject_id not be used as a feature?\nWhat does accuracy measure?\nWhat additional information does the confusion matrix provide?",
+    "section": "7.8 Checkpoint",
+    "text": "7.8 Checkpoint\nBefore continuing, you should be able to answer:\n\nWhy is Random Forest a good baseline model?\nWhat are X, y and groups?\nWhy should subject_id not be used as a feature?\nWhy must the feature column order be saved?\nWhat is the difference between predict() and predict_proba()?",
     "crumbs": [
       "<span class='chapter-number'>7</span>  <span class='chapter-title'>Machine Learning</span>"
     ]
@@ -853,8 +793,8 @@
     "objectID": "modules/06_machine_learning.html#further-exploration",
     "href": "modules/06_machine_learning.html#further-exploration",
     "title": "7  Machine Learning",
-    "section": "7.15 Further Exploration",
-    "text": "7.15 Further Exploration\nOptional: change the number of trees from 200 to 50.\nDoes the accuracy change?\nWhat does this tell you about the stability of the model?",
+    "section": "7.9 Further Exploration",
+    "text": "7.9 Further Exploration\nOptional: change the number of trees from 200 to 50.\nDoes the prediction for the sample window change?\nWhat does this tell you about model stability?",
     "crumbs": [
       "<span class='chapter-number'>7</span>  <span class='chapter-title'>Machine Learning</span>"
     ]
@@ -863,30 +803,150 @@
     "objectID": "modules/06_machine_learning.html#summary",
     "href": "modules/06_machine_learning.html#summary",
     "title": "7  Machine Learning",
-    "section": "7.16 Summary",
-    "text": "7.16 Summary\nIn this chapter you learned how to\n\nload the feature table,\ndefine feature columns and target labels,\ntrain a Random Forest classifier,\nevaluate it with a random split,\ninspect predictions and probabilities.\n\nIn the next chapter we will ask a more realistic question:\nCan the model generalize to people it has never seen before?",
+    "section": "7.10 Summary",
+    "text": "7.10 Summary\nIn this chapter you learned how to\n\nload the saved feature table,\nsplit features, labels and subject identifiers,\ntrain a reusable Random Forest baseline,\ninspect one prediction and its probabilities.\n\nIn the next chapter we will evaluate whether the model generalizes to people it has never seen before.",
     "crumbs": [
       "<span class='chapter-number'>7</span>  <span class='chapter-title'>Machine Learning</span>"
     ]
   },
   {
+    "objectID": "modules/07_evaluation.html",
+    "href": "modules/07_evaluation.html",
+    "title": "8  Evaluation",
+    "section": "",
+    "text": "8.1 Learning Objectives\nAfter completing this chapter, you should be able to",
+    "crumbs": [
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Evaluation</span>"
+    ]
+  },
+  {
+    "objectID": "modules/07_evaluation.html#learning-objectives",
+    "href": "modules/07_evaluation.html#learning-objectives",
+    "title": "8  Evaluation",
+    "section": "",
+    "text": "explain why random train/test splits can be optimistic,\nevaluate a model with a subject-wise split,\nunderstand the leave-one-subject-out evaluation idea,\ncompare random split and subject-wise results,\nexport model metadata with evaluation results.",
+    "crumbs": [
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Evaluation</span>"
+    ]
+  },
+  {
+    "objectID": "modules/07_evaluation.html#setup",
+    "href": "modules/07_evaluation.html#setup",
+    "title": "8  Evaluation",
+    "section": "8.2 Setup",
+    "text": "8.2 Setup\n\nfrom pathlib import Path\nimport sys\n\nimport pandas as pd\n\ncurrent_path = Path.cwd().resolve()\n\nfor parent in [current_path] + list(current_path.parents):\n    if (parent / \"app\").exists():\n        PROJECT_ROOT = parent\n        break\nelse:\n    raise RuntimeError(\"Could not find project root containing app/ directory.\")\n\nsys.path.insert(0, str(PROJECT_ROOT))\n\nfrom app.config import WINDOW_SIZE\nfrom app.evaluation import (\n    confusion_matrix_table,\n    evaluate_random_split,\n    evaluate_subject_split,\n    leave_one_subject_out_evaluation,\n    metrics_for_metadata,\n)\nfrom app.training import (\n    load_feature_table,\n    save_model_artifacts,\n    split_features_and_labels,\n    train_random_forest,\n)\n\n\nfeatures_df = load_feature_table()\nX, y, groups, feature_columns = split_features_and_labels(features_df)\n\nfeatures_df.shape\n\n(8066, 22)",
+    "crumbs": [
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Evaluation</span>"
+    ]
+  },
+  {
+    "objectID": "modules/07_evaluation.html#why-random-split-can-be-optimistic",
+    "href": "modules/07_evaluation.html#why-random-split-can-be-optimistic",
+    "title": "8  Evaluation",
+    "section": "8.3 Why Random Split Can Be Optimistic",
+    "text": "8.3 Why Random Split Can Be Optimistic\nA random split divides windows into training and test rows.\nThis is easy to do, but it can mix windows from the same person across both sets.\nFor wearable data, this matters because people move differently.\n\n\n\n\n\n\nWarningCommon Pitfall\n\n\n\nIf windows from the same subject appear in both training and test sets, the model may partly learn person-specific movement patterns.\nThe test score can then look better than performance on a completely new person.",
+    "crumbs": [
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Evaluation</span>"
+    ]
+  },
+  {
+    "objectID": "modules/07_evaluation.html#step-1-random-split-evaluation",
+    "href": "modules/07_evaluation.html#step-1-random-split-evaluation",
+    "title": "8  Evaluation",
+    "section": "8.4 Step 1 — Random Split Evaluation",
+    "text": "8.4 Step 1 — Random Split Evaluation\n\nrandom_result = evaluate_random_split(X, y)\n\nrandom_result[\"metrics\"][\"accuracy\"]\n\n0.9857496902106567\n\n\n\npd.DataFrame(random_result[\"metrics\"][\"classification_report\"]).T\n\n\n\n\n\n\n\n\nprecision\nrecall\nf1-score\nsupport\n\n\n\n\nsitting\n0.992233\n0.975191\n0.983638\n524.00000\n\n\nstanding\n0.983209\n0.985047\n0.984127\n535.00000\n\n\nwalking\n0.982238\n0.996396\n0.989267\n555.00000\n\n\naccuracy\n0.985750\n0.985750\n0.985750\n0.98575\n\n\nmacro avg\n0.985893\n0.985545\n0.985677\n1614.00000\n\n\nweighted avg\n0.985805\n0.985750\n0.985736\n1614.00000\n\n\n\n\n\n\n\n\nrandom_labels = random_result[\"metrics\"][\"labels\"]\nrandom_matrix = pd.DataFrame(\n    random_result[\"metrics\"][\"confusion_matrix\"],\n    index=[f\"true_{label}\" for label in random_labels],\n    columns=[f\"pred_{label}\" for label in random_labels],\n)\n\nrandom_matrix\n\n\n\n\n\n\n\n\npred_sitting\npred_standing\npred_walking\n\n\n\n\ntrue_sitting\n511\n9\n4\n\n\ntrue_standing\n2\n527\n6\n\n\ntrue_walking\n2\n0\n553\n\n\n\n\n\n\n\n\n8.4.1 Discussion\nThis score answers the question:\n\nCan the model classify unseen windows from a similar pool of subjects?\n\nThat is useful, but it is not the same as testing on a new person.",
+    "crumbs": [
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Evaluation</span>"
+    ]
+  },
+  {
+    "objectID": "modules/07_evaluation.html#step-2-subject-wise-evaluation",
+    "href": "modules/07_evaluation.html#step-2-subject-wise-evaluation",
+    "title": "8  Evaluation",
+    "section": "8.5 Step 2 — Subject-Wise Evaluation",
+    "text": "8.5 Step 2 — Subject-Wise Evaluation\nIn a subject-wise split, entire subjects are assigned to either training or test.\nThe model is evaluated on people it did not see during training.\n\nsubject_result = evaluate_subject_split(X, y, groups)\n\nsubject_result[\"metrics\"][\"accuracy\"]\n\n0.8678756476683938\n\n\n\nsubject_result[\"test_subjects\"]\n\n[1643, 1640, 1646, 1612, 1624, 1631, 1617, 1632, 1603, 1630, 1613]\n\n\n\npd.DataFrame(subject_result[\"metrics\"][\"classification_report\"]).T\n\n\n\n\n\n\n\n\nprecision\nrecall\nf1-score\nsupport\n\n\n\n\nsitting\n0.752013\n0.905039\n0.821460\n516.000000\n\n\nstanding\n0.895262\n0.698444\n0.784699\n514.000000\n\n\nwalking\n0.984674\n1.000000\n0.992278\n514.000000\n\n\naccuracy\n0.867876\n0.867876\n0.867876\n0.867876\n\n\nmacro avg\n0.877316\n0.867827\n0.866146\n1544.000000\n\n\nweighted avg\n0.877154\n0.867876\n0.866088\n1544.000000\n\n\n\n\n\n\n\n\nsubject_labels = subject_result[\"metrics\"][\"labels\"]\nsubject_matrix = pd.DataFrame(\n    subject_result[\"metrics\"][\"confusion_matrix\"],\n    index=[f\"true_{label}\" for label in subject_labels],\n    columns=[f\"pred_{label}\" for label in subject_labels],\n)\n\nsubject_matrix\n\n\n\n\n\n\n\n\npred_sitting\npred_standing\npred_walking\n\n\n\n\ntrue_sitting\n467\n42\n7\n\n\ntrue_standing\n154\n359\n1\n\n\ntrue_walking\n0\n0\n514\n\n\n\n\n\n\n\n\n8.5.1 Discussion\nThis score answers the more realistic deployment question:\n\nCan the model classify activities for people it has never seen before?\n\nThis is usually harder.\nSitting and standing are especially difficult because both can produce low-motion signals.",
+    "crumbs": [
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Evaluation</span>"
+    ]
+  },
+  {
+    "objectID": "modules/07_evaluation.html#step-3-compare-strategies",
+    "href": "modules/07_evaluation.html#step-3-compare-strategies",
+    "title": "8  Evaluation",
+    "section": "8.6 Step 3 — Compare Strategies",
+    "text": "8.6 Step 3 — Compare Strategies\n\ncomparison = pd.DataFrame(\n    [\n        {\n            \"strategy\": \"random_split\",\n            \"accuracy\": random_result[\"metrics\"][\"accuracy\"],\n            \"test_size\": random_result[\"test_size\"],\n        },\n        {\n            \"strategy\": \"subject_split\",\n            \"accuracy\": subject_result[\"metrics\"][\"accuracy\"],\n            \"test_size\": subject_result[\"test_size\"],\n        },\n    ]\n)\n\ncomparison\n\n\n\n\n\n\n\n\nstrategy\naccuracy\ntest_size\n\n\n\n\n0\nrandom_split\n0.985750\n1614\n\n\n1\nsubject_split\n0.867876\n1544\n\n\n\n\n\n\n\n\n8.6.1 Discussion\nIf the random split score is higher than the subject-wise score, that is not a bug.\nIt is evidence that generalization to new people is a harder problem than recognizing windows from familiar subjects.",
+    "crumbs": [
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Evaluation</span>"
+    ]
+  },
+  {
+    "objectID": "modules/07_evaluation.html#step-4-loso-concept",
+    "href": "modules/07_evaluation.html#step-4-loso-concept",
+    "title": "8  Evaluation",
+    "section": "8.7 Step 4 — LOSO Concept",
+    "text": "8.7 Step 4 — LOSO Concept\nLeave-one-subject-out evaluation trains one model per subject.\nEach run holds out exactly one subject for testing and trains on all remaining subjects.\nThis gives a more detailed view of which subjects are easy or hard to generalize to.\nFor a teaching render, we run a small preview on the first five subjects.\n\nloso_preview = leave_one_subject_out_evaluation(\n    X,\n    y,\n    groups,\n    max_subjects=5,\n)\n\nloso_preview\n\n\n\n\n\n\n\n\nsubject_id\naccuracy\ntest_size\n\n\n\n\n0\n1600\n1.000000\n105\n\n\n1\n1601\n1.000000\n135\n\n\n2\n1602\n1.000000\n105\n\n\n3\n1603\n0.963504\n137\n\n\n4\n1604\n0.961905\n105\n\n\n\n\n\n\n\n\nloso_preview[\"accuracy\"].describe()\n\ncount    5.000000\nmean     0.985082\nstd      0.020436\nmin      0.961905\n25%      0.963504\n50%      1.000000\n75%      1.000000\nmax      1.000000\nName: accuracy, dtype: float64\n\n\n\n\n\n\n\n\nNoteRemember\n\n\n\nA full LOSO evaluation is useful, but it trains one model per subject.\nFor this dataset, that means 51 model fits.",
+    "crumbs": [
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Evaluation</span>"
+    ]
+  },
+  {
+    "objectID": "modules/07_evaluation.html#step-5-export-model-artifacts-and-metadata",
+    "href": "modules/07_evaluation.html#step-5-export-model-artifacts-and-metadata",
+    "title": "8  Evaluation",
+    "section": "8.8 Step 5 — Export Model Artifacts and Metadata",
+    "text": "8.8 Step 5 — Export Model Artifacts and Metadata\nWe train one final model on all available feature rows and save the artifacts needed later:\n\ntrained model,\nfeature column order,\nclass labels,\nmodel metadata,\nevaluation results.\n\n\nfinal_model = train_random_forest(X, y)\n\nmetadata = {\n    \"evaluation_results\": {\n        \"random_split\": metrics_for_metadata(random_result),\n        \"subject_split\": metrics_for_metadata(subject_result),\n        \"loso_preview\": loso_preview.to_dict(orient=\"records\"),\n    }\n}\n\nmodel_metadata = save_model_artifacts(\n    final_model,\n    feature_columns,\n    metadata=metadata,\n    window_size=WINDOW_SIZE,\n)\n\nmodel_metadata.keys()\n\ndict_keys(['model_type', 'window_size', 'feature_columns', 'class_labels', 'n_estimators', 'random_state', 'evaluation_results'])\n\n\n\n{\n    \"model_type\": model_metadata[\"model_type\"],\n    \"window_size\": model_metadata[\"window_size\"],\n    \"class_labels\": model_metadata[\"class_labels\"],\n}\n\n{'model_type': 'RandomForestClassifier',\n 'window_size': 100,\n 'class_labels': ['sitting', 'standing', 'walking']}",
+    "crumbs": [
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Evaluation</span>"
+    ]
+  },
+  {
+    "objectID": "modules/07_evaluation.html#checkpoint",
+    "href": "modules/07_evaluation.html#checkpoint",
+    "title": "8  Evaluation",
+    "section": "8.9 Checkpoint",
+    "text": "8.9 Checkpoint\nBefore continuing, you should be able to answer:\n\nWhy can a random split be optimistic?\nWhat changes in a subject-wise split?\nWhat does LOSO evaluate?\nWhy is generalization to new people harder?\nWhy do we save feature columns with the model?",
+    "crumbs": [
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Evaluation</span>"
+    ]
+  },
+  {
+    "objectID": "modules/07_evaluation.html#further-exploration",
+    "href": "modules/07_evaluation.html#further-exploration",
+    "title": "8  Evaluation",
+    "section": "8.10 Further Exploration",
+    "text": "8.10 Further Exploration\nOptional: run LOSO for all subjects by removing max_subjects=5.\nHow much do subject-level accuracies vary?\nWhich activities are most often confused?",
+    "crumbs": [
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Evaluation</span>"
+    ]
+  },
+  {
+    "objectID": "modules/07_evaluation.html#summary",
+    "href": "modules/07_evaluation.html#summary",
+    "title": "8  Evaluation",
+    "section": "8.11 Summary",
+    "text": "8.11 Summary\nIn this chapter you learned how to\n\ncompare random split and subject-wise evaluation,\ninterpret why subject-wise evaluation is more realistic,\nuse a LOSO preview,\nexport model artifacts with metadata.\n\nThe next chapters will later turn these artifacts into a service and live demo.",
+    "crumbs": [
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Evaluation</span>"
+    ]
+  },
+  {
     "objectID": "modules/07_deployment.html",
     "href": "modules/07_deployment.html",
-    "title": "8  Deployment",
+    "title": "9  Deployment",
     "section": "",
     "text": "This chapter turns the trained model into a reusable prediction service.",
     "crumbs": [
-      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Deployment</span>"
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Deployment</span>"
     ]
   },
   {
     "objectID": "modules/08_live_prediction.html",
     "href": "modules/08_live_prediction.html",
-    "title": "9  Live Prediction",
+    "title": "10  Live Prediction",
     "section": "",
     "text": "This chapter connects phyphox, Streamlit, and the trained model for live activity recognition.",
     "crumbs": [
-      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Live Prediction</span>"
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Live Prediction</span>"
     ]
   }
 ]

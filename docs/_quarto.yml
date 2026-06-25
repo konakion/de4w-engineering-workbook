@@ -14,6 +14,7 @@ book:
     - modules/04_windowing.qmd
     - modules/05_feature_engineering.qmd
     - modules/06_machine_learning.qmd
+    - modules/07_evaluation.qmd
     - modules/07_deployment.qmd
     - modules/08_live_prediction.qmd
 

@@ -5,11 +5,10 @@
 After completing this chapter, you should be able to
 
 - load the feature table created in the previous chapter,
-- define feature columns and target labels,
-- train a Random Forest classifier,
-- create predictions on unseen windows,
-- evaluate the model with accuracy and a classification report,
-- understand why a simple baseline model is valuable.
+- separate model features from labels and subject identifiers,
+- train a Random Forest baseline model,
+- inspect predictions and class probabilities,
+- understand why reusable training code matters.
 
 ---
 
@@ -20,15 +19,6 @@ from pathlib import Path
 import sys
 
 import pandas as pd
-import matplotlib.pyplot as plt
-
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.metrics import (
-    accuracy_score,
-    classification_report,
-    ConfusionMatrixDisplay,
-)
-from sklearn.model_selection import train_test_split
 
 current_path = Path.cwd().resolve()
 
@@ -41,16 +31,18 @@ else:
 
 sys.path.insert(0, str(PROJECT_ROOT))
 
-DATA_DIR = PROJECT_ROOT / "data"
-
-features_df = pd.read_csv(DATA_DIR / "features_df.csv")
+from app.training import (
+    load_feature_table,
+    split_features_and_labels,
+    train_random_forest,
+)
 ```
 
 ---
 
 ## Why Random Forest?
 
-We use a Random Forest as our first model because it is a strong baseline for tabular feature data.
+We use a Random Forest as the first model because it is a strong baseline for tabular feature data.
 
 A Random Forest is an ensemble of decision trees.
 
@@ -72,9 +64,13 @@ Before using deep learning, always ask whether a simpler model already solves th
 
 ---
 
-## Step 1 — Inspect the Feature Table
+## Step 1 — Load the Feature Table
+
+The previous chapter saved one row per sensor window.
 
 ```{python}
+features_df = load_feature_table()
+
 features_df.head()
 ```
 
@@ -88,160 +84,76 @@ features_df["activity"].value_counts()
 
 ---
 
-## Step 2 — Define Features and Target
+## Step 2 — Split Features, Labels and Subjects
 
 The model should learn from numerical features.
 
 It should not use metadata such as `subject_id` as input.
 
 ```{python}
-feature_columns = [
-    column
-    for column in features_df.columns
-    if column not in ["activity", "subject_id"]
-]
+X, y, groups, feature_columns = split_features_and_labels(features_df)
 
-X = features_df[feature_columns]
-y = features_df["activity"]
-
-X.shape, y.shape
-```
-
----
-
-## Step 3 — Random Train/Test Split
-
-We first use a random train/test split.
-
-This is a common first evaluation strategy.
-
-```{python}
-X_train, X_test, y_train, y_test = train_test_split(
-    X,
-    y,
-    test_size=0.2,
-    random_state=42,
-    stratify=y,
-)
+X.shape, y.shape, groups.shape
 ```
 
 ```{python}
-X_train.shape, X_test.shape
+feature_columns
 ```
 
-::: {.callout-warning}
-## Common Pitfall
+::: {.callout-note}
+## Remember
 
-A random split may place windows from the same participant in both training and test sets.
+The exact feature column order must be saved with the model.
 
-This can make the evaluation look better than it really is.
-
-We will address this in the next chapter.
+During deployment, live features must be passed to the model in the same order.
 :::
 
 ---
 
-## Step 4 — Train the Random Forest
+## Step 3 — Train the Baseline Model
+
+We now train a Random Forest on the complete feature table.
+
+This gives us a baseline model artifact that later chapters can evaluate and export with metadata.
 
 ```{python}
-rf = RandomForestClassifier(
-    n_estimators=200,
-    random_state=42,
-)
+baseline_model = train_random_forest(X, y)
 
-rf.fit(X_train, y_train)
+baseline_model
+```
+
+```{python}
+baseline_model.classes_
 ```
 
 ---
 
-## Step 5 — Predict on the Test Set
+## Step 4 — Predict One Window
+
+We inspect one prediction to understand the model interface.
 
 ```{python}
-y_pred = rf.predict(X_test)
+sample = X.iloc[[0]]
 
-y_pred[:10]
-```
-
----
-
-## Step 6 — Evaluate Accuracy
-
-```{python}
-random_split_accuracy = accuracy_score(y_test, y_pred)
-
-random_split_accuracy
-```
-
-### Discussion
-
-Accuracy tells us the fraction of correctly classified windows.
-
-However, accuracy alone does not tell us which classes are confused.
-
----
-
-## Step 7 — Classification Report
-
-```{python}
-print(classification_report(y_test, y_pred))
-```
-
-The classification report shows precision, recall and F1-score for each class.
-
----
-
-## Step 8 — Confusion Matrix
-
-```{python}
-ConfusionMatrixDisplay.from_estimator(
-    rf,
-    X_test,
-    y_test,
-)
-
-plt.show()
-```
-
-### Discussion
-
-The confusion matrix helps us see which activities are confused with each other.
-
-For this dataset, walking is usually easier to classify than sitting and standing.
-
----
-
-## Step 9 — Predict One Window
-
-```{python}
-sample = X_test.iloc[[0]]
-
-prediction = rf.predict(sample)
+prediction = baseline_model.predict(sample)
 
 prediction
 ```
 
 ```{python}
 pd.DataFrame(
-    rf.predict_proba(sample),
-    columns=rf.classes_,
+    baseline_model.predict_proba(sample),
+    columns=baseline_model.classes_,
 )
 ```
 
 ### Discussion
 
-The model not only predicts a class but can also estimate class probabilities.
+The model predicts one activity label.
 
-These probabilities will later be useful in the dashboard.
+It can also return probabilities for all known classes.
 
----
-
-## Think
-
-The model may achieve very high accuracy with a random split.
-
-Does that mean the system will work equally well on a completely new person?
-
-Why or why not?
+These probabilities will later be useful for dashboards and live prediction.
 
 ---
 
@@ -250,10 +162,10 @@ Why or why not?
 Before continuing, you should be able to answer:
 
 1. Why is Random Forest a good baseline model?
-2. What are `X` and `y`?
+2. What are `X`, `y` and `groups`?
 3. Why should `subject_id` not be used as a feature?
-4. What does accuracy measure?
-5. What additional information does the confusion matrix provide?
+4. Why must the feature column order be saved?
+5. What is the difference between `predict()` and `predict_proba()`?
 
 ---
 
@@ -261,9 +173,9 @@ Before continuing, you should be able to answer:
 
 Optional: change the number of trees from `200` to `50`.
 
-Does the accuracy change?
+Does the prediction for the sample window change?
 
-What does this tell you about the stability of the model?
+What does this tell you about model stability?
 
 ---
 
@@ -271,12 +183,9 @@ What does this tell you about the stability of the model?
 
 In this chapter you learned how to
 
-- load the feature table,
-- define feature columns and target labels,
-- train a Random Forest classifier,
-- evaluate it with a random split,
-- inspect predictions and probabilities.
+- load the saved feature table,
+- split features, labels and subject identifiers,
+- train a reusable Random Forest baseline,
+- inspect one prediction and its probabilities.
 
-In the next chapter we will ask a more realistic question:
-
-Can the model generalize to people it has never seen before?
+In the next chapter we will evaluate whether the model generalizes to people it has never seen before.

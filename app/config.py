@@ -8,6 +8,7 @@ MODEL_DIR: Path = PROJECT_ROOT / "models"
 MODEL_PATH: Path = MODEL_DIR / "activity_model_random_forest.joblib"
 FEATURE_COLUMNS_PATH: Path = MODEL_DIR / "feature_columns.joblib"
 ACTIVITY_LABELS_PATH: Path = MODEL_DIR / "activity_labels.joblib"
+MODEL_METADATA_PATH: Path = MODEL_DIR / "model_metadata.json"
 
 WINDOW_SIZE: int = 100
 SAMPLING_RATE_HZ: int = 20

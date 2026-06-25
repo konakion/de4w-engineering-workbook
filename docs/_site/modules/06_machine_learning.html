@@ -68,7 +68,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../modules/07_deployment.html" rel="next">
+<link href="../modules/07_evaluation.html" rel="next">
 <link href="../modules/05_feature_engineering.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
@@ -192,14 +192,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="../modules/07_evaluation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Evaluation</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="../modules/07_deployment.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Deployment</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Deployment</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="../modules/08_live_prediction.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Live Prediction</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Live Prediction</span></span></a>
   </div>
 </li>
     </ul>
@@ -215,28 +221,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#learning-objectives" id="toc-learning-objectives" class="nav-link active" data-scroll-target="#learning-objectives"><span class="header-section-number">7.1</span> Learning Objectives</a></li>
   <li><a href="#setup" id="toc-setup" class="nav-link" data-scroll-target="#setup"><span class="header-section-number">7.2</span> Setup</a></li>
   <li><a href="#why-random-forest" id="toc-why-random-forest" class="nav-link" data-scroll-target="#why-random-forest"><span class="header-section-number">7.3</span> Why Random Forest?</a></li>
-  <li><a href="#step-1-inspect-the-feature-table" id="toc-step-1-inspect-the-feature-table" class="nav-link" data-scroll-target="#step-1-inspect-the-feature-table"><span class="header-section-number">7.4</span> Step 1 — Inspect the Feature Table</a></li>
-  <li><a href="#step-2-define-features-and-target" id="toc-step-2-define-features-and-target" class="nav-link" data-scroll-target="#step-2-define-features-and-target"><span class="header-section-number">7.5</span> Step 2 — Define Features and Target</a></li>
-  <li><a href="#step-3-random-traintest-split" id="toc-step-3-random-traintest-split" class="nav-link" data-scroll-target="#step-3-random-traintest-split"><span class="header-section-number">7.6</span> Step 3 — Random Train/Test Split</a></li>
-  <li><a href="#step-4-train-the-random-forest" id="toc-step-4-train-the-random-forest" class="nav-link" data-scroll-target="#step-4-train-the-random-forest"><span class="header-section-number">7.7</span> Step 4 — Train the Random Forest</a></li>
-  <li><a href="#step-5-predict-on-the-test-set" id="toc-step-5-predict-on-the-test-set" class="nav-link" data-scroll-target="#step-5-predict-on-the-test-set"><span class="header-section-number">7.8</span> Step 5 — Predict on the Test Set</a></li>
-  <li><a href="#step-6-evaluate-accuracy" id="toc-step-6-evaluate-accuracy" class="nav-link" data-scroll-target="#step-6-evaluate-accuracy"><span class="header-section-number">7.9</span> Step 6 — Evaluate Accuracy</a>
+  <li><a href="#step-1-load-the-feature-table" id="toc-step-1-load-the-feature-table" class="nav-link" data-scroll-target="#step-1-load-the-feature-table"><span class="header-section-number">7.4</span> Step 1 — Load the Feature Table</a></li>
+  <li><a href="#step-2-split-features-labels-and-subjects" id="toc-step-2-split-features-labels-and-subjects" class="nav-link" data-scroll-target="#step-2-split-features-labels-and-subjects"><span class="header-section-number">7.5</span> Step 2 — Split Features, Labels and Subjects</a></li>
+  <li><a href="#step-3-train-the-baseline-model" id="toc-step-3-train-the-baseline-model" class="nav-link" data-scroll-target="#step-3-train-the-baseline-model"><span class="header-section-number">7.6</span> Step 3 — Train the Baseline Model</a></li>
+  <li><a href="#step-4-predict-one-window" id="toc-step-4-predict-one-window" class="nav-link" data-scroll-target="#step-4-predict-one-window"><span class="header-section-number">7.7</span> Step 4 — Predict One Window</a>
   <ul class="collapse">
-  <li><a href="#discussion" id="toc-discussion" class="nav-link" data-scroll-target="#discussion"><span class="header-section-number">7.9.1</span> Discussion</a></li>
+  <li><a href="#discussion" id="toc-discussion" class="nav-link" data-scroll-target="#discussion"><span class="header-section-number">7.7.1</span> Discussion</a></li>
   </ul></li>
-  <li><a href="#step-7-classification-report" id="toc-step-7-classification-report" class="nav-link" data-scroll-target="#step-7-classification-report"><span class="header-section-number">7.10</span> Step 7 — Classification Report</a></li>
-  <li><a href="#step-8-confusion-matrix" id="toc-step-8-confusion-matrix" class="nav-link" data-scroll-target="#step-8-confusion-matrix"><span class="header-section-number">7.11</span> Step 8 — Confusion Matrix</a>
-  <ul class="collapse">
-  <li><a href="#discussion-1" id="toc-discussion-1" class="nav-link" data-scroll-target="#discussion-1"><span class="header-section-number">7.11.1</span> Discussion</a></li>
-  </ul></li>
-  <li><a href="#step-9-predict-one-window" id="toc-step-9-predict-one-window" class="nav-link" data-scroll-target="#step-9-predict-one-window"><span class="header-section-number">7.12</span> Step 9 — Predict One Window</a>
-  <ul class="collapse">
-  <li><a href="#discussion-2" id="toc-discussion-2" class="nav-link" data-scroll-target="#discussion-2"><span class="header-section-number">7.12.1</span> Discussion</a></li>
-  </ul></li>
-  <li><a href="#think" id="toc-think" class="nav-link" data-scroll-target="#think"><span class="header-section-number">7.13</span> Think</a></li>
-  <li><a href="#checkpoint" id="toc-checkpoint" class="nav-link" data-scroll-target="#checkpoint"><span class="header-section-number">7.14</span> Checkpoint</a></li>
-  <li><a href="#further-exploration" id="toc-further-exploration" class="nav-link" data-scroll-target="#further-exploration"><span class="header-section-number">7.15</span> Further Exploration</a></li>
-  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary"><span class="header-section-number">7.16</span> Summary</a></li>
+  <li><a href="#checkpoint" id="toc-checkpoint" class="nav-link" data-scroll-target="#checkpoint"><span class="header-section-number">7.8</span> Checkpoint</a></li>
+  <li><a href="#further-exploration" id="toc-further-exploration" class="nav-link" data-scroll-target="#further-exploration"><span class="header-section-number">7.9</span> Further Exploration</a></li>
+  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary"><span class="header-section-number">7.10</span> Summary</a></li>
   </ul>
 </nav>
     </div>
@@ -267,51 +261,43 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>After completing this chapter, you should be able to</p>
 <ul>
 <li>load the feature table created in the previous chapter,</li>
-<li>define feature columns and target labels,</li>
-<li>train a Random Forest classifier,</li>
-<li>create predictions on unseen windows,</li>
-<li>evaluate the model with accuracy and a classification report,</li>
-<li>understand why a simple baseline model is valuable.</li>
+<li>separate model features from labels and subject identifiers,</li>
+<li>train a Random Forest baseline model,</li>
+<li>inspect predictions and class probabilities,</li>
+<li>understand why reusable training code matters.</li>
 </ul>
 <hr>
 </section>
 <section id="setup" class="level2" data-number="7.2">
 <h2 data-number="7.2" class="anchored" data-anchor-id="setup"><span class="header-section-number">7.2</span> Setup</h2>
-<div id="40263898" class="cell" data-execution_count="1">
+<div id="cd36c54f" class="cell" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pathlib <span class="im">import</span> Path</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> sys</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.ensemble <span class="im">import</span> RandomForestClassifier</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> (</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    accuracy_score,</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    classification_report,</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    ConfusionMatrixDisplay,</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>current_path <span class="op">=</span> Path.cwd().resolve()</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> parent <span class="kw">in</span> [current_path] <span class="op">+</span> <span class="bu">list</span>(current_path.parents):</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (parent <span class="op">/</span> <span class="st">"app"</span>).exists():</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>        PROJECT_ROOT <span class="op">=</span> parent</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>        <span class="cf">break</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">raise</span> <span class="pp">RuntimeError</span>(<span class="st">"Could not find project root containing app/ directory."</span>)</span>
 <span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>current_path <span class="op">=</span> Path.cwd().resolve()</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>sys.path.insert(<span class="dv">0</span>, <span class="bu">str</span>(PROJECT_ROOT))</span>
 <span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> parent <span class="kw">in</span> [current_path] <span class="op">+</span> <span class="bu">list</span>(current_path.parents):</span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (parent <span class="op">/</span> <span class="st">"app"</span>).exists():</span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>        PROJECT_ROOT <span class="op">=</span> parent</span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>        <span class="cf">break</span></span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>    <span class="cf">raise</span> <span class="pp">RuntimeError</span>(<span class="st">"Could not find project root containing app/ directory."</span>)</span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>sys.path.insert(<span class="dv">0</span>, <span class="bu">str</span>(PROJECT_ROOT))</span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>DATA_DIR <span class="op">=</span> PROJECT_ROOT <span class="op">/</span> <span class="st">"data"</span></span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a>features_df <span class="op">=</span> pd.read_csv(DATA_DIR <span class="op">/</span> <span class="st">"features_df.csv"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> app.training <span class="im">import</span> (</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>    load_feature_table,</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>    split_features_and_labels,</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    train_random_forest,</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <hr>
 </section>
 <section id="why-random-forest" class="level2" data-number="7.3">
 <h2 data-number="7.3" class="anchored" data-anchor-id="why-random-forest"><span class="header-section-number">7.3</span> Why Random Forest?</h2>
-<p>We use a Random Forest as our first model because it is a strong baseline for tabular feature data.</p>
+<p>We use a Random Forest as the first model because it is a strong baseline for tabular feature data.</p>
 <p>A Random Forest is an ensemble of decision trees.</p>
 <p>It is useful because it is</p>
 <ul>
@@ -337,10 +323,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <hr>
 </section>
-<section id="step-1-inspect-the-feature-table" class="level2" data-number="7.4">
-<h2 data-number="7.4" class="anchored" data-anchor-id="step-1-inspect-the-feature-table"><span class="header-section-number">7.4</span> Step 1 — Inspect the Feature Table</h2>
-<div id="d086f7ae" class="cell" data-execution_count="2">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>features_df.head()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="step-1-load-the-feature-table" class="level2" data-number="7.4">
+<h2 data-number="7.4" class="anchored" data-anchor-id="step-1-load-the-feature-table"><span class="header-section-number">7.4</span> Step 1 — Load the Feature Table</h2>
+<p>The previous chapter saved one row per sensor window.</p>
+<div id="c45d17db" class="cell" data-execution_count="2">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>features_df <span class="op">=</span> load_feature_table()</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>features_df.head()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="2">
 <div>
 
@@ -500,13 +489,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<div id="9a955440" class="cell" data-execution_count="3">
+<div id="6bbefab9" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>features_df.shape</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="3">
 <pre><code>(8066, 22)</code></pre>
 </div>
 </div>
-<div id="9729f8d6" class="cell" data-execution_count="4">
+<div id="da40055c" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>features_df[<span class="st">"activity"</span>].value_counts()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="4">
 <pre><code>activity
@@ -518,73 +507,68 @@ Name: count, dtype: int64</code></pre>
 </div>
 <hr>
 </section>
-<section id="step-2-define-features-and-target" class="level2" data-number="7.5">
-<h2 data-number="7.5" class="anchored" data-anchor-id="step-2-define-features-and-target"><span class="header-section-number">7.5</span> Step 2 — Define Features and Target</h2>
+<section id="step-2-split-features-labels-and-subjects" class="level2" data-number="7.5">
+<h2 data-number="7.5" class="anchored" data-anchor-id="step-2-split-features-labels-and-subjects"><span class="header-section-number">7.5</span> Step 2 — Split Features, Labels and Subjects</h2>
 <p>The model should learn from numerical features.</p>
 <p>It should not use metadata such as <code>subject_id</code> as input.</p>
-<div id="8c59c6f4" class="cell" data-execution_count="5">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>feature_columns <span class="op">=</span> [</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    column</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> column <span class="kw">in</span> features_df.columns</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> column <span class="kw">not</span> <span class="kw">in</span> [<span class="st">"activity"</span>, <span class="st">"subject_id"</span>]</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>]</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> features_df[feature_columns]</span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> features_df[<span class="st">"activity"</span>]</span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>X.shape, y.shape</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="2396e0f4" class="cell" data-execution_count="5">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>X, y, groups, feature_columns <span class="op">=</span> split_features_and_labels(features_df)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>X.shape, y.shape, groups.shape</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="5">
-<pre><code>((8066, 20), (8066,))</code></pre>
+<pre><code>((8066, 20), (8066,), (8066,))</code></pre>
 </div>
 </div>
-<hr>
-</section>
-<section id="step-3-random-traintest-split" class="level2" data-number="7.6">
-<h2 data-number="7.6" class="anchored" data-anchor-id="step-3-random-traintest-split"><span class="header-section-number">7.6</span> Step 3 — Random Train/Test Split</h2>
-<p>We first use a random train/test split.</p>
-<p>This is a common first evaluation strategy.</p>
-<div id="2accdb74" class="cell" data-execution_count="6">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>X_train, X_test, y_train, y_test <span class="op">=</span> train_test_split(</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    X,</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    y,</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    test_size<span class="op">=</span><span class="fl">0.2</span>,</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    random_state<span class="op">=</span><span class="dv">42</span>,</span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    stratify<span class="op">=</span>y,</span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="51bed544" class="cell" data-execution_count="6">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>feature_columns</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="6">
+<pre><code>['mean_x',
+ 'std_x',
+ 'min_x',
+ 'max_x',
+ 'energy_x',
+ 'mean_y',
+ 'std_y',
+ 'min_y',
+ 'max_y',
+ 'energy_y',
+ 'mean_z',
+ 'std_z',
+ 'min_z',
+ 'max_z',
+ 'energy_z',
+ 'mean_magnitude',
+ 'std_magnitude',
+ 'min_magnitude',
+ 'max_magnitude',
+ 'energy_magnitude']</code></pre>
 </div>
-<div id="6a61a48b" class="cell" data-execution_count="7">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>X_train.shape, X_test.shape</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="7">
-<pre><code>((6452, 20), (1614, 20))</code></pre>
 </div>
-</div>
-<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Warning</span>Common Pitfall
+<span class="screen-reader-only">Note</span>Remember
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>A random split may place windows from the same participant in both training and test sets.</p>
-<p>This can make the evaluation look better than it really is.</p>
-<p>We will address this in the next chapter.</p>
+<p>The exact feature column order must be saved with the model.</p>
+<p>During deployment, live features must be passed to the model in the same order.</p>
 </div>
 </div>
 <hr>
 </section>
-<section id="step-4-train-the-random-forest" class="level2" data-number="7.7">
-<h2 data-number="7.7" class="anchored" data-anchor-id="step-4-train-the-random-forest"><span class="header-section-number">7.7</span> Step 4 — Train the Random Forest</h2>
-<div id="683524cf" class="cell" data-execution_count="8">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>rf <span class="op">=</span> RandomForestClassifier(</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>    n_estimators<span class="op">=</span><span class="dv">200</span>,</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    random_state<span class="op">=</span><span class="dv">42</span>,</span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>rf.fit(X_train, y_train)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="8">
+<section id="step-3-train-the-baseline-model" class="level2" data-number="7.6">
+<h2 data-number="7.6" class="anchored" data-anchor-id="step-3-train-the-baseline-model"><span class="header-section-number">7.6</span> Step 3 — Train the Baseline Model</h2>
+<p>We now train a Random Forest on the complete feature table.</p>
+<p>This gives us a baseline model artifact that later chapters can evaluate and export with metadata.</p>
+<div id="b13bdc08" class="cell" data-execution_count="7">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>baseline_model <span class="op">=</span> train_random_forest(X, y)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>baseline_model</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="7">
 <style>.sk-global {
   /* Definition of color scheme common for light and dark mode */
   --sklearn-color-text: #000;
@@ -1637,7 +1621,7 @@ Warning: impurity-based feature importances can be misleading for<br>
 high cardinality features (many unique values). See<br>
 :func:`sklearn.inspection.permutation_importance` as an alternative.</span></a></td>
 <td class="fitted-att-type">ndarray[float64](20,)</td>
-<td>[0.02,0.08,0.01,...,0.06,0.08,0.03]</td>
+<td>[0.02,0.08,0.02,...,0.06,0.08,0.04]</td>
 </tr>
 <tr class="default odd">
 <td class="param"><a href="https://scikit-learn.org/1.9/modules/generated/sklearn.ensemble.RandomForestClassifier.html#:~:text=feature_names_in_,-ndarray%20of%20shape%20%28n_features_in_%2C%29" class="param-doc-link" style="anchor-name: --doc-link-feature_names_in_;" rel="noreferrer" target="_blank">feature_names_in_ <span class="param-doc-description" style="position-anchor: --doc-link-feature_names_in_;"> feature_names_in_: ndarray of shape (`n_features_in_`,)<br>
@@ -1851,102 +1835,33 @@ function forceTheme(elementId) {
 forceTheme('sk-container-id-1');</script>
 </div>
 </div>
+<div id="245a287f" class="cell" data-execution_count="8">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>baseline_model.classes_</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="8">
+<pre><code>array(['sitting', 'standing', 'walking'], dtype=object)</code></pre>
+</div>
+</div>
 <hr>
 </section>
-<section id="step-5-predict-on-the-test-set" class="level2" data-number="7.8">
-<h2 data-number="7.8" class="anchored" data-anchor-id="step-5-predict-on-the-test-set"><span class="header-section-number">7.8</span> Step 5 — Predict on the Test Set</h2>
-<div id="22727d57" class="cell" data-execution_count="9">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>y_pred <span class="op">=</span> rf.predict(X_test)</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>y_pred[:<span class="dv">10</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="step-4-predict-one-window" class="level2" data-number="7.7">
+<h2 data-number="7.7" class="anchored" data-anchor-id="step-4-predict-one-window"><span class="header-section-number">7.7</span> Step 4 — Predict One Window</h2>
+<p>We inspect one prediction to understand the model interface.</p>
+<div id="87c9dba4" class="cell" data-execution_count="9">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>sample <span class="op">=</span> X.iloc[[<span class="dv">0</span>]]</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>prediction <span class="op">=</span> baseline_model.predict(sample)</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>prediction</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="9">
-<pre><code>array(['standing', 'walking', 'standing', 'standing', 'sitting',
-       'sitting', 'standing', 'standing', 'walking', 'walking'],
-      dtype=object)</code></pre>
+<pre><code>array(['sitting'], dtype=object)</code></pre>
 </div>
 </div>
-<hr>
-</section>
-<section id="step-6-evaluate-accuracy" class="level2" data-number="7.9">
-<h2 data-number="7.9" class="anchored" data-anchor-id="step-6-evaluate-accuracy"><span class="header-section-number">7.9</span> Step 6 — Evaluate Accuracy</h2>
-<div id="57fd019e" class="cell" data-execution_count="10">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>random_split_accuracy <span class="op">=</span> accuracy_score(y_test, y_pred)</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>random_split_accuracy</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="96bbab2f" class="cell" data-execution_count="10">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>pd.DataFrame(</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>    baseline_model.predict_proba(sample),</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>    columns<span class="op">=</span>baseline_model.classes_,</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="10">
-<pre><code>0.9857496902106567</code></pre>
-</div>
-</div>
-<section id="discussion" class="level3" data-number="7.9.1">
-<h3 data-number="7.9.1" class="anchored" data-anchor-id="discussion"><span class="header-section-number">7.9.1</span> Discussion</h3>
-<p>Accuracy tells us the fraction of correctly classified windows.</p>
-<p>However, accuracy alone does not tell us which classes are confused.</p>
-<hr>
-</section>
-</section>
-<section id="step-7-classification-report" class="level2" data-number="7.10">
-<h2 data-number="7.10" class="anchored" data-anchor-id="step-7-classification-report"><span class="header-section-number">7.10</span> Step 7 — Classification Report</h2>
-<div id="f4ca097f" class="cell" data-execution_count="11">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(classification_report(y_test, y_pred))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>              precision    recall  f1-score   support
-
-     sitting       0.99      0.98      0.98       524
-    standing       0.98      0.99      0.98       535
-     walking       0.98      1.00      0.99       555
-
-    accuracy                           0.99      1614
-   macro avg       0.99      0.99      0.99      1614
-weighted avg       0.99      0.99      0.99      1614
-</code></pre>
-</div>
-</div>
-<p>The classification report shows precision, recall and F1-score for each class.</p>
-<hr>
-</section>
-<section id="step-8-confusion-matrix" class="level2" data-number="7.11">
-<h2 data-number="7.11" class="anchored" data-anchor-id="step-8-confusion-matrix"><span class="header-section-number">7.11</span> Step 8 — Confusion Matrix</h2>
-<div id="c1cfa8a9" class="cell" data-execution_count="12">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>ConfusionMatrixDisplay.from_estimator(</span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>    rf,</span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>    X_test,</span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>    y_test,</span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="06_machine_learning_files/figure-html/cell-13-output-1.png" width="556" height="431" class="figure-img"></p>
-</figure>
-</div>
-</div>
-</div>
-<section id="discussion-1" class="level3" data-number="7.11.1">
-<h3 data-number="7.11.1" class="anchored" data-anchor-id="discussion-1"><span class="header-section-number">7.11.1</span> Discussion</h3>
-<p>The confusion matrix helps us see which activities are confused with each other.</p>
-<p>For this dataset, walking is usually easier to classify than sitting and standing.</p>
-<hr>
-</section>
-</section>
-<section id="step-9-predict-one-window" class="level2" data-number="7.12">
-<h2 data-number="7.12" class="anchored" data-anchor-id="step-9-predict-one-window"><span class="header-section-number">7.12</span> Step 9 — Predict One Window</h2>
-<div id="c0b2214d" class="cell" data-execution_count="13">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>sample <span class="op">=</span> X_test.iloc[[<span class="dv">0</span>]]</span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>prediction <span class="op">=</span> rf.predict(sample)</span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>prediction</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="13">
-<pre><code>array(['standing'], dtype=object)</code></pre>
-</div>
-</div>
-<div id="62f18966" class="cell" data-execution_count="14">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>pd.DataFrame(</span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>    rf.predict_proba(sample),</span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>    columns<span class="op">=</span>rf.classes_,</span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="14">
 <div>
 
 
@@ -1962,8 +1877,8 @@ weighted avg       0.99      0.99      0.99      1614
 <tbody>
 <tr class="odd">
 <th data-quarto-table-cell-role="th">0</th>
-<td>0.01</td>
-<td>0.99</td>
+<td>1.0</td>
+<td>0.0</td>
 <td>0.0</td>
 </tr>
 </tbody>
@@ -1972,51 +1887,43 @@ weighted avg       0.99      0.99      0.99      1614
 </div>
 </div>
 </div>
-<section id="discussion-2" class="level3" data-number="7.12.1">
-<h3 data-number="7.12.1" class="anchored" data-anchor-id="discussion-2"><span class="header-section-number">7.12.1</span> Discussion</h3>
-<p>The model not only predicts a class but can also estimate class probabilities.</p>
-<p>These probabilities will later be useful in the dashboard.</p>
+<section id="discussion" class="level3" data-number="7.7.1">
+<h3 data-number="7.7.1" class="anchored" data-anchor-id="discussion"><span class="header-section-number">7.7.1</span> Discussion</h3>
+<p>The model predicts one activity label.</p>
+<p>It can also return probabilities for all known classes.</p>
+<p>These probabilities will later be useful for dashboards and live prediction.</p>
 <hr>
 </section>
 </section>
-<section id="think" class="level2" data-number="7.13">
-<h2 data-number="7.13" class="anchored" data-anchor-id="think"><span class="header-section-number">7.13</span> Think</h2>
-<p>The model may achieve very high accuracy with a random split.</p>
-<p>Does that mean the system will work equally well on a completely new person?</p>
-<p>Why or why not?</p>
-<hr>
-</section>
-<section id="checkpoint" class="level2" data-number="7.14">
-<h2 data-number="7.14" class="anchored" data-anchor-id="checkpoint"><span class="header-section-number">7.14</span> Checkpoint</h2>
+<section id="checkpoint" class="level2" data-number="7.8">
+<h2 data-number="7.8" class="anchored" data-anchor-id="checkpoint"><span class="header-section-number">7.8</span> Checkpoint</h2>
 <p>Before continuing, you should be able to answer:</p>
 <ol type="1">
 <li>Why is Random Forest a good baseline model?</li>
-<li>What are <code>X</code> and <code>y</code>?</li>
+<li>What are <code>X</code>, <code>y</code> and <code>groups</code>?</li>
 <li>Why should <code>subject_id</code> not be used as a feature?</li>
-<li>What does accuracy measure?</li>
-<li>What additional information does the confusion matrix provide?</li>
+<li>Why must the feature column order be saved?</li>
+<li>What is the difference between <code>predict()</code> and <code>predict_proba()</code>?</li>
 </ol>
 <hr>
 </section>
-<section id="further-exploration" class="level2" data-number="7.15">
-<h2 data-number="7.15" class="anchored" data-anchor-id="further-exploration"><span class="header-section-number">7.15</span> Further Exploration</h2>
+<section id="further-exploration" class="level2" data-number="7.9">
+<h2 data-number="7.9" class="anchored" data-anchor-id="further-exploration"><span class="header-section-number">7.9</span> Further Exploration</h2>
 <p>Optional: change the number of trees from <code>200</code> to <code>50</code>.</p>
-<p>Does the accuracy change?</p>
-<p>What does this tell you about the stability of the model?</p>
+<p>Does the prediction for the sample window change?</p>
+<p>What does this tell you about model stability?</p>
 <hr>
 </section>
-<section id="summary" class="level2" data-number="7.16">
-<h2 data-number="7.16" class="anchored" data-anchor-id="summary"><span class="header-section-number">7.16</span> Summary</h2>
+<section id="summary" class="level2" data-number="7.10">
+<h2 data-number="7.10" class="anchored" data-anchor-id="summary"><span class="header-section-number">7.10</span> Summary</h2>
 <p>In this chapter you learned how to</p>
 <ul>
-<li>load the feature table,</li>
-<li>define feature columns and target labels,</li>
-<li>train a Random Forest classifier,</li>
-<li>evaluate it with a random split,</li>
-<li>inspect predictions and probabilities.</li>
+<li>load the saved feature table,</li>
+<li>split features, labels and subject identifiers,</li>
+<li>train a reusable Random Forest baseline,</li>
+<li>inspect one prediction and its probabilities.</li>
 </ul>
-<p>In the next chapter we will ask a more realistic question:</p>
-<p>Can the model generalize to people it has never seen before?</p>
+<p>In the next chapter we will evaluate whether the model generalizes to people it has never seen before.</p>
 
 
 </section>
@@ -2429,8 +2336,8 @@ weighted avg       0.99      0.99      0.99      1614
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../modules/07_deployment.html" class="pagination-link" aria-label="Deployment">
-        <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Deployment</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../modules/07_evaluation.html" class="pagination-link" aria-label="Evaluation">
+        <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Evaluation</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

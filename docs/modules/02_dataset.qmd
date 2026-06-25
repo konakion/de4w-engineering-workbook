@@ -1,0 +1,110 @@
+# Understanding the Dataset
+
+## Learning Objectives
+
+After completing this chapter, you should be able to
+
+- understand the structure of the WISDM dataset
+- explain how wearable sensor data is organized
+- identify the most important attributes of the dataset
+- understand why exploratory data analysis (EDA) is the first step of every machine learning project
+
+---
+
+## Why Do We Start with the Data?
+
+Many beginners believe that machine learning starts by choosing an algorithm.
+
+In reality, every successful machine learning project starts with understanding the available data.
+
+Before writing a single line of model training code, we should answer questions such as:
+
+- What information is available?
+- How was the data collected?
+- Which sensors were used?
+- What do the labels represent?
+- Are there missing values?
+- Are all activities equally represented?
+
+::: {.callout-tip}
+## Engineering Insight
+
+Experienced data scientists usually spend much more time understanding and preparing data than training models.
+:::
+
+---
+
+## The WISDM Dataset
+
+Throughout this project we use the **WISDM Smartphone and Smartwatch Activity Dataset**.
+
+For simplicity, we only use **smartphone accelerometer data**.
+
+---
+
+## Raw File Structure
+
+Each participant is stored in a separate file.
+
+```text
+data_1600_accel_phone.txt
+```
+
+---
+
+## One Measurement
+
+Each row represents one timestamped sensor measurement.
+
+```text
+subject_id, activity_code, timestamp, x, y, z;
+```
+
+---
+
+## Understanding the Columns
+
+| Column | Description |
+|---------|-------------|
+| subject_id | Participant identifier |
+| activity_code | Activity label |
+| timestamp | Measurement timestamp |
+| x | Acceleration along x-axis |
+| y | Acceleration along y-axis |
+| z | Acceleration along z-axis |
+
+---
+
+## Activity Mapping
+
+```{python}
+ACTIVITY_MAP = {
+    'A':'walking','B':'jogging','C':'stairs','D':'sitting','E':'standing',
+    'F':'typing','G':'brushing_teeth','H':'eating_soup','I':'eating_chips',
+    'J':'eating_pasta','K':'drinking','L':'eating_sandwich','M':'kicking',
+    'O':'catch','P':'dribbling','Q':'writing','R':'clapping','S':'folding_clothes'
+}
+
+TARGET_ACTIVITIES=['walking','sitting','standing']
+```
+
+::: {.callout-note}
+## Remember
+
+We keep the complete activity mapping although we currently use only three activities.
+:::
+
+---
+
+## Checkpoint
+
+1. What does one row represent?
+2. Why separate files per participant?
+3. Why only three activities?
+4. Why inspect the dataset before training?
+
+---
+
+## Summary
+
+In the next chapter we will load all participant files and inspect the raw accelerometer signals.

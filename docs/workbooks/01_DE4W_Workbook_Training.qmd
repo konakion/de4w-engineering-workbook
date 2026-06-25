@@ -1,0 +1,721 @@
+---
+title: "DE4W Capstone Project"
+subtitle: "Workbook 1: Training an Activity Recognition Model"
+format:
+  html:
+    toc: true
+    code-fold: false
+    theme: cosmo
+  pdf: default
+execute:
+  echo: true
+  warning: false
+  message: false
+---
+
+# Welcome
+
+Welcome to the **DE4W Capstone Project**.
+
+In this workbook, we build the training pipeline for a live activity recognition system.
+
+The full system follows this pipeline:
+
+```text
+Raw Sensor Data
+→ Windowing
+→ Feature Engineering
+→ Machine Learning
+→ Evaluation
+→ Model Export
+→ API
+→ Dashboard
+→ Live Prediction
+```
+
+# Learning Objectives
+
+After completing this workbook, you should be able to:
+
+- load and inspect wearable sensor data
+- understand smartphone accelerometer measurements
+- convert continuous sensor streams into fixed-size windows
+- extract statistical features from time-series windows
+- train a Random Forest classifier
+- compare random splits and subject-wise splits
+- export a trained model for later deployment
+
+# Project Story
+
+Imagine you joined a small digital health startup.
+
+Your task is to build an application that recognizes whether a person is:
+
+- walking
+- sitting
+- standing
+
+using only the smartphone accelerometer.
+
+The system should eventually work in real time.
+
+# Mission 1: Understand the Dataset
+
+## Goal
+
+Before training a machine learning model, we first need to understand the data.
+
+In this section we will:
+
+- locate the raw WISDM phone accelerometer files
+- load all participant files
+- map activity codes to readable labels
+- focus on walking, sitting and standing
+
+## Imports and Project Paths
+
+```{python}
+from pathlib import Path
+
+import joblib
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import (
+    accuracy_score,
+    classification_report,
+    ConfusionMatrixDisplay,
+)
+from sklearn.model_selection import train_test_split
+```
+
+```{python}
+PROJECT_ROOT = Path.cwd().parents[1] if Path.cwd().name == "workbooks" else Path.cwd()
+
+DATA_DIR = PROJECT_ROOT / "data"
+MODEL_DIR = PROJECT_ROOT / "models"
+
+MODEL_DIR.mkdir(exist_ok=True)
+
+print("Project root:", PROJECT_ROOT)
+print("Data directory:", DATA_DIR)
+print("Model directory:", MODEL_DIR)
+```
+
+## Activity Mapping
+
+The WISDM raw files use single-letter activity codes.
+
+```{python}
+ACTIVITY_MAP = {
+    "A": "walking",
+    "B": "jogging",
+    "C": "stairs",
+    "D": "sitting",
+    "E": "standing",
+    "F": "typing",
+    "G": "brushing_teeth",
+    "H": "eating_soup",
+    "I": "eating_chips",
+    "J": "eating_pasta",
+    "K": "drinking",
+    "L": "eating_sandwich",
+    "M": "kicking",
+    "O": "catch",
+    "P": "dribbling",
+    "Q": "writing",
+    "R": "clapping",
+    "S": "folding_clothes",
+}
+
+TARGET_ACTIVITIES = ["walking", "sitting", "standing"]
+```
+
+## Load One WISDM File
+
+Each raw file has the following structure:
+
+```text
+subject_id, activity_code, timestamp, x, y, z;
+```
+
+```{python}
+def load_single_wisdm_file(file_path: Path) -> pd.DataFrame:
+    """
+    Load one WISDM phone accelerometer file.
+
+    Parameters
+    ----------
+    file_path:
+        Path to one raw WISDM phone accelerometer text file.
+
+    Returns
+    -------
+    pandas.DataFrame
+        DataFrame with subject_id, activity_code, timestamp, x, y, z and activity.
+    """
+    df = pd.read_csv(
+        file_path,
+        header=None,
+        names=["subject_id", "activity_code", "timestamp", "x", "y", "z"],
+        sep=",",
+    )
+
+    df["z"] = (
+        df["z"]
+        .astype(str)
+        .str.replace(";", "", regex=False)
+        .astype(float)
+    )
+
+    df["activity"] = df["activity_code"].map(ACTIVITY_MAP)
+
+    return df
+```
+
+## Load All Participant Files
+
+```{python}
+def load_wisdm_phone_accel(
+    data_dir: Path,
+    target_activities: list[str] | None = None,
+) -> pd.DataFrame:
+    """
+    Load all WISDM phone accelerometer files from a directory.
+    """
+    files = sorted(data_dir.glob("data_*_accel_phone.txt"))
+
+    if not files:
+        raise FileNotFoundError(
+            f"No WISDM phone accelerometer files found in {data_dir}."
+        )
+
+    dataframes = []
+
+    for file_path in files:
+        df_file = load_single_wisdm_file(file_path)
+
+        if target_activities is not None:
+            df_file = df_file[df_file["activity"].isin(target_activities)]
+
+        dataframes.append(df_file)
+
+    return pd.concat(dataframes, ignore_index=True)
+```
+
+```{python}
+df = load_wisdm_phone_accel(
+    DATA_DIR,
+    target_activities=TARGET_ACTIVITIES,
+)
+
+df.head()
+```
+
+```{python}
+df.shape
+```
+
+```{python}
+df["activity"].value_counts()
+```
+
+```{python}
+df["subject_id"].nunique()
+```
+
+## Checkpoint 1
+
+At this point, you should be able to answer:
+
+1. What does one row in the raw WISDM file represent?
+2. Why do we focus on only three activities first?
+3. Why is it useful that the dataset contains subject identifiers?
+4. Why should we inspect the class distribution before training a model?
+
+# Mission 2: Understand the Signal
+
+## Goal
+
+We now inspect the accelerometer signal and compute the acceleration magnitude.
+
+The magnitude combines all three axes:
+
+$$
+m = \sqrt{x^2 + y^2 + z^2}
+$$
+
+## Add Magnitude
+
+```{python}
+df["magnitude"] = np.sqrt(
+    df["x"] ** 2 + df["y"] ** 2 + df["z"] ** 2
+)
+
+df.head()
+```
+
+## Plot One Activity
+
+```{python}
+activity = "walking"
+
+sample = (
+    df[df["activity"] == activity]
+    .head(400)
+    .reset_index(drop=True)
+)
+
+plt.figure(figsize=(12, 4))
+plt.plot(sample["x"], label="x")
+plt.plot(sample["y"], label="y")
+plt.plot(sample["z"], label="z")
+plt.plot(sample["magnitude"], label="magnitude", linewidth=2)
+plt.title(f"Phone accelerometer signal: {activity}")
+plt.xlabel("Sample")
+plt.ylabel("Acceleration [m/s²]")
+plt.legend()
+plt.show()
+```
+
+## Compare Activities
+
+```{python}
+plt.figure(figsize=(12, 5))
+
+for activity in TARGET_ACTIVITIES:
+    signal = (
+        df[df["activity"] == activity]["magnitude"]
+        .head(400)
+        .reset_index(drop=True)
+    )
+    plt.plot(signal, label=activity)
+
+plt.title("Magnitude comparison")
+plt.xlabel("Sample")
+plt.ylabel("Magnitude")
+plt.legend()
+plt.show()
+```
+
+## Estimate Sampling Rate
+
+```{python}
+subject = df["subject_id"].iloc[0]
+activity = "walking"
+
+sample = df[
+    (df["subject_id"] == subject)
+    & (df["activity"] == activity)
+].sort_values("timestamp")
+
+dt = sample["timestamp"].diff().dropna()
+sampling_rate = 1e9 / dt.mean()
+
+sampling_rate
+```
+
+## Checkpoint 2
+
+1. Why does the accelerometer not show zero acceleration when the phone is still?
+2. What is the magnitude?
+3. Why can magnitude be useful for activity recognition?
+4. Why is sampling rate important for windowing?
+
+# Mission 3: Create Windows
+
+## Goal
+
+We convert the continuous sensor stream into fixed-size windows.
+
+In this project we use:
+
+```text
+100 samples ≈ 5 seconds
+```
+
+because the sampling rate is approximately 20 Hz.
+
+```{python}
+WINDOW_SIZE = 100
+```
+
+```{python}
+def create_windows(
+    df: pd.DataFrame,
+    window_size: int = WINDOW_SIZE,
+) -> list[pd.DataFrame]:
+    """
+    Split a DataFrame into non-overlapping windows.
+    """
+    windows = []
+
+    for start in range(0, len(df) - window_size, window_size):
+        end = start + window_size
+        windows.append(df.iloc[start:end])
+
+    return windows
+```
+
+## Test Windowing
+
+```{python}
+walking_df = df[df["activity"] == "walking"].copy()
+
+windows = create_windows(walking_df, window_size=WINDOW_SIZE)
+
+len(windows)
+```
+
+```{python}
+window = windows[0]
+
+plt.figure(figsize=(10, 4))
+plt.plot(window["magnitude"])
+plt.title("One 5-second window")
+plt.xlabel("Sample")
+plt.ylabel("Magnitude")
+plt.show()
+```
+
+## Checkpoint 3
+
+1. Why do we need windows?
+2. How many seconds are represented by 100 samples at 20 Hz?
+3. What is the trade-off between small and large windows?
+4. Why might live predictions not change immediately when the activity changes?
+
+# Mission 4: Extract Features
+
+## Goal
+
+We transform each sensor window into a numerical feature vector.
+
+For each signal:
+
+```text
+x, y, z, magnitude
+```
+
+we compute:
+
+```text
+mean, std, min, max, energy
+```
+
+This yields:
+
+\[
+4 \times 5 = 20
+\]
+
+features.
+
+```{python}
+def extract_features(window: pd.DataFrame) -> dict[str, float]:
+    """
+    Extract statistical features from one accelerometer window.
+    """
+    features = {}
+
+    for axis in ["x", "y", "z", "magnitude"]:
+        signal = window[axis]
+
+        features[f"mean_{axis}"] = float(signal.mean())
+        features[f"std_{axis}"] = float(signal.std())
+        features[f"min_{axis}"] = float(signal.min())
+        features[f"max_{axis}"] = float(signal.max())
+        features[f"energy_{axis}"] = float(np.sum(signal ** 2))
+
+    return features
+```
+
+## Test Feature Extraction
+
+```{python}
+features = extract_features(windows[0])
+
+pd.Series(features)
+```
+
+```{python}
+len(features)
+```
+
+## Convert All Windows to Features
+
+```{python}
+def windows_to_features(
+    df: pd.DataFrame,
+    window_size: int = WINDOW_SIZE,
+) -> pd.DataFrame:
+    """
+    Convert raw sensor data into a feature table.
+    """
+    rows = []
+
+    for activity in TARGET_ACTIVITIES:
+        activity_df = df[df["activity"] == activity]
+
+        for subject_id in sorted(activity_df["subject_id"].unique()):
+            subject_df = activity_df[
+                activity_df["subject_id"] == subject_id
+            ].sort_values("timestamp")
+
+            windows = create_windows(subject_df, window_size=window_size)
+
+            for window in windows:
+                feature_row = extract_features(window)
+                feature_row["activity"] = activity
+                feature_row["subject_id"] = subject_id
+                rows.append(feature_row)
+
+    return pd.DataFrame(rows)
+```
+
+```{python}
+features_df = windows_to_features(df, window_size=WINDOW_SIZE)
+
+features_df.head()
+```
+
+```{python}
+features_df.shape
+```
+
+```{python}
+features_df["activity"].value_counts()
+```
+
+```{python}
+features_df.isna().sum().sum()
+```
+
+```{python}
+features_df.to_csv(
+    DATA_DIR / "features_df.csv",
+    index=False,
+)
+```
+
+## Checkpoint 4
+
+1. Why do we extract features from windows?
+2. Why might standard deviation help distinguish walking from standing?
+3. What does energy measure?
+4. Why must training and deployment use the same feature extraction function?
+
+# Mission 5: Train a Machine Learning Model
+
+## Goal
+
+We train a Random Forest classifier to recognize walking, sitting and standing.
+
+## Prepare X and y
+
+```{python}
+feature_columns = [
+    column
+    for column in features_df.columns
+    if column not in ["activity", "subject_id"]
+]
+
+X = features_df[feature_columns]
+y = features_df["activity"]
+
+X.shape, y.shape
+```
+
+## Random Train/Test Split
+
+```{python}
+X_train, X_test, y_train, y_test = train_test_split(
+    X,
+    y,
+    test_size=0.2,
+    random_state=42,
+    stratify=y,
+)
+```
+
+```{python}
+rf = RandomForestClassifier(
+    n_estimators=200,
+    random_state=42,
+)
+
+rf.fit(X_train, y_train)
+```
+
+```{python}
+y_pred = rf.predict(X_test)
+
+random_split_accuracy = accuracy_score(y_test, y_pred)
+
+random_split_accuracy
+```
+
+```{python}
+print(classification_report(y_test, y_pred))
+```
+
+```{python}
+ConfusionMatrixDisplay.from_estimator(
+    rf,
+    X_test,
+    y_test,
+)
+plt.show()
+```
+
+## Checkpoint 5
+
+1. Why is Random Forest a good baseline?
+2. What does accuracy measure?
+3. What does the confusion matrix show?
+4. Why might a random split be too optimistic?
+
+# Mission 6: Evaluate Generalization
+
+## Goal
+
+We evaluate whether the model generalizes to unseen subjects.
+
+```{python}
+subjects = features_df["subject_id"].unique()
+
+train_subjects, test_subjects = train_test_split(
+    subjects,
+    test_size=0.2,
+    random_state=42,
+)
+
+train_df = features_df[features_df["subject_id"].isin(train_subjects)].copy()
+test_df = features_df[features_df["subject_id"].isin(test_subjects)].copy()
+```
+
+```{python}
+X_train_subject = train_df[feature_columns]
+y_train_subject = train_df["activity"]
+
+X_test_subject = test_df[feature_columns]
+y_test_subject = test_df["activity"]
+```
+
+```{python}
+rf_subject = RandomForestClassifier(
+    n_estimators=200,
+    random_state=42,
+)
+
+rf_subject.fit(X_train_subject, y_train_subject)
+```
+
+```{python}
+y_pred_subject = rf_subject.predict(X_test_subject)
+
+subject_split_accuracy = accuracy_score(y_test_subject, y_pred_subject)
+
+subject_split_accuracy
+```
+
+```{python}
+print(classification_report(y_test_subject, y_pred_subject))
+```
+
+```{python}
+ConfusionMatrixDisplay.from_estimator(
+    rf_subject,
+    X_test_subject,
+    y_test_subject,
+)
+plt.show()
+```
+
+## Compare Both Evaluation Strategies
+
+```{python}
+print("Random split accuracy:", random_split_accuracy)
+print("Subject-wise split accuracy:", subject_split_accuracy)
+```
+
+## Checkpoint 6
+
+1. Why is subject-wise evaluation more realistic?
+2. Why is random split accuracy often higher?
+3. Why are sitting and standing harder to distinguish than walking?
+4. What does this tell us about deployment?
+
+# Mission 7: Export the Model
+
+## Goal
+
+We export the trained model and metadata for later deployment.
+
+```{python}
+joblib.dump(
+    rf_subject,
+    MODEL_DIR / "activity_model_random_forest.joblib",
+)
+
+joblib.dump(
+    feature_columns,
+    MODEL_DIR / "feature_columns.joblib",
+)
+
+activity_labels = sorted(features_df["activity"].unique())
+
+joblib.dump(
+    activity_labels,
+    MODEL_DIR / "activity_labels.joblib",
+)
+```
+
+## Test Exported Model
+
+```{python}
+loaded_model = joblib.load(MODEL_DIR / "activity_model_random_forest.joblib")
+loaded_feature_columns = joblib.load(MODEL_DIR / "feature_columns.joblib")
+
+sample_row = X_test_subject.iloc[[0]]
+
+prediction = loaded_model.predict(sample_row[loaded_feature_columns])
+
+prediction
+```
+
+```{python}
+pd.DataFrame(
+    loaded_model.predict_proba(sample_row[loaded_feature_columns]),
+    columns=loaded_model.classes_,
+)
+```
+
+# Final Checkpoint
+
+You should now be able to explain the complete training pipeline:
+
+```text
+Raw WISDM data
+→ Magnitude
+→ Windowing
+→ Feature extraction
+→ Feature table
+→ Random Forest
+→ Subject-wise evaluation
+→ Model export
+```
+
+# Final Reflection
+
+The next part of the project turns this trained model into a deployed system:
+
+```text
+Model Export
+→ FastAPI
+→ Streamlit
+→ phyphox
+→ Live Prediction
+```

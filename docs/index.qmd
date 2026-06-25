@@ -1,0 +1,94 @@
+---
+title: "DE4W Capstone Project"
+---
+
+# Welcome
+
+## Building a Live Activity Recognition System
+
+Welcome to the **DE4W Capstone Project**.
+
+During this semester you learned many individual concepts:
+
+- wearable sensors
+- data collection
+- preprocessing
+- feature engineering
+- machine learning
+- evaluation
+- deployment
+
+Today, we combine all of these concepts into **one complete engineering project**.
+
+---
+
+## What Will We Build?
+
+By the end of this project, you will have built a complete activity recognition system capable of recognizing human activities in real time using smartphone accelerometer data.
+
+## Project Pipeline
+
+```{mermaid}
+flowchart LR
+
+A[Smartphone]
+-->B[Accelerometer]
+
+B-->C[Windowing]
+
+C-->D[Feature Engineering]
+
+D-->E[Random Forest]
+
+E-->F[FastAPI]
+
+F-->G[Streamlit]
+
+G-->H[Live Prediction]
+```
+
+---
+
+## Learning Outcomes
+
+After completing this project you will be able to
+
+- build an end-to-end machine learning pipeline
+- engineer features from wearable sensor data
+- train and evaluate a machine learning model
+- deploy a trained model as a REST API
+- create an interactive dashboard
+- perform live activity recognition using your own smartphone
+
+---
+
+## Repository Structure
+
+```text
+de4w-live-activity-app/
+
+├── app/
+├── data/
+├── docs/
+├── models/
+├── notebooks/
+├── pyproject.toml
+└── uv.lock
+```
+
+---
+
+## The Journey
+
+The following chapters guide you through the complete engineering workflow.
+
+1. Introduction
+2. Dataset
+3. Windowing
+4. Feature Engineering
+5. Machine Learning
+6. Evaluation
+7. Deployment
+8. Live Prediction
+
+Let's get started.

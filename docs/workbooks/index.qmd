@@ -1,0 +1,29 @@
+---
+title: "DE4W Capstone Project"
+subtitle: "Building a Live Activity Recognition System"
+format:
+  html:
+    toc: true
+    code-fold: false
+    theme: cosmo
+  pdf: default
+execute:
+  echo: true
+---
+
+# Welcome
+
+Welcome to the DE4W Capstone Project.
+
+Throughout this semester you have learned many individual concepts:
+
+- wearable sensors
+- data engineering
+- feature engineering
+- machine learning
+- evaluation
+- deployment
+
+In this project we connect everything into one complete engineering workflow.
+
+The final system will perform **live activity recognition** using a smartphone.

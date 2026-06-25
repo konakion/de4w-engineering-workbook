@@ -1,0 +1,7 @@
+project:
+  type: default
+
+execute:
+  freeze: auto
+  cache: false
+  kernel: de4w

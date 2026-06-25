@@ -1,0 +1,3 @@
+# Live Prediction
+
+This chapter connects phyphox, Streamlit, and the trained model for live activity recognition.

@@ -1,0 +1,32 @@
+project:
+  type: book
+  output-dir: _site
+
+book:
+  title: "DE4W Capstone Project"
+  subtitle: "Building a Live Activity Recognition System"
+  author: "Orhan Konak"
+  chapters:
+    - index.qmd
+    - modules/01_introduction.qmd
+    - modules/02_dataset.qmd
+    - modules/03_loading_and_exploration.qmd
+    - modules/04_windowing.qmd
+    - modules/05_feature_engineering.qmd
+    - modules/06_machine_learning.qmd
+    - modules/07_deployment.qmd
+    - modules/08_live_prediction.qmd
+
+format:
+  html:
+    theme: cosmo
+    toc: true
+    code-fold: false
+    code-tools: false
+  pdf:
+    documentclass: scrreprt
+
+execute:
+  freeze: auto
+  cache: false
+  kernel: de4w

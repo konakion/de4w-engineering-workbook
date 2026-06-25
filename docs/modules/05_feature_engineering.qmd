@@ -1,0 +1,349 @@
+# Feature Engineering
+
+## Learning Objectives
+
+After completing this chapter, you should be able to
+
+- explain why feature engineering is needed for classical machine learning,
+- convert sensor windows into numerical feature vectors,
+- use reusable feature extraction code from the `app/` package,
+- create a complete feature table for all windows,
+- understand why training and deployment must use the same feature extraction logic.
+
+---
+
+## Setup
+
+```{python}
+from pathlib import Path
+import sys
+
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+
+current_path = Path.cwd().resolve()
+
+for parent in [current_path] + list(current_path.parents):
+    if (parent / "app").exists():
+        PROJECT_ROOT = parent
+        break
+else:
+    raise RuntimeError("Could not find project root containing app/ directory.")
+
+sys.path.insert(0, str(PROJECT_ROOT))
+
+from app.config import WINDOW_SIZE
+from app.data_loader import TARGET_ACTIVITIES, load_wisdm_phone_accel
+from app.windowing import create_windows
+from app.feature_extraction import extract_features
+
+DATA_DIR = PROJECT_ROOT / "data"
+
+df = load_wisdm_phone_accel(DATA_DIR)
+
+df["magnitude"] = np.sqrt(
+    df["x"] ** 2 + df["y"] ** 2 + df["z"] ** 2
+)
+```
+
+::: {.callout-important}
+## Software Engineering Principle
+
+The feature extraction logic lives in `app/feature_extraction.py`.
+
+The workbook imports and uses this function instead of redefining it.
+
+This ensures that training and live prediction use the same implementation.
+:::
+
+---
+
+## Why Feature Engineering?
+
+A sensor window contains many raw measurements.
+
+For example, with a window size of 100 samples and four signals (`x`, `y`, `z`, `magnitude`), one window contains 400 raw values.
+
+Classical machine learning models such as Random Forests usually work better with structured tabular features.
+
+Feature engineering transforms a window into a compact numerical summary.
+
+```{mermaid}
+flowchart LR
+
+A[Sensor Window]
+-->B[Feature Extraction]
+
+B-->C[Feature Vector]
+
+C-->D[Machine Learning Model]
+```
+
+---
+
+## Our Feature Set
+
+For each signal
+
+```text
+x, y, z, magnitude
+```
+
+we compute:
+
+| Feature | Meaning |
+|---------|---------|
+| mean | average signal level |
+| std | variability |
+| min | smallest value |
+| max | largest value |
+| energy | overall signal intensity |
+
+This gives
+
+$$
+4 \times 5 = 20
+$$
+
+features per window.
+
+---
+
+## Step 1 — Create One Example Window
+
+```{python}
+walking_df = (
+    df[df["activity"] == "walking"]
+    .sort_values("timestamp")
+    .copy()
+)
+
+windows = create_windows(
+    walking_df,
+    window_size=WINDOW_SIZE,
+)
+
+example_window = windows[0]
+
+example_window.head()
+```
+
+---
+
+## Step 2 — Extract Features from One Window
+
+```{python}
+example_features = extract_features(example_window)
+
+pd.Series(example_features)
+```
+
+```{python}
+len(example_features)
+```
+
+### Expected Output
+
+The output should contain 20 features.
+
+---
+
+## Step 3 — Understand the Energy Feature
+
+Energy is computed as
+
+$$
+Energy = \sum_i x_i^2
+$$
+
+It is often useful because dynamic activities such as walking usually produce higher signal intensity than static activities such as sitting or standing.
+
+```{python}
+example_window["magnitude"].head()
+```
+
+```{python}
+energy_magnitude = np.sum(example_window["magnitude"] ** 2)
+
+energy_magnitude
+```
+
+---
+
+## Step 4 — Convert All Windows into Features
+
+### Goal
+
+We now create one feature row per window.
+
+Windows are created separately per subject and activity.
+
+```{python}
+def windows_to_features(
+    df: pd.DataFrame,
+    window_size: int = WINDOW_SIZE,
+) -> pd.DataFrame:
+    """
+    Convert raw sensor data into a feature table.
+
+    Windows are created separately for each subject and activity.
+
+    Parameters
+    ----------
+    df:
+        Sensor DataFrame containing subject_id, activity and timestamp.
+
+    window_size:
+        Number of samples per window.
+
+    Returns
+    -------
+    pandas.DataFrame
+        Feature table with one row per window.
+    """
+    rows = []
+
+    for activity in TARGET_ACTIVITIES:
+        activity_df = df[df["activity"] == activity]
+
+        for subject_id in sorted(activity_df["subject_id"].unique()):
+            subject_df = (
+                activity_df[activity_df["subject_id"] == subject_id]
+                .sort_values("timestamp")
+            )
+
+            windows = create_windows(
+                subject_df,
+                window_size=window_size,
+            )
+
+            for window in windows:
+                feature_row = extract_features(window)
+                feature_row["activity"] = activity
+                feature_row["subject_id"] = subject_id
+                rows.append(feature_row)
+
+    return pd.DataFrame(rows)
+```
+
+```{python}
+features_df = windows_to_features(
+    df,
+    window_size=WINDOW_SIZE,
+)
+
+features_df.head()
+```
+
+---
+
+## Step 5 — Inspect the Feature Table
+
+```{python}
+features_df.shape
+```
+
+```{python}
+features_df["activity"].value_counts()
+```
+
+```{python}
+features_df["subject_id"].nunique()
+```
+
+```{python}
+features_df.isna().sum().sum()
+```
+
+### Discussion
+
+At this point, the continuous sensor data has been transformed into a tabular machine learning dataset.
+
+Each row represents one window.
+
+Each column represents one feature or metadata field.
+
+---
+
+## Step 6 — Save the Feature Table
+
+```{python}
+features_df.to_csv(
+    DATA_DIR / "features_df.csv",
+    index=False,
+)
+```
+
+::: {.callout-note}
+## Remember
+
+Saving intermediate artifacts makes the pipeline easier to debug and reproduce.
+
+The next chapters can load the feature table directly instead of recomputing it every time.
+:::
+
+---
+
+## Think
+
+Which feature do you expect to be most useful for distinguishing walking from standing?
+
+- mean?
+- standard deviation?
+- maximum?
+- energy?
+
+Why?
+
+---
+
+## Common Pitfall
+
+::: {.callout-warning}
+## Training and Deployment Must Match
+
+If you train a model using one feature extraction method but deploy it with a different method, predictions become unreliable.
+
+That is why the project keeps feature extraction in `app/feature_extraction.py`.
+:::
+
+---
+
+## Checkpoint
+
+Before continuing, you should be able to answer:
+
+1. Why do we extract features from windows?
+2. Why does a Random Forest work well with feature tables?
+3. What does the energy feature measure?
+4. How many features do we compute per window?
+5. Why must training and deployment use the same feature extraction logic?
+
+---
+
+## Mini Challenge
+
+Add one additional feature to `app/feature_extraction.py`, for example:
+
+- median
+- range
+- interquartile range
+
+Then rerun this chapter.
+
+How does the number of features change?
+
+---
+
+## Summary
+
+In this chapter you learned
+
+- why feature engineering is necessary,
+- how windows are transformed into feature vectors,
+- how reusable project code improves maintainability,
+- how to create a complete feature table,
+- why consistent feature extraction is essential for deployment.
+
+In the next chapter we will train a machine learning model using this feature table.

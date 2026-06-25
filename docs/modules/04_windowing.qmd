@@ -1,0 +1,157 @@
+# Windowing
+
+## Learning Objectives
+
+After completing this chapter, you should be able to
+
+- explain why continuous sensor streams must be segmented into windows,
+- use reusable windowing code from the `app/` package,
+- create windows for one activity,
+- create windows safely per subject and activity,
+- understand how window size affects live prediction.
+
+---
+
+## Setup
+
+```{python}
+from pathlib import Path
+import sys
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+current_path = Path.cwd().resolve()
+
+for parent in [current_path] + list(current_path.parents):
+    if (parent / "app").exists():
+        PROJECT_ROOT = parent
+        break
+else:
+    raise RuntimeError("Could not find project root containing app/ directory.")
+
+sys.path.insert(0, str(PROJECT_ROOT))
+
+from app.config import WINDOW_SIZE
+from app.data_loader import load_wisdm_phone_accel
+from app.windowing import create_windows, create_grouped_windows
+
+DATA_DIR = PROJECT_ROOT / "data"
+
+df = load_wisdm_phone_accel(DATA_DIR)
+
+df["magnitude"] = np.sqrt(
+    df["x"] ** 2 + df["y"] ** 2 + df["z"] ** 2
+)
+```
+
+::: {.callout-important}
+## Software Engineering Principle
+
+This chapter does **not** redefine `create_windows()`.
+
+Instead, it imports reusable project code from `app.windowing`.
+
+This follows the **Don't Repeat Yourself (DRY)** principle.
+:::
+
+---
+
+## Why Do We Need Windowing?
+
+Wearable sensors produce a continuous stream of measurements.
+
+Classical machine learning algorithms expect **fixed-size samples**.
+
+Windowing bridges this gap by splitting a continuous stream into equally sized segments.
+
+---
+
+## Step 1 — Create Windows for Walking
+
+```{python}
+walking_df = (
+    df[df["activity"] == "walking"]
+    .sort_values("timestamp")
+    .copy()
+)
+
+walking_windows = create_windows(
+    walking_df,
+    window_size=WINDOW_SIZE,
+)
+
+len(walking_windows)
+```
+
+---
+
+## Step 2 — Inspect One Window
+
+```{python}
+first_window = walking_windows[0]
+
+first_window.head()
+```
+
+```{python}
+first_window.shape
+```
+
+---
+
+## Step 3 — Visualize One Window
+
+```{python}
+plt.figure(figsize=(10, 4))
+
+plt.plot(first_window["magnitude"])
+
+plt.title("One Walking Window")
+plt.xlabel("Sample")
+plt.ylabel("Magnitude")
+plt.show()
+```
+
+---
+
+## Step 4 — Create Windows for the Entire Dataset
+
+```{python}
+all_windows = create_grouped_windows(
+    df,
+    window_size=WINDOW_SIZE,
+)
+
+len(all_windows)
+```
+
+::: {.callout-warning}
+## Common Pitfall
+
+Always create windows separately for each subject and activity.
+
+Otherwise, a window may contain multiple activities.
+:::
+
+---
+
+## Checkpoint
+
+1. Why do we need windowing?
+2. What does a 100-sample window represent at 20 Hz?
+3. Why should windows not span multiple activities?
+4. Why is the window size relevant for live prediction?
+
+---
+
+## Summary
+
+In this chapter you learned
+
+- why windowing is necessary,
+- how reusable project code is imported,
+- how to create windows safely,
+- why window size controls the trade-off between stability and responsiveness.
+
+In the next chapter we will extract numerical features from every window.

@@ -100,6 +100,7 @@ Complete this checklist before students arrive:
 - Put the phone and laptop on the same hotspot or local router.
 - Open the phyphox URL from the laptop browser.
 - Keep the phone awake and charging if possible.
+- Test Replay Mode so the demo can continue without phyphox.
 
 ## During Class Sequence
 
@@ -127,7 +128,7 @@ Use this fallback:
 1. Confirm whether the laptop browser can open the phyphox URL.
 2. If not, switch to a phone hotspot or travel router.
 3. If it still fails, show the Live Prediction diagram and explain the expected Sensor Stream path.
-4. Use the Streamlit UI states to discuss where the failure occurs.
+4. Switch the dashboard to Replay Mode and keep the Prediction, probabilities, signal plot and history visible.
 5. Continue with the saved WISDM data and API demonstration.
 
 ## Fallback If FastAPI Fails

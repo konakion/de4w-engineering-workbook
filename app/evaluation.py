@@ -4,7 +4,7 @@ import numpy as np
 import pandas as pd
 from sklearn.base import clone
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.metrics import accuracy_score
+from sklearn.metrics import ConfusionMatrixDisplay, accuracy_score
 from sklearn.metrics import classification_report as sklearn_classification_report
 from sklearn.metrics import confusion_matrix
 from sklearn.model_selection import train_test_split
@@ -42,6 +42,35 @@ def confusion_matrix_table(
         index=[f"true_{label}" for label in labels],
         columns=[f"pred_{label}" for label in labels],
     )
+
+
+def plot_confusion_matrix_table(
+    matrix: pd.DataFrame,
+    labels: list[str],
+    title: str,
+    ax: Any | None = None,
+) -> Any:
+    """
+    Plot a labeled confusion matrix table for teaching notebooks.
+
+    This helper only visualizes existing evaluation results. It does not change
+    model training, prediction, or metric computation.
+    """
+    display = ConfusionMatrixDisplay(
+        confusion_matrix=matrix.to_numpy(),
+        display_labels=labels,
+    )
+    axis = display.plot(
+        ax=ax,
+        cmap="Blues",
+        colorbar=False,
+        values_format="d",
+    ).ax_
+    axis.set_title(title)
+    axis.set_xlabel("Predicted activity")
+    axis.set_ylabel("True activity")
+
+    return axis
 
 
 def evaluate_predictions(

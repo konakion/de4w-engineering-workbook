@@ -42,6 +42,7 @@ The goal of this chapter is to interpret the evaluation strategies, not to dupli
 from pathlib import Path
 import sys
 
+import matplotlib.pyplot as plt
 import pandas as pd
 
 current_path = Path.cwd().resolve()
@@ -61,6 +62,7 @@ from app.evaluation import (
     evaluate_subject_split,
     leave_one_subject_out_evaluation,
     metrics_for_metadata,
+    plot_confusion_matrix_table,
 )
 from app.training import (
     load_feature_table,
@@ -345,6 +347,15 @@ random_matrix = pd.DataFrame(
 random_matrix
 ```
 
+```{python}
+plot_confusion_matrix_table(
+    random_matrix,
+    random_labels,
+    "Random Split Confusion Matrix",
+)
+plt.show()
+```
+
 Interpretation:
 
 The diagonal tells us which activities the random split Model recognizes most reliably.
@@ -368,6 +379,15 @@ subject_matrix = pd.DataFrame(
 )
 
 subject_matrix
+```
+
+```{python}
+plot_confusion_matrix_table(
+    subject_matrix,
+    subject_labels,
+    "Subject-Wise Confusion Matrix",
+)
+plt.show()
 ```
 
 Interpretation:
@@ -402,6 +422,27 @@ pd.concat(
     },
     axis=1,
 )
+```
+
+```{python}
+fig, axes = plt.subplots(1, 2, figsize=(12, 4))
+
+plot_confusion_matrix_table(
+    random_matrix,
+    random_labels,
+    "Random Split",
+    ax=axes[0],
+)
+plot_confusion_matrix_table(
+    subject_matrix,
+    subject_labels,
+    "Subject-Wise",
+    ax=axes[1],
+)
+
+fig.suptitle("Random Split vs Subject-Wise Confusion Matrices")
+fig.tight_layout()
+plt.show()
 ```
 
 Interpretation:

@@ -64,6 +64,9 @@ Start the dashboard:
 uv run streamlit run dashboard.py
 ```
 
+The dashboard includes Live phyphox mode and Replay Mode. Use Replay Mode when
+networking or phyphox is unavailable during a class demo.
+
 ## Repository Structure
 
 ```text
@@ -174,6 +177,10 @@ phyphox
 → Model
 → dashboard
 ```
+
+If phyphox is unavailable, select Replay Mode in the dashboard sidebar. Replay
+Mode uses stored/synthetic samples to demonstrate the same Window -> Feature
+Vector -> Model -> Prediction flow without a live phone.
 
 ## eduroam And Hotspot Note
 

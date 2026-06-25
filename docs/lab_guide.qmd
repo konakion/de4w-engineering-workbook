@@ -121,8 +121,12 @@ The dashboard asks for:
 - phyphox URL
 - window size
 - demo duration
+- Live phyphox or Replay Mode
 
 Keep FastAPI running in the first terminal if your demo uses the API service.
+
+Use Replay Mode if phyphox or the network is unavailable. It still demonstrates
+the Sensor Stream, Window, Feature Vector, Model and Prediction flow.
 
 # Connect phyphox
 

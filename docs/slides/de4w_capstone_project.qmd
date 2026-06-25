@@ -143,36 +143,70 @@ This shows which people are easier or harder to generalize to.
 
 ## Deployment
 
-FastAPI turns the trained model into a service.
+A trained model is not yet a usable system.
 
-Important artifacts:
+```{mermaid}
+flowchart LR
+  A[Notebook] --> B[Model Artifact]
+  B --> C[FastAPI]
+  C --> D[Client]
+```
+
+Deployment is where machine learning becomes software engineering.
+
+## Deployment Artifacts
+
+The service needs:
 
 - trained model
 - feature column order
 - class labels
 - metadata
 
+The feature order is part of the Model contract.
+
 ## Prediction API
 
-Endpoints:
+```{mermaid}
+flowchart LR
+  A[Feature Vector] --> B[API]
+  B --> C[Prediction]
+```
 
 - `GET /health`
 - `POST /predict`
+- Swagger UI: `/docs`
 
-The API validates feature names before predicting.
-
-Missing features should fail clearly.
+Good Deployment fails clearly when artifacts or features are missing.
 
 ## Live Prediction
 
 ```{mermaid}
 flowchart LR
-  A[phyphox] --> B[PhyphoxClient]
-  B --> C[LiveBuffer]
-  C --> D[Feature extraction]
-  D --> E[Prediction service]
-  E --> F[Streamlit dashboard]
+  A[Smartphone] --> B[phyphox]
+  B --> C[HTTP]
+  C --> D[Buffer]
+  D --> E[Window]
+  E --> F[Features]
+  F --> G[Model]
+  G --> H[Dashboard]
 ```
+
+Live prediction connects the physical world to the trained Model.
+
+## Live Demo Trade-Off
+
+The dashboard needs a full Window before it can predict.
+
+Short Window:
+
+- faster response
+- noisier Predictions
+
+Long Window:
+
+- slower response
+- steadier Predictions
 
 ## Classroom Network Lesson
 
@@ -186,13 +220,13 @@ Reliable fallbacks:
 - local router
 - travel router
 
-## Troubleshooting First Checks
+## Live Demo Troubleshooting
 
 1. Can the laptop open the phyphox URL in a browser?
 2. Is phyphox remote access enabled?
 3. Are model artifacts present?
 4. Does `/health` return `model_loaded: true`?
-5. Are all 20 features present in prediction requests?
+5. Do live features match the saved feature columns?
 
 ## Teaching Flow
 

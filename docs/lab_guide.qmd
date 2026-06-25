@@ -32,7 +32,7 @@ uv sync
 Check imports:
 
 ```bash
-uv run python -c "import app.api, app.training, app.evaluation, app.model_utils; print('ready')"
+uv run python -c "import app.api, app.training, app.evaluation, app.model_utils, app.pipeline; print('final imports work')"
 ```
 
 # Data Placement
@@ -86,6 +86,8 @@ Run:
 uv run uvicorn app.api:app --reload
 ```
 
+Keep this terminal open while you test the API.
+
 Open:
 
 ```text
@@ -94,9 +96,21 @@ http://127.0.0.1:8000/health
 
 You should see `model_loaded: true`.
 
+You can also open Swagger UI:
+
+```text
+http://127.0.0.1:8000/docs
+```
+
+Swagger UI lets you inspect `GET /health` and `POST /predict` in the browser.
+
+Use `/health` first.
+
+It checks whether the model artifacts can be loaded.
+
 # Start Streamlit
 
-Run:
+Open a second terminal and run:
 
 ```bash
 uv run streamlit run dashboard.py
@@ -108,6 +122,8 @@ The dashboard asks for:
 - window size
 - demo duration
 
+Keep FastAPI running in the first terminal if your demo uses the API service.
+
 # Connect phyphox
 
 On your phone:
@@ -117,6 +133,18 @@ On your phone:
 3. Enable remote access.
 4. Copy the shown URL.
 5. Paste it into Streamlit.
+
+Before starting the Streamlit demo, test the phyphox URL in your laptop browser.
+
+If the browser cannot open the URL, Streamlit cannot read the phone either.
+
+::: {.callout-warning}
+## Hotspot Warning
+
+University networks such as eduroam often block direct phone-to-laptop communication.
+
+If the phyphox URL does not open on the laptop, use a smartphone hotspot, local router, or travel router.
+:::
 
 # Troubleshooting
 
@@ -136,6 +164,15 @@ Try:
 
 Check that model artifacts exist in `models/`.
 
+Expected files:
+
+```text
+models/activity_model_random_forest.joblib
+models/feature_columns.joblib
+models/activity_labels.joblib
+models/model_metadata.json
+```
+
 ## Prediction Fails With Missing Features
 
 The model expects all 20 feature columns saved in `models/feature_columns.joblib`.
@@ -152,8 +189,17 @@ Most failures are caused by:
 
 - wrong phyphox URL
 - remote access disabled
+- phone asleep
 - phone and laptop on different networks
 - eduroam blocking local traffic
+
+## Predictions Are Slow To Appear
+
+The dashboard needs a full Window before it can predict.
+
+A five-second Window means the first Prediction appears only after enough samples have been collected.
+
+Use a smaller Window for a faster but potentially noisier demo.
 
 # Completion Checklist
 
@@ -165,4 +211,3 @@ You are done when you can:
 - start Streamlit,
 - describe the live prediction pipeline,
 - explain the eduroam/hotspot lesson.
-

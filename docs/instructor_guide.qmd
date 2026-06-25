@@ -83,6 +83,73 @@ On the phone:
 4. Copy the remote URL.
 5. Paste it into Streamlit.
 
+# Concrete Live Demo Runbook
+
+## Before Class Checklist
+
+Complete this checklist before students arrive:
+
+- Render the book and slides once.
+- Confirm WISDM data is in `data/`.
+- Confirm `data/features_df.csv` exists.
+- Confirm these model artifacts exist: `activity_model_random_forest.joblib`, `feature_columns.joblib`, `activity_labels.joblib`, and `model_metadata.json`.
+- Start FastAPI with `uv run uvicorn app.api:app --reload`.
+- Open `http://127.0.0.1:8000/health` and confirm `model_loaded: true`.
+- Open `http://127.0.0.1:8000/docs` and confirm Swagger UI loads.
+- Start Streamlit with `uv run streamlit run dashboard.py`.
+- Put the phone and laptop on the same hotspot or local router.
+- Open the phyphox URL from the laptop browser.
+- Keep the phone awake and charging if possible.
+
+## During Class Sequence
+
+Use this sequence for the 60-82 minute live portion:
+
+1. Show the deployment slide: notebook to Model Artifact to FastAPI to client.
+2. Start or reveal the FastAPI terminal.
+3. Open `/health` and explain that it checks artifacts, not activity recognition.
+4. Open Swagger UI at `/docs` and show `/predict` as the input/output contract.
+5. Start or reveal Streamlit.
+6. Open phyphox on the phone and point out remote access.
+7. Paste the phyphox URL into Streamlit.
+8. Start a short demo duration with the course default Window size.
+9. Move the phone through walking, standing, and sitting examples.
+10. Pause after the first Prediction and ask why it did not appear instantly.
+11. Connect the delay back to Window size.
+12. End by showing the troubleshooting table in the Live Prediction chapter.
+
+## Fallback If phyphox Fails
+
+Do not spend more than two or three minutes debugging live networking in front of the class.
+
+Use this fallback:
+
+1. Confirm whether the laptop browser can open the phyphox URL.
+2. If not, switch to a phone hotspot or travel router.
+3. If it still fails, show the Live Prediction diagram and explain the expected Sensor Stream path.
+4. Use the Streamlit UI states to discuss where the failure occurs.
+5. Continue with the saved WISDM data and API demonstration.
+
+## Fallback If FastAPI Fails
+
+If FastAPI does not start or `/health` fails:
+
+1. Check whether another process is already using port 8000.
+2. Show the `/health` response or terminal error as a deployment debugging example.
+3. Confirm that model artifacts exist in `models/`.
+4. If needed, skip live API calls and use the Deployment chapter diagrams to explain the contract.
+5. Keep the lesson focused on why artifacts and validation matter.
+
+## Fallback If Streamlit Fails
+
+If the dashboard does not start:
+
+1. Keep FastAPI running and use Swagger UI for `/health` and `/predict`.
+2. Show the Live Prediction diagram in the slides.
+3. Explain that Streamlit is the user interface, not the Model itself.
+4. Discuss the dashboard states from the Live Prediction chapter.
+5. If time allows, restart Streamlit after the conceptual explanation.
+
 # Demo Fallback Plan
 
 Live sensor demos can fail because of networks, firewalls, phones, or battery state.
@@ -124,4 +191,3 @@ Before class:
 - Why might sitting and standing be confused?
 - What does the eduroam issue teach us about deployment?
 - What would need to change for a production medical wearable?
-

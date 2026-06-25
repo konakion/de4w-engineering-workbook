@@ -10,11 +10,49 @@ A Model only becomes useful when another program can ask it for a Prediction. Th
 
 After completing this chapter, you should be able to
 
+- explain why a trained model is not yet a usable system,
 - explain which model artifacts are needed for prediction,
+- explain why feature order must be saved,
 - start the FastAPI service,
+- use Swagger UI to inspect the API,
 - check API health,
 - send one prediction request,
 - explain how the Streamlit dashboard uses the same prediction code.
+
+---
+
+## A Trained Model Is Not Yet A Usable System
+
+At the end of training, we have a Model.
+
+That is important, but it is not enough.
+
+A notebook can prove that a Model works in one controlled environment. A deployed system must let other software request Predictions repeatedly, validate inputs, report errors, and return results in a predictable format.
+
+That is the difference between an experiment and a usable system.
+
+```{mermaid}
+flowchart LR
+  A[Notebook] --> B[Model Artifact]
+  B --> C[FastAPI]
+  C --> D[Client]
+```
+
+The notebook is where we build and inspect the baseline.
+
+The Model Artifact is what we save so the result can be reused.
+
+FastAPI is the service layer that exposes the Model to other programs.
+
+The client can be Swagger UI, a script, the Streamlit dashboard, or a future mobile application.
+
+::: {.callout-tip}
+## Engineering Insight
+
+Deployment is the point where machine learning becomes software engineering.
+
+The same Feature Vector definition must connect training, evaluation, API prediction, and the Streamlit dashboard.
+:::
 
 ---
 
@@ -29,17 +67,17 @@ models/
 └── activity_labels.joblib
 ```
 
-The most important artifact for deployment is the feature column list.
+Each artifact has a job:
+
+| Artifact | Purpose | Why it matters |
+|---|---|---|
+| `activity_model_random_forest.joblib` | Stores the trained Random Forest Model | The API needs the learned patterns for Prediction |
+| `feature_columns.joblib` | Stores the exact Feature Vector order | The same numbers in the wrong order can produce wrong Predictions |
+| `activity_labels.joblib` | Stores readable class labels | The API can return `walking`, `sitting`, or `standing` instead of raw class indices |
+
+The most fragile artifact is often the feature column list.
 
 The live system must send features to the model in exactly the same order that was used during training.
-
-::: {.callout-tip}
-## Engineering Insight
-
-Deployment is part of the machine learning system, not an afterthought.
-
-The same Feature Vector definition must connect training, evaluation, API prediction, and the Streamlit dashboard.
-:::
 
 ::: {.callout-warning}
 ## Common Pitfall
@@ -57,6 +95,14 @@ FastAPI exposes the trained model as a small HTTP service.
 
 The project keeps the API logic in `app/api.py` and the model loading/prediction logic in `app/model_utils.py`.
 
+This separation matters.
+
+The API handles HTTP requests, validation, and responses.
+
+The model utility code handles artifact loading and Prediction.
+
+That means a user interface can change without rewriting the Model logic, and the Model logic can improve without redesigning the API.
+
 Start the API from the project root:
 
 ```bash
@@ -68,6 +114,16 @@ The API will usually be available at:
 ```text
 http://127.0.0.1:8000
 ```
+
+Open the interactive API documentation at:
+
+```text
+http://127.0.0.1:8000/docs
+```
+
+This page is Swagger UI.
+
+Swagger UI is useful in a teaching session because students can inspect available endpoints, see request schemas, try `/health`, and send a `/predict` request without writing a separate client.
 
 ---
 
@@ -90,6 +146,14 @@ Expected response:
 ```
 
 If a model file is missing, the endpoint returns a clear message naming the missing artifact.
+
+The health endpoint answers a deployment question:
+
+> Can this service load the artifacts required for Prediction?
+
+It does not classify activity.
+
+It checks whether the service is ready.
 
 ---
 
@@ -134,6 +198,20 @@ The response contains:
   }
 }
 ```
+
+The Prediction workflow is:
+
+```{mermaid}
+flowchart LR
+  A[Feature Vector] --> B[API]
+  B --> C[Prediction]
+```
+
+The Feature Vector is the input contract.
+
+The API validates that contract.
+
+The Prediction is the output that another system can use.
 
 ::: {.callout-note}
 ## Validation

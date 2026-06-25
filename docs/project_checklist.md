@@ -5,7 +5,7 @@ Use this checklist before teaching or submitting the project.
 ## Imports
 
 ```bash
-uv run python -c "import app.api, app.training, app.evaluation, app.model_utils; print('release 1 imports work')"
+uv run python -c "import app.api, app.training, app.evaluation, app.model_utils, app.pipeline; print('final imports work')"
 ```
 
 ## Documentation Render
@@ -52,4 +52,3 @@ Verify that the dashboard opens and shows the waiting state.
 - phyphox remote access is enabled.
 - The phyphox URL opens in the laptop browser.
 - If eduroam blocks traffic, use a hotspot or local router.
-

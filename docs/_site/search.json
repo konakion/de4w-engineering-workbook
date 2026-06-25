@@ -1024,7 +1024,17 @@
     "href": "modules/07_deployment.html#learning-objectives",
     "title": "9  Deployment",
     "section": "",
-    "text": "explain which model artifacts are needed for prediction,\nstart the FastAPI service,\ncheck API health,\nsend one prediction request,\nexplain how the Streamlit dashboard uses the same prediction code.",
+    "text": "explain why a trained model is not yet a usable system,\nexplain which model artifacts are needed for prediction,\nexplain why feature order must be saved,\nstart the FastAPI service,\nuse Swagger UI to inspect the API,\ncheck API health,\nsend one prediction request,\nexplain how the Streamlit dashboard uses the same prediction code.",
+    "crumbs": [
+      "<span class='chapter-number'>9</span>  <span class='chapter-title'>Deployment</span>"
+    ]
+  },
+  {
+    "objectID": "modules/07_deployment.html#a-trained-model-is-not-yet-a-usable-system",
+    "href": "modules/07_deployment.html#a-trained-model-is-not-yet-a-usable-system",
+    "title": "9  Deployment",
+    "section": "9.2 A Trained Model Is Not Yet A Usable System",
+    "text": "9.2 A Trained Model Is Not Yet A Usable System\nAt the end of training, we have a Model.\nThat is important, but it is not enough.\nA notebook can prove that a Model works in one controlled environment. A deployed system must let other software request Predictions repeatedly, validate inputs, report errors, and return results in a predictable format.\nThat is the difference between an experiment and a usable system.\n\n\n\n\n\nflowchart LR\n  A[Notebook] --&gt; B[Model Artifact]\n  B --&gt; C[FastAPI]\n  C --&gt; D[Client]\n\n\n\n\n\n\nThe notebook is where we build and inspect the baseline.\nThe Model Artifact is what we save so the result can be reused.\nFastAPI is the service layer that exposes the Model to other programs.\nThe client can be Swagger UI, a script, the Streamlit dashboard, or a future mobile application.\n\n\n\n\n\n\nTipEngineering Insight\n\n\n\nDeployment is the point where machine learning becomes software engineering.\nThe same Feature Vector definition must connect training, evaluation, API prediction, and the Streamlit dashboard.",
     "crumbs": [
       "<span class='chapter-number'>9</span>  <span class='chapter-title'>Deployment</span>"
     ]
@@ -1033,8 +1043,8 @@
     "objectID": "modules/07_deployment.html#model-artifacts",
     "href": "modules/07_deployment.html#model-artifacts",
     "title": "9  Deployment",
-    "section": "9.2 Model Artifacts",
-    "text": "9.2 Model Artifacts\nThe deployed prediction service uses files in the models/ directory.\nmodels/\n├── activity_model_random_forest.joblib\n├── feature_columns.joblib\n└── activity_labels.joblib\nThe most important artifact for deployment is the feature column list.\nThe live system must send features to the model in exactly the same order that was used during training.\n\n\n\n\n\n\nTipEngineering Insight\n\n\n\nDeployment is part of the machine learning system, not an afterthought.\nThe same Feature Vector definition must connect training, evaluation, API prediction, and the Streamlit dashboard.\n\n\n\n\n\n\n\n\nWarningCommon Pitfall\n\n\n\nIf the model was trained with one set of features but the API receives a different set, predictions are not reliable.\nThe API checks for missing and unexpected features before predicting.",
+    "section": "9.3 Model Artifacts",
+    "text": "9.3 Model Artifacts\nThe deployed prediction service uses files in the models/ directory.\nmodels/\n├── activity_model_random_forest.joblib\n├── feature_columns.joblib\n└── activity_labels.joblib\nEach artifact has a job:\n\n\n\n\n\n\n\n\nArtifact\nPurpose\nWhy it matters\n\n\n\n\nactivity_model_random_forest.joblib\nStores the trained Random Forest Model\nThe API needs the learned patterns for Prediction\n\n\nfeature_columns.joblib\nStores the exact Feature Vector order\nThe same numbers in the wrong order can produce wrong Predictions\n\n\nactivity_labels.joblib\nStores readable class labels\nThe API can return walking, sitting, or standing instead of raw class indices\n\n\n\nThe most fragile artifact is often the feature column list.\nThe live system must send features to the model in exactly the same order that was used during training.\n\n\n\n\n\n\nWarningCommon Pitfall\n\n\n\nIf the model was trained with one set of features but the API receives a different set, predictions are not reliable.\nThe API checks for missing and unexpected features before predicting.",
     "crumbs": [
       "<span class='chapter-number'>9</span>  <span class='chapter-title'>Deployment</span>"
     ]
@@ -1043,8 +1053,8 @@
     "objectID": "modules/07_deployment.html#fastapi-service",
     "href": "modules/07_deployment.html#fastapi-service",
     "title": "9  Deployment",
-    "section": "9.3 FastAPI Service",
-    "text": "9.3 FastAPI Service\nFastAPI exposes the trained model as a small HTTP service.\nThe project keeps the API logic in app/api.py and the model loading/prediction logic in app/model_utils.py.\nStart the API from the project root:\nuv run uvicorn app.api:app --reload\nThe API will usually be available at:\nhttp://127.0.0.1:8000",
+    "section": "9.4 FastAPI Service",
+    "text": "9.4 FastAPI Service\nFastAPI exposes the trained model as a small HTTP service.\nThe project keeps the API logic in app/api.py and the model loading/prediction logic in app/model_utils.py.\nThis separation matters.\nThe API handles HTTP requests, validation, and responses.\nThe model utility code handles artifact loading and Prediction.\nThat means a user interface can change without rewriting the Model logic, and the Model logic can improve without redesigning the API.\nStart the API from the project root:\nuv run uvicorn app.api:app --reload\nThe API will usually be available at:\nhttp://127.0.0.1:8000\nOpen the interactive API documentation at:\nhttp://127.0.0.1:8000/docs\nThis page is Swagger UI.\nSwagger UI is useful in a teaching session because students can inspect available endpoints, see request schemas, try /health, and send a /predict request without writing a separate client.",
     "crumbs": [
       "<span class='chapter-number'>9</span>  <span class='chapter-title'>Deployment</span>"
     ]
@@ -1053,8 +1063,8 @@
     "objectID": "modules/07_deployment.html#health-check",
     "href": "modules/07_deployment.html#health-check",
     "title": "9  Deployment",
-    "section": "9.4 Health Check",
-    "text": "9.4 Health Check\nUse the health endpoint to verify that the API can load the model artifacts.\ncurl http://127.0.0.1:8000/health\nExpected response:\n{\n  \"status\": \"ok\",\n  \"model_loaded\": true,\n  \"detail\": \"Model artifacts are available.\"\n}\nIf a model file is missing, the endpoint returns a clear message naming the missing artifact.",
+    "section": "9.5 Health Check",
+    "text": "9.5 Health Check\nUse the health endpoint to verify that the API can load the model artifacts.\ncurl http://127.0.0.1:8000/health\nExpected response:\n{\n  \"status\": \"ok\",\n  \"model_loaded\": true,\n  \"detail\": \"Model artifacts are available.\"\n}\nIf a model file is missing, the endpoint returns a clear message naming the missing artifact.\nThe health endpoint answers a deployment question:\n\nCan this service load the artifacts required for Prediction?\n\nIt does not classify activity.\nIt checks whether the service is ready.",
     "crumbs": [
       "<span class='chapter-number'>9</span>  <span class='chapter-title'>Deployment</span>"
     ]
@@ -1063,8 +1073,8 @@
     "objectID": "modules/07_deployment.html#prediction-request",
     "href": "modules/07_deployment.html#prediction-request",
     "title": "9  Deployment",
-    "section": "9.5 Prediction Request",
-    "text": "9.5 Prediction Request\nThe prediction endpoint is:\nPOST /predict\nIt expects one JSON object with a features field.\nThe feature names must match models/feature_columns.joblib.\nExample shape:\n{\n  \"features\": {\n    \"mean_x\": 0.0,\n    \"std_x\": 0.0,\n    \"min_x\": 0.0,\n    \"max_x\": 0.0,\n    \"energy_x\": 0.0\n  }\n}\nThe real request must include all 20 trained feature columns.\nThe response contains:\n{\n  \"activity\": \"walking\",\n  \"confidence\": 0.91,\n  \"probabilities\": {\n    \"sitting\": 0.02,\n    \"standing\": 0.07,\n    \"walking\": 0.91\n  }\n}\n\n\n\n\n\n\nNoteValidation\n\n\n\nIf features are missing, the API returns a validation error that names them.",
+    "section": "9.6 Prediction Request",
+    "text": "9.6 Prediction Request\nThe prediction endpoint is:\nPOST /predict\nIt expects one JSON object with a features field.\nThe feature names must match models/feature_columns.joblib.\nExample shape:\n{\n  \"features\": {\n    \"mean_x\": 0.0,\n    \"std_x\": 0.0,\n    \"min_x\": 0.0,\n    \"max_x\": 0.0,\n    \"energy_x\": 0.0\n  }\n}\nThe real request must include all 20 trained feature columns.\nThe response contains:\n{\n  \"activity\": \"walking\",\n  \"confidence\": 0.91,\n  \"probabilities\": {\n    \"sitting\": 0.02,\n    \"standing\": 0.07,\n    \"walking\": 0.91\n  }\n}\nThe Prediction workflow is:\n\n\n\n\n\nflowchart LR\n  A[Feature Vector] --&gt; B[API]\n  B --&gt; C[Prediction]\n\n\n\n\n\n\nThe Feature Vector is the input contract.\nThe API validates that contract.\nThe Prediction is the output that another system can use.\n\n\n\n\n\n\nNoteValidation\n\n\n\nIf features are missing, the API returns a validation error that names them.",
     "crumbs": [
       "<span class='chapter-number'>9</span>  <span class='chapter-title'>Deployment</span>"
     ]
@@ -1073,8 +1083,8 @@
     "objectID": "modules/07_deployment.html#streamlit-dashboard",
     "href": "modules/07_deployment.html#streamlit-dashboard",
     "title": "9  Deployment",
-    "section": "9.6 Streamlit Dashboard",
-    "text": "9.6 Streamlit Dashboard\nThe Streamlit dashboard is the live demonstration UI.\nStart it from the project root:\nuv run streamlit run dashboard.py\nThe dashboard:\n\nreads live samples from phyphox,\nstores recent samples in LiveBuffer,\ncreates a Window,\nextracts a Feature Vector,\ncalls the same prediction service used by the API,\ndisplays the current activity and probabilities.\n\nThe API and dashboard share the same model artifact checks.\nThis reduces the chance that the web service and live demo behave differently.",
+    "section": "9.7 Streamlit Dashboard",
+    "text": "9.7 Streamlit Dashboard\nThe Streamlit dashboard is the live demonstration UI.\nStart it from the project root:\nuv run streamlit run dashboard.py\nThe dashboard:\n\nreads live samples from phyphox,\nstores recent samples in LiveBuffer,\ncreates a Window,\nextracts a Feature Vector,\ncalls the same prediction service used by the API,\ndisplays the current activity and probabilities.\n\nThe API and dashboard share the same model artifact checks.\nThis reduces the chance that the web service and live demo behave differently.",
     "crumbs": [
       "<span class='chapter-number'>9</span>  <span class='chapter-title'>Deployment</span>"
     ]
@@ -1083,8 +1093,8 @@
     "objectID": "modules/07_deployment.html#thinking-like-an-engineer",
     "href": "modules/07_deployment.html#thinking-like-an-engineer",
     "title": "9  Deployment",
-    "section": "9.7 Thinking Like An Engineer",
-    "text": "9.7 Thinking Like An Engineer\nInstead of asking:\n\nCan my notebook produce a prediction?\n\nask:\n\nCan another system request the same Prediction reliably?\n\nDeployment forces us to make assumptions explicit: artifact locations, feature names, input validation, output format, and failure messages.",
+    "section": "9.8 Thinking Like An Engineer",
+    "text": "9.8 Thinking Like An Engineer\nInstead of asking:\n\nCan my notebook produce a prediction?\n\nask:\n\nCan another system request the same Prediction reliably?\n\nDeployment forces us to make assumptions explicit: artifact locations, feature names, input validation, output format, and failure messages.",
     "crumbs": [
       "<span class='chapter-number'>9</span>  <span class='chapter-title'>Deployment</span>"
     ]
@@ -1093,8 +1103,8 @@
     "objectID": "modules/07_deployment.html#checkpoint",
     "href": "modules/07_deployment.html#checkpoint",
     "title": "9  Deployment",
-    "section": "9.8 Checkpoint",
-    "text": "9.8 Checkpoint\nBefore continuing, you should be able to answer:\n\nWhich model artifacts are needed for prediction?\nWhy must feature names match the training feature columns?\nWhat does /health check?\nWhat does /predict return?\nWhy should the API and dashboard use the same prediction service?",
+    "section": "9.9 Checkpoint",
+    "text": "9.9 Checkpoint\nBefore continuing, you should be able to answer:\n\nWhich model artifacts are needed for prediction?\nWhy must feature names match the training feature columns?\nWhat does /health check?\nWhat does /predict return?\nWhy should the API and dashboard use the same prediction service?",
     "crumbs": [
       "<span class='chapter-number'>9</span>  <span class='chapter-title'>Deployment</span>"
     ]
@@ -1103,8 +1113,8 @@
     "objectID": "modules/07_deployment.html#further-exploration",
     "href": "modules/07_deployment.html#further-exploration",
     "title": "9  Deployment",
-    "section": "9.9 Further Exploration",
-    "text": "9.9 Further Exploration\nOptional: intentionally remove one feature from a /predict request.\nWhich error message does the API return?\nHow does that help debug deployment problems?",
+    "section": "9.10 Further Exploration",
+    "text": "9.10 Further Exploration\nOptional: intentionally remove one feature from a /predict request.\nWhich error message does the API return?\nHow does that help debug deployment problems?",
     "crumbs": [
       "<span class='chapter-number'>9</span>  <span class='chapter-title'>Deployment</span>"
     ]
@@ -1113,8 +1123,8 @@
     "objectID": "modules/07_deployment.html#what-have-we-achieved",
     "href": "modules/07_deployment.html#what-have-we-achieved",
     "title": "9  Deployment",
-    "section": "9.10 What Have We Achieved?",
-    "text": "9.10 What Have We Achieved?\n\nWe identified the model artifacts needed for Deployment.\nWe explained why feature columns must match the trained Feature Matrix.\nWe started and tested the FastAPI prediction service.\nWe connected the API and Streamlit dashboard to the same prediction path.\nWe practiced treating validation errors as part of system reliability.",
+    "section": "9.11 What Have We Achieved?",
+    "text": "9.11 What Have We Achieved?\n\nWe identified the model artifacts needed for Deployment.\nWe explained why feature columns must match the trained Feature Matrix.\nWe started and tested the FastAPI prediction service.\nWe connected the API and Streamlit dashboard to the same prediction path.\nWe practiced treating validation errors as part of system reliability.",
     "crumbs": [
       "<span class='chapter-number'>9</span>  <span class='chapter-title'>Deployment</span>"
     ]
@@ -1123,8 +1133,8 @@
     "objectID": "modules/07_deployment.html#what-comes-next",
     "href": "modules/07_deployment.html#what-comes-next",
     "title": "9  Deployment",
-    "section": "9.11 What Comes Next?",
-    "text": "9.11 What Comes Next?\nDeployment gives us a service that can return Predictions. The final major chapter connects that service to a real phone Sensor Stream for Live Prediction.",
+    "section": "9.12 What Comes Next?",
+    "text": "9.12 What Comes Next?\nDeployment gives us a service that can return Predictions. The final major chapter connects that service to a real phone Sensor Stream for Live Prediction.",
     "crumbs": [
       "<span class='chapter-number'>9</span>  <span class='chapter-title'>Deployment</span>"
     ]
@@ -1144,7 +1154,17 @@
     "href": "modules/08_live_prediction.html#learning-objectives",
     "title": "10  Live Prediction",
     "section": "",
-    "text": "configure phyphox remote access,\nexplain why the phone and laptop must be on the same network,\ndescribe the live prediction pipeline,\nrun the Streamlit dashboard,\ntroubleshoot common live demo failures.",
+    "text": "explain how Live Prediction connects the physical world to the trained Model,\nconfigure phyphox remote access,\nexplain why the phone and laptop must be on the same network,\ndescribe the live prediction pipeline,\nexplain why Window size creates prediction delay,\nrun the Streamlit dashboard,\ntroubleshoot common live demo failures.",
+    "crumbs": [
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Live Prediction</span>"
+    ]
+  },
+  {
+    "objectID": "modules/08_live_prediction.html#live-prediction-connects-the-physical-world-to-the-model",
+    "href": "modules/08_live_prediction.html#live-prediction-connects-the-physical-world-to-the-model",
+    "title": "10  Live Prediction",
+    "section": "10.2 Live Prediction Connects The Physical World To The Model",
+    "text": "10.2 Live Prediction Connects The Physical World To The Model\nUntil now, the project has mostly used stored data.\nLive Prediction changes the situation.\nA real phone moves in the physical world. phyphox streams the phone acceleration. The dashboard collects recent samples, creates a Window, extracts a Feature Vector, and asks the Model for a Prediction.\nThat is the complete system in motion.\n\n\n\n\n\nflowchart LR\n  A[Smartphone] --&gt; B[phyphox]\n  B --&gt; C[HTTP]\n  C --&gt; D[Buffer]\n  D --&gt; E[Window]\n  E --&gt; F[Features]\n  F --&gt; G[Model]\n  G --&gt; H[Dashboard]\n\n\n\n\n\n\nThe important lesson is that machine learning is now only one part of a live chain.\nIf any link fails, the demo fails.",
     "crumbs": [
       "<span class='chapter-number'>10</span>  <span class='chapter-title'>Live Prediction</span>"
     ]
@@ -1153,8 +1173,8 @@
     "objectID": "modules/08_live_prediction.html#phyphox-setup",
     "href": "modules/08_live_prediction.html#phyphox-setup",
     "title": "10  Live Prediction",
-    "section": "10.2 phyphox Setup",
-    "text": "10.2 phyphox Setup\nInstall phyphox on your smartphone.\nOpen an acceleration experiment and enable remote access.\nphyphox will show a URL such as:\nhttp://192.168.178.45:8080\nEnter this URL in the Streamlit dashboard.\n\n\n\n\n\n\nWarningNetwork Requirement\n\n\n\nThe phone and laptop must be able to reach each other on the local network.\nUniversity WiFi networks such as eduroam often block direct device-to-device communication.\nIf the laptop cannot open the phyphox URL in a browser, the dashboard cannot read sensor data either.\n\n\nRecommended network options:\n\nsmartphone hotspot,\nlocal home WiFi,\ntravel router,\nlab router configured for local device communication.",
+    "section": "10.3 phyphox Setup",
+    "text": "10.3 phyphox Setup\nInstall phyphox on your smartphone.\nOpen an acceleration experiment and enable remote access.\nphyphox will show a URL such as:\nhttp://192.168.178.45:8080\nEnter this URL in the Streamlit dashboard.\nphyphox acts as the live sensor source.\nIt turns the smartphone accelerometer into an HTTP endpoint that the laptop can request.\n\n\n\n\n\n\nWarningNetwork Requirement\n\n\n\nThe phone and laptop must be able to reach each other on the local network.\nUniversity WiFi networks such as eduroam often block direct device-to-device communication.\nIf the laptop cannot open the phyphox URL in a browser, the dashboard cannot read sensor data either.\n\n\nThis is why a hotspot often works better for class demos.\nA phone hotspot usually places the phone and laptop on a small local network where they can talk directly.\nRecommended network options:\n\nsmartphone hotspot,\nlocal home WiFi,\ntravel router,\nlab router configured for local device communication.",
     "crumbs": [
       "<span class='chapter-number'>10</span>  <span class='chapter-title'>Live Prediction</span>"
     ]
@@ -1163,8 +1183,8 @@
     "objectID": "modules/08_live_prediction.html#start-the-dashboard",
     "href": "modules/08_live_prediction.html#start-the-dashboard",
     "title": "10  Live Prediction",
-    "section": "10.3 Start the Dashboard",
-    "text": "10.3 Start the Dashboard\nFrom the project root:\nuv run streamlit run dashboard.py\nThe dashboard lets you configure:\n\nphyphox URL,\nwindow size,\ndemo duration.\n\nThe demo is intentionally time-limited so that it cannot run forever by accident.",
+    "section": "10.4 Start the Dashboard",
+    "text": "10.4 Start the Dashboard\nFrom the project root:\nuv run streamlit run dashboard.py\nThe dashboard lets you configure:\n\nphyphox URL,\nwindow size,\ndemo duration.\n\nThe demo is intentionally time-limited so that it cannot run forever by accident.",
     "crumbs": [
       "<span class='chapter-number'>10</span>  <span class='chapter-title'>Live Prediction</span>"
     ]
@@ -1173,8 +1193,18 @@
     "objectID": "modules/08_live_prediction.html#live-prediction-pipeline",
     "href": "modules/08_live_prediction.html#live-prediction-pipeline",
     "title": "10  Live Prediction",
-    "section": "10.4 Live Prediction Pipeline",
-    "text": "10.4 Live Prediction Pipeline\nThe live pipeline is:\nphyphox\n→ PhyphoxClient\n→ LiveBuffer\n→ Window\n→ Feature Vector\n→ prediction service\n→ Streamlit dashboard\nPhyphoxClient reads the latest x, y and z acceleration values.\nLiveBuffer stores the most recent samples until a full Window is available.\nThe Window is converted to the same Feature Vector used during training.\nThe prediction service loads the trained Random Forest Model and returns:\n\npredicted activity,\nconfidence,\nclass probabilities.\n\n\n\n\n\n\n\nTipEngineering Insight\n\n\n\nLive Prediction is where hidden assumptions become visible.\nSampling rate, network access, buffer size, feature order, and model artifacts all have to work at the same time.",
+    "section": "10.5 Live Prediction Pipeline",
+    "text": "10.5 Live Prediction Pipeline\nThe live pipeline is:\nphyphox\n→ PhyphoxClient\n→ LiveBuffer\n→ Window\n→ Feature Vector\n→ Model\n→ Streamlit dashboard\nPhyphoxClient reads the latest x, y and z acceleration values.\nLiveBuffer stores the most recent samples until a full Window is available.\nThe Window is converted to the same Feature Vector used during training.\nThe prediction service loads the trained Random Forest Model and returns:\n\npredicted activity,\nconfidence,\nclass probabilities.\n\n\n\n\n\n\n\nTipEngineering Insight\n\n\n\nLive Prediction is where hidden assumptions become visible.\nSampling rate, network access, buffer size, feature order, and model artifacts all have to work at the same time.",
+    "crumbs": [
+      "<span class='chapter-number'>10</span>  <span class='chapter-title'>Live Prediction</span>"
+    ]
+  },
+  {
+    "objectID": "modules/08_live_prediction.html#why-predictions-react-with-delay",
+    "href": "modules/08_live_prediction.html#why-predictions-react-with-delay",
+    "title": "10  Live Prediction",
+    "section": "10.6 Why Predictions React With Delay",
+    "text": "10.6 Why Predictions React With Delay\nThe dashboard cannot classify one isolated acceleration sample.\nIt needs a full Window.\nIf the Window is five seconds long, the system needs about five seconds of recent Sensor Stream data before the first Prediction can appear.\nShorter Windows can react faster but may be noisier.\nLonger Windows can be more stable but react more slowly.\nThis is why Live Prediction always includes a trade-off between responsiveness and stability.",
     "crumbs": [
       "<span class='chapter-number'>10</span>  <span class='chapter-title'>Live Prediction</span>"
     ]
@@ -1183,8 +1213,8 @@
     "objectID": "modules/08_live_prediction.html#dashboard-states",
     "href": "modules/08_live_prediction.html#dashboard-states",
     "title": "10  Live Prediction",
-    "section": "10.5 Dashboard States",
-    "text": "10.5 Dashboard States\nThe dashboard shows the current live demo state:\n\n\n\nState\nMeaning\n\n\n\n\nWaiting\nThe demo has not started yet\n\n\nCollecting samples\nThe buffer is filling\n\n\nPredicting\nA full window is available\n\n\nError\nphyphox or model prediction failed\n\n\nFinished\nThe configured demo duration ended\n\n\n\nThese states make live demos easier to debug in front of a class.",
+    "section": "10.7 Dashboard States",
+    "text": "10.7 Dashboard States\nThe dashboard shows the current live demo state:\n\n\n\nState\nMeaning\n\n\n\n\nWaiting\nThe demo has not started yet\n\n\nCollecting samples\nThe buffer is filling\n\n\nPredicting\nA full window is available\n\n\nError\nphyphox or model prediction failed\n\n\nFinished\nThe configured demo duration ended\n\n\n\nThese states make live demos easier to debug in front of a class.",
     "crumbs": [
       "<span class='chapter-number'>10</span>  <span class='chapter-title'>Live Prediction</span>"
     ]
@@ -1193,8 +1223,8 @@
     "objectID": "modules/08_live_prediction.html#thinking-like-an-engineer",
     "href": "modules/08_live_prediction.html#thinking-like-an-engineer",
     "title": "10  Live Prediction",
-    "section": "10.6 Thinking Like An Engineer",
-    "text": "10.6 Thinking Like An Engineer\nInstead of asking:\n\nDoes the Model work?\n\nask:\n\nCan the complete live system keep producing Predictions when real-world conditions change?\n\nIn a classroom demo, the most likely failures may be networking, phone setup, timing, or missing artifacts rather than machine learning accuracy.",
+    "section": "10.8 Thinking Like An Engineer",
+    "text": "10.8 Thinking Like An Engineer\nInstead of asking:\n\nDoes the Model work?\n\nask:\n\nCan the complete live system keep producing Predictions when real-world conditions change?\n\nIn a classroom demo, the most likely failures may be networking, phone setup, timing, or missing artifacts rather than machine learning accuracy.",
     "crumbs": [
       "<span class='chapter-number'>10</span>  <span class='chapter-title'>Live Prediction</span>"
     ]
@@ -1203,8 +1233,8 @@
     "objectID": "modules/08_live_prediction.html#troubleshooting",
     "href": "modules/08_live_prediction.html#troubleshooting",
     "title": "10  Live Prediction",
-    "section": "10.7 Troubleshooting",
-    "text": "10.7 Troubleshooting\n\n10.7.1 phyphox URL Does Not Open\nCheck that remote access is enabled in phyphox.\nMake sure the phone and laptop are on the same network.\nIf you are on eduroam, try a phone hotspot or a local router.\n\n\n10.7.2 Dashboard Shows a Timeout\nThe laptop can see the URL but the response is too slow.\nMove both devices closer to the access point or use a simpler local network.\n\n\n10.7.3 Missing Buffer Error\nMake sure the correct phyphox experiment is open and producing acceleration buffers named accX, accY and accZ.\n\n\n10.7.4 Model Artifact Error\nConfirm that these files exist:\nmodels/activity_model_random_forest.joblib\nmodels/feature_columns.joblib\nmodels/activity_labels.joblib\nIf they are missing, rerun the training/export step before the live demo.",
+    "section": "10.9 Troubleshooting",
+    "text": "10.9 Troubleshooting\nA live demo can fail for machine learning reasons, but it more often fails for ordinary system reasons.\nUse the table before changing code.\n\n\n\n\n\n\n\n\nProblem\nLikely Cause\nFix\n\n\n\n\nphyphox URL does not open in the laptop browser\nWrong IP address or phone and laptop are on different networks\nCopy the current URL from phyphox again and confirm both devices use the same network\n\n\nphyphox URL works on the phone but not on the laptop\neduroam or another managed network uses client isolation\nUse a phone hotspot, local router, or travel router\n\n\nDashboard stops receiving samples\nPhone went asleep or phyphox stopped running in the foreground\nKeep the phone awake and leave the phyphox experiment open\n\n\nDashboard reports remote access or connection errors\nphyphox remote access is off\nEnable remote access in phyphox and paste the shown URL into Streamlit\n\n\nModel artifact error\nRequired files are missing from models/\nRegenerate or restore the model artifacts before the demo\n\n\nFeature mismatch error\nLive Feature Vector does not match the saved training feature columns\nUse the project feature extraction pipeline and do not manually edit feature names\n\n\nPredictions appear slowly\nWindow size is long\nUse a smaller Window for a more responsive classroom demo\n\n\nPredictions look unstable\nWindow size is short or the phone motion is inconsistent\nUse a larger Window or repeat the activity more steadily",
     "crumbs": [
       "<span class='chapter-number'>10</span>  <span class='chapter-title'>Live Prediction</span>"
     ]
@@ -1213,8 +1243,8 @@
     "objectID": "modules/08_live_prediction.html#checkpoint",
     "href": "modules/08_live_prediction.html#checkpoint",
     "title": "10  Live Prediction",
-    "section": "10.8 Checkpoint",
-    "text": "10.8 Checkpoint\nBefore continuing, you should be able to answer:\n\nWhy can eduroam block the live demo?\nWhat does the live buffer store?\nWhen does the dashboard start predicting?\nWhy must live feature extraction match training feature extraction?\nWhat should you check first if phyphox cannot connect?",
+    "section": "10.10 Checkpoint",
+    "text": "10.10 Checkpoint\nBefore continuing, you should be able to answer:\n\nWhy can eduroam block the live demo?\nWhat does the live buffer store?\nWhen does the dashboard start predicting?\nWhy do Predictions react with delay?\nWhy must live feature extraction match training feature extraction?",
     "crumbs": [
       "<span class='chapter-number'>10</span>  <span class='chapter-title'>Live Prediction</span>"
     ]
@@ -1223,8 +1253,8 @@
     "objectID": "modules/08_live_prediction.html#further-exploration",
     "href": "modules/08_live_prediction.html#further-exploration",
     "title": "10  Live Prediction",
-    "section": "10.9 Further Exploration",
-    "text": "10.9 Further Exploration\nOptional: compare predictions with two different window sizes.\nHow does a smaller window affect responsiveness?\nHow does a larger window affect stability?",
+    "section": "10.11 Further Exploration",
+    "text": "10.11 Further Exploration\nOptional: compare predictions with two different window sizes.\nHow does a smaller window affect responsiveness?\nHow does a larger window affect stability?",
     "crumbs": [
       "<span class='chapter-number'>10</span>  <span class='chapter-title'>Live Prediction</span>"
     ]
@@ -1233,8 +1263,8 @@
     "objectID": "modules/08_live_prediction.html#what-have-we-achieved",
     "href": "modules/08_live_prediction.html#what-have-we-achieved",
     "title": "10  Live Prediction",
-    "section": "10.10 What Have We Achieved?",
-    "text": "10.10 What Have We Achieved?\n\nWe connected phyphox Sensor Stream data to the project pipeline.\nWe traced the live path from LiveBuffer to Window to Feature Vector to Prediction.\nWe explained why eduroam and other managed networks can block the demo.\nWe interpreted dashboard states as debugging signals.\nWe prepared a troubleshooting checklist for reliable Live Prediction.",
+    "section": "10.12 What Have We Achieved?",
+    "text": "10.12 What Have We Achieved?\n\nWe connected phyphox Sensor Stream data to the project pipeline.\nWe traced the live path from LiveBuffer to Window to Feature Vector to Prediction.\nWe explained why eduroam and other managed networks can block the demo.\nWe interpreted dashboard states as debugging signals.\nWe prepared a troubleshooting checklist for reliable Live Prediction.",
     "crumbs": [
       "<span class='chapter-number'>10</span>  <span class='chapter-title'>Live Prediction</span>"
     ]
@@ -1243,8 +1273,8 @@
     "objectID": "modules/08_live_prediction.html#what-comes-next",
     "href": "modules/08_live_prediction.html#what-comes-next",
     "title": "10  Live Prediction",
-    "section": "10.11 What Comes Next?",
-    "text": "10.11 What Comes Next?\nYou have now followed the full system from raw Sensor Stream to Live Prediction. The remaining project materials help you review, teach, and verify the complete workbook.",
+    "section": "10.13 What Comes Next?",
+    "text": "10.13 What Comes Next?\nYou have now followed the full system from raw Sensor Stream to Live Prediction. The remaining project materials help you review, teach, and verify the complete workbook.",
     "crumbs": [
       "<span class='chapter-number'>10</span>  <span class='chapter-title'>Live Prediction</span>"
     ]

@@ -43,7 +43,7 @@ uv sync
 Check imports:
 
 ```bash
-uv run python -c "import app.api, app.training, app.evaluation, app.model_utils; print('ready')"
+uv run python -c "import app.api, app.training, app.evaluation, app.model_utils, app.pipeline; print('final imports work')"
 ```
 
 Render the Quarto book:
@@ -116,10 +116,10 @@ Render slides:
 PATH=.venv/bin:$PATH quarto render docs/slides/de4w_capstone_project.qmd
 ```
 
-Check deployment imports:
+Check final imports:
 
 ```bash
-uv run python -c "import app.api, app.training, app.evaluation, app.model_utils; print('release 1 imports work')"
+uv run python -c "import app.api, app.training, app.evaluation, app.model_utils, app.pipeline; print('final imports work')"
 ```
 
 Start FastAPI:
@@ -169,8 +169,9 @@ The live path is:
 phyphox
 → PhyphoxClient
 → LiveBuffer
-→ feature extraction
-→ prediction service
+→ Window
+→ Feature Vector
+→ Model
 → dashboard
 ```
 
@@ -201,4 +202,3 @@ This is an expected deployment lesson, not a model bug.
 - `quarto render docs` may use a system Python without Jupyter/PyYAML. Use `PATH=.venv/bin:$PATH quarto render docs`.
 - Live prediction depends on local network reachability between phone and laptop.
 - The model is a teaching baseline, not a production medical model.
-

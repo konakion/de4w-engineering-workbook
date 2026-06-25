@@ -107,6 +107,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
+<script src="../site_libs/quarto-diagram/mermaid.min.js"></script>
+<script src="../site_libs/quarto-diagram/mermaid-init.js"></script>
+<link href="../site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
 
 
 </head>
@@ -216,16 +219,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    
   <ul>
   <li><a href="#learning-objectives" id="toc-learning-objectives" class="nav-link active" data-scroll-target="#learning-objectives"><span class="header-section-number">9.1</span> Learning Objectives</a></li>
-  <li><a href="#model-artifacts" id="toc-model-artifacts" class="nav-link" data-scroll-target="#model-artifacts"><span class="header-section-number">9.2</span> Model Artifacts</a></li>
-  <li><a href="#fastapi-service" id="toc-fastapi-service" class="nav-link" data-scroll-target="#fastapi-service"><span class="header-section-number">9.3</span> FastAPI Service</a></li>
-  <li><a href="#health-check" id="toc-health-check" class="nav-link" data-scroll-target="#health-check"><span class="header-section-number">9.4</span> Health Check</a></li>
-  <li><a href="#prediction-request" id="toc-prediction-request" class="nav-link" data-scroll-target="#prediction-request"><span class="header-section-number">9.5</span> Prediction Request</a></li>
-  <li><a href="#streamlit-dashboard" id="toc-streamlit-dashboard" class="nav-link" data-scroll-target="#streamlit-dashboard"><span class="header-section-number">9.6</span> Streamlit Dashboard</a></li>
-  <li><a href="#thinking-like-an-engineer" id="toc-thinking-like-an-engineer" class="nav-link" data-scroll-target="#thinking-like-an-engineer"><span class="header-section-number">9.7</span> Thinking Like An Engineer</a></li>
-  <li><a href="#checkpoint" id="toc-checkpoint" class="nav-link" data-scroll-target="#checkpoint"><span class="header-section-number">9.8</span> Checkpoint</a></li>
-  <li><a href="#further-exploration" id="toc-further-exploration" class="nav-link" data-scroll-target="#further-exploration"><span class="header-section-number">9.9</span> Further Exploration</a></li>
-  <li><a href="#what-have-we-achieved" id="toc-what-have-we-achieved" class="nav-link" data-scroll-target="#what-have-we-achieved"><span class="header-section-number">9.10</span> What Have We Achieved?</a></li>
-  <li><a href="#what-comes-next" id="toc-what-comes-next" class="nav-link" data-scroll-target="#what-comes-next"><span class="header-section-number">9.11</span> What Comes Next?</a></li>
+  <li><a href="#a-trained-model-is-not-yet-a-usable-system" id="toc-a-trained-model-is-not-yet-a-usable-system" class="nav-link" data-scroll-target="#a-trained-model-is-not-yet-a-usable-system"><span class="header-section-number">9.2</span> A Trained Model Is Not Yet A Usable System</a></li>
+  <li><a href="#model-artifacts" id="toc-model-artifacts" class="nav-link" data-scroll-target="#model-artifacts"><span class="header-section-number">9.3</span> Model Artifacts</a></li>
+  <li><a href="#fastapi-service" id="toc-fastapi-service" class="nav-link" data-scroll-target="#fastapi-service"><span class="header-section-number">9.4</span> FastAPI Service</a></li>
+  <li><a href="#health-check" id="toc-health-check" class="nav-link" data-scroll-target="#health-check"><span class="header-section-number">9.5</span> Health Check</a></li>
+  <li><a href="#prediction-request" id="toc-prediction-request" class="nav-link" data-scroll-target="#prediction-request"><span class="header-section-number">9.6</span> Prediction Request</a></li>
+  <li><a href="#streamlit-dashboard" id="toc-streamlit-dashboard" class="nav-link" data-scroll-target="#streamlit-dashboard"><span class="header-section-number">9.7</span> Streamlit Dashboard</a></li>
+  <li><a href="#thinking-like-an-engineer" id="toc-thinking-like-an-engineer" class="nav-link" data-scroll-target="#thinking-like-an-engineer"><span class="header-section-number">9.8</span> Thinking Like An Engineer</a></li>
+  <li><a href="#checkpoint" id="toc-checkpoint" class="nav-link" data-scroll-target="#checkpoint"><span class="header-section-number">9.9</span> Checkpoint</a></li>
+  <li><a href="#further-exploration" id="toc-further-exploration" class="nav-link" data-scroll-target="#further-exploration"><span class="header-section-number">9.10</span> Further Exploration</a></li>
+  <li><a href="#what-have-we-achieved" id="toc-what-have-we-achieved" class="nav-link" data-scroll-target="#what-have-we-achieved"><span class="header-section-number">9.11</span> What Have We Achieved?</a></li>
+  <li><a href="#what-comes-next" id="toc-what-comes-next" class="nav-link" data-scroll-target="#what-comes-next"><span class="header-section-number">9.12</span> What Comes Next?</a></li>
   </ul>
 </nav>
     </div>
@@ -268,23 +272,42 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 data-number="9.1" class="anchored" data-anchor-id="learning-objectives"><span class="header-section-number">9.1</span> Learning Objectives</h2>
 <p>After completing this chapter, you should be able to</p>
 <ul>
+<li>explain why a trained model is not yet a usable system,</li>
 <li>explain which model artifacts are needed for prediction,</li>
+<li>explain why feature order must be saved,</li>
 <li>start the FastAPI service,</li>
+<li>use Swagger UI to inspect the API,</li>
 <li>check API health,</li>
 <li>send one prediction request,</li>
 <li>explain how the Streamlit dashboard uses the same prediction code.</li>
 </ul>
 <hr>
 </section>
-<section id="model-artifacts" class="level2" data-number="9.2">
-<h2 data-number="9.2" class="anchored" data-anchor-id="model-artifacts"><span class="header-section-number">9.2</span> Model Artifacts</h2>
-<p>The deployed prediction service uses files in the <code>models/</code> directory.</p>
-<pre class="text"><code>models/
-├── activity_model_random_forest.joblib
-├── feature_columns.joblib
-└── activity_labels.joblib</code></pre>
-<p>The most important artifact for deployment is the feature column list.</p>
-<p>The live system must send features to the model in exactly the same order that was used during training.</p>
+<section id="a-trained-model-is-not-yet-a-usable-system" class="level2" data-number="9.2">
+<h2 data-number="9.2" class="anchored" data-anchor-id="a-trained-model-is-not-yet-a-usable-system"><span class="header-section-number">9.2</span> A Trained Model Is Not Yet A Usable System</h2>
+<p>At the end of training, we have a Model.</p>
+<p>That is important, but it is not enough.</p>
+<p>A notebook can prove that a Model works in one controlled environment. A deployed system must let other software request Predictions repeatedly, validate inputs, report errors, and return results in a predictable format.</p>
+<p>That is the difference between an experiment and a usable system.</p>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart LR
+  A[Notebook] --&gt; B[Model Artifact]
+  B --&gt; C[FastAPI]
+  C --&gt; D[Client]
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<p>The notebook is where we build and inspect the baseline.</p>
+<p>The Model Artifact is what we save so the result can be reused.</p>
+<p>FastAPI is the service layer that exposes the Model to other programs.</p>
+<p>The client can be Swagger UI, a script, the Streamlit dashboard, or a future mobile application.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -295,10 +318,53 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Deployment is part of the machine learning system, not an afterthought.</p>
+<p>Deployment is the point where machine learning becomes software engineering.</p>
 <p>The same Feature Vector definition must connect training, evaluation, API prediction, and the Streamlit dashboard.</p>
 </div>
 </div>
+<hr>
+</section>
+<section id="model-artifacts" class="level2" data-number="9.3">
+<h2 data-number="9.3" class="anchored" data-anchor-id="model-artifacts"><span class="header-section-number">9.3</span> Model Artifacts</h2>
+<p>The deployed prediction service uses files in the <code>models/</code> directory.</p>
+<pre class="text"><code>models/
+├── activity_model_random_forest.joblib
+├── feature_columns.joblib
+└── activity_labels.joblib</code></pre>
+<p>Each artifact has a job:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Artifact</th>
+<th>Purpose</th>
+<th>Why it matters</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>activity_model_random_forest.joblib</code></td>
+<td>Stores the trained Random Forest Model</td>
+<td>The API needs the learned patterns for Prediction</td>
+</tr>
+<tr class="even">
+<td><code>feature_columns.joblib</code></td>
+<td>Stores the exact Feature Vector order</td>
+<td>The same numbers in the wrong order can produce wrong Predictions</td>
+</tr>
+<tr class="odd">
+<td><code>activity_labels.joblib</code></td>
+<td>Stores readable class labels</td>
+<td>The API can return <code>walking</code>, <code>sitting</code>, or <code>standing</code> instead of raw class indices</td>
+</tr>
+</tbody>
+</table>
+<p>The most fragile artifact is often the feature column list.</p>
+<p>The live system must send features to the model in exactly the same order that was used during training.</p>
 <div class="callout callout-style-default callout-warning callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -315,56 +381,88 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <hr>
 </section>
-<section id="fastapi-service" class="level2" data-number="9.3">
-<h2 data-number="9.3" class="anchored" data-anchor-id="fastapi-service"><span class="header-section-number">9.3</span> FastAPI Service</h2>
+<section id="fastapi-service" class="level2" data-number="9.4">
+<h2 data-number="9.4" class="anchored" data-anchor-id="fastapi-service"><span class="header-section-number">9.4</span> FastAPI Service</h2>
 <p>FastAPI exposes the trained model as a small HTTP service.</p>
 <p>The project keeps the API logic in <code>app/api.py</code> and the model loading/prediction logic in <code>app/model_utils.py</code>.</p>
+<p>This separation matters.</p>
+<p>The API handles HTTP requests, validation, and responses.</p>
+<p>The model utility code handles artifact loading and Prediction.</p>
+<p>That means a user interface can change without rewriting the Model logic, and the Model logic can improve without redesigning the API.</p>
 <p>Start the API from the project root:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">uv</span> run uvicorn app.api:app <span class="at">--reload</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The API will usually be available at:</p>
 <pre class="text"><code>http://127.0.0.1:8000</code></pre>
+<p>Open the interactive API documentation at:</p>
+<pre class="text"><code>http://127.0.0.1:8000/docs</code></pre>
+<p>This page is Swagger UI.</p>
+<p>Swagger UI is useful in a teaching session because students can inspect available endpoints, see request schemas, try <code>/health</code>, and send a <code>/predict</code> request without writing a separate client.</p>
 <hr>
 </section>
-<section id="health-check" class="level2" data-number="9.4">
-<h2 data-number="9.4" class="anchored" data-anchor-id="health-check"><span class="header-section-number">9.4</span> Health Check</h2>
+<section id="health-check" class="level2" data-number="9.5">
+<h2 data-number="9.5" class="anchored" data-anchor-id="health-check"><span class="header-section-number">9.5</span> Health Check</h2>
 <p>Use the health endpoint to verify that the API can load the model artifacts.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> http://127.0.0.1:8000/health</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> http://127.0.0.1:8000/health</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Expected response:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"status"</span><span class="fu">:</span> <span class="st">"ok"</span><span class="fu">,</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"model_loaded"</span><span class="fu">:</span> <span class="kw">true</span><span class="fu">,</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"detail"</span><span class="fu">:</span> <span class="st">"Model artifacts are available."</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"status"</span><span class="fu">:</span> <span class="st">"ok"</span><span class="fu">,</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"model_loaded"</span><span class="fu">:</span> <span class="kw">true</span><span class="fu">,</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"detail"</span><span class="fu">:</span> <span class="st">"Model artifacts are available."</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>If a model file is missing, the endpoint returns a clear message naming the missing artifact.</p>
+<p>The health endpoint answers a deployment question:</p>
+<blockquote class="blockquote">
+<p>Can this service load the artifacts required for Prediction?</p>
+</blockquote>
+<p>It does not classify activity.</p>
+<p>It checks whether the service is ready.</p>
 <hr>
 </section>
-<section id="prediction-request" class="level2" data-number="9.5">
-<h2 data-number="9.5" class="anchored" data-anchor-id="prediction-request"><span class="header-section-number">9.5</span> Prediction Request</h2>
+<section id="prediction-request" class="level2" data-number="9.6">
+<h2 data-number="9.6" class="anchored" data-anchor-id="prediction-request"><span class="header-section-number">9.6</span> Prediction Request</h2>
 <p>The prediction endpoint is:</p>
 <pre class="text"><code>POST /predict</code></pre>
 <p>It expects one JSON object with a <code>features</code> field.</p>
 <p>The feature names must match <code>models/feature_columns.joblib</code>.</p>
 <p>Example shape:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"features"</span><span class="fu">:</span> <span class="fu">{</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"mean_x"</span><span class="fu">:</span> <span class="fl">0.0</span><span class="fu">,</span></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"std_x"</span><span class="fu">:</span> <span class="fl">0.0</span><span class="fu">,</span></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"min_x"</span><span class="fu">:</span> <span class="fl">0.0</span><span class="fu">,</span></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"max_x"</span><span class="fu">:</span> <span class="fl">0.0</span><span class="fu">,</span></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"energy_x"</span><span class="fu">:</span> <span class="fl">0.0</span></span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">}</span></span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<p>The real request must include all 20 trained feature columns.</p>
-<p>The response contains:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"activity"</span><span class="fu">:</span> <span class="st">"walking"</span><span class="fu">,</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"confidence"</span><span class="fu">:</span> <span class="fl">0.91</span><span class="fu">,</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"probabilities"</span><span class="fu">:</span> <span class="fu">{</span></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"sitting"</span><span class="fu">:</span> <span class="fl">0.02</span><span class="fu">,</span></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"standing"</span><span class="fu">:</span> <span class="fl">0.07</span><span class="fu">,</span></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"walking"</span><span class="fu">:</span> <span class="fl">0.91</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"features"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"mean_x"</span><span class="fu">:</span> <span class="fl">0.0</span><span class="fu">,</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"std_x"</span><span class="fu">:</span> <span class="fl">0.0</span><span class="fu">,</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"min_x"</span><span class="fu">:</span> <span class="fl">0.0</span><span class="fu">,</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"max_x"</span><span class="fu">:</span> <span class="fl">0.0</span><span class="fu">,</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"energy_x"</span><span class="fu">:</span> <span class="fl">0.0</span></span>
 <span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">}</span></span>
 <span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The real request must include all 20 trained feature columns.</p>
+<p>The response contains:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"activity"</span><span class="fu">:</span> <span class="st">"walking"</span><span class="fu">,</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"confidence"</span><span class="fu">:</span> <span class="fl">0.91</span><span class="fu">,</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">"probabilities"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"sitting"</span><span class="fu">:</span> <span class="fl">0.02</span><span class="fu">,</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"standing"</span><span class="fu">:</span> <span class="fl">0.07</span><span class="fu">,</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"walking"</span><span class="fu">:</span> <span class="fl">0.91</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">}</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>The Prediction workflow is:</p>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart LR
+  A[Feature Vector] --&gt; B[API]
+  B --&gt; C[Prediction]
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<p>The Feature Vector is the input contract.</p>
+<p>The API validates that contract.</p>
+<p>The Prediction is the output that another system can use.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -380,11 +478,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <hr>
 </section>
-<section id="streamlit-dashboard" class="level2" data-number="9.6">
-<h2 data-number="9.6" class="anchored" data-anchor-id="streamlit-dashboard"><span class="header-section-number">9.6</span> Streamlit Dashboard</h2>
+<section id="streamlit-dashboard" class="level2" data-number="9.7">
+<h2 data-number="9.7" class="anchored" data-anchor-id="streamlit-dashboard"><span class="header-section-number">9.7</span> Streamlit Dashboard</h2>
 <p>The Streamlit dashboard is the live demonstration UI.</p>
 <p>Start it from the project root:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">uv</span> run streamlit run dashboard.py</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ex">uv</span> run streamlit run dashboard.py</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The dashboard:</p>
 <ul>
 <li>reads live samples from phyphox,</li>
@@ -398,8 +496,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>This reduces the chance that the web service and live demo behave differently.</p>
 <hr>
 </section>
-<section id="thinking-like-an-engineer" class="level2" data-number="9.7">
-<h2 data-number="9.7" class="anchored" data-anchor-id="thinking-like-an-engineer"><span class="header-section-number">9.7</span> Thinking Like An Engineer</h2>
+<section id="thinking-like-an-engineer" class="level2" data-number="9.8">
+<h2 data-number="9.8" class="anchored" data-anchor-id="thinking-like-an-engineer"><span class="header-section-number">9.8</span> Thinking Like An Engineer</h2>
 <p>Instead of asking:</p>
 <blockquote class="blockquote">
 <p>Can my notebook produce a prediction?</p>
@@ -411,8 +509,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Deployment forces us to make assumptions explicit: artifact locations, feature names, input validation, output format, and failure messages.</p>
 <hr>
 </section>
-<section id="checkpoint" class="level2" data-number="9.8">
-<h2 data-number="9.8" class="anchored" data-anchor-id="checkpoint"><span class="header-section-number">9.8</span> Checkpoint</h2>
+<section id="checkpoint" class="level2" data-number="9.9">
+<h2 data-number="9.9" class="anchored" data-anchor-id="checkpoint"><span class="header-section-number">9.9</span> Checkpoint</h2>
 <p>Before continuing, you should be able to answer:</p>
 <ol type="1">
 <li>Which model artifacts are needed for prediction?</li>
@@ -423,15 +521,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ol>
 <hr>
 </section>
-<section id="further-exploration" class="level2" data-number="9.9">
-<h2 data-number="9.9" class="anchored" data-anchor-id="further-exploration"><span class="header-section-number">9.9</span> Further Exploration</h2>
+<section id="further-exploration" class="level2" data-number="9.10">
+<h2 data-number="9.10" class="anchored" data-anchor-id="further-exploration"><span class="header-section-number">9.10</span> Further Exploration</h2>
 <p>Optional: intentionally remove one feature from a <code>/predict</code> request.</p>
 <p>Which error message does the API return?</p>
 <p>How does that help debug deployment problems?</p>
 <hr>
 </section>
-<section id="what-have-we-achieved" class="level2" data-number="9.10">
-<h2 data-number="9.10" class="anchored" data-anchor-id="what-have-we-achieved"><span class="header-section-number">9.10</span> What Have We Achieved?</h2>
+<section id="what-have-we-achieved" class="level2" data-number="9.11">
+<h2 data-number="9.11" class="anchored" data-anchor-id="what-have-we-achieved"><span class="header-section-number">9.11</span> What Have We Achieved?</h2>
 <ul>
 <li>We identified the model artifacts needed for Deployment.</li>
 <li>We explained why feature columns must match the trained Feature Matrix.</li>
@@ -440,8 +538,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>We practiced treating validation errors as part of system reliability.</li>
 </ul>
 </section>
-<section id="what-comes-next" class="level2" data-number="9.11">
-<h2 data-number="9.11" class="anchored" data-anchor-id="what-comes-next"><span class="header-section-number">9.11</span> What Comes Next?</h2>
+<section id="what-comes-next" class="level2" data-number="9.12">
+<h2 data-number="9.12" class="anchored" data-anchor-id="what-comes-next"><span class="header-section-number">9.12</span> What Comes Next?</h2>
 <p>Deployment gives us a service that can return Predictions. The final major chapter connects that service to a real phone Sensor Stream for Live Prediction.</p>
 
 

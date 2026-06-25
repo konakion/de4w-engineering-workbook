@@ -106,6 +106,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-label": "Search"
   }
 }</script>
+<script src="../site_libs/quarto-diagram/mermaid.min.js"></script>
+<script src="../site_libs/quarto-diagram/mermaid-init.js"></script>
+<link href="../site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
 
 
 </head>
@@ -215,22 +218,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
    
   <ul>
   <li><a href="#learning-objectives" id="toc-learning-objectives" class="nav-link active" data-scroll-target="#learning-objectives"><span class="header-section-number">10.1</span> Learning Objectives</a></li>
-  <li><a href="#phyphox-setup" id="toc-phyphox-setup" class="nav-link" data-scroll-target="#phyphox-setup"><span class="header-section-number">10.2</span> phyphox Setup</a></li>
-  <li><a href="#start-the-dashboard" id="toc-start-the-dashboard" class="nav-link" data-scroll-target="#start-the-dashboard"><span class="header-section-number">10.3</span> Start the Dashboard</a></li>
-  <li><a href="#live-prediction-pipeline" id="toc-live-prediction-pipeline" class="nav-link" data-scroll-target="#live-prediction-pipeline"><span class="header-section-number">10.4</span> Live Prediction Pipeline</a></li>
-  <li><a href="#dashboard-states" id="toc-dashboard-states" class="nav-link" data-scroll-target="#dashboard-states"><span class="header-section-number">10.5</span> Dashboard States</a></li>
-  <li><a href="#thinking-like-an-engineer" id="toc-thinking-like-an-engineer" class="nav-link" data-scroll-target="#thinking-like-an-engineer"><span class="header-section-number">10.6</span> Thinking Like An Engineer</a></li>
-  <li><a href="#troubleshooting" id="toc-troubleshooting" class="nav-link" data-scroll-target="#troubleshooting"><span class="header-section-number">10.7</span> Troubleshooting</a>
-  <ul class="collapse">
-  <li><a href="#phyphox-url-does-not-open" id="toc-phyphox-url-does-not-open" class="nav-link" data-scroll-target="#phyphox-url-does-not-open"><span class="header-section-number">10.7.1</span> phyphox URL Does Not Open</a></li>
-  <li><a href="#dashboard-shows-a-timeout" id="toc-dashboard-shows-a-timeout" class="nav-link" data-scroll-target="#dashboard-shows-a-timeout"><span class="header-section-number">10.7.2</span> Dashboard Shows a Timeout</a></li>
-  <li><a href="#missing-buffer-error" id="toc-missing-buffer-error" class="nav-link" data-scroll-target="#missing-buffer-error"><span class="header-section-number">10.7.3</span> Missing Buffer Error</a></li>
-  <li><a href="#model-artifact-error" id="toc-model-artifact-error" class="nav-link" data-scroll-target="#model-artifact-error"><span class="header-section-number">10.7.4</span> Model Artifact Error</a></li>
-  </ul></li>
-  <li><a href="#checkpoint" id="toc-checkpoint" class="nav-link" data-scroll-target="#checkpoint"><span class="header-section-number">10.8</span> Checkpoint</a></li>
-  <li><a href="#further-exploration" id="toc-further-exploration" class="nav-link" data-scroll-target="#further-exploration"><span class="header-section-number">10.9</span> Further Exploration</a></li>
-  <li><a href="#what-have-we-achieved" id="toc-what-have-we-achieved" class="nav-link" data-scroll-target="#what-have-we-achieved"><span class="header-section-number">10.10</span> What Have We Achieved?</a></li>
-  <li><a href="#what-comes-next" id="toc-what-comes-next" class="nav-link" data-scroll-target="#what-comes-next"><span class="header-section-number">10.11</span> What Comes Next?</a></li>
+  <li><a href="#live-prediction-connects-the-physical-world-to-the-model" id="toc-live-prediction-connects-the-physical-world-to-the-model" class="nav-link" data-scroll-target="#live-prediction-connects-the-physical-world-to-the-model"><span class="header-section-number">10.2</span> Live Prediction Connects The Physical World To The Model</a></li>
+  <li><a href="#phyphox-setup" id="toc-phyphox-setup" class="nav-link" data-scroll-target="#phyphox-setup"><span class="header-section-number">10.3</span> phyphox Setup</a></li>
+  <li><a href="#start-the-dashboard" id="toc-start-the-dashboard" class="nav-link" data-scroll-target="#start-the-dashboard"><span class="header-section-number">10.4</span> Start the Dashboard</a></li>
+  <li><a href="#live-prediction-pipeline" id="toc-live-prediction-pipeline" class="nav-link" data-scroll-target="#live-prediction-pipeline"><span class="header-section-number">10.5</span> Live Prediction Pipeline</a></li>
+  <li><a href="#why-predictions-react-with-delay" id="toc-why-predictions-react-with-delay" class="nav-link" data-scroll-target="#why-predictions-react-with-delay"><span class="header-section-number">10.6</span> Why Predictions React With Delay</a></li>
+  <li><a href="#dashboard-states" id="toc-dashboard-states" class="nav-link" data-scroll-target="#dashboard-states"><span class="header-section-number">10.7</span> Dashboard States</a></li>
+  <li><a href="#thinking-like-an-engineer" id="toc-thinking-like-an-engineer" class="nav-link" data-scroll-target="#thinking-like-an-engineer"><span class="header-section-number">10.8</span> Thinking Like An Engineer</a></li>
+  <li><a href="#troubleshooting" id="toc-troubleshooting" class="nav-link" data-scroll-target="#troubleshooting"><span class="header-section-number">10.9</span> Troubleshooting</a></li>
+  <li><a href="#checkpoint" id="toc-checkpoint" class="nav-link" data-scroll-target="#checkpoint"><span class="header-section-number">10.10</span> Checkpoint</a></li>
+  <li><a href="#further-exploration" id="toc-further-exploration" class="nav-link" data-scroll-target="#further-exploration"><span class="header-section-number">10.11</span> Further Exploration</a></li>
+  <li><a href="#what-have-we-achieved" id="toc-what-have-we-achieved" class="nav-link" data-scroll-target="#what-have-we-achieved"><span class="header-section-number">10.12</span> What Have We Achieved?</a></li>
+  <li><a href="#what-comes-next" id="toc-what-comes-next" class="nav-link" data-scroll-target="#what-comes-next"><span class="header-section-number">10.13</span> What Comes Next?</a></li>
   </ul>
 </nav>
     </div>
@@ -273,21 +272,54 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 data-number="10.1" class="anchored" data-anchor-id="learning-objectives"><span class="header-section-number">10.1</span> Learning Objectives</h2>
 <p>After completing this chapter, you should be able to</p>
 <ul>
+<li>explain how Live Prediction connects the physical world to the trained Model,</li>
 <li>configure phyphox remote access,</li>
 <li>explain why the phone and laptop must be on the same network,</li>
 <li>describe the live prediction pipeline,</li>
+<li>explain why Window size creates prediction delay,</li>
 <li>run the Streamlit dashboard,</li>
 <li>troubleshoot common live demo failures.</li>
 </ul>
 <hr>
 </section>
-<section id="phyphox-setup" class="level2" data-number="10.2">
-<h2 data-number="10.2" class="anchored" data-anchor-id="phyphox-setup"><span class="header-section-number">10.2</span> phyphox Setup</h2>
+<section id="live-prediction-connects-the-physical-world-to-the-model" class="level2" data-number="10.2">
+<h2 data-number="10.2" class="anchored" data-anchor-id="live-prediction-connects-the-physical-world-to-the-model"><span class="header-section-number">10.2</span> Live Prediction Connects The Physical World To The Model</h2>
+<p>Until now, the project has mostly used stored data.</p>
+<p>Live Prediction changes the situation.</p>
+<p>A real phone moves in the physical world. phyphox streams the phone acceleration. The dashboard collects recent samples, creates a Window, extracts a Feature Vector, and asks the Model for a Prediction.</p>
+<p>That is the complete system in motion.</p>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart LR
+  A[Smartphone] --&gt; B[phyphox]
+  B --&gt; C[HTTP]
+  C --&gt; D[Buffer]
+  D --&gt; E[Window]
+  E --&gt; F[Features]
+  F --&gt; G[Model]
+  G --&gt; H[Dashboard]
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<p>The important lesson is that machine learning is now only one part of a live chain.</p>
+<p>If any link fails, the demo fails.</p>
+<hr>
+</section>
+<section id="phyphox-setup" class="level2" data-number="10.3">
+<h2 data-number="10.3" class="anchored" data-anchor-id="phyphox-setup"><span class="header-section-number">10.3</span> phyphox Setup</h2>
 <p>Install phyphox on your smartphone.</p>
 <p>Open an acceleration experiment and enable remote access.</p>
 <p>phyphox will show a URL such as:</p>
 <pre class="text"><code>http://192.168.178.45:8080</code></pre>
 <p>Enter this URL in the Streamlit dashboard.</p>
+<p>phyphox acts as the live sensor source.</p>
+<p>It turns the smartphone accelerometer into an HTTP endpoint that the laptop can request.</p>
 <div class="callout callout-style-default callout-warning callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -303,6 +335,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>If the laptop cannot open the phyphox URL in a browser, the dashboard cannot read sensor data either.</p>
 </div>
 </div>
+<p>This is why a hotspot often works better for class demos.</p>
+<p>A phone hotspot usually places the phone and laptop on a small local network where they can talk directly.</p>
 <p>Recommended network options:</p>
 <ul>
 <li>smartphone hotspot,</li>
@@ -312,8 +346,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul>
 <hr>
 </section>
-<section id="start-the-dashboard" class="level2" data-number="10.3">
-<h2 data-number="10.3" class="anchored" data-anchor-id="start-the-dashboard"><span class="header-section-number">10.3</span> Start the Dashboard</h2>
+<section id="start-the-dashboard" class="level2" data-number="10.4">
+<h2 data-number="10.4" class="anchored" data-anchor-id="start-the-dashboard"><span class="header-section-number">10.4</span> Start the Dashboard</h2>
 <p>From the project root:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">uv</span> run streamlit run dashboard.py</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The dashboard lets you configure:</p>
@@ -325,15 +359,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>The demo is intentionally time-limited so that it cannot run forever by accident.</p>
 <hr>
 </section>
-<section id="live-prediction-pipeline" class="level2" data-number="10.4">
-<h2 data-number="10.4" class="anchored" data-anchor-id="live-prediction-pipeline"><span class="header-section-number">10.4</span> Live Prediction Pipeline</h2>
+<section id="live-prediction-pipeline" class="level2" data-number="10.5">
+<h2 data-number="10.5" class="anchored" data-anchor-id="live-prediction-pipeline"><span class="header-section-number">10.5</span> Live Prediction Pipeline</h2>
 <p>The live pipeline is:</p>
 <pre class="text"><code>phyphox
 → PhyphoxClient
 → LiveBuffer
 → Window
 → Feature Vector
-→ prediction service
+→ Model
 → Streamlit dashboard</code></pre>
 <p><code>PhyphoxClient</code> reads the latest x, y and z acceleration values.</p>
 <p><code>LiveBuffer</code> stores the most recent samples until a full Window is available.</p>
@@ -360,8 +394,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <hr>
 </section>
-<section id="dashboard-states" class="level2" data-number="10.5">
-<h2 data-number="10.5" class="anchored" data-anchor-id="dashboard-states"><span class="header-section-number">10.5</span> Dashboard States</h2>
+<section id="why-predictions-react-with-delay" class="level2" data-number="10.6">
+<h2 data-number="10.6" class="anchored" data-anchor-id="why-predictions-react-with-delay"><span class="header-section-number">10.6</span> Why Predictions React With Delay</h2>
+<p>The dashboard cannot classify one isolated acceleration sample.</p>
+<p>It needs a full Window.</p>
+<p>If the Window is five seconds long, the system needs about five seconds of recent Sensor Stream data before the first Prediction can appear.</p>
+<p>Shorter Windows can react faster but may be noisier.</p>
+<p>Longer Windows can be more stable but react more slowly.</p>
+<p>This is why Live Prediction always includes a trade-off between responsiveness and stability.</p>
+<hr>
+</section>
+<section id="dashboard-states" class="level2" data-number="10.7">
+<h2 data-number="10.7" class="anchored" data-anchor-id="dashboard-states"><span class="header-section-number">10.7</span> Dashboard States</h2>
 <p>The dashboard shows the current live demo state:</p>
 <table class="caption-top table">
 <thead>
@@ -396,8 +440,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>These states make live demos easier to debug in front of a class.</p>
 <hr>
 </section>
-<section id="thinking-like-an-engineer" class="level2" data-number="10.6">
-<h2 data-number="10.6" class="anchored" data-anchor-id="thinking-like-an-engineer"><span class="header-section-number">10.6</span> Thinking Like An Engineer</h2>
+<section id="thinking-like-an-engineer" class="level2" data-number="10.8">
+<h2 data-number="10.8" class="anchored" data-anchor-id="thinking-like-an-engineer"><span class="header-section-number">10.8</span> Thinking Like An Engineer</h2>
 <p>Instead of asking:</p>
 <blockquote class="blockquote">
 <p>Does the Model work?</p>
@@ -409,54 +453,89 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>In a classroom demo, the most likely failures may be networking, phone setup, timing, or missing artifacts rather than machine learning accuracy.</p>
 <hr>
 </section>
-<section id="troubleshooting" class="level2" data-number="10.7">
-<h2 data-number="10.7" class="anchored" data-anchor-id="troubleshooting"><span class="header-section-number">10.7</span> Troubleshooting</h2>
-<section id="phyphox-url-does-not-open" class="level3" data-number="10.7.1">
-<h3 data-number="10.7.1" class="anchored" data-anchor-id="phyphox-url-does-not-open"><span class="header-section-number">10.7.1</span> phyphox URL Does Not Open</h3>
-<p>Check that remote access is enabled in phyphox.</p>
-<p>Make sure the phone and laptop are on the same network.</p>
-<p>If you are on eduroam, try a phone hotspot or a local router.</p>
-</section>
-<section id="dashboard-shows-a-timeout" class="level3" data-number="10.7.2">
-<h3 data-number="10.7.2" class="anchored" data-anchor-id="dashboard-shows-a-timeout"><span class="header-section-number">10.7.2</span> Dashboard Shows a Timeout</h3>
-<p>The laptop can see the URL but the response is too slow.</p>
-<p>Move both devices closer to the access point or use a simpler local network.</p>
-</section>
-<section id="missing-buffer-error" class="level3" data-number="10.7.3">
-<h3 data-number="10.7.3" class="anchored" data-anchor-id="missing-buffer-error"><span class="header-section-number">10.7.3</span> Missing Buffer Error</h3>
-<p>Make sure the correct phyphox experiment is open and producing acceleration buffers named <code>accX</code>, <code>accY</code> and <code>accZ</code>.</p>
-</section>
-<section id="model-artifact-error" class="level3" data-number="10.7.4">
-<h3 data-number="10.7.4" class="anchored" data-anchor-id="model-artifact-error"><span class="header-section-number">10.7.4</span> Model Artifact Error</h3>
-<p>Confirm that these files exist:</p>
-<pre class="text"><code>models/activity_model_random_forest.joblib
-models/feature_columns.joblib
-models/activity_labels.joblib</code></pre>
-<p>If they are missing, rerun the training/export step before the live demo.</p>
+<section id="troubleshooting" class="level2" data-number="10.9">
+<h2 data-number="10.9" class="anchored" data-anchor-id="troubleshooting"><span class="header-section-number">10.9</span> Troubleshooting</h2>
+<p>A live demo can fail for machine learning reasons, but it more often fails for ordinary system reasons.</p>
+<p>Use the table before changing code.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Problem</th>
+<th>Likely Cause</th>
+<th>Fix</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>phyphox URL does not open in the laptop browser</td>
+<td>Wrong IP address or phone and laptop are on different networks</td>
+<td>Copy the current URL from phyphox again and confirm both devices use the same network</td>
+</tr>
+<tr class="even">
+<td>phyphox URL works on the phone but not on the laptop</td>
+<td>eduroam or another managed network uses client isolation</td>
+<td>Use a phone hotspot, local router, or travel router</td>
+</tr>
+<tr class="odd">
+<td>Dashboard stops receiving samples</td>
+<td>Phone went asleep or phyphox stopped running in the foreground</td>
+<td>Keep the phone awake and leave the phyphox experiment open</td>
+</tr>
+<tr class="even">
+<td>Dashboard reports remote access or connection errors</td>
+<td>phyphox remote access is off</td>
+<td>Enable remote access in phyphox and paste the shown URL into Streamlit</td>
+</tr>
+<tr class="odd">
+<td>Model artifact error</td>
+<td>Required files are missing from <code>models/</code></td>
+<td>Regenerate or restore the model artifacts before the demo</td>
+</tr>
+<tr class="even">
+<td>Feature mismatch error</td>
+<td>Live Feature Vector does not match the saved training feature columns</td>
+<td>Use the project feature extraction pipeline and do not manually edit feature names</td>
+</tr>
+<tr class="odd">
+<td>Predictions appear slowly</td>
+<td>Window size is long</td>
+<td>Use a smaller Window for a more responsive classroom demo</td>
+</tr>
+<tr class="even">
+<td>Predictions look unstable</td>
+<td>Window size is short or the phone motion is inconsistent</td>
+<td>Use a larger Window or repeat the activity more steadily</td>
+</tr>
+</tbody>
+</table>
 <hr>
 </section>
-</section>
-<section id="checkpoint" class="level2" data-number="10.8">
-<h2 data-number="10.8" class="anchored" data-anchor-id="checkpoint"><span class="header-section-number">10.8</span> Checkpoint</h2>
+<section id="checkpoint" class="level2" data-number="10.10">
+<h2 data-number="10.10" class="anchored" data-anchor-id="checkpoint"><span class="header-section-number">10.10</span> Checkpoint</h2>
 <p>Before continuing, you should be able to answer:</p>
 <ol type="1">
 <li>Why can eduroam block the live demo?</li>
 <li>What does the live buffer store?</li>
 <li>When does the dashboard start predicting?</li>
+<li>Why do Predictions react with delay?</li>
 <li>Why must live feature extraction match training feature extraction?</li>
-<li>What should you check first if phyphox cannot connect?</li>
 </ol>
 <hr>
 </section>
-<section id="further-exploration" class="level2" data-number="10.9">
-<h2 data-number="10.9" class="anchored" data-anchor-id="further-exploration"><span class="header-section-number">10.9</span> Further Exploration</h2>
+<section id="further-exploration" class="level2" data-number="10.11">
+<h2 data-number="10.11" class="anchored" data-anchor-id="further-exploration"><span class="header-section-number">10.11</span> Further Exploration</h2>
 <p>Optional: compare predictions with two different window sizes.</p>
 <p>How does a smaller window affect responsiveness?</p>
 <p>How does a larger window affect stability?</p>
 <hr>
 </section>
-<section id="what-have-we-achieved" class="level2" data-number="10.10">
-<h2 data-number="10.10" class="anchored" data-anchor-id="what-have-we-achieved"><span class="header-section-number">10.10</span> What Have We Achieved?</h2>
+<section id="what-have-we-achieved" class="level2" data-number="10.12">
+<h2 data-number="10.12" class="anchored" data-anchor-id="what-have-we-achieved"><span class="header-section-number">10.12</span> What Have We Achieved?</h2>
 <ul>
 <li>We connected phyphox Sensor Stream data to the project pipeline.</li>
 <li>We traced the live path from <code>LiveBuffer</code> to Window to Feature Vector to Prediction.</li>
@@ -465,8 +544,8 @@ models/activity_labels.joblib</code></pre>
 <li>We prepared a troubleshooting checklist for reliable Live Prediction.</li>
 </ul>
 </section>
-<section id="what-comes-next" class="level2" data-number="10.11">
-<h2 data-number="10.11" class="anchored" data-anchor-id="what-comes-next"><span class="header-section-number">10.11</span> What Comes Next?</h2>
+<section id="what-comes-next" class="level2" data-number="10.13">
+<h2 data-number="10.13" class="anchored" data-anchor-id="what-comes-next"><span class="header-section-number">10.13</span> What Comes Next?</h2>
 <p>You have now followed the full system from raw Sensor Stream to Live Prediction. The remaining project materials help you review, teach, and verify the complete workbook.</p>
 
 

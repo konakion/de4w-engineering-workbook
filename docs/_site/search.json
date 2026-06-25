@@ -854,7 +854,7 @@
     "href": "modules/07_evaluation.html#does-our-model-really-work-on-people-it-has-never-seen-before",
     "title": "8  Evaluation And Generalization",
     "section": "",
-    "text": "Does our Model really work on people it has never seen before?\n\n\n\n\n\n\n\n\n\n\nTipEngineering Insight\n\n\n\nIf the system will be used on new people, the evaluation must test new people.",
+    "text": "Does our Model really work on people it has never seen before?\n\n\n\n\n\n\n\n\n\n\nTipEngineering Insight: Confidence Is Not Correctness\n\n\n\nA Model may assign a high Confidence to a Prediction and still be wrong.\nEvaluation teaches us when a Prediction should be trusted, not only whether it was correct on one dataset.",
     "crumbs": [
       "<span class='chapter-number'>8</span>  <span class='chapter-title'>Evaluation And Generalization</span>"
     ]
@@ -880,11 +880,31 @@
     ]
   },
   {
+    "objectID": "modules/07_evaluation.html#probability-before-prediction",
+    "href": "modules/07_evaluation.html#probability-before-prediction",
+    "title": "8  Evaluation And Generalization",
+    "section": "8.4 Probability Before Prediction",
+    "text": "8.4 Probability Before Prediction\nA Prediction is the final decision, but it is not the first thing the Model computes.\nFor a Random Forest, many decision trees vote for different classes.\nThose votes are turned into Class Probabilities.\nThe predicted class is simply the class with the highest Probability.\n\n\n\n\n\nflowchart TD\n  A[Sensor Stream]\n  --&gt; B[Window]\n  --&gt; C[Feature Vector]\n  --&gt; D[Random Forest]\n  --&gt; E[Class Probabilities]\n  --&gt; F[Prediction]\n\n\n\n\n\n\nFor example, the Model might produce:\n\n\n\nClass\nProbability\n\n\n\n\nwalking\n96%\n\n\nstanding\n3%\n\n\nsitting\n1%\n\n\n\nThe Prediction is walking because walking has the highest Probability.\nThe Confidence is 96%.\nHigh Confidence means the Model strongly prefers one class over the others.\nLow Confidence means the probabilities are closer together.\nAn uncertain Prediction might look like this:\n\n\n\nClass\nProbability\n\n\n\n\nwalking\n42%\n\n\nstanding\n35%\n\n\nsitting\n23%\n\n\n\nThe Model still returns one Prediction, but the result deserves more caution.\nHigh Confidence is not proof that the Prediction is correct.\nIt only tells us how strongly the Model prefers that class according to the patterns it has learned.",
+    "crumbs": [
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Evaluation And Generalization</span>"
+    ]
+  },
+  {
+    "objectID": "modules/07_evaluation.html#decision-boundaries-a-conceptual-view",
+    "href": "modules/07_evaluation.html#decision-boundaries-a-conceptual-view",
+    "title": "8  Evaluation And Generalization",
+    "section": "8.5 Decision Boundaries: A Conceptual View",
+    "text": "8.5 Decision Boundaries: A Conceptual View\nThe Model divides feature space into regions.\nOne region is mostly walking.\nAnother region is mostly standing.\nAnother region is mostly sitting.\nWhen a new Feature Vector arrives, the Model checks where it falls.\nIf it falls in the walking region, the Prediction is walking.\nIf it falls near the boundary between sitting and standing, the Model may be less certain or more likely to make a mistake.\nThis is why feature engineering and evaluation belong together.\nThe Feature Vector determines where examples appear in feature space.\nEvaluation tells us whether the learned regions generalize to new people.",
+    "crumbs": [
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Evaluation And Generalization</span>"
+    ]
+  },
+  {
     "objectID": "modules/07_evaluation.html#random-split-the-first-result",
     "href": "modules/07_evaluation.html#random-split-the-first-result",
     "title": "8  Evaluation And Generalization",
-    "section": "8.4 Random Split: The First Result",
-    "text": "8.4 Random Split: The First Result\nA random split divides rows into train and test sets.\nIt is common because it is simple and works well for many tabular datasets.\nBut wearable datasets contain many windows from the same subjects.\nRandom splitting can place windows from one subject in both training and test.\n\n\n\n\n\nflowchart LR\n  A[Subject 1 windows] --&gt; C[Train]\n  A --&gt; D[Test]\n  B[Subject 2 windows] --&gt; C\n  B --&gt; D\n  E[Subject 3 windows] --&gt; C\n  E --&gt; D\n\n\n\n\n\n\nThis often gives high performance because the test data is very similar to the training data.\nThat can be a useful first result.\nBut for wearable data, it may be too optimistic.\n\nrandom_result = evaluate_random_split(X, y)\n\nrandom_result[\"metrics\"][\"accuracy\"]\n\n0.9857496902106567\n\n\nThis score answers:\n\nCan the model classify unseen windows from a familiar subject pool?\n\nThat is not the same as deployment to new people.",
+    "section": "8.6 Random Split: The First Result",
+    "text": "8.6 Random Split: The First Result\nA random split divides rows into train and test sets.\nIt is common because it is simple and works well for many tabular datasets.\nBut wearable datasets contain many windows from the same subjects.\nRandom splitting can place windows from one subject in both training and test.\n\n\n\n\n\nflowchart LR\n  A[Subject 1 windows] --&gt; C[Train]\n  A --&gt; D[Test]\n  B[Subject 2 windows] --&gt; C\n  B --&gt; D\n  E[Subject 3 windows] --&gt; C\n  E --&gt; D\n\n\n\n\n\n\nThis often gives high performance because the test data is very similar to the training data.\nThat can be a useful first result.\nBut for wearable data, it may be too optimistic.\n\nrandom_result = evaluate_random_split(X, y)\n\nrandom_result[\"metrics\"][\"accuracy\"]\n\n0.9857496902106567\n\n\nThis score answers:\n\nCan the model classify unseen windows from a familiar subject pool?\n\nThat is not the same as deployment to new people.",
     "crumbs": [
       "<span class='chapter-number'>8</span>  <span class='chapter-title'>Evaluation And Generalization</span>"
     ]
@@ -893,8 +913,8 @@
     "objectID": "modules/07_evaluation.html#the-leakage-problem",
     "href": "modules/07_evaluation.html#the-leakage-problem",
     "title": "8  Evaluation And Generalization",
-    "section": "8.5 The Leakage Problem",
-    "text": "8.5 The Leakage Problem\nWindows from the same person can look very similar.\nPeople differ in walking style, phone placement, body movement and recording conditions.\nIf the same subject appears in both train and test, the model may learn subject-specific patterns.\nThis is not intentional cheating.\nIt is a subtle evaluation design problem.\n\n\n\n\n\n\nWarningCommon Pitfall\n\n\n\nHigh accuracy can come from evaluating on data that is too similar to the training data.\n\n\nThe important question is not whether the random split score is wrong.\nThe important question is what it actually measures.",
+    "section": "8.7 The Leakage Problem",
+    "text": "8.7 The Leakage Problem\nWindows from the same person can look very similar.\nPeople differ in walking style, phone placement, body movement and recording conditions.\nIf the same subject appears in both train and test, the model may learn subject-specific patterns.\nThis is not intentional cheating.\nIt is a subtle evaluation design problem.\n\n\n\n\n\n\nWarningCommon Pitfall\n\n\n\nHigh accuracy can come from evaluating on data that is too similar to the training data.\n\n\nThe important question is not whether the random split score is wrong.\nThe important question is what it actually measures.",
     "crumbs": [
       "<span class='chapter-number'>8</span>  <span class='chapter-title'>Evaluation And Generalization</span>"
     ]
@@ -903,8 +923,8 @@
     "objectID": "modules/07_evaluation.html#subject-wise-evaluation",
     "href": "modules/07_evaluation.html#subject-wise-evaluation",
     "title": "8  Evaluation And Generalization",
-    "section": "8.6 Subject-Wise Evaluation",
-    "text": "8.6 Subject-Wise Evaluation\nIn subject-wise evaluation, train subjects and test subjects are separated.\nThe model trains on one group of people and is tested on different people.\n\n\n\n\n\nflowchart LR\n  A[Train Subjects] --&gt; B[Model]\n  B --&gt; C[Test Subjects]\n  D[Subject 1, 2, 3, ...] --&gt; A\n  E[Subject 40, 41, 42, ...] --&gt; C\n\n\n\n\n\n\nThis better simulates deployment on a new user.\nAccuracy often drops.\nThat drop is informative, not a failure.\nIt tells us how much harder generalization is when the model cannot rely on familiar subject patterns.\n\nsubject_result = evaluate_subject_split(X, y, groups)\n\nsubject_result[\"metrics\"][\"accuracy\"]\n\n0.8678756476683938\n\n\nThis score answers:\n\nCan the model classify activities for people it has never seen before?\n\nFor wearable systems, this is often the more important question.",
+    "section": "8.8 Subject-Wise Evaluation",
+    "text": "8.8 Subject-Wise Evaluation\nIn subject-wise evaluation, train subjects and test subjects are separated.\nThe model trains on one group of people and is tested on different people.\n\n\n\n\n\nflowchart LR\n  A[Train Subjects] --&gt; B[Model]\n  B --&gt; C[Test Subjects]\n  D[Subject 1, 2, 3, ...] --&gt; A\n  E[Subject 40, 41, 42, ...] --&gt; C\n\n\n\n\n\n\nThis better simulates deployment on a new user.\nAccuracy often drops.\nThat drop is informative, not a failure.\nIt tells us how much harder generalization is when the model cannot rely on familiar subject patterns.\n\nsubject_result = evaluate_subject_split(X, y, groups)\n\nsubject_result[\"metrics\"][\"accuracy\"]\n\n0.8678756476683938\n\n\nThis score answers:\n\nCan the model classify activities for people it has never seen before?\n\nFor wearable systems, this is often the more important question.",
     "crumbs": [
       "<span class='chapter-number'>8</span>  <span class='chapter-title'>Evaluation And Generalization</span>"
     ]
@@ -913,8 +933,8 @@
     "objectID": "modules/07_evaluation.html#random-split-vs-subject-wise-split",
     "href": "modules/07_evaluation.html#random-split-vs-subject-wise-split",
     "title": "8  Evaluation And Generalization",
-    "section": "8.7 Random Split Vs Subject-Wise Split",
-    "text": "8.7 Random Split Vs Subject-Wise Split\nThe comparison is the lesson.\n\ncomparison = pd.DataFrame(\n    [\n        {\n            \"evaluation strategy\": \"Random split\",\n            \"accuracy\": random_result[\"metrics\"][\"accuracy\"],\n            \"test examples\": random_result[\"test_size\"],\n        },\n        {\n            \"evaluation strategy\": \"Subject-wise split\",\n            \"accuracy\": subject_result[\"metrics\"][\"accuracy\"],\n            \"test examples\": subject_result[\"test_size\"],\n        },\n    ]\n)\n\ncomparison\n\n\n\n\n\n\n\n\nevaluation strategy\naccuracy\ntest examples\n\n\n\n\n0\nRandom split\n0.985750\n1614\n\n\n1\nSubject-wise split\n0.867876\n1544\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nEvaluation strategy\nWhat is tested?\nTypical result\nRisk\n\n\n\n\nRandom split\nNew windows from a mixed subject pool\nOften high\nCan be too optimistic if subjects appear in both train and test\n\n\nSubject-wise split\nNew subjects held out from training\nOften lower\nDepends on which subjects are held out\n\n\nLOSO\nEvery subject is tested as the held-out subject once\nStrict and detailed\nComputationally more expensive\n\n\n\nIf the random split score is higher, do not panic.\nThat gap tells us that subject generalization is harder than row-level prediction.",
+    "section": "8.9 Random Split Vs Subject-Wise Split",
+    "text": "8.9 Random Split Vs Subject-Wise Split\nThe comparison is the lesson.\n\ncomparison = pd.DataFrame(\n    [\n        {\n            \"evaluation strategy\": \"Random split\",\n            \"accuracy\": random_result[\"metrics\"][\"accuracy\"],\n            \"test examples\": random_result[\"test_size\"],\n        },\n        {\n            \"evaluation strategy\": \"Subject-wise split\",\n            \"accuracy\": subject_result[\"metrics\"][\"accuracy\"],\n            \"test examples\": subject_result[\"test_size\"],\n        },\n    ]\n)\n\ncomparison\n\n\n\n\n\n\n\n\nevaluation strategy\naccuracy\ntest examples\n\n\n\n\n0\nRandom split\n0.985750\n1614\n\n\n1\nSubject-wise split\n0.867876\n1544\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nEvaluation strategy\nWhat is tested?\nTypical result\nRisk\n\n\n\n\nRandom split\nNew windows from a mixed subject pool\nOften high\nCan be too optimistic if subjects appear in both train and test\n\n\nSubject-wise split\nNew subjects held out from training\nOften lower\nDepends on which subjects are held out\n\n\nLOSO\nEvery subject is tested as the held-out subject once\nStrict and detailed\nComputationally more expensive\n\n\n\nIf the random split score is higher, do not panic.\nThat gap tells us that subject generalization is harder than row-level prediction.",
     "crumbs": [
       "<span class='chapter-number'>8</span>  <span class='chapter-title'>Evaluation And Generalization</span>"
     ]
@@ -923,8 +943,28 @@
     "objectID": "modules/07_evaluation.html#interpreting-confusion-matrices",
     "href": "modules/07_evaluation.html#interpreting-confusion-matrices",
     "title": "8  Evaluation And Generalization",
-    "section": "8.8 Interpreting Confusion Matrices",
-    "text": "8.8 Interpreting Confusion Matrices\nA confusion matrix shows which activities are predicted correctly and which are confused.\nDiagonal entries are correct predictions.\nOff-diagonal entries are mistakes.\n\nrandom_labels = random_result[\"metrics\"][\"labels\"]\nrandom_matrix = pd.DataFrame(\n    random_result[\"metrics\"][\"confusion_matrix\"],\n    index=[f\"true_{label}\" for label in random_labels],\n    columns=[f\"pred_{label}\" for label in random_labels],\n)\n\nrandom_matrix\n\n\n\n\n\n\n\n\npred_sitting\npred_standing\npred_walking\n\n\n\n\ntrue_sitting\n511\n9\n4\n\n\ntrue_standing\n2\n527\n6\n\n\ntrue_walking\n2\n0\n553\n\n\n\n\n\n\n\nThis matrix tells us where the random split model succeeds and fails.\nWalking is often easier because it has stronger movement and higher energy.\nSitting and standing may be confused because both are low-motion states.\nNow inspect the subject-wise confusion matrix.\n\nsubject_labels = subject_result[\"metrics\"][\"labels\"]\nsubject_matrix = pd.DataFrame(\n    subject_result[\"metrics\"][\"confusion_matrix\"],\n    index=[f\"true_{label}\" for label in subject_labels],\n    columns=[f\"pred_{label}\" for label in subject_labels],\n)\n\nsubject_matrix\n\n\n\n\n\n\n\n\npred_sitting\npred_standing\npred_walking\n\n\n\n\ntrue_sitting\n467\n42\n7\n\n\ntrue_standing\n154\n359\n1\n\n\ntrue_walking\n0\n0\n514\n\n\n\n\n\n\n\nThis matrix is more realistic for deployment.\nIf sitting and standing are confused more often here, that is not surprising.\nIt means the distinction is less stable across people.",
+    "section": "8.10 Interpreting Confusion Matrices",
+    "text": "8.10 Interpreting Confusion Matrices\nA confusion matrix shows which activities are predicted correctly and which are confused.\nDiagonal entries are correct predictions.\nOff-diagonal entries are mistakes.\nRead the matrix row by row.\nEach row is the true activity.\nEach column is the predicted activity.\nFor one class, a false negative means the true activity was that class, but the Model predicted something else.\nFor one class, a false positive means the Model predicted that class, but the true activity was something else.\nFor example:\n\ntrue walking predicted as sitting is a false negative for walking,\ntrue standing predicted as walking is a false positive for walking,\ntrue sitting predicted as standing shows confusion between two low-motion activities.\n\n\nrandom_labels = random_result[\"metrics\"][\"labels\"]\nrandom_matrix = pd.DataFrame(\n    random_result[\"metrics\"][\"confusion_matrix\"],\n    index=[f\"true_{label}\" for label in random_labels],\n    columns=[f\"pred_{label}\" for label in random_labels],\n)\n\nrandom_matrix\n\n\n\n\n\n\n\n\npred_sitting\npred_standing\npred_walking\n\n\n\n\ntrue_sitting\n511\n9\n4\n\n\ntrue_standing\n2\n527\n6\n\n\ntrue_walking\n2\n0\n553\n\n\n\n\n\n\n\nInterpretation:\nThe diagonal tells us which activities the random split Model recognizes most reliably.\nWalking is often easier because it has stronger movement and higher energy.\nThe most important off-diagonal entries are the activity pairs that the Model confuses.\nIf sitting and standing are confused, that is expected: both are low-motion states and can look similar when the phone orientation changes.\nIf walking is confused with sitting or standing, inspect whether those Windows contain pauses, weak movement, or unusual phone placement.\nNow inspect the subject-wise confusion matrix.\n\nsubject_labels = subject_result[\"metrics\"][\"labels\"]\nsubject_matrix = pd.DataFrame(\n    subject_result[\"metrics\"][\"confusion_matrix\"],\n    index=[f\"true_{label}\" for label in subject_labels],\n    columns=[f\"pred_{label}\" for label in subject_labels],\n)\n\nsubject_matrix\n\n\n\n\n\n\n\n\npred_sitting\npred_standing\npred_walking\n\n\n\n\ntrue_sitting\n467\n42\n7\n\n\ntrue_standing\n154\n359\n1\n\n\ntrue_walking\n0\n0\n514\n\n\n\n\n\n\n\nInterpretation:\nThis matrix is more realistic for Deployment because the test subjects were not seen during training.\nIf sitting and standing are confused more often here, that is not surprising.\nIt means the distinction is less stable across people.\nFalse positives and false negatives are especially useful here.\nIf the Model predicts walking for many true standing Windows, walking has many false positives.\nIf many true sitting Windows are predicted as standing, sitting has many false negatives.\nThese errors tell us which activities do not generalize cleanly to new subjects.",
+    "crumbs": [
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Evaluation And Generalization</span>"
+    ]
+  },
+  {
+    "objectID": "modules/07_evaluation.html#comparing-two-confusion-matrices",
+    "href": "modules/07_evaluation.html#comparing-two-confusion-matrices",
+    "title": "8  Evaluation And Generalization",
+    "section": "8.11 Comparing Two Confusion Matrices",
+    "text": "8.11 Comparing Two Confusion Matrices\nThe most valuable lesson is not just either matrix by itself.\nIt is the difference between them.\n\npd.concat(\n    {\n        \"random_split\": random_matrix,\n        \"subject_wise\": subject_matrix,\n    },\n    axis=1,\n)\n\n\n\n\n\n\n\n\nrandom_split\nsubject_wise\n\n\n\npred_sitting\npred_standing\npred_walking\npred_sitting\npred_standing\npred_walking\n\n\n\n\ntrue_sitting\n511\n9\n4\n467\n42\n7\n\n\ntrue_standing\n2\n527\n6\n154\n359\n1\n\n\ntrue_walking\n2\n0\n553\n0\n0\n514\n\n\n\n\n\n\n\nInterpretation:\nCompare the off-diagonal entries between the two matrices.\nErrors that increase in the subject-wise matrix show where Generalization becomes harder.\nSitting and standing errors often increase because these activities depend strongly on posture, phone placement, and individual behavior.\nWalking often remains easier because it produces more dynamic acceleration patterns.\nThis comparison teaches a deeper lesson than a single accuracy score:\n\nA Model may recognize familiar people well but still struggle with new people.\n\nThat is why Evaluation must match Deployment.",
+    "crumbs": [
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Evaluation And Generalization</span>"
+    ]
+  },
+  {
+    "objectID": "modules/07_evaluation.html#unknown-activities",
+    "href": "modules/07_evaluation.html#unknown-activities",
+    "title": "8  Evaluation And Generalization",
+    "section": "8.12 Unknown Activities",
+    "text": "8.12 Unknown Activities\nWhat happens if the user starts cycling?\nThe Model has never seen cycling during training.\nIt only knows the labels walking, standing, and sitting.\nTherefore it will still predict one of those three classes.\nIt might predict walking because cycling is dynamic.\nIt might predict sitting because the phone orientation resembles a seated posture.\nIt will not automatically say:\n\nI do not know this activity.\n\nThe Model does not know that an activity is unknown unless uncertainty estimation or unknown-activity detection is explicitly added.\nThis matters for Deployment.\nA live system should not treat every Prediction as equally trustworthy.",
     "crumbs": [
       "<span class='chapter-number'>8</span>  <span class='chapter-title'>Evaluation And Generalization</span>"
     ]
@@ -933,8 +973,8 @@
     "objectID": "modules/07_evaluation.html#loso-concept",
     "href": "modules/07_evaluation.html#loso-concept",
     "title": "8  Evaluation And Generalization",
-    "section": "8.9 LOSO Concept",
-    "text": "8.9 LOSO Concept\nLeave-One-Subject-Out evaluation is stricter.\nThe idea is simple:\n\nHold out one subject.\nTrain on all other subjects.\nTest on the held-out subject.\nRepeat for each subject.\nAverage the performance.\n\nLOSO asks:\n\nHow well does the system generalize across all possible held-out subjects?\n\nFor a teaching render, we run a small preview on the first five subjects.\n\nloso_preview = leave_one_subject_out_evaluation(\n    X,\n    y,\n    groups,\n    max_subjects=5,\n)\n\nloso_preview\n\n\n\n\n\n\n\n\nsubject_id\naccuracy\ntest_size\n\n\n\n\n0\n1600\n1.000000\n105\n\n\n1\n1601\n1.000000\n135\n\n\n2\n1602\n1.000000\n105\n\n\n3\n1603\n0.963504\n137\n\n\n4\n1604\n0.961905\n105\n\n\n\n\n\n\n\nThis preview shows that subject-level performance can vary.\nSome people are easier for the model.\nSome people are harder.\nThat variation is exactly why subject-aware evaluation matters.",
+    "section": "8.13 LOSO Concept",
+    "text": "8.13 LOSO Concept\nLeave-One-Subject-Out evaluation is stricter.\nThe idea is simple:\n\nHold out one subject.\nTrain on all other subjects.\nTest on the held-out subject.\nRepeat for each subject.\nAverage the performance.\n\nLOSO asks:\n\nHow well does the system generalize across all possible held-out subjects?\n\nFor a teaching render, we run a small preview on the first five subjects.\n\nloso_preview = leave_one_subject_out_evaluation(\n    X,\n    y,\n    groups,\n    max_subjects=5,\n)\n\nloso_preview\n\n\n\n\n\n\n\n\nsubject_id\naccuracy\ntest_size\n\n\n\n\n0\n1600\n1.000000\n105\n\n\n1\n1601\n1.000000\n135\n\n\n2\n1602\n1.000000\n105\n\n\n3\n1603\n0.963504\n137\n\n\n4\n1604\n0.961905\n105\n\n\n\n\n\n\n\nThis preview shows that subject-level performance can vary.\nSome people are easier for the model.\nSome people are harder.\nThat variation is exactly why subject-aware evaluation matters.",
     "crumbs": [
       "<span class='chapter-number'>8</span>  <span class='chapter-title'>Evaluation And Generalization</span>"
     ]
@@ -943,8 +983,8 @@
     "objectID": "modules/07_evaluation.html#thinking-like-an-engineer",
     "href": "modules/07_evaluation.html#thinking-like-an-engineer",
     "title": "8  Evaluation And Generalization",
-    "section": "8.10 Thinking Like An Engineer",
-    "text": "8.10 Thinking Like An Engineer\nInstead of asking:\n\nHow high is my accuracy?\n\nask:\n\nDoes my evaluation simulate the way the system will be used?\n\nIf the system will be used by new people, then new people must appear in the test set.\nIf the system will be used on a new device, evaluation should eventually test device differences.\nIf the system will be used in a new session, evaluation should consider session differences.\nThe evaluation design is part of the engineering design.",
+    "section": "8.14 Thinking Like An Engineer",
+    "text": "8.14 Thinking Like An Engineer\nInstead of asking:\n\nIs the Prediction correct?\n\nask:\n\nShould this Prediction be trusted?\n\nIf the system will be used by new people, then new people must appear in the test set.\nIf the system will be used on a new device, evaluation should eventually test device differences.\nIf the system will be used in a new session, evaluation should consider session differences.\nThe evaluation design is part of the engineering design.\nTrust depends on the evaluation strategy, the Confidence, the activity being predicted, and whether the current Sensor Stream resembles the data the Model was trained on.",
     "crumbs": [
       "<span class='chapter-number'>8</span>  <span class='chapter-title'>Evaluation And Generalization</span>"
     ]
@@ -953,8 +993,8 @@
     "objectID": "modules/07_evaluation.html#the-project-implementation",
     "href": "modules/07_evaluation.html#the-project-implementation",
     "title": "8  Evaluation And Generalization",
-    "section": "8.11 The Project Implementation",
-    "text": "8.11 The Project Implementation\nThe reusable evaluation logic lives in app.evaluation.\nIt provides:\n\nrandom split evaluation,\nsubject-wise evaluation,\nLOSO-style evaluation,\nclassification reports,\nconfusion matrix support.\n\nThis chapter uses those functions so the evaluation logic stays consistent across the project.",
+    "section": "8.15 The Project Implementation",
+    "text": "8.15 The Project Implementation\nThe reusable evaluation logic lives in app.evaluation.\nIt provides:\n\nrandom split evaluation,\nsubject-wise evaluation,\nLOSO-style evaluation,\nclassification reports,\nconfusion matrix support.\n\nThis chapter uses those functions so the evaluation logic stays consistent across the project.",
     "crumbs": [
       "<span class='chapter-number'>8</span>  <span class='chapter-title'>Evaluation And Generalization</span>"
     ]
@@ -963,8 +1003,8 @@
     "objectID": "modules/07_evaluation.html#save-evaluation-metadata",
     "href": "modules/07_evaluation.html#save-evaluation-metadata",
     "title": "8  Evaluation And Generalization",
-    "section": "8.12 Save Evaluation Metadata",
-    "text": "8.12 Save Evaluation Metadata\nThe project saves evaluation results with the model artifacts.\nThis makes the trained model easier to inspect later.\n\nfinal_model = train_random_forest(X, y)\n\nmetadata = {\n    \"evaluation_results\": {\n        \"random_split\": metrics_for_metadata(random_result),\n        \"subject_split\": metrics_for_metadata(subject_result),\n        \"loso_preview\": loso_preview.to_dict(orient=\"records\"),\n    }\n}\n\nmodel_metadata = save_model_artifacts(\n    final_model,\n    feature_columns,\n    metadata=metadata,\n    window_size=WINDOW_SIZE,\n)\n\n{\n    \"model_type\": model_metadata[\"model_type\"],\n    \"window_size\": model_metadata[\"window_size\"],\n    \"class_labels\": model_metadata[\"class_labels\"],\n}\n\n{'model_type': 'RandomForestClassifier',\n 'window_size': 100,\n 'class_labels': ['sitting', 'standing', 'walking']}",
+    "section": "8.16 Save Evaluation Metadata",
+    "text": "8.16 Save Evaluation Metadata\nThe project saves evaluation results with the model artifacts.\nThis makes the trained model easier to inspect later.\n\nfinal_model = train_random_forest(X, y)\n\nmetadata = {\n    \"evaluation_results\": {\n        \"random_split\": metrics_for_metadata(random_result),\n        \"subject_split\": metrics_for_metadata(subject_result),\n        \"loso_preview\": loso_preview.to_dict(orient=\"records\"),\n    }\n}\n\nmodel_metadata = save_model_artifacts(\n    final_model,\n    feature_columns,\n    metadata=metadata,\n    window_size=WINDOW_SIZE,\n)\n\n{\n    \"model_type\": model_metadata[\"model_type\"],\n    \"window_size\": model_metadata[\"window_size\"],\n    \"class_labels\": model_metadata[\"class_labels\"],\n}\n\n{'model_type': 'RandomForestClassifier',\n 'window_size': 100,\n 'class_labels': ['sitting', 'standing', 'walking']}",
     "crumbs": [
       "<span class='chapter-number'>8</span>  <span class='chapter-title'>Evaluation And Generalization</span>"
     ]
@@ -973,8 +1013,8 @@
     "objectID": "modules/07_evaluation.html#further-exploration",
     "href": "modules/07_evaluation.html#further-exploration",
     "title": "8  Evaluation And Generalization",
-    "section": "8.13 Further Exploration",
-    "text": "8.13 Further Exploration\nOptional directions:\n\nstratified LOSO,\nsession-wise split,\ndevice-wise split,\ncalibration,\nconfidence thresholds.\n\nThese are advanced evaluation ideas, not required for the first system.",
+    "section": "8.17 Further Exploration",
+    "text": "8.17 Further Exploration\nOptional directions:\n\nopen-set recognition,\nnovelty detection,\nout-of-distribution detection,\nstratified LOSO,\nsession-wise split,\ndevice-wise split,\ncalibration,\ntemperature scaling,\nconfidence thresholds.\n\nThese are advanced evaluation ideas, not required for the first system.",
     "crumbs": [
       "<span class='chapter-number'>8</span>  <span class='chapter-title'>Evaluation And Generalization</span>"
     ]
@@ -983,8 +1023,8 @@
     "objectID": "modules/07_evaluation.html#checkpoint",
     "href": "modules/07_evaluation.html#checkpoint",
     "title": "8  Evaluation And Generalization",
-    "section": "8.14 Checkpoint",
-    "text": "8.14 Checkpoint\nBefore continuing, you should be able to answer:\n\nWhy can random split accuracy be too optimistic?\nWhy does subject-wise evaluation better match deployment on new people?\nWhat does LOSO test?\nHow do you read diagonal and off-diagonal confusion matrix entries?\nWhy should evaluation match the deployment scenario?",
+    "section": "8.18 Checkpoint",
+    "text": "8.18 Checkpoint\nBefore continuing, you should be able to answer:\n\nWhy can random split accuracy be too optimistic?\nWhy does subject-wise evaluation better match deployment on new people?\nWhat does LOSO test?\nWhat is the difference between Probability, Confidence, and Prediction?\nWhy can a confident Prediction still be wrong?\nHow do you read false positives and false negatives in a confusion matrix?\nWhy should evaluation match the deployment scenario?",
     "crumbs": [
       "<span class='chapter-number'>8</span>  <span class='chapter-title'>Evaluation And Generalization</span>"
     ]
@@ -993,8 +1033,8 @@
     "objectID": "modules/07_evaluation.html#what-have-we-achieved",
     "href": "modules/07_evaluation.html#what-have-we-achieved",
     "title": "8  Evaluation And Generalization",
-    "section": "8.15 What Have We Achieved?",
-    "text": "8.15 What Have We Achieved?\n\nWe explained why accuracy depends on the deployment scenario.\nWe identified how random splits can overestimate wearable sensing performance.\nWe separated subject-wise evaluation from ordinary random evaluation.\nWe interpreted confusion matrices as evidence about Model behavior.\nWe framed LOSO as a stricter test of generalization to new people.",
+    "section": "8.19 What Have We Achieved?",
+    "text": "8.19 What Have We Achieved?\n\nWe explained why accuracy depends on the deployment scenario.\nWe identified how random splits can overestimate wearable sensing performance.\nWe separated subject-wise evaluation from ordinary random evaluation.\nWe interpreted confusion matrices as evidence about Model behavior.\nWe distinguished Probability, Confidence, and Prediction.\nWe explained why unknown activities still receive known labels.\nWe framed LOSO as a stricter test of generalization to new people.",
     "crumbs": [
       "<span class='chapter-number'>8</span>  <span class='chapter-title'>Evaluation And Generalization</span>"
     ]
@@ -1003,8 +1043,8 @@
     "objectID": "modules/07_evaluation.html#what-comes-next",
     "href": "modules/07_evaluation.html#what-comes-next",
     "title": "8  Evaluation And Generalization",
-    "section": "8.16 What Comes Next?",
-    "text": "8.16 What Comes Next?\nOnce evaluation gives us a trustworthy baseline, the system needs a way to serve Predictions. The next chapter moves from evaluation to Deployment with FastAPI and Streamlit.",
+    "section": "8.20 What Comes Next?",
+    "text": "8.20 What Comes Next?\nOnce evaluation gives us a trustworthy baseline, the system needs a way to serve Predictions. The next chapter moves from evaluation to Deployment with FastAPI and Streamlit.",
     "crumbs": [
       "<span class='chapter-number'>8</span>  <span class='chapter-title'>Evaluation And Generalization</span>"
     ]

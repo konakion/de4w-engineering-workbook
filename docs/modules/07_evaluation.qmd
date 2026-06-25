@@ -23,9 +23,11 @@ That gap is not an embarrassment.
 It is one of the most important learning outcomes in wearable machine learning.
 
 ::: {.callout-tip}
-## Engineering Insight
+## Engineering Insight: Confidence Is Not Correctness
 
-If the system will be used on new people, the evaluation must test new people.
+A Model may assign a high Confidence to a Prediction and still be wrong.
+
+Evaluation teaches us when a Prediction should be trusted, not only whether it was correct on one dataset.
 :::
 
 ---
@@ -94,6 +96,82 @@ It is:
 > Can the model classify activities for subjects it did not see during training?
 
 The difference between those two questions is the heart of this chapter.
+
+---
+
+## Probability Before Prediction
+
+A Prediction is the final decision, but it is not the first thing the Model computes.
+
+For a Random Forest, many decision trees vote for different classes.
+
+Those votes are turned into Class Probabilities.
+
+The predicted class is simply the class with the highest Probability.
+
+```{mermaid}
+flowchart TD
+  A[Sensor Stream]
+  --> B[Window]
+  --> C[Feature Vector]
+  --> D[Random Forest]
+  --> E[Class Probabilities]
+  --> F[Prediction]
+```
+
+For example, the Model might produce:
+
+| Class | Probability |
+|---|---:|
+| walking | 96% |
+| standing | 3% |
+| sitting | 1% |
+
+The Prediction is `walking` because `walking` has the highest Probability.
+
+The Confidence is 96%.
+
+High Confidence means the Model strongly prefers one class over the others.
+
+Low Confidence means the probabilities are closer together.
+
+An uncertain Prediction might look like this:
+
+| Class | Probability |
+|---|---:|
+| walking | 42% |
+| standing | 35% |
+| sitting | 23% |
+
+The Model still returns one Prediction, but the result deserves more caution.
+
+High Confidence is not proof that the Prediction is correct.
+
+It only tells us how strongly the Model prefers that class according to the patterns it has learned.
+
+---
+
+## Decision Boundaries: A Conceptual View
+
+The Model divides feature space into regions.
+
+One region is mostly walking.
+
+Another region is mostly standing.
+
+Another region is mostly sitting.
+
+When a new Feature Vector arrives, the Model checks where it falls.
+
+If it falls in the walking region, the Prediction is walking.
+
+If it falls near the boundary between sitting and standing, the Model may be less certain or more likely to make a mistake.
+
+This is why feature engineering and evaluation belong together.
+
+The Feature Vector determines where examples appear in feature space.
+
+Evaluation tells us whether the learned regions generalize to new people.
 
 ---
 
@@ -240,6 +318,22 @@ Diagonal entries are correct predictions.
 
 Off-diagonal entries are mistakes.
 
+Read the matrix row by row.
+
+Each row is the true activity.
+
+Each column is the predicted activity.
+
+For one class, a false negative means the true activity was that class, but the Model predicted something else.
+
+For one class, a false positive means the Model predicted that class, but the true activity was something else.
+
+For example:
+
+- true walking predicted as sitting is a false negative for walking,
+- true standing predicted as walking is a false positive for walking,
+- true sitting predicted as standing shows confusion between two low-motion activities.
+
 ```{python}
 random_labels = random_result["metrics"]["labels"]
 random_matrix = pd.DataFrame(
@@ -251,11 +345,17 @@ random_matrix = pd.DataFrame(
 random_matrix
 ```
 
-This matrix tells us where the random split model succeeds and fails.
+Interpretation:
+
+The diagonal tells us which activities the random split Model recognizes most reliably.
 
 Walking is often easier because it has stronger movement and higher energy.
 
-Sitting and standing may be confused because both are low-motion states.
+The most important off-diagonal entries are the activity pairs that the Model confuses.
+
+If sitting and standing are confused, that is expected: both are low-motion states and can look similar when the phone orientation changes.
+
+If walking is confused with sitting or standing, inspect whether those Windows contain pauses, weak movement, or unusual phone placement.
 
 Now inspect the subject-wise confusion matrix.
 
@@ -270,11 +370,81 @@ subject_matrix = pd.DataFrame(
 subject_matrix
 ```
 
-This matrix is more realistic for deployment.
+Interpretation:
+
+This matrix is more realistic for Deployment because the test subjects were not seen during training.
 
 If sitting and standing are confused more often here, that is not surprising.
 
 It means the distinction is less stable across people.
+
+False positives and false negatives are especially useful here.
+
+If the Model predicts walking for many true standing Windows, walking has many false positives.
+
+If many true sitting Windows are predicted as standing, sitting has many false negatives.
+
+These errors tell us which activities do not generalize cleanly to new subjects.
+
+---
+
+## Comparing Two Confusion Matrices
+
+The most valuable lesson is not just either matrix by itself.
+
+It is the difference between them.
+
+```{python}
+pd.concat(
+    {
+        "random_split": random_matrix,
+        "subject_wise": subject_matrix,
+    },
+    axis=1,
+)
+```
+
+Interpretation:
+
+Compare the off-diagonal entries between the two matrices.
+
+Errors that increase in the subject-wise matrix show where Generalization becomes harder.
+
+Sitting and standing errors often increase because these activities depend strongly on posture, phone placement, and individual behavior.
+
+Walking often remains easier because it produces more dynamic acceleration patterns.
+
+This comparison teaches a deeper lesson than a single accuracy score:
+
+> A Model may recognize familiar people well but still struggle with new people.
+
+That is why Evaluation must match Deployment.
+
+---
+
+## Unknown Activities
+
+What happens if the user starts cycling?
+
+The Model has never seen cycling during training.
+
+It only knows the labels walking, standing, and sitting.
+
+Therefore it will still predict one of those three classes.
+
+It might predict walking because cycling is dynamic.
+
+It might predict sitting because the phone orientation resembles a seated posture.
+
+It will not automatically say:
+
+> I do not know this activity.
+
+The Model does not know that an activity is unknown unless uncertainty estimation or unknown-activity detection is explicitly added.
+
+This matters for Deployment.
+
+A live system should not treat every Prediction as equally trustworthy.
 
 ---
 
@@ -321,11 +491,11 @@ That variation is exactly why subject-aware evaluation matters.
 
 Instead of asking:
 
-> How high is my accuracy?
+> Is the Prediction correct?
 
 ask:
 
-> Does my evaluation simulate the way the system will be used?
+> Should this Prediction be trusted?
 
 If the system will be used by new people, then new people must appear in the test set.
 
@@ -334,6 +504,8 @@ If the system will be used on a new device, evaluation should eventually test de
 If the system will be used in a new session, evaluation should consider session differences.
 
 The evaluation design is part of the engineering design.
+
+Trust depends on the evaluation strategy, the Confidence, the activity being predicted, and whether the current Sensor Stream resembles the data the Model was trained on.
 
 ---
 
@@ -390,10 +562,14 @@ model_metadata = save_model_artifacts(
 
 Optional directions:
 
+- open-set recognition,
+- novelty detection,
+- out-of-distribution detection,
 - stratified LOSO,
 - session-wise split,
 - device-wise split,
 - calibration,
+- temperature scaling,
 - confidence thresholds.
 
 These are advanced evaluation ideas, not required for the first system.
@@ -407,8 +583,10 @@ Before continuing, you should be able to answer:
 1. Why can random split accuracy be too optimistic?
 2. Why does subject-wise evaluation better match deployment on new people?
 3. What does LOSO test?
-4. How do you read diagonal and off-diagonal confusion matrix entries?
-5. Why should evaluation match the deployment scenario?
+4. What is the difference between Probability, Confidence, and Prediction?
+5. Why can a confident Prediction still be wrong?
+6. How do you read false positives and false negatives in a confusion matrix?
+7. Why should evaluation match the deployment scenario?
 
 ---
 
@@ -418,6 +596,8 @@ Before continuing, you should be able to answer:
 - We identified how random splits can overestimate wearable sensing performance.
 - We separated subject-wise evaluation from ordinary random evaluation.
 - We interpreted confusion matrices as evidence about Model behavior.
+- We distinguished Probability, Confidence, and Prediction.
+- We explained why unknown activities still receive known labels.
 - We framed LOSO as a stricter test of generalization to new people.
 
 ## What Comes Next?

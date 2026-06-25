@@ -131,6 +131,74 @@ The model may learn person-specific movement patterns.
 
 Subject-wise evaluation is closer to real deployment.
 
+## Random Split vs Subject-Wise
+
+```{mermaid}
+flowchart LR
+  A[Random split] --> B[Often looks excellent]
+  C[Subject-wise split] --> D[Tests new people]
+  B --> E[May be optimistic]
+  D --> F[More realistic Deployment question]
+```
+
+The key question is Generalization:
+
+> Will this work for a person the Model has never seen?
+
+## Confusion Matrix
+
+|  | Predicted walking | Predicted sitting | Predicted standing |
+|---|---:|---:|---:|
+| True walking | correct | mistake | mistake |
+| True sitting | mistake | correct | sitting/standing confusion |
+| True standing | mistake | sitting/standing confusion | correct |
+
+- diagonal: correct Predictions
+- off-diagonal: confused classes
+- sitting and standing are both low-motion activities
+
+## Probability Before Prediction
+
+```{mermaid}
+flowchart LR
+  A[Window] --> B[Feature Vector]
+  B --> C[Random Forest]
+  C --> D[Class Probabilities]
+  D --> E[Prediction]
+```
+
+The Prediction is the class with the highest Probability.
+
+## Confidence Is Not Correctness
+
+High Confidence:
+
+```text
+walking 96%, standing 3%, sitting 1%
+```
+
+Low Confidence:
+
+```text
+walking 42%, standing 35%, sitting 23%
+```
+
+High Confidence can still be wrong. Low Confidence should trigger caution.
+
+## Unknown Activities
+
+What if the user starts cycling?
+
+The Model has only learned:
+
+- walking
+- sitting
+- standing
+
+It must still choose one of them.
+
+Unknown activity detection is a separate engineering problem.
+
 ## LOSO
 
 Leave-one-subject-out evaluation:
@@ -250,6 +318,13 @@ Demonstrate deployment and live prediction.
 
 - A model is not yet a system.
 - Data leakage can make evaluation too optimistic.
+- Confidence is not correctness.
+- Unknown activities still receive known labels.
 - Training and deployment must share feature logic.
 - Live wearable demos are also network engineering.
-- Simple models can teach strong engineering habits.
+
+## Final Take-Home
+
+A wearable AI system is not finished when accuracy is high.
+
+It is finished when the complete pipeline is reliable, interpretable, and usable.

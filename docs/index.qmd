@@ -64,6 +64,12 @@ By the end of this project, you will have built:
 - a Streamlit dashboard for live demos,
 - live smartphone activity recognition with phyphox.
 
+::: {.callout-note}
+## Tools You Will Meet
+
+`uv` keeps the project environment reproducible. FastAPI and `uvicorn` turn the trained Model into a small web service. Streamlit gives us a browser dashboard for teaching and live demos. `joblib` saves trained scikit-learn artifacts so they can be reused later.
+:::
+
 The system will focus on three activities:
 
 - walking,

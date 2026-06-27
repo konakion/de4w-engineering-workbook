@@ -32,6 +32,15 @@ The goal is not to build the most complex model.
 
 The goal is to understand the full engineering pipeline.
 
+## Tooling In Plain Language
+
+- `uv` creates and uses the project environment so everyone runs the same dependencies.
+- FastAPI exposes the trained Model through web endpoints such as `/health` and `/predict`.
+- `uvicorn` is the web server that runs the FastAPI app on your machine.
+- Streamlit turns Python code into a browser dashboard for teaching and live demos.
+- `joblib` saves and loads scikit-learn model artifacts.
+- The `app/` folder is a Python package, which keeps reusable project code separate from notebooks and docs.
+
 ## Quick Start
 
 Install dependencies:
@@ -39,6 +48,8 @@ Install dependencies:
 ```bash
 uv sync
 ```
+
+`uv sync` installs the dependencies defined by this project into a local environment.
 
 Check imports:
 
@@ -58,11 +69,15 @@ Start the API:
 uv run uvicorn app.api:app --reload
 ```
 
+`uv run` executes the command inside the project environment, and `uvicorn` serves the FastAPI app.
+
 Start the dashboard:
 
 ```bash
 uv run streamlit run dashboard.py
 ```
+
+Streamlit opens a browser UI for the live demo without requiring a separate frontend project.
 
 The dashboard includes Live phyphox mode and Replay Mode. Use Replay Mode when
 networking or phyphox is unavailable during a class demo.

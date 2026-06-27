@@ -5,6 +5,8 @@ from typing import Any
 import numpy as np
 import pandas as pd
 import requests
+# Streamlit lets us build a browser-based teaching dashboard with Python only,
+# which keeps the live demo close to the data pipeline students already know.
 import streamlit as st
 
 from app.config import (
@@ -287,6 +289,7 @@ def run_demo(
     window_size: int,
     duration_seconds: int,
     refresh_interval: float,
+    dashboard_area: Any,
 ) -> None:
     buffer = LiveBuffer(window_size=window_size)
     client = PhyphoxClient(phone_url) if source_mode == "Live phyphox" else None
@@ -295,7 +298,6 @@ def run_demo(
 
     status_area = st.empty()
     progress_area = st.empty()
-    main_area = st.empty()
 
     if source_mode == "Replay Mode":
         status_area.warning("Replay mode active. Using stored WISDM/synthetic samples, not a live phone.")
@@ -333,12 +335,14 @@ def run_demo(
                 append_prediction(result)
                 status_area.success("Prediction updated.")
 
-            with main_area.container():
+            dashboard_area.empty()
+            with dashboard_area.container():
                 render_main_dashboard(
                     show_probabilities=st.session_state.show_probabilities,
                     show_signal_plot=st.session_state.show_signal_plot,
                     show_feature_table=st.session_state.show_feature_table,
-                    debug_mode=st.session_state.mode == "Debug Mode",
+                    debug_mode=st.session_state.mode == "Debug Mode"
+                    or st.session_state.show_debug_details,
                 )
 
             time.sleep(refresh_interval)
@@ -527,14 +531,7 @@ if source_mode == "Replay Mode":
 if st.session_state.latest_error:
     st.error(st.session_state.latest_error)
 
-render_main_dashboard(
-    show_probabilities=st.session_state.show_probabilities,
-    show_signal_plot=st.session_state.show_signal_plot,
-    show_feature_table=st.session_state.show_feature_table,
-    debug_mode=st.session_state.mode == "Debug Mode" or st.session_state.show_debug_details,
-)
-
-render_explanation()
+dashboard_area = st.empty()
 
 if start:
     run_demo(
@@ -543,4 +540,16 @@ if start:
         window_size=int(window_size),
         duration_seconds=int(duration),
         refresh_interval=float(refresh_interval),
+        dashboard_area=dashboard_area,
     )
+else:
+    with dashboard_area.container():
+        render_main_dashboard(
+            show_probabilities=st.session_state.show_probabilities,
+            show_signal_plot=st.session_state.show_signal_plot,
+            show_feature_table=st.session_state.show_feature_table,
+            debug_mode=st.session_state.mode == "Debug Mode"
+            or st.session_state.show_debug_details,
+        )
+
+render_explanation()

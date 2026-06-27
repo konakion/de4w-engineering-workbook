@@ -2,6 +2,8 @@ import json
 from pathlib import Path
 from typing import Any
 
+# joblib stores scikit-learn models in files so training and deployment can
+# happen at different times.
 import joblib
 import pandas as pd
 from sklearn.ensemble import RandomForestClassifier
@@ -150,6 +152,7 @@ def save_model_artifacts(
 
     class_labels = [str(class_label) for class_label in model.classes_]
 
+    # Saving the feature order is as important as saving the model itself.
     joblib.dump(model, model_path)
     joblib.dump(feature_columns, feature_columns_path)
     joblib.dump(class_labels, activity_labels_path)

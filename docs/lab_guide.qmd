@@ -29,6 +29,8 @@ Install dependencies:
 uv sync
 ```
 
+`uv` is used so the whole class works with the same Python environment and dependency versions.
+
 Check imports:
 
 ```bash
@@ -86,6 +88,8 @@ Run:
 uv run uvicorn app.api:app --reload
 ```
 
+`uvicorn` is the local web server that makes the FastAPI prediction app reachable in your browser.
+
 Keep this terminal open while you test the API.
 
 Open:
@@ -115,6 +119,8 @@ Open a second terminal and run:
 ```bash
 uv run streamlit run dashboard.py
 ```
+
+Streamlit creates the live demo dashboard directly from Python code.
 
 The dashboard asks for:
 

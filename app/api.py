@@ -1,5 +1,7 @@
 from typing import Any
 
+# FastAPI turns ordinary Python functions into HTTP endpoints so other
+# programs can request predictions without importing our code directly.
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel, Field
 

@@ -74,6 +74,10 @@ In this section we will:
 
 ## Imports and Project Paths
 
+`joblib` is used later to save the trained scikit-learn Model and reload it during Deployment.
+
+Keeping paths relative to the project root makes the workbook easier to run on another computer.
+
 ```{python}
 from pathlib import Path
 
@@ -653,6 +657,8 @@ print("Subject-wise split accuracy:", subject_split_accuracy)
 ## Goal
 
 We export the trained model and metadata for later deployment.
+
+Exporting with `joblib` turns trained Python objects into files. That is what lets the API and dashboard reuse the Model without retraining it.
 
 ```{python}
 joblib.dump(

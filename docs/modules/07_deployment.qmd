@@ -42,6 +42,8 @@ The notebook is where we build and inspect the baseline.
 
 The Model Artifact is what we save so the result can be reused.
 
+In this project, model artifacts are stored with `joblib`, a common Python tool for saving scikit-learn objects.
+
 FastAPI is the service layer that exposes the Model to other programs.
 
 The client can be Swagger UI, a script, the Streamlit dashboard, or a future mobile application.
@@ -95,6 +97,12 @@ FastAPI exposes the trained model as a small HTTP service.
 
 The project keeps the API logic in `app/api.py` and the model loading/prediction logic in `app/model_utils.py`.
 
+::: {.callout-note}
+## Beginner Note
+
+FastAPI defines what the web service can do. `uvicorn` is the local server that actually runs that service so a browser, dashboard, or script can call it.
+:::
+
 This separation matters.
 
 The API handles HTTP requests, validation, and responses.
@@ -108,6 +116,8 @@ Start the API from the project root:
 ```bash
 uv run uvicorn app.api:app --reload
 ```
+
+`uv run` keeps this command inside the project environment, so it uses the same installed packages as the rest of the workbook.
 
 The API will usually be available at:
 
@@ -224,6 +234,8 @@ If features are missing, the API returns a validation error that names them.
 ## Streamlit Dashboard
 
 The Streamlit dashboard is the live demonstration UI.
+
+Streamlit is useful here because it creates an interactive browser app from Python code, without requiring students to learn frontend development first.
 
 Start it from the project root:
 

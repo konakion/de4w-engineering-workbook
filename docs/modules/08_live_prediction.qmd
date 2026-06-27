@@ -96,6 +96,8 @@ From the project root:
 uv run streamlit run dashboard.py
 ```
 
+This command starts a Streamlit app: a Python script that becomes an interactive browser dashboard for the live demo.
+
 The dashboard lets you configure:
 
 - phyphox URL,

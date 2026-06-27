@@ -306,6 +306,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>The notebook is where we build and inspect the baseline.</p>
 <p>The Model Artifact is what we save so the result can be reused.</p>
+<p>In this project, model artifacts are stored with <code>joblib</code>, a common Python tool for saving scikit-learn objects.</p>
 <p>FastAPI is the service layer that exposes the Model to other programs.</p>
 <p>The client can be Swagger UI, a script, the Streamlit dashboard, or a future mobile application.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
@@ -385,12 +386,26 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 data-number="9.4" class="anchored" data-anchor-id="fastapi-service"><span class="header-section-number">9.4</span> FastAPI Service</h2>
 <p>FastAPI exposes the trained model as a small HTTP service.</p>
 <p>The project keeps the API logic in <code>app/api.py</code> and the model loading/prediction logic in <code>app/model_utils.py</code>.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Beginner Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>FastAPI defines what the web service can do. <code>uvicorn</code> is the local server that actually runs that service so a browser, dashboard, or script can call it.</p>
+</div>
+</div>
 <p>This separation matters.</p>
 <p>The API handles HTTP requests, validation, and responses.</p>
 <p>The model utility code handles artifact loading and Prediction.</p>
 <p>That means a user interface can change without rewriting the Model logic, and the Model logic can improve without redesigning the API.</p>
 <p>Start the API from the project root:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">uv</span> run uvicorn app.api:app <span class="at">--reload</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p><code>uv run</code> keeps this command inside the project environment, so it uses the same installed packages as the rest of the workbook.</p>
 <p>The API will usually be available at:</p>
 <pre class="text"><code>http://127.0.0.1:8000</code></pre>
 <p>Open the interactive API documentation at:</p>
@@ -481,6 +496,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="streamlit-dashboard" class="level2" data-number="9.7">
 <h2 data-number="9.7" class="anchored" data-anchor-id="streamlit-dashboard"><span class="header-section-number">9.7</span> Streamlit Dashboard</h2>
 <p>The Streamlit dashboard is the live demonstration UI.</p>
+<p>Streamlit is useful here because it creates an interactive browser app from Python code, without requiring students to learn frontend development first.</p>
 <p>Start it from the project root:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ex">uv</span> run streamlit run dashboard.py</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The dashboard:</p>

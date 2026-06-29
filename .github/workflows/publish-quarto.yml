@@ -37,7 +37,7 @@ jobs:
         run: uv sync
 
       - name: Render Quarto book
-        run: uv run quarto render docs
+        run: uv run quarto render docs --to html
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
